@@ -1,7 +1,10 @@
 package com.samsolutions.recipes;
 
+import org.apache.log4j.Logger;
+
 public class TestLog4j {
-    private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(TestLog4j.class);
+
+    private static final Logger LOGGER = Logger.getLogger(TestLog4j.class);
 
     public void doSomething() {
         System.out.print("Hello World");
