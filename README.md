@@ -1,4 +1,14 @@
-# Recipes
-IntelliJ IDEA 2017.2.5 x64
-Maven,Tomcat 9.0.12,MySQL,H2
-Spring boot
+## Used tools
+* IntelliJ IDEA Community Edition 2019.2
+* Apache Maven
+* Apache Tomcat
+
+## Database
+* MySQL
+* H2
+* Flyway
+
+## Technologies
+* JDK 
+* Spring Boot 2.1.9
+* Spring Security
