@@ -84,10 +84,13 @@
 - [ ] Agile/scrum
 
 # Tools
-- [X] Git/Github
 - [X] Maven
-- [X] Tomcat
-- [ ] Tomcat remote debugging
+- [X] Tomcat: structure, settings
+- [ ] Tomcat: remote debugging
+- [X] Git/Github
+- [ ] Git: branching
+- [ ] Git: patches
+- [ ] Git: cherry-pick
 - [X] IntelliJ Idea - DB Viewer
 - [ ] Postman
 - [ ] curl
@@ -100,7 +103,7 @@
 | Date | Git comit | Topics | Mentor's satisfaction |
 |----------- |:-----------:|----------- |:-----------: |
 | __15.10.2019__ | :ballot_box_with_check: | First meeting |:thumbsup:|
-|__16.10.2019__ | :ballot_box_with_check:| Infrastructure(setup project, debug, run on tomcat):thumbsup:|
+|__16.10.2019__ | :ballot_box_with_check:| Infrastructure(setup project, debug, run on tomcat) |:thumbsup:|
 |17.10.2019 | :ballot_box_with_check:| ...|:thumbsup:|
 |__18.10.2019__ | :ballot_box_with_check:| mysql, Log4j, flyway, tomcat/maven configuration|:thumbsup:|
 
