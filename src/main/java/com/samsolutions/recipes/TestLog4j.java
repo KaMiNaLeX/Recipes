@@ -1,12 +1,13 @@
 package com.samsolutions.recipes;
 
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 public class TestLog4j {
-    private static final Logger logger = Logger.getLogger("APP2");
+
+    private static final Logger LOGGER = Logger.getLogger(TestLog4j.class);
 
     public void doSomething() {
         System.out.print("Hello World");
-        logger.info("doSomething");
+        LOGGER.info("Info message");
     }
 }
