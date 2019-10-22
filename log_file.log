@@ -5,3 +5,6 @@
 2019-10-17 17:47:45 INFO  TestLog4j:8 - Info message
 2019-10-22 15:34:47 INFO  TestLog4j:11 - Info message
 2019-10-22 15:36:10 INFO  TestLog4j:11 - Info message
+2019-10-22 15:40:20 INFO  TestLog4j:11 - Info message
+2019-10-22 15:41:02 INFO  TestLog4j:11 - Info message
+2019-10-22 16:10:30 INFO  TestLog4j:11 - Info message
