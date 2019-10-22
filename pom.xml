@@ -50,6 +50,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <!--https://flywaydb.org/documentation/-->
+            <!--https://flywaydb.org/documentation/plugins/springboot-->
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
