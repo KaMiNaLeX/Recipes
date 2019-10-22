@@ -10,7 +10,7 @@ public class RecipesApplication {
         SpringApplication.run(RecipesApplication.class, args);
         TestLog4j testLog4j = new TestLog4j();
         testLog4j.doSomething();
-        System.out.println("Hello");
+
     }
 
 }
