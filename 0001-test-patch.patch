@@ -1,0 +1,207 @@
+From 2903be18b20af376f6365e51613500fe396a6788 Mon Sep 17 00:00:00 2001
+From: alkam <kaminskiy_2013@mail.ru>
+Date: Wed, 23 Oct 2019 16:24:26 +0300
+Subject: [PATCH] test patch
+
+---
+ My Progress                                        |   6 --
+ QA                                                 |  43 --------
+ .../samsolutions/recipes/RecipesApplication.java   |   2 +-
+ trainee_progress.MD                                | 109 ---------------------
+ 4 files changed, 1 insertion(+), 159 deletions(-)
+ delete mode 100644 My Progress
+ delete mode 100644 QA
+ delete mode 100644 trainee_progress.MD
+
+diff --git a/My Progress b/My Progress
+deleted file mode 100644
+index 5fef44d..0000000
+--- a/My Progress	
++++ /dev/null
+@@ -1,6 +0,0 @@
+-Create project Spring boot + Maven + Tomcat.
+-Check structure of Maven and Tomcat
+-Connect DB MySQL,H2.
+-Connect FlyWay.Testing migrations DB.
+-Add Logging (log4j).Testing logging.
+-Testing Git:branching,Git:patches,Git:cherry-pick.
+diff --git a/QA b/QA
+deleted file mode 100644
+index 1d5fca8..0000000
+--- a/QA
++++ /dev/null
+@@ -1,43 +0,0 @@
+-Dependency Injection(DI) - is a technique where by one object (or static method) supplies the dependencies of another object. 
+-A dependency is an object that can be used (a service).
+-When class A uses some functionality of class B, then its said that class A has a dependency of class B.
+-In Java, before we can use methods of other classes, we first need to create the object of that class 
+-(i.e. class A needs to create an instance of class B).
+-So, transferring the task of creating the object to someone else and directly using the dependency is called dependency injection.
+-
+-Spring MVC - Pattern Architecture Model - View - Controller.The whole logic of Spring MVC is built around the DispatcherServlet,
+-which receives and processes all HTTP requests (from the UI) and responses to them.
+-1)After receiving an HTTP request, DispatcherServlet accesses the HandlerMapping interface, 
+-which determines which Controller should be called, and then sends the request to the desired Controller.
+-2)The controller accepts the request and calls the appropriate utility method based on GET or POST. 
+-The called method determines the Model data based on a specific business logic and returns the View name to the DispatcherServlet.
+-3)Using the ViewResolver interface, the DispatcherServlet determines which View should be used based on the name received.
+-4)After the View has been created, the DispatcherServlet sends the Model data as attributes to the View, 
+-which is ultimately displayed in the browser.
+-
+-CRUD - Operations Create,Read,Update,Delete.Sql: Insert,Select,Update,Delete.HTTP:Post/Put,Get,Put,Delete.
+-
+-Git:branching - To create a new branch and switch to it at the same time, you can run the git checkout command with the -b.
+-git merge command:merge 2 branches.
+-
+-Git:patch - This is a text file that contains code and metadata about commits (commit ID, date, message, etc.). We can create a patch from commits,
+-and other developers can accept them in their repository.git format-patch - create .patch.,git apply - confirm changes.
+-
+-Git:cherry-pick.The git cherry-pick command is used to take the change introduced in a single Git commit and 
+-try to re-introduce it as a new commit on the branch you’re currently on. 
+-This can be useful to only take one or two commits from a branch individually rather than merging in the branch which takes all the changes.
+-The git rebase command is basically an automated cherry-pick. 
+-It determines a series of commits and then cherry-picks them one by one in the same order somewhere else.
+-
+-Structure Tomcat.
+-bin - startup, shutdown and other scripts and executables
+-common - common classes that Catalina and web applications can use
+-conf - Configuration files, including modules.xml, server.xml, and a number of apps-<name>.xml.
+-lib - Jar files that are used for starting and stopping Tomcat.
+-logs - Catalina and application logs
+-server - classes used only by Catalina
+-shared - classes shared by all web applications
+-webapps - directory containing the web applications
+-work - temporary storage for files and directories
+-
+-Maven settings.xml - https://maven.apache.org/settings.html
+diff --git a/src/main/java/com/samsolutions/recipes/RecipesApplication.java b/src/main/java/com/samsolutions/recipes/RecipesApplication.java
+index f790f9b..428c15c 100644
+--- a/src/main/java/com/samsolutions/recipes/RecipesApplication.java
++++ b/src/main/java/com/samsolutions/recipes/RecipesApplication.java
+@@ -10,7 +10,7 @@ public class RecipesApplication {
+         SpringApplication.run(RecipesApplication.class, args);
+         TestLog4j testLog4j = new TestLog4j();
+         testLog4j.doSomething();
+-        System.out.println("Hello World");
++
+     }
+ 
+ }
+diff --git a/trainee_progress.MD b/trainee_progress.MD
+deleted file mode 100644
+index 571c845..0000000
+--- a/trainee_progress.MD
++++ /dev/null
+@@ -1,109 +0,0 @@
+-# Learned technologies/libraries/approaches
+-- [X] Logging(log4j/slf4j)
+-- [ ] Spring
+-  - [ ] Dependency Injection(DI)
+-  - [ ] @Autowired
+-  - [ ] @Bean
+-  - [ ] @Qualifier
+-  - [ ] @Profile
+-  - [ ] @Value
+-  - [ ] @Configuration
+-  - [ ] web.xml
+-  - [ ] Spring Expression Language(SpEL)
+-  - [ ] Component scanning
+-  - [ ] @PropertySource
+-  - [ ] @Repository
+-  - [ ] MVC
+-  - [ ] Spring forms/tags
+-  - [ ] Application context
+-  - [ ] Container
+-  - [ ] AOP
+-  - [ ] Transactions
+-  - [ ] Security
+-  - [ ] REST
+-  - [ ] JPA Spring Data
+-  - [ ] Testing: @RunWith
+-  - [ ] Testing: @ExtendWith
+-  - [ ] Logging
+-  - [ ] @Controller
+-  - [ ] @RestController
+-  - [ ] @RequestParam, @RequestMapping
+-  - [ ] Presentation Level(JSP)
+-  - [ ] Validation API(@Valid, @BindingResult)
+-  - [ ] Encoding(UTF-8)
+-  - [ ] i18N
+-- [ ] Spring boot
+-  - [ ] Autoconfig
+-  - [ ] @SpringBootApplication
+-  - [ ] @EnableAutoConfiguration
+-  - [ ] Actuator
+-  - [ ] Testing: @SpringBoottest
+-  - [ ] Testing: @WebMvcTest
+-  - [ ] Testing: @MockBean adn @Mock
+-  - [ ] Testing: @DataJpaTest
+-- [ ] Hibernate
+-  - [ ] Maven configuration
+-  - [ ] JPA and different providers
+-  - [ ] H2+JPA/EntityManager
+-  - [ ] persistence.xml
+-  - [ ] Spring Integration 
+-  - [ ] Commit/Rollback
+-  - [ ] @OneToMany/@ManyToOne unidirectinal/bidirectional
+-  - [ ] @OneToOne unidirectinal/bidirectional
+-  - [ ] @ManyToMany
+-  - [ ] Domain Entities
+-  - [ ] Hibernate tuning via parameters(log, format sql and etc.)
+-  - [ ] DTO    
+-  - [ ] DAO
+-  - [ ] @PersitenceUnit
+-  - [ ] CLOB/BLOB - different approaches
+-  - [ ] LAZY-initialization
+-  - [ ] Unit tests
+-  - [ ] different log configs for development(inc. statistics) and production
+-  - [ ] replace build-in connection pool
+-- [ ] Data Rest
+-- [ ] Relation DBs: mySQL
+-- [ ] JUnit
+-- [ ] Testing
+-  - [ ] JUnit 4
+-  - [ ] JUnit 5
+-  - [ ] Mockito
+-  - [ ] TestNG
+-  - [ ] Integration Tests
+-- [ ] Frontend(React/Anglular, html)
+-
+-# Databases
+-- [ ] H2
+-- [ ] MySql
+-- [ ] Postgress
+-- [X] Flyway: database version control
+-
+-# Processes
+-- [X] Checkstyle
+-- [X] FindBugs
+-- [ ] Agile/scrum
+-
+-# Tools
+-- [X] Maven
+-- [X] Tomcat: structure, settings
+-- [ ] Tomcat: remote debugging
+-- [X] Git/Github
+-- [ ] Git: branching
+-- [ ] Git: patches
+-- [ ] Git: cherry-pick
+-- [X] IntelliJ Idea - DB Viewer
+-- [ ] Postman
+-- [ ] curl
+-- [ ] Docker
+-
+-
+-# Trainee progress
+- __Bold dates__ = meeting between the mentor and the trainee
+-
+-| Date | Git comit | Topics | Mentor's satisfaction |
+-|----------- |:-----------:|----------- |:-----------: |
+-| __15.10.2019__ | :ballot_box_with_check: | First meeting |:thumbsup:|
+-|__16.10.2019__ | :ballot_box_with_check:| Infrastructure(setup project, debug, run on tomcat) |:thumbsup:|
+-|17.10.2019 | :ballot_box_with_check:| ...|:thumbsup:|
+-|__18.10.2019__ | :ballot_box_with_check:| mysql, Log4j, flyway, tomcat/maven configuration|:thumbsup:|
+-
+-- 
+2.14.2.windows.1
+
