@@ -28,3 +28,14 @@ try to re-introduce it as a new commit on the branch you’re currently on.
 This can be useful to only take one or two commits from a branch individually rather than merging in the branch which takes all the changes.
 The git rebase command is basically an automated cherry-pick. 
 It determines a series of commits and then cherry-picks them one by one in the same order somewhere else.
+
+Structure Tomcat.
+bin - startup, shutdown and other scripts and executables
+common - common classes that Catalina and web applications can use
+conf - Configuration files, including modules.xml, server.xml, and a number of apps-<name>.xml.
+lib - Jar files that are used for starting and stopping Tomcat.
+logs - Catalina and application logs
+server - classes used only by Catalina
+shared - classes shared by all web applications
+webapps - directory containing the web applications
+work - temporary storage for files and directories
