@@ -4,3 +4,4 @@ Connect DB MySQL,H2.
 Connect FlyWay.Testing migrations DB.
 Add Logging (log4j).Testing logging.
 Testing Git:branching,Git:patches,Git:cherry-pick.
+Create start.bat
