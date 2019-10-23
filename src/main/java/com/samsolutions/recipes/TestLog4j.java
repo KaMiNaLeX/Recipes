@@ -8,5 +8,6 @@ public class TestLog4j {
 
     public void doSomething() {
         LOGGER.info("Info message");
+        LOGGER.info("Hello");
     }
 }
