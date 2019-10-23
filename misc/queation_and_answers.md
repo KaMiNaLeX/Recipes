@@ -41,3 +41,28 @@ webapps - directory containing the web applications
 work - temporary storage for files and directories
 
 Maven settings.xml - https://maven.apache.org/settings.html
+
+### [Spring Boot Starters](https://docs.spring.io/spring-boot/docs/2.1.6.RELEASE/reference/htmlsingle/#using-boot-starter)
+__Main application starters__:
+ * *spring-boot-starter-web*: starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container
+ * *spring-boot-starter-validation*: starter for using Java Bean Validation with Hibernate Validator
+ * *spring-boot-starter-test*: starter for testing Spring Boot applications with libraries including JUnit, Hamcrest and Mockito
+ * *spring-boot-starter-security*: starter for using Spring Security
+
+### Spring Boot Actuator
+The spring-boot-actuator module provides all of Spring Boot’s production-ready features.
+These additional features help you monitor and manage your application when you push it to production. You can choose to manage and monitor your application by using HTTP endpoints or with JMX. Auditing, health, and metrics gathering can also be automatically applied to your application.
+
+__Main links__:
+ * errors
+ * actuator/health 
+ * actuator/info 
+ * actuator.
+
+### @MockMvc
+The __MockMvc__ comes from Spring Test and allows you, via a set of convenient builder classes, to send HTTP requests into the DispatcherServlet and make assertions about the result. 
+Note the use of the __@AutoConfigureMockMvc__together with __@SpringBootTest__ to inject a __MockMvc__ instance. Having used 
+
+### @SpringBootTest
+We are asking for the whole application context to be created. 
+An alternative would be to ask Spring Boot to create only the web layers of the context using the __@WebMvcTest__. Spring Boot automatically tries to locate the main application class of your application in either case, but you can override it, or narrow it down, if you want to build something different.
