@@ -39,3 +39,5 @@ server - classes used only by Catalina
 shared - classes shared by all web applications
 webapps - directory containing the web applications
 work - temporary storage for files and directories
+
+Maven settings.xml - https://maven.apache.org/settings.html
