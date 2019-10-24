@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.controllers;
 
+import com.samsolutions.recipes.BaseTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @since 2019.10
  */
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class TestControllerTest {
+public class TestControllerTest extends BaseTest {
 
     @Autowired
     private MockMvc mockMvc;
