@@ -14,7 +14,7 @@ public class TestController {
 
     @RequestMapping("/")
     public String hello() {
-        return "Hello world Hibernate2";
+        return "hello";
     }
 
     @RequestMapping("/bye")

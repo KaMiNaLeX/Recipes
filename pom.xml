@@ -43,18 +43,21 @@
 
     <dependency>
       <!--https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web-->
+      <!--https://www.codeflow.site/ru/article/spring-boot-starters-->
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
     <dependency>
       <!--https://mvnrepository.com/artifact/mysql/mysql-connector-java-->
+      <!--https://dev.mysql.com/doc/connectors/en/connector-j-installing-maven.html-->
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <!--https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test-->
+      <!--https://docs.spring.io/spring-boot/docs/1.1.4.RELEASE/reference/html/boot-features-testing.html-->
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>

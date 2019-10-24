@@ -2,15 +2,15 @@
 
 **2019.10.24**
 
-Learn markdown basics.Learn spring actuator/metrics.Learn dbdesigner. **4h**
+Learn markdown basics.Learn spring actuator/metrics.Learn dbdesigner.Learn Unit tests. **6h**
 
 **2019.10.23**
 
-Structure of Maven and Tomcat.Testing Git:branching,Git:patches,Git:cherry-pick. Configuration maven-compiler-plugin.Update pom.xml. **8h**
+Structure of Maven and Tomcat.Testing Git:branching,Git:patches,Git:cherry-pick. Configuration maven-compiler-plugin.Update pom.xml. **4h**
 
 **2019.10.22**
 
-Create start.bat.Update Q&A. Learn structure of Maven and Tomcat.Learn remote debug. **4h**
+Create start.bat.Update Q&A. Learn structure of Maven and Tomcat.Learn remote debug. **6h**
 
 **2019.10.21**
 

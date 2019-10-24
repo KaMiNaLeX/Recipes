@@ -78,3 +78,9 @@ Note the use of the __@AutoConfigureMockMvc__together with __@SpringBootTest__ t
 ### @SpringBootTest
 We are asking for the whole application context to be created. 
 An alternative would be to ask Spring Boot to create only the web layers of the context using the __@WebMvcTest__. Spring Boot automatically tries to locate the main application class of your application in either case, but you can override it, or narrow it down, if you want to build something different.
+
+### @SpringBootApplication
+**@SpringBootApplication** is a convenience annotation that adds all of the following:
+* **@Configuration**: Tags the class as a source of bean definitions for the application context.
+* **@EnableAutoConfiguration**: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings. For example, if spring-webmvc is on the classpath, this annotation flags the application as a web application and activates key behaviors, such as setting up a DispatcherServlet.
+* **@ComponentScan**: Tells Spring to look for other components, configurations, and services in the hello package, letting it find the controllers.
