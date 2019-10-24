@@ -1,0 +1,24 @@
+From 0386c098f0f2c78326e6d1f5013b679448570623 Mon Sep 17 00:00:00 2001
+From: alkam <kaminskiy_2013@mail.ru>
+Date: Tue, 22 Oct 2019 17:45:10 +0300
+Subject: [PATCH] testcommit
+
+---
+ src/main/java/com/samsolutions/recipes/RecipesApplication.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/main/java/com/samsolutions/recipes/RecipesApplication.java b/src/main/java/com/samsolutions/recipes/RecipesApplication.java
+index e2b5968..ea5a03c 100644
+--- a/src/main/java/com/samsolutions/recipes/RecipesApplication.java
++++ b/src/main/java/com/samsolutions/recipes/RecipesApplication.java
+@@ -10,6 +10,7 @@ public class RecipesApplication {
+         SpringApplication.run(RecipesApplication.class, args);
+         TestLog4j testLog4j = new TestLog4j();
+         testLog4j.doSomething();
++        System.out.println("Hello");
+     }
+ 
+ }
+-- 
+2.14.2.windows.1
+
