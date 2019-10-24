@@ -1,46 +1,58 @@
-Dependency Injection(DI) - is a technique where by one object (or static method) supplies the dependencies of another object. 
+### Dependency Injection(DI) 
+**Dependency Injection(DI)** - is a technique where by one object (or static method) supplies the dependencies of another object. 
 A dependency is an object that can be used (a service).
 When class A uses some functionality of class B, then its said that class A has a dependency of class B.
 In Java, before we can use methods of other classes, we first need to create the object of that class 
 (i.e. class A needs to create an instance of class B).
 So, transferring the task of creating the object to someone else and directly using the dependency is called dependency injection.
 
-Spring MVC - Pattern Architecture Model - View - Controller.The whole logic of Spring MVC is built around the DispatcherServlet,
+### Spring MVC
+**Spring MVC** - Pattern Architecture *Model - View - Controller*.The whole logic of **Spring MVC** is built around the *DispatcherServlet*,
 which receives and processes all HTTP requests (from the UI) and responses to them.
-1)After receiving an HTTP request, DispatcherServlet accesses the HandlerMapping interface, 
+* 1.After receiving an HTTP request, DispatcherServlet accesses the HandlerMapping interface, 
 which determines which Controller should be called, and then sends the request to the desired Controller.
-2)The controller accepts the request and calls the appropriate utility method based on GET or POST. 
+* 2.The controller accepts the request and calls the appropriate utility method based on GET or POST. 
 The called method determines the Model data based on a specific business logic and returns the View name to the DispatcherServlet.
-3)Using the ViewResolver interface, the DispatcherServlet determines which View should be used based on the name received.
-4)After the View has been created, the DispatcherServlet sends the Model data as attributes to the View, 
+* 3.Using the ViewResolver interface, the DispatcherServlet determines which View should be used based on the name received.
+* 4.After the View has been created, the DispatcherServlet sends the Model data as attributes to the View, 
 which is ultimately displayed in the browser.
 
-CRUD - Operations Create,Read,Update,Delete.Sql: Insert,Select,Update,Delete.HTTP:Post/Put,Get,Put,Delete.
+### CRUD
 
-Git:branching - To create a new branch and switch to it at the same time, you can run the git checkout command with the -b.
-git merge command:merge 2 branches.
+Operations | HTTP | Sql |
+------------ | ------------- | ---------------
+CREATE | POST | INSERT 
+READ | GET | SELECT
+UPDATE | PUT | UPDATE
+DELETE | DELETE | DELETE
 
-Git:patch - This is a text file that contains code and metadata about commits (commit ID, date, message, etc.). We can create a patch from commits,
-and other developers can accept them in their repository.git format-patch - create .patch.,git apply - confirm changes.
+### Git:branching 
+To create a new branch and switch to it at the same time, you can run the **git checkout** command with the **-b**.
+**git merge** command - merge 2 branches.
 
-Git:cherry-pick.The git cherry-pick command is used to take the change introduced in a single Git commit and 
+### Git:patch
+This is a text file that contains code and metadata about commits (commit ID, date, message, etc.). We can create a patch from commits,
+and other developers can accept them in their repository.**git format-patch -1** - create .patch.,**git apply/am** - confirm changes.
+
+### Git:cherry-pick
+The **git cherry-pick** command is used to take the change introduced in a single Git commit and 
 try to re-introduce it as a new commit on the branch you’re currently on. 
 This can be useful to only take one or two commits from a branch individually rather than merging in the branch which takes all the changes.
 The git rebase command is basically an automated cherry-pick. 
 It determines a series of commits and then cherry-picks them one by one in the same order somewhere else.
 
-Structure Tomcat.
-bin - startup, shutdown and other scripts and executables
-common - common classes that Catalina and web applications can use
-conf - Configuration files, including modules.xml, server.xml, and a number of apps-<name>.xml.
-lib - Jar files that are used for starting and stopping Tomcat.
-logs - Catalina and application logs
-server - classes used only by Catalina
-shared - classes shared by all web applications
-webapps - directory containing the web applications
-work - temporary storage for files and directories
+### Structure of Tomcat
+ * **bin** - startup, shutdown and other scripts and executables
+* **common** - common classes that Catalina and web applications can use
+* **conf** - Configuration files, including modules.xml, server.xml, and a number of apps-<name>.xml.
+* **lib** - Jar files that are used for starting and stopping Tomcat.
+* **logs** - Catalina and application logs
+* **server** - classes used only by Catalina
+* **shared** - classes shared by all web applications
+* **webapps** - directory containing the web applications
+* **work** - temporary storage for files and directories
 
-Maven settings.xml - https://maven.apache.org/settings.html
+### [Maven settings.xml](https://maven.apache.org/settings.html)
 
 ### [Spring Boot Starters](https://docs.spring.io/spring-boot/docs/2.1.6.RELEASE/reference/htmlsingle/#using-boot-starter)
 __Main application starters__:

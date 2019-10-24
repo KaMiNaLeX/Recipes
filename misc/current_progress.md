@@ -1,4 +1,4 @@
-##WEEK 2(20h)
+## WEEK 2(20h)
 
 **2019.10.24**
 
@@ -16,7 +16,7 @@ Create start.bat.Update Q&A. Learn structure of Maven and Tomcat.Learn remote de
 
 Create Read.md with using technologies.Create Q&A.Learn remote debug. **4h**
 
-##WEEK 1(20h)
+## WEEK 1(20h)
 
 **2019.10.18**
 
