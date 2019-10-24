@@ -1,4 +1,5 @@
-######WEEK 2(20h)
+##WEEK 2(20h)
+
 **2019.10.24**
 
 Learn markdown basics.Learn spring actuator/metrics.Learn dbdesigner. **4h**
@@ -15,7 +16,8 @@ Create start.bat.Update Q&A. Learn structure of Maven and Tomcat.Learn remote de
 
 Create Read.md with using technologies.Create Q&A.Learn remote debug. **4h**
 
-######WEEK 1(20h)
+##WEEK 1(20h)
+
 **2019.10.18**
 
 Learn logging.Testing log4j.Learn migrations DB.Connect FlyWay. **4h**
