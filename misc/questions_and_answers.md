@@ -84,3 +84,16 @@ An alternative would be to ask Spring Boot to create only the web layers of the 
 * **@Configuration**: Tags the class as a source of bean definitions for the application context.
 * **@EnableAutoConfiguration**: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings. For example, if spring-webmvc is on the classpath, this annotation flags the application as a web application and activates key behaviors, such as setting up a DispatcherServlet.
 * **@ComponentScan**: Tells Spring to look for other components, configurations, and services in the hello package, letting it find the controllers.
+
+### @RestController
+**@RestController** is a specialized version of the controller. It includes the **@Controller** and **@ResponseBody** annotations and as a result, simplifies the controller implementation
+
+### @Controller
+Classic controllers can be annotated with the **@Controller** annotation. This is simply a specialization of the @Component class and allows implementation classes to be autodetected through the classpath scanning.
+
+### @ResponseBody
+The **@ResponseBody** annotation tells a controller that the object returned is automatically serialized into JSON and passed back into the HttpResponse object.
+
+### @RequiredArgsConstructor
+Just add the **@RequiredArgsConstructor** annotation and you'd get a constructor for all the final fields int the class, just as you declared them.
+
