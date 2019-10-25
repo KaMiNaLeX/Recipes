@@ -1,5 +1,6 @@
 package com.samsolutions.recipes;
 
+import com.samsolutions.recipes.models.TestModel;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +21,9 @@ public class RecipesApplication {
         SpringApplication.run(RecipesApplication.class, args);
         TestLog4j testLog4j = new TestLog4j();
         testLog4j.doSomething();
+        TestModel testModel = new TestModel();
+        testModel.setId(1);
+        System.out.println(testModel.getId());
     }
 
     @Bean

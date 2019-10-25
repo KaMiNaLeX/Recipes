@@ -1,4 +1,8 @@
-## WEEK 2(20h)
+## WEEK 2(23h)
+
+**2019.10.25**
+
+Learn Lombok. Testing @Getter @Setter @Log4j2 **3h**
 
 **2019.10.24**
 
