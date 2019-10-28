@@ -1,3 +1,4 @@
+https://app.dbdesigner.net/designer/schema/279390
 ## WEEK 2(23h)
 
 **2019.10.25**
