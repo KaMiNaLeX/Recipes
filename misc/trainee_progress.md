@@ -1,5 +1,8 @@
 # Learned technologies/libraries/approaches
 - [X] Logging(log4j/slf4j)
+- [X] Local/remote debugging
+- [X] Run and deploy
+- [X] Markdown format 
 - [ ] Spring
   - [ ] Dependency Injection(DI)
   - [ ] @Autowired
@@ -8,6 +11,7 @@
   - [ ] @Profile
   - [ ] @Value
   - [ ] @Configuration
+  - [ ] @ActiveProfiles
   - [ ] web.xml
   - [ ] Spring Expression Language(SpEL)
   - [ ] Component scanning
@@ -37,7 +41,7 @@
   - [ ] @SpringBootApplication
   - [ ] @EnableAutoConfiguration
   - [ ] Actuator
-  - [ ] Testing: @SpringBoottest
+  - [ ] Testing: @SpringBootTest
   - [ ] Testing: @WebMvcTest
   - [ ] Testing: @MockBean adn @Mock
   - [ ] Testing: @DataJpaTest
@@ -61,20 +65,22 @@
   - [ ] Unit tests
   - [ ] different log configs for development(inc. statistics) and production
   - [ ] replace build-in connection pool
-- [ ] Data Rest
+- [ ] Lombok  
+- [ ] REST
 - [ ] Relation DBs: mySQL
-- [ ] JUnit
 - [ ] Testing
   - [ ] JUnit 4
   - [ ] JUnit 5
   - [ ] Mockito
+  - [ ] Matchers
   - [ ] TestNG
   - [ ] Integration Tests
+  - [ ] @RunWith
 - [ ] Frontend(React/Anglular, html)
 
 # Databases
-- [ ] H2
-- [ ] MySql
+- [X] H2
+- [X] MySql
 - [ ] Postgress
 - [X] Flyway: database version control
 
@@ -88,11 +94,11 @@
 - [X] Tomcat: structure, settings
 - [ ] Tomcat: remote debugging
 - [X] Git/Github
-- [ ] Git: branching
-- [ ] Git: patches
+- [X] Git: branching
+- [X] Git: patches
 - [ ] Git: cherry-pick
 - [X] IntelliJ Idea - DB Viewer
-- [ ] Postman
+- [X] Postman
 - [ ] curl
 - [ ] Docker
 
@@ -104,6 +110,11 @@
 |----------- |:-----------:|----------- |:-----------: |
 | __15.10.2019__ | :ballot_box_with_check: | First meeting |:thumbsup:|
 |__16.10.2019__ | :ballot_box_with_check:| Infrastructure(setup project, debug, run on tomcat) |:thumbsup:|
-|17.10.2019 | :ballot_box_with_check:| ...|:thumbsup:|
-|__18.10.2019__ | :ballot_box_with_check:| mysql, Log4j, flyway, tomcat/maven configuration|:thumbsup:|
+|17.10.2019 | :ballot_box_with_check:| log4j, Flyway, H2|:thumbsup:|
+|__18.10.2019__ | :ballot_box_with_check:| readme, checkstyle/findbug, process organization|:thumbsup:|
+|__21.10.2019__ | :ballot_box_with_check:| cmd running/ remote debugging, tomcat/maven structue and settings |:thumbsup:|
+|22.10.2019 | :ballot_box_with_check:| git features |:thumbsup:|
+|23.10.2019 | :ballot_box_with_check:| mysql, Log4j, flyway, tomcat/maven configuration|:thumbsup:|
+|__24.10.2019__ | :ballot_box_with_check:| running with different profiles, header, pom properties ||
+|25.10.2019 | :ballot_box_with_check:| lombok, db model||
 
