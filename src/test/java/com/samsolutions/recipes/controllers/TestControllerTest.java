@@ -30,7 +30,7 @@ public class TestControllerTest extends BaseTest {
     public void hello() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(content().string(equalTo("Hello world Hibernate2")));
+            .andExpect(content().string(equalTo("hello")));
     }
 
     @Test

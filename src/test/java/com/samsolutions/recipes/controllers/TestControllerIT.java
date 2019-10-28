@@ -40,7 +40,7 @@ public class TestControllerIT extends BaseTest {
     @Test
     public void hello() throws Exception {
         ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
-        assertThat(response.getBody(), equalTo("Hello world Hibernate2"));
+        assertThat(response.getBody(), equalTo("hello"));
     }
 
     @Test
