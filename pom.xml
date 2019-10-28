@@ -74,7 +74,6 @@
                     <version>${h2.version}</version>
                     <scope>test</scope>
                 </dependency>
-
                 <dependency>
                     <!--https://flywaydb.org/documentation/-->
                     <!--https://flywaydb.org/documentation/plugins/springboot-->
