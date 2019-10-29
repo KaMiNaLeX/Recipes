@@ -1,10 +1,14 @@
-https://app.dbdesigner.net/designer/schema/279390
+https://dbdesigner.page.link/wPXo
 
-## WEEK 3()
+## WEEK 3(4h)
+
+**2019.10.29**
+
+Create db model.Testing spring devtools.REST API.Learn JPA.
 
 **2019.10.28**
 
-Create db model.
+Create db model. **4h**
 
 ## WEEK 2(23h)
 

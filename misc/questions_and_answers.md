@@ -97,3 +97,22 @@ The **@ResponseBody** annotation tells a controller that the object returned is 
 ### @RequiredArgsConstructor
 Just add the **@RequiredArgsConstructor** annotation and you'd get a constructor for all the final fields int the class, just as you declared them.
 
+### Spring Actuator
+Monitoring our app, gathering metrics, understanding traffic or the state of our database becomes trivial with this dependency.Actuator is mainly used to expose operational information about the running application – health, metrics, info, dump, env, etc. It uses HTTP endpoints or JMX beans to enable us to interact with it.
+Here are some of the most common endpoints Boot provides out of the box:
+* **/health** – Shows application health information (a simple ‘status' when accessed over an unauthenticated connection or full message details when authenticated); it's not sensitive by default
+* **/info** – Displays arbitrary application info; not sensitive by default
+* **/metrics** – Shows ‘metrics' information for the current application; it's also sensitive by default
+* **/trace**  – Displays trace information (by default the last few HTTP requests)
+
+### REST
+**Representational state transfer** (REST) is a software architectural style that defines a set of constraints to be used for 
+creating Web services. Web services that conform to the REST architectural style, called RESTful Web services, provide interoperability between computer systems on the Internet. RESTful Web services allow the requesting systems to access and manipulate textual representations of Web resources by using a uniform and predefined set of stateless operations. Other kinds of Web services, such as SOAP Web services, expose their own arbitrary sets of operations.
+Six guiding constraints define a RESTful system.These constraints restrict the ways that the server can process and respond to client requests so that, by operating within these constraints, the system gains desirable non-functional properties, such as performance, scalability, simplicity, modifiability, visibility, portability, and reliability.If a system violates any of the required constraints, it cannot be considered RESTful.
+The formal REST constraints are as follows:
+* **Client-server architecture**
+* **Statelessness**
+* **Cacheability**
+* **Layered system**
+* **Code on demand (optional)**
+* **Uniform interface**
