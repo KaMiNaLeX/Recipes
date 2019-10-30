@@ -1,1 +1,0 @@
-insert into user (firstname, lastname, email, login, password) values ('test','test','test','test','test');
