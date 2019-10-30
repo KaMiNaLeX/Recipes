@@ -18,10 +18,8 @@ public class UserEntity {
     private String password;
 
 
-
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }

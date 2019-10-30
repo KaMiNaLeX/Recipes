@@ -28,5 +28,4 @@ public class UserController {
     public List findAllById(@PathVariable("id") int id) {
         return userService.findAllById(id);
     }
-
 }

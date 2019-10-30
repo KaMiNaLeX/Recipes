@@ -1,6 +1,5 @@
 package com.samsolutions.recipes.services;
 
-import com.samsolutions.recipes.models.UserEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.List;
  */
 @Service
 public interface UserService {
-    List<UserEntity> findAllById(int Id);
-    List<UserEntity> findAll();
+    List findAllById(int id);
+
+    List findAll();
 }

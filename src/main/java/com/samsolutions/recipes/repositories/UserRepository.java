@@ -11,7 +11,6 @@ import java.util.List;
  * @since 2019.10
  */
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
-
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     List findAllById(int id);
 }

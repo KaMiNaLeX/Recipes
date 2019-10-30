@@ -19,18 +19,16 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public List<UserEntity> findAllById(int Id) {
+    public List findAllById(int id) {
         List<UserEntity> userEntities = new ArrayList<>();
-        userEntities = userRepository.findAllById(Id);
+        userEntities = userRepository.findAllById(id);
         return userEntities;
     }
 
     @Override
-    public List<UserEntity> findAll() {
+    public List findAll() {
         List<UserEntity> userEntities = new ArrayList<>();
         userEntities = userRepository.findAll();
         return userEntities;
     }
-
-
 }
