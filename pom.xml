@@ -26,8 +26,15 @@
                 <mvn-compiler-plugin.config.source>1.8</mvn-compiler-plugin.config.source>
                 <mvn-compiler-plugin.config.target>1.8</mvn-compiler-plugin.config.target>
                 <lombok.version>1.18.10</lombok.version>
+                <mapstruct.version>2.3.5</mapstruct.version>
             </properties>
             <dependencies>
+                <dependency>
+                    <!--https://mapstruct.org/-->
+                    <groupId>org.modelmapper</groupId>
+                    <artifactId>modelmapper</artifactId>
+                    <version>${mapstruct.version}</version>
+                </dependency>
                 <dependency>
                     <!--https://docs.spring.io/spring-boot/docs/2.1.6.RELEASE/reference/htmlsingle/#production-ready-->
                     <groupId>org.springframework.boot</groupId>

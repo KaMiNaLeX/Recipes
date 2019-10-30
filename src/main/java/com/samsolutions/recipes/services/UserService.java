@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.services;
 
+import com.samsolutions.recipes.DTO.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,5 +13,5 @@ import java.util.List;
 public interface UserService {
     List findAllById(int id);
 
-    List findAll();
+    List<UserDto> findAll();
 }
