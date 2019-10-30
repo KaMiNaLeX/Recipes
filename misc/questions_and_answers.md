@@ -116,3 +116,20 @@ The formal REST constraints are as follows:
 * **Layered system**
 * **Code on demand (optional)**
 * **Uniform interface**
+
+### DTO
+A **data transfer object (DTO)** is a design pattern conceived to reduce the number of calls when working with remote interfaces. 
+As Martin Fowler defines in his blog, the main reason for using a Data Transfer Object is to batch up what would be multiple remote calls into a single one.
+Another advantage of using DTOs on RESTful APIs written in Java (and on Spring Boot), is that they can help hiding implementation details of domain objects (aka. entities). 
+Exposing entities through endpoints can become a security issue if we do not carefully handle what properties can be changed through what operations.
+
+### DAO
+The **Data Access Object (DAO)** pattern is a structural pattern that allows us to isolate the application/business layer from the persistence layer (usually a relational database, but it could be any other persistence mechanism) using an abstract API.
+The functionality of this API is to hide from the application all the complexities involved in performing CRUD operations in the underlying storage mechanism. This permits both layers to evolve separately without knowing anything about each other.
+
+### Spring boot Filter
+A filter is an object used to intercept the HTTP requests and responses of your application. By using filter, we can perform two operations at two instances −
+* Before sending the request to the controller
+* Before sending a response to the client.
+
+Servlet Filter implementation class with **@Component** annotation.

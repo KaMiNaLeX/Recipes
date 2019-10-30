@@ -1,10 +1,14 @@
 https://dbdesigner.page.link/wPXo
 
-## WEEK 3(4h)
+## WEEK 3(10h)
+
+**2019.10.30**
+
+Learn DTO,DAO,Mapping.
 
 **2019.10.29**
 
-Create db model.Testing spring devtools.REST API.Learn JPA.
+Create db model.Testing spring devtools.REST API.Learn JPA. **6H**
 
 **2019.10.28**
 
