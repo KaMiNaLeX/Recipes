@@ -1,9 +1,11 @@
 package com.samsolutions.recipes.models;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author kaminskiy.alexey
@@ -14,8 +16,10 @@ import java.util.Objects;
 @Table(name = "user")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID id;
     @Column
     private String firstName;
     @Column
