@@ -1,10 +1,12 @@
 package com.samsolutions.recipes.repositories;
 
+import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author kaminskiy.alexey
@@ -12,6 +14,10 @@ import java.util.List;
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
-    List findAllById(int id);
+    UserEntity getById(UUID uuid);
+
+    UserEntity getByLogin(String login);
+
+    UserEntity removeByLogin(String login);
 
 }

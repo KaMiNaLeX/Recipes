@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.services.impl;
 
 import com.samsolutions.recipes.DTO.UserDTO;
+import com.samsolutions.recipes.models.UserEntity;
 import com.samsolutions.recipes.repositories.UserRepository;
 import com.samsolutions.recipes.services.ModelMapperService;
 import com.samsolutions.recipes.services.UserService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -20,11 +22,38 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Autowired
     private UserRepository userRepository;
 
+
     @Override
-    public List findAllById(int id) {
-        List<UserDTO> userDTOList = new ArrayList<>();
-        map(userRepository.findAllById(id), userDTOList);
-        return userDTOList;
+    public UserEntity getById(UUID uuid) {
+        UserEntity userEntity = userRepository.getById(uuid);
+        return userEntity;
+    }
+
+    @Override
+    public UserEntity getByLogin(String login) {
+        UserEntity userEntity = userRepository.getByLogin(login);
+        return userEntity;
+    }
+
+
+    @Override
+    public UserEntity removeByLogin(String login) {
+        UserEntity userEntity = userRepository.getByLogin(login);
+        userRepository.removeByLogin(userEntity.getLogin());
+        return null;
+    }
+
+    @Override
+    public UserEntity createUser(UserEntity userEntity) {
+        UserEntity newUserEntity = new UserEntity();
+        newUserEntity.setId(userEntity.getId());
+        newUserEntity.setFirstName(userEntity.getFirstName());
+        newUserEntity.setLastName(userEntity.getLastName());
+        newUserEntity.setEmail(userEntity.getEmail());
+        newUserEntity.setLogin(userEntity.getLogin());
+        newUserEntity.setPassword(userEntity.getPassword());
+        userRepository.save(newUserEntity);
+        return newUserEntity;
     }
 
     @Override

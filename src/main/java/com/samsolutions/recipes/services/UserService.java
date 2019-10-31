@@ -1,9 +1,11 @@
 package com.samsolutions.recipes.services;
 
 import com.samsolutions.recipes.DTO.UserDTO;
+import com.samsolutions.recipes.models.UserEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author kaminskiy.alexey
@@ -11,7 +13,13 @@ import java.util.List;
  */
 @Service
 public interface UserService {
-    List findAllById(int id);
+    UserEntity getById(UUID uuid);
+
+    UserEntity getByLogin(String login);
+
+    UserEntity removeByLogin(String login);
+
+    UserEntity createUser(UserEntity userEntity);
 
     List<UserDTO> findAll();
 }
