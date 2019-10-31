@@ -27,8 +27,15 @@
                 <mvn-compiler-plugin.config.target>1.8</mvn-compiler-plugin.config.target>
                 <lombok.version>1.18.10</lombok.version>
                 <mapstruct.version>2.3.5</mapstruct.version>
+                <javafaker.version>1.0.1</javafaker.version>
             </properties>
             <dependencies>
+                <dependency>
+                    <!--http://javadox.com/com.github.javafaker/javafaker/0.5/com/github/javafaker/Faker.html-->
+                    <groupId>com.github.javafaker</groupId>
+                    <artifactId>javafaker</artifactId>
+                    <version>${javafaker.version}</version>
+                </dependency>
                 <dependency>
                     <!--https://mapstruct.org/-->
                     <groupId>org.modelmapper</groupId>

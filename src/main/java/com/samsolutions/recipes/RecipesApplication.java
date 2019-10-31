@@ -1,5 +1,6 @@
 package com.samsolutions.recipes;
 
+import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +17,16 @@ import java.util.Arrays;
 public class RecipesApplication {
 
     public static void main(String[] args) {
+
+        Faker faker = new Faker();
+
+        String streetName = faker.address().streetName();
+        String number = faker.address().buildingNumber();
+        String city = faker.address().city();
+        String country = faker.address().country();
+        String a = faker.funnyName().name();
+
+
         SpringApplication.run(RecipesApplication.class, args);
     }
 
