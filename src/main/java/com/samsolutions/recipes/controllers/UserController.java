@@ -44,8 +44,8 @@ public class UserController {
      * need to fix
      */
     @DeleteMapping("/delete/{login}")
-    public UserEntity removeByLogin(@PathVariable("login") String login) {
-        return userService.removeByLogin(login);
+    public void removeByLogin(@PathVariable("login") String login) {
+        userService.removeByLogin(login);
     }
 
     @PostMapping("/create")

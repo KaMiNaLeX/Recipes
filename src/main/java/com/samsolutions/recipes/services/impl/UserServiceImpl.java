@@ -37,10 +37,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
 
     @Override
-    public UserEntity removeByLogin(String login) {
-        UserEntity userEntity = userRepository.getByLogin(login);
-        userRepository.removeByLogin(userEntity.getLogin());
-        return null;
+    public void removeByLogin(String login) {
+        userRepository.removeByLogin(login);
     }
 
     @Override

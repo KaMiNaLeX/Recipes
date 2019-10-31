@@ -17,7 +17,7 @@ public interface UserService {
 
     UserEntity getByLogin(String login);
 
-    UserEntity removeByLogin(String login);
+    void removeByLogin(String login);
 
     UserEntity createUser(UserEntity userEntity);
 

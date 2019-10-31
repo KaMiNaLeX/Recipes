@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.repositories;
 
-import com.samsolutions.recipes.DTO.UserDTO;
+
 import com.samsolutions.recipes.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,6 +18,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     UserEntity getByLogin(String login);
 
-    UserEntity removeByLogin(String login);
+    void removeByLogin(String login);
 
 }
