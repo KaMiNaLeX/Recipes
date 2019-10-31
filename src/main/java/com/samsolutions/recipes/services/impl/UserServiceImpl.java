@@ -1,7 +1,6 @@
 package com.samsolutions.recipes.services.impl;
 
-import com.samsolutions.recipes.DTO.UserDto;
-import com.samsolutions.recipes.models.UserEntity;
+import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.repositories.UserRepository;
 import com.samsolutions.recipes.services.ModelMapperService;
 import com.samsolutions.recipes.services.UserService;
@@ -23,17 +22,17 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     @Override
     public List findAllById(int id) {
-        List<UserDto> userDtoList = new ArrayList<>();
-        map(userRepository.findAllById(id), userDtoList);
-        return userDtoList;
+        List<UserDTO> userDTOList = new ArrayList<>();
+        map(userRepository.findAllById(id), userDTOList);
+        return userDTOList;
     }
 
     @Override
-    public List<UserDto> findAll() {
-        List<UserDto> userDtoList = new ArrayList<>();
-        UserDto userDto = new UserDto();
-        userDtoList.add(userDto);
-        map(userRepository.findAll(), userDtoList);
-        return userDtoList;
+    public List<UserDTO> findAll() {
+        List<UserDTO> userDTOList = new ArrayList<>();
+        UserDTO userDto = new UserDTO();
+        userDTOList.add(userDto);
+        map(userRepository.findAll(), userDTOList);
+        return userDTOList;
     }
 }

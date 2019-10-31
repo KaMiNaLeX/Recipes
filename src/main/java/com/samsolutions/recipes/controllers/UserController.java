@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.controllers;
 
-import com.samsolutions.recipes.DTO.UserDto;
+import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class UserController {
     UserServiceImpl userService;
 
     @GetMapping("/")
-    public List<UserDto> findAll() {
+    public List<UserDTO> findAll() {
         return userService.findAll();
     }
 

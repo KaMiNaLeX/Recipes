@@ -1,17 +1,12 @@
 package com.samsolutions.recipes;
 
-import com.samsolutions.recipes.DTO.UserDto;
-import com.samsolutions.recipes.models.UserEntity;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+
 
 /**
  * @author kaminskiy.alexey
@@ -21,11 +16,6 @@ import java.util.List;
 public class RecipesApplication {
 
     public static void main(String[] args) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(2);
-        List userEntities = Collections.singletonList(userEntity);
-        List userDtos = new ArrayList();
-        userDtos.addAll(userEntities);
         SpringApplication.run(RecipesApplication.class, args);
     }
 
