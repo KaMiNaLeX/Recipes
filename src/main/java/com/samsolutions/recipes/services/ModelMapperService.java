@@ -17,6 +17,16 @@ public interface ModelMapperService {
     }
 
     default void map(List src, List dest) {
+        Object dto = dest.get(0);
+        Class dtoClass = dto.getClass();
+        for (int i = 1; i < src.size(); i++) {
+            try {
+                Object newInstance = dtoClass.newInstance();
+                dest.add(newInstance);
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         for (int i = 0; i < src.size(); i++) {
             try {
                 mapCustom(src.get(i), dest.get(i));

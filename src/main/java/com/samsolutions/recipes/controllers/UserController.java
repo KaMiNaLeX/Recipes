@@ -24,7 +24,6 @@ public class UserController {
         return userService.getAll();
     }
 
-    //todo need to fix
     @GetMapping("/")
     public List<UserDTO> findAll() {
         return userService.findAll();

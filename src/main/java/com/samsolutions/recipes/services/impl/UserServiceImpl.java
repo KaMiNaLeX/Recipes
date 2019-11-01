@@ -45,7 +45,6 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public UserEntity createUser(UserEntity userEntity) {
         UserEntity newUserEntity = new UserEntity();
-        newUserEntity.setId(userEntity.getId());
         newUserEntity.setFirstName(userEntity.getFirstName());
         newUserEntity.setLastName(userEntity.getLastName());
         newUserEntity.setEmail(userEntity.getEmail());
@@ -58,8 +57,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public List<UserDTO> findAll() {
         List<UserDTO> userDTOList = new ArrayList<>();
-        UserDTO userDto = new UserDTO();
-        userDTOList.add(userDto);
+        UserDTO userDTO = new UserDTO();
+        userDTOList.add(userDTO);
         map(userRepository.findAll(), userDTOList);
         return userDTOList;
     }
