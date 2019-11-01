@@ -1,14 +1,22 @@
 https://dbdesigner.page.link/wPXo
 
-## WEEK 3(10h)
+## WEEK 3(26h)
+
+**2019.11.01**
+
+Update Model Mapping, REST API.Learn pagination and sort.Swagger 2. **6h**
+
+**2019.10.31**
+
+Learn and testing DB/hibernate UUID,javaFaker. **6h**
 
 **2019.10.30**
 
-Learn DTO,DAO,Mapping.
+Learn DTO,DAO,Mapping. **4h**
 
 **2019.10.29**
 
-Create db model.Testing spring devtools.REST API.Learn JPA. **6H**
+Create db model.Testing spring devtools.REST API.Learn JPA. **6h**
 
 **2019.10.28**
 

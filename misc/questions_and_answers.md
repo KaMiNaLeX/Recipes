@@ -133,3 +133,7 @@ A filter is an object used to intercept the HTTP requests and responses of your 
 * Before sending a response to the client.
 
 Servlet Filter implementation class with **@Component** annotation.
+
+### @Autowired
+Starting with Spring 2.5, the framework introduced a new style of Dependency Injection driven by @Autowired Annotations. 
+This annotation allows Spring to resolve and inject collaborating beans into your bean.Once annotation injection is enabled, autowiring can be used on properties, setters, and constructors.
