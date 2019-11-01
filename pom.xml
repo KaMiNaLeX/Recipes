@@ -28,8 +28,15 @@
                 <lombok.version>1.18.10</lombok.version>
                 <modelmapper.version>2.3.5</modelmapper.version>
                 <javafaker.version>1.0.1</javafaker.version>
+                <swagger2.version>2.9.2</swagger2.version>
             </properties>
             <dependencies>
+                <dependency>
+                    <!--https://swagger.io/docs/-->
+                    <groupId>io.springfox</groupId>
+                    <artifactId>springfox-swagger2</artifactId>
+                    <version>${swagger2.version}</version>
+                </dependency>
                 <dependency>
                     <!--http://javadox.com/com.github.javafaker/javafaker/0.5/com/github/javafaker/Faker.html-->
                     <groupId>com.github.javafaker</groupId>
