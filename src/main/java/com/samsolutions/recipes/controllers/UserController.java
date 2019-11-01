@@ -19,18 +19,18 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
 
-    /**
-     * need to fix
-     */
+    @GetMapping("/getAll")
+    public List<UserEntity> getAll() {
+        return userService.getAll();
+    }
+
+    //todo need to fix
     @GetMapping("/")
     public List<UserDTO> findAll() {
         return userService.findAll();
     }
 
-    /**
-     * need to fix
-     */
-    @GetMapping("/id/{id}")
+    @GetMapping("/id/ {id}")
     public UserEntity getById(@PathVariable("id") UUID uuid) {
         return userService.getById(uuid);
     }
@@ -40,9 +40,6 @@ public class UserController {
         return userService.getByLogin(login);
     }
 
-    /**
-     * need to fix
-     */
     @DeleteMapping("/delete/{login}")
     public void removeByLogin(@PathVariable("login") String login) {
         userService.removeByLogin(login);

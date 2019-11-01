@@ -38,7 +38,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     @Override
     public void removeByLogin(String login) {
-        userRepository.removeByLogin(login);
+        UserEntity userEntity = userRepository.getByLogin(login);
+        userRepository.delete(userEntity);
     }
 
     @Override
@@ -61,5 +62,10 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         userDTOList.add(userDto);
         map(userRepository.findAll(), userDTOList);
         return userDTOList;
+    }
+
+    @Override
+    public List<UserEntity> getAll() {
+        return userRepository.findAll();
     }
 }

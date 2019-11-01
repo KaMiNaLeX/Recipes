@@ -22,4 +22,6 @@ public interface UserService {
     UserEntity createUser(UserEntity userEntity);
 
     List<UserDTO> findAll();
+
+    List<UserEntity> getAll();
 }
