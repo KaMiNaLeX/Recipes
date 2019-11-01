@@ -20,8 +20,8 @@ public class UserController {
     UserServiceImpl userService;
 
     @GetMapping("/getAll")
-    public List<UserEntity> getAll() {
-        return userService.getAll();
+    public List<UserEntity> getAll(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return userService.getAll(page, size);
     }
 
     @GetMapping("/")

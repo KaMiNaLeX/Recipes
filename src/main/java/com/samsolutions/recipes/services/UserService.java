@@ -23,5 +23,5 @@ public interface UserService {
 
     List<UserDTO> findAll();
 
-    List<UserEntity> getAll();
+    List<UserEntity> getAll(int page, int size);
 }

@@ -6,6 +6,9 @@ import com.samsolutions.recipes.repositories.UserRepository;
 import com.samsolutions.recipes.services.ModelMapperService;
 import com.samsolutions.recipes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -64,7 +67,10 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
-    public List<UserEntity> getAll() {
-        return userRepository.findAll();
+    public List<UserEntity> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<UserEntity> pageEntity = userRepository.findAll(pageable);
+        List<UserEntity> list = pageEntity.getContent();
+        return list;
     }
 }
