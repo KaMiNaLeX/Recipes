@@ -1,10 +1,10 @@
 https://dbdesigner.page.link/wPXo
 
-## WEEK 3(26h)
+## WEEK 3(24h)
 
 **2019.11.01**
 
-Update Model Mapping, REST API.Learn pagination and sort.Swagger 2. **6h**
+Update Model Mapping, REST API.Learn pagination and sort.Swagger 2. **4h**
 
 **2019.10.31**
 
