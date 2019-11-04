@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    public void removeById(UUID uuid) {
+        UserEntity userEntity = userRepository.getById(uuid);
+        userRepository.delete(userEntity);
+    }
+
+    @Override
     public UserEntity createUser(UserEntity userEntity) {
         UserEntity newUserEntity = new UserEntity();
         newUserEntity.setFirstName(userEntity.getFirstName());
@@ -73,5 +79,17 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         Page<UserEntity> pageEntity = userRepository.findAll(pageable);
         List<UserEntity> list = pageEntity.getContent();
         return list;
+    }
+
+    @Override
+    public UserEntity updateUser(UUID uuid, UserEntity userEntity) {
+        UserEntity user = userRepository.getById(uuid);
+        user.setLogin(userEntity.getLogin());
+        user.setEmail(userEntity.getEmail());
+        user.setFirstName(userEntity.getFirstName());
+        user.setLastName(userEntity.getLastName());
+        user.setPassword(userEntity.getPassword());
+        userRepository.save(user);
+        return user;
     }
 }

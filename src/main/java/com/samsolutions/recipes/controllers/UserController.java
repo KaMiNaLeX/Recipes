@@ -29,7 +29,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping("/id/ {id}")
+    @GetMapping("/id/{id}")
     public UserEntity getById(@PathVariable("id") UUID uuid) {
         return userService.getById(uuid);
     }
@@ -44,8 +44,20 @@ public class UserController {
         userService.removeByLogin(login);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void removeById(@PathVariable("id") UUID uuid) {
+        userService.removeById(uuid);
+    }
+
     @PostMapping("/create")
     public UserEntity createUser(@RequestBody UserEntity userEntity) {
         return userService.createUser(userEntity);
     }
+
+    @PutMapping("/{id}")
+    public UserEntity updateUser(@PathVariable("id") UUID uuid, @RequestBody UserEntity userEntity) {
+        return userService.updateUser(uuid, userEntity);
+    }
+
+
 }

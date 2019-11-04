@@ -19,9 +19,13 @@ public interface UserService {
 
     void removeByLogin(String login);
 
+    void removeById(UUID uuid);
+
     UserEntity createUser(UserEntity userEntity);
 
     List<UserDTO> findAll();
 
     List<UserEntity> getAll(int page, int size);
+
+    UserEntity updateUser(UUID uuid,UserEntity userEntity);
 }
