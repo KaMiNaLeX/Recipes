@@ -1,63 +1,62 @@
 package com.samsolutions.recipes.controllers;
 
-import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.models.UserEntity;
-import com.samsolutions.recipes.services.impl.UserServiceImpl;
+import com.samsolutions.recipes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import javax.validation.Valid;
 import java.util.UUID;
 
 /**
  * @author kaminskiy.alexey
  * @since 2019.10
  */
-@RestController
-@RequestMapping("/api")
+@Controller
+@RequestMapping("/view")
 public class UserController {
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
-    @GetMapping("/getAll")
-    public List<UserEntity> getAll(@RequestParam("page") int page, @RequestParam("size") int size) {
-        return userService.getAll(page, size);
+    @GetMapping("/signup")
+    public String showSignUpForm(UserEntity userEntity) {
+        return "add-user";
     }
 
-    @GetMapping("/")
-    public List<UserDTO> findAll() {
-        return userService.findAll();
+    @PostMapping("/adduser")
+    public String addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "add-user";
+        }
+        userService.addUser(userEntity, result, model);
+        return "index";
     }
 
-    @GetMapping("/id/{id}")
-    public UserEntity getById(@PathVariable("id") UUID uuid) {
-        return userService.getById(uuid);
+    @GetMapping("/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") UUID uuid, Model model) {
+        userService.showUpdateForm(uuid, model);
+        return "update-user";
     }
 
-    @GetMapping("/login/{login}")
-    public UserEntity getByLogin(@PathVariable("login") String login) {
-        return userService.getByLogin(login);
+    @PostMapping("/update/{id}")
+    public String updateUser(@PathVariable("id") UUID uuid, @Valid UserEntity userEntity, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            userEntity.setId(uuid);
+            return "update-user";
+        }
+        userService.updateUser(uuid, userEntity, result, model);
+        return "index";
     }
 
-    @DeleteMapping("/delete/{login}")
-    public void removeByLogin(@PathVariable("login") String login) {
-        userService.removeByLogin(login);
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") UUID uuid, Model model) {
+        userService.deleteUser(uuid, model);
+        return "index";
     }
-
-    @DeleteMapping("/delete/{id}")
-    public void removeById(@PathVariable("id") UUID uuid) {
-        userService.removeById(uuid);
-    }
-
-    @PostMapping("/create")
-    public UserEntity createUser(@RequestBody UserEntity userEntity) {
-        return userService.createUser(userEntity);
-    }
-
-    @PutMapping("/{id}")
-    public UserEntity updateUser(@PathVariable("id") UUID uuid, @RequestBody UserEntity userEntity) {
-        return userService.updateUser(uuid, userEntity);
-    }
-
-
 }

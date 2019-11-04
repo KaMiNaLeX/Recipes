@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form action="#" th:action="@{/view/adduser}" th:object="${userEntity}" method="post">
+    <label for="firstName">FirstName</label>
+    <input type="text" th:field="*{firstName}" id="firstName" placeholder="FirstName"/>
+    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+    <label for="lastName">LastName</label>
+    <input type="text" th:field="*{lastName}" id="lastName" placeholder="LastName"/>
+    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+    <label for="login">Login</label>
+    <input type="text" th:field="*{login}" id="login" placeholder="Login"/>
+    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email" placeholder="Email"/>
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="password"/>
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    <input type="submit" value="Add User"/>
+</form>
+</body>
+</html>

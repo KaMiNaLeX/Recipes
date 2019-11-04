@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.services.impl;
 
 import com.samsolutions.recipes.DTO.UserDTO;
+import com.samsolutions.recipes.exeption.UserNotFoundException;
 import com.samsolutions.recipes.models.UserEntity;
 import com.samsolutions.recipes.repositories.UserRepository;
 import com.samsolutions.recipes.services.ModelMapperService;
@@ -11,7 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -30,12 +34,18 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public UserEntity getById(UUID uuid) {
         UserEntity userEntity = userRepository.getById(uuid);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
+        }
         return userEntity;
     }
 
     @Override
     public UserEntity getByLogin(String login) {
         UserEntity userEntity = userRepository.getByLogin(login);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", login));
+        }
         return userEntity;
     }
 
@@ -43,12 +53,18 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void removeByLogin(String login) {
         UserEntity userEntity = userRepository.getByLogin(login);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", login));
+        }
         userRepository.delete(userEntity);
     }
 
     @Override
     public void removeById(UUID uuid) {
         UserEntity userEntity = userRepository.getById(uuid);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
+        }
         userRepository.delete(userEntity);
     }
 
@@ -84,6 +100,9 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public UserEntity updateUser(UUID uuid, UserEntity userEntity) {
         UserEntity user = userRepository.getById(uuid);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
+        }
         user.setLogin(userEntity.getLogin());
         user.setEmail(userEntity.getEmail());
         user.setFirstName(userEntity.getFirstName());
@@ -91,5 +110,36 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         user.setPassword(userEntity.getPassword());
         userRepository.save(user);
         return user;
+    }
+
+    @Override
+    public void addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
+        userRepository.save(userEntity);
+        model.addAttribute("users", userRepository.findAll());
+    }
+
+    @Override
+    public void showUpdateForm(UUID uuid, Model model) {
+        UserEntity userEntity = userRepository.getById(uuid);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
+        }
+        model.addAttribute("user", userEntity);
+    }
+
+    @Override
+    public void updateUser(UUID uuid, UserEntity userEntity, BindingResult result, Model model) {
+        userRepository.save(userEntity);
+        model.addAttribute("users", userRepository.findAll());
+    }
+
+    @Override
+    public void deleteUser(UUID uuid, Model model) {
+        UserEntity userEntity = userRepository.getById(uuid);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
+        }
+        userRepository.delete(userEntity);
+        model.addAttribute("users", userRepository.findAll());
     }
 }
