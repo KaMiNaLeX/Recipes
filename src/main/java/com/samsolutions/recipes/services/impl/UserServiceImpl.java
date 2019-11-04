@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         if (userEntity == null) {
             throw new UserNotFoundException(String.format("User with id %s not found", uuid));
         }
-        model.addAttribute("user", userEntity);
+        model.addAttribute("userEntity", userEntity);
     }
 
     @Override

@@ -6,15 +6,24 @@
 </head>
 <body>
 <form action="#"
-      th:action="@{/update/{id}(id=${user.id})}"
-      th:object="${user}"
+      th:action="@{/view/update/{id}(id=${userEntity.id})}"
+      th:object="${userEntity}"
       method="post">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Name"/>
-    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <label for="firstName">FirstName</label>
+    <input type="text" th:field="*{firstName}" id="firstName" placeholder="FirstName"/>
+    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+    <label for="lastName">LastName</label>
+    <input type="text" th:field="*{lastName}" id="lastName" placeholder="LastName"/>
+    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+    <label for="login">Login</label>
+    <input type="text" th:field="*{login}" id="login" placeholder="Login"/>
+    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email" placeholder="Email"/>
     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="password"/>
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     <input type="submit" value="Update User"/>
 </form>
 </body>

@@ -12,6 +12,7 @@
         <table>
             <thead>
             <tr>
+                <th>uuid</th>
                 <th>FirstName</th>
                 <th>LastName</th>
                 <th>Login</th>
@@ -21,13 +22,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.firstName}"></td>
-                <td th:text="${user.lastName}"></td>
-                <td th:text="${user.login}"></td>
-                <td th:text="${user.email}"></td>
-                <td><a th:href="@{/view/edit/{id}(id=${user.id})}">Edit</a></td>
-                <td><a th:href="@{/view/delete/{id}(id=${user.id})}">Delete</a></td>
+            <tr th:each="userEntity : ${users}">
+                <td th:text="${userEntity.id}"></td>
+                <td th:text="${userEntity.firstName}"></td>
+                <td th:text="${userEntity.lastName}"></td>
+                <td th:text="${userEntity.login}"></td>
+                <td th:text="${userEntity.email}"></td>
+                <td><a th:href="@{/view/edit/{id}(id=${userEntity.id})}">Edit</a></td>
+                <td><a th:href="@{/view/delete/{id}(id=${userEntity.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
