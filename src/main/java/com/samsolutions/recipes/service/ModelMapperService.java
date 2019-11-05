@@ -1,4 +1,4 @@
-package com.samsolutions.recipes.services;
+package com.samsolutions.recipes.service;
 
 import org.modelmapper.ModelMapper;
 

@@ -1,9 +1,8 @@
-package com.samsolutions.recipes.controllers;
+package com.samsolutions.recipes.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.github.javafaker.Faker;
-import com.samsolutions.recipes.models.UserEntity;
-import com.samsolutions.recipes.repositories.UserRepository;
+import com.samsolutions.recipes.model.UserEntity;
+import com.samsolutions.recipes.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

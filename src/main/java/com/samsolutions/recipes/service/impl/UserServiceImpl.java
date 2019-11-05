@@ -1,11 +1,11 @@
-package com.samsolutions.recipes.services.impl;
+package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.exeption.UserNotFoundException;
-import com.samsolutions.recipes.models.UserEntity;
-import com.samsolutions.recipes.repositories.UserRepository;
-import com.samsolutions.recipes.services.ModelMapperService;
-import com.samsolutions.recipes.services.UserService;
+import com.samsolutions.recipes.model.UserEntity;
+import com.samsolutions.recipes.repository.UserRepository;
+import com.samsolutions.recipes.service.ModelMapperService;
+import com.samsolutions.recipes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

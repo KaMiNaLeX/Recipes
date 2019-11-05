@@ -1,9 +1,8 @@
-package com.samsolutions.recipes.repositories;
+package com.samsolutions.recipes.repository;
 
-import com.samsolutions.recipes.models.UserEntity;
+import com.samsolutions.recipes.model.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

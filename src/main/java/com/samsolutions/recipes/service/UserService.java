@@ -1,7 +1,7 @@
-package com.samsolutions.recipes.services;
+package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.DTO.UserDTO;
-import com.samsolutions.recipes.models.UserEntity;
+import com.samsolutions.recipes.model.UserEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -1,7 +1,7 @@
-package com.samsolutions.recipes.controllers;
+package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.models.UserEntity;
-import com.samsolutions.recipes.services.UserService;
+import com.samsolutions.recipes.model.UserEntity;
+import com.samsolutions.recipes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
