@@ -1,24 +1,37 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<h1 th:text="#{greeting}"></h1>
 <div th:switch="${users}">
-    <h2 th:case="null">No users yet!</h2>
+    <h2 th:case="null" th:text="#{index.noUsers}"></h2>
     <div th:case="*">
-        <h2>Users</h2>
+        <h2 th:text="#{index.users}"></h2>
         <table>
             <thead>
             <tr>
-                <th>uuid</th>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>Login</th>
-                <th>Email</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th th:text="#{index.uui}"></th>
+                <th th:text="#{index.firstName}"></th>
+                <th th:text="#{index.lastName}"></th>
+                <th th:text="#{index.log-in}"></th>
+                <th th:text="#{index.email}"></th>
+                <th th:text="#{index.edit}"></th>
+                <th th:text="#{index.delete}"></th>
             </tr>
             </thead>
             <tbody>
@@ -28,13 +41,19 @@
                 <td th:text="${userEntity.lastName}"></td>
                 <td th:text="${userEntity.login}"></td>
                 <td th:text="${userEntity.email}"></td>
-                <td><a th:href="@{/view/edit/{id}(id=${userEntity.id})}">Edit</a></td>
-                <td><a th:href="@{/view/delete/{id}(id=${userEntity.id})}">Delete</a></td>
+                <td><a th:href="@{/view/edit/{id}(id=${userEntity.id})}" th:text="#{index.edit}"></a></td>
+                <td><a th:href="@{/view/delete/{id}(id=${userEntity.id})}" th:text="#{index.delete}"></a></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a href="/view/signup">Add a new user</a></p>
+    <p><a href="/view/signup" th:text="#{index.addUser}"></a></p>
 </div>
+<span th:text="#{lang.change}"></span>:
+<select id="locales">
+    <option value=""></option>
+    <option value="en" th:text="#{lang.eng}"></option>
+    <option value="ru" th:text="#{lang.ru}"></option>
+</select>
 </body>
 </html>

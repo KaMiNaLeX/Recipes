@@ -1,8 +1,13 @@
 https://dbdesigner.page.link/wPXo
-## WEEK 4(h)
+## WEEK 4(5h)
+
+**2019.11.05**
+
+i18n.Exceptions.
 
 **2019.11.04**
 
+CRUD with Thymeleaf. **5h**
 
 ## WEEK 3(24h)
 

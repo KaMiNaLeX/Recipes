@@ -24,6 +24,11 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/index")
+    public String showIndexPage() {
+        return "index";
+    }
+
     @GetMapping("/signup")
     public String showSignUpForm(UserEntity userEntity) {
         return "add-user";
