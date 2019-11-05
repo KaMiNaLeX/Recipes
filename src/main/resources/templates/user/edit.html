@@ -9,22 +9,22 @@
       th:action="@{/view/update/{id}(id=${userEntity.id})}"
       th:object="${userEntity}"
       method="post">
-    <label for="firstName">FirstName</label>
-    <input type="text" th:field="*{firstName}" id="firstName" placeholder="FirstName"/>
+    <label th:text="#{index.firstName}" for="firstName"></label>
+    <input type="text" th:field="*{firstName}" id="firstName" th:placeholder="#{index.firstName}"/>
     <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-    <label for="lastName">LastName</label>
-    <input type="text" th:field="*{lastName}" id="lastName" placeholder="LastName"/>
+    <label for="lastName" th:text="#{index.lastName}"></label>
+    <input type="text" th:field="*{lastName}" id="lastName" th:placeholder="#{index.lastName}"/>
     <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-    <label for="login">Login</label>
-    <input type="text" th:field="*{login}" id="login" placeholder="Login"/>
+    <label for="login" th:text="#{index.log-in}"></label>
+    <input type="text" th:field="*{login}" id="login" th:placeholder="#{index.log-in}"/>
     <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
-    <label for="email">Email</label>
-    <input type="text" th:field="*{email}" id="email" placeholder="Email"/>
+    <label for="email" th:text="#{index.email}"></label>
+    <input type="text" th:field="*{email}" id="email" th:placeholder="#{index.email}"/>
     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-    <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password" placeholder="password"/>
+    <label for="password" th:text="#{index.pass}"></label>
+    <input type="text" th:field="*{password}" id="password" th:placeholder="#{index.pass}"/>
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    <input type="submit" value="Update User"/>
+    <input type="submit" th:value="#{index.edit}"/>
 </form>
 </body>
 </html>
