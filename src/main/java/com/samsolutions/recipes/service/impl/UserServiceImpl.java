@@ -145,4 +145,9 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         userRepository.delete(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }
+
+    @Override
+    public void all(Model model) {
+        model.addAttribute("users", userRepository.findAll());
+    }
 }

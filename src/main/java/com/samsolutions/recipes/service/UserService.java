@@ -34,6 +34,8 @@ public interface UserService {
 
     void deleteUser(UUID uuid, Model model);
 
+    void all(Model model);
+
     UserEntity createUser(UserEntity userEntity);
 
     List<UserDTO> findAll();

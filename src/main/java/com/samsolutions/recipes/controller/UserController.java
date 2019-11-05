@@ -31,39 +31,44 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/signup")
-    public String showSignUpForm(UserEntity userEntity) {
-        return "add-user";
+    @GetMapping("/users")
+    public String all(Model model) {
+        return "user/list";
     }
 
-    @PostMapping("/adduser")
+    @GetMapping("/signUp")
+    public String showSignUpForm(UserEntity userEntity) {
+        return "user/add";
+    }
+
+    @PostMapping("/addUser")
     public String addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "add-user";
+            return "user/add";
         }
         userService.addUser(userEntity, result, model);
-        return "index";
+        return "user/list";
     }
 
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") UUID uuid, Model model) {
         userService.showUpdateForm(uuid, model);
-        return "update-user";
+        return "user/edit";
     }
 
     @PostMapping("/update/{id}")
     public String updateUser(@PathVariable("id") UUID uuid, @Valid UserEntity userEntity, BindingResult result, Model model) {
         if (result.hasErrors()) {
             userEntity.setId(uuid);
-            return "update-user";
+            return "user/edit";
         }
         userService.updateUser(uuid, userEntity, result, model);
-        return "index";
+        return "user/list";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") UUID uuid, Model model) {
         userService.deleteUser(uuid, model);
-        return "index";
+        return "user/list";
     }
 }

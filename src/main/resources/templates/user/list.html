@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2 th:text="#{index.users}"></h2>
+<table>
+    <thead>
+    <tr>
+        <th th:text="#{index.uui}"></th>
+        <th th:text="#{index.firstName}"></th>
+        <th th:text="#{index.lastName}"></th>
+        <th th:text="#{index.log-in}"></th>
+        <th th:text="#{index.email}"></th>
+        <th th:text="#{index.edit}"></th>
+        <th th:text="#{index.delete}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="userEntity : ${users}">
+        <td th:text="${userEntity.id}"></td>
+        <td th:text="${userEntity.firstName}"></td>
+        <td th:text="${userEntity.lastName}"></td>
+        <td th:text="${userEntity.login}"></td>
+        <td th:text="${userEntity.email}"></td>
+        <td><a th:href="@{/view/edit/{id}(id=${userEntity.id})}" th:text="#{index.edit}"></a></td>
+        <td><a th:href="@{/view/delete/{id}(id=${userEntity.id})}" th:text="#{index.delete}"></a></td>
+    </tr>
+    </tbody>
+</table>
+<p><a href="/view/signUp" th:text="#{index.addUser}"></a></p>
+</body>
+</html>
