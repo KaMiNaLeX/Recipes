@@ -15,6 +15,8 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 /**
+ * User controller to manage users.
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */

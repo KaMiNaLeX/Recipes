@@ -22,6 +22,9 @@ import java.util.UUID;
 
 
 /**
+ * The service has been annotated with @Service so that Spring Boot will detect it and
+ * create an instance of it.
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */

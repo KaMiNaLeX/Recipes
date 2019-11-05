@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * User RestController to manage users.
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */

@@ -6,6 +6,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
+ * Service to map Entity -> DTO
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */

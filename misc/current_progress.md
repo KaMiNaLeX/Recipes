@@ -1,9 +1,9 @@
 https://dbdesigner.page.link/wPXo
-## WEEK 4(5h)
+## WEEK 4(9h)
 
 **2019.11.05**
 
-i18n.Exceptions.
+i18n.Exceptions. **4h**
 
 **2019.11.04**
 

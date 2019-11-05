@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * User service.
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */

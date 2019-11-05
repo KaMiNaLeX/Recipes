@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Custom exception.
+ *
  * @author kaminskiy.alexey
  * @since 2019.11
  */

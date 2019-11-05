@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * User DTO.
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */

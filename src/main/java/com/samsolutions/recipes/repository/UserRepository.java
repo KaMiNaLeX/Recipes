@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 /**
+ * User repository.
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */

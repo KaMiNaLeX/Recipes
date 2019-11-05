@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Controller to create User with random fields.
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
+ * Transaction filter.
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */

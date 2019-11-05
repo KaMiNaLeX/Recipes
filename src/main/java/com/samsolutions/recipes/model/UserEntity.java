@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 /**
+ * A user is defined by uuid; it has a firstName,lastName,email,login,password.
+ *
  * @author kaminskiy.alexey
  * @since 2019.10
  */
