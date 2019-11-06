@@ -31,6 +31,16 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
+
+    @GetMapping("/registration")
+    public String showRegistrationForm() {
+        return "registration";
+    }
+
     @GetMapping("/users")
     public String all(Model model) {
         return "user/list";

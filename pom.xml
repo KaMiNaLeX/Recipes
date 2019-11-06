@@ -32,6 +32,10 @@
             </properties>
             <dependencies>
                 <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-security</artifactId>
+                </dependency>
+                <dependency>
                     <!--https://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html-->
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-thymeleaf</artifactId>

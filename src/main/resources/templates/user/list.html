@@ -6,17 +6,17 @@
 </head>
 <body>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
-<h2 th:text="#{index.users}"></h2>
+<h2 th:text="#{users}"></h2>
 <table>
     <thead>
     <tr>
-        <th th:text="#{index.uui}"></th>
-        <th th:text="#{index.firstName}"></th>
-        <th th:text="#{index.lastName}"></th>
-        <th th:text="#{index.log-in}"></th>
-        <th th:text="#{index.email}"></th>
-        <th th:text="#{index.edit}"></th>
-        <th th:text="#{index.delete}"></th>
+        <th th:text="#{user.uui}"></th>
+        <th th:text="#{user.firstName}"></th>
+        <th th:text="#{user.lastName}"></th>
+        <th th:text="#{user.login}"></th>
+        <th th:text="#{user.email}"></th>
+        <th th:text="#{edit}"></th>
+        <th th:text="#{delete}"></th>
     </tr>
     </thead>
     <tbody>
@@ -27,11 +27,11 @@
         <td th:text="${userEntity.lastName}"></td>
         <td th:text="${userEntity.login}"></td>
         <td th:text="${userEntity.email}"></td>
-        <td><a th:href="@{/view/edit/{id}(id=${userEntity.id})}" th:text="#{index.edit}"></a></td>
-        <td><a th:href="@{/view/delete/{id}(id=${userEntity.id})}" th:text="#{index.delete}"></a></td>
+        <td><a th:href="@{/view/edit/{id}(id=${userEntity.id})}" th:text="#{edit}"></a></td>
+        <td><a th:href="@{/view/delete/{id}(id=${userEntity.id})}" th:text="#{delete}"></a></td>
     </tr>
     </tbody>
 </table>
-<p><a href="/view/signUp" th:text="#{index.addUser}"></a></p>
+<p><a href="/view/signUp" th:text="#{user.add.addUser}"></a></p>
 </body>
 </html>

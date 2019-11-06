@@ -7,22 +7,22 @@
 <body>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
 <form action="#" th:action="@{/view/addUser}" th:object="${userEntity}" method="post">
-    <label th:text="#{index.firstName}" for="firstName"></label>
-    <input type="text" th:field="*{firstName}" id="firstName" th:placeholder="#{index.firstName}"/>
+    <label th:text="#{user.firstName}" for="firstName"></label>
+    <input type="text" th:field="*{firstName}" id="firstName" th:placeholder="#{user.firstName}"/>
     <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-    <label for="lastName" th:text="#{index.lastName}"></label>
-    <input type="text" th:field="*{lastName}" id="lastName" th:placeholder="#{index.lastName}"/>
+    <label for="lastName" th:text="#{user.lastName}"></label>
+    <input type="text" th:field="*{lastName}" id="lastName" th:placeholder="#{user.lastName}"/>
     <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-    <label for="login" th:text="#{index.log-in}"></label>
-    <input type="text" th:field="*{login}" id="login" th:placeholder="#{index.log-in}"/>
+    <label for="login" th:text="#{user.login}"></label>
+    <input type="text" th:field="*{login}" id="login" th:placeholder="#{user.login}"/>
     <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
-    <label for="email" th:text="#{index.email}"></label>
-    <input type="text" th:field="*{email}" id="email" th:placeholder="#{index.email}"/>
+    <label for="email" th:text="#{user.email}"></label>
+    <input type="text" th:field="*{email}" id="email" th:placeholder="#{user.email}"/>
     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-    <label for="password" th:text="#{index.pass}"></label>
-    <input type="text" th:field="*{password}" id="password" th:placeholder="#{index.pass}"/>
+    <label for="password" th:text="#{user.password}"></label>
+    <input type="text" th:field="*{password}" id="password" th:placeholder="#{user.password}"/>
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    <input type="submit" th:value="#{index.addUser}"/>
+    <input type="submit" th:value="#{user.add.addUser}"/>
 </form>
 </body>
 </html>
