@@ -1,10 +1,11 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <body>
+<!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
 <form action="#" th:action="@{/view/addUser}" th:object="${userEntity}" method="post">
     <label th:text="#{index.firstName}" for="firstName"></label>
     <input type="text" th:field="*{firstName}" id="firstName" th:placeholder="#{index.firstName}"/>
