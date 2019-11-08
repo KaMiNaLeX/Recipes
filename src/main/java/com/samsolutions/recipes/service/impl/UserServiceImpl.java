@@ -6,6 +6,7 @@ import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.UserService;
+import com.samsolutions.recipes.service.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -79,6 +80,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         newUserEntity.setEmail(userEntity.getEmail());
         newUserEntity.setLogin(userEntity.getLogin());
         newUserEntity.setPassword(userEntity.getPassword());
+        newUserEntity.setUserRole(UserRole.SIMPLE_USER_ROLE);
         userRepository.save(newUserEntity);
         return newUserEntity;
     }
@@ -111,6 +113,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         user.setFirstName(userEntity.getFirstName());
         user.setLastName(userEntity.getLastName());
         user.setPassword(userEntity.getPassword());
+        user.setUserRole(userEntity.getUserRole());
         userRepository.save(user);
         return user;
     }

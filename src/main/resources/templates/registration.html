@@ -1,56 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registration Form</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <form th:action="@{/view/login}" method="get">
     <button type="Submit" th:text="#{loginPage}"></button>
 </form>
-<div>
-    <!--/*@thymesVar id="user" type="object"*/-->
-    <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
-    <form autocomplete="off" action="#" th:action="@{/registration}"
-          th:object="${userEntity}" method="post">
-        <h2 th:text="#{registrationPage}"></h2>
-        <div>
-            <div>
-                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-                <input type="text" th:field="*{firstName}" th:placeholder="#{user.firstName}"/>
-            </div>
-        </div>
-        <div>
-            <div>
-                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-                <input type="text" th:field="*{lastName}" th:placeholder="#{user.lastName}"/>
-            </div>
-        </div>
-        <div>
-            <div>
-                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-                <input type="text" th:field="*{email}" th:placeholder="#{user.email}"/>
-            </div>
-        </div>
-        <div>
-            <div>
-                <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
-                <input type="text" th:field="*{login}" th:placeholder="#{user.login}"/>
-            </div>
-        </div>
-        <div>
-            <div>
-                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-                <input type="text" th:field="*{password}" th:placeholder="#{user.password}"/>
-            </div>
-        </div>
-        <div>
-            <div>
-                <button type="submit" th:text="#{registerUser}"></button>
-            </div>
-        </div>
-        <!--<span th:utext="${successMessage}"></span>-->
-    </form>
-</div>
+<!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
+<form action="#" th:action="@{/view/addUser}" th:object="${userEntity}" method="post">
+    <label th:text="#{user.firstName}"></label>
+    <input type="text" th:field="*{firstName}" id="firstName" name="firstName" th:placeholder="#{user.firstName}"/>
+    <input type="submit" th:value="#{user.add.addUser}"/>
+</form>
 </body>
 </html>
