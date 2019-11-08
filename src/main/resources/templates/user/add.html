@@ -6,7 +6,7 @@
 </head>
 <body>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
-<form action="#" th:action="@{/view/addUser}" th:object="${userEntity}" method="post">
+<form action="#" th:action="@{/admin/addUser}" th:object="${userEntity}" method="post">
     <label th:text="#{user.firstName}" for="firstName"></label>
     <input type="text" th:field="*{firstName}" id="firstName" th:placeholder="#{user.firstName}"/>
     <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
@@ -22,6 +22,9 @@
     <label for="password" th:text="#{user.password}"></label>
     <input type="text" th:field="*{password}" id="password" th:placeholder="#{user.password}"/>
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    <label for="userRole" th:text="#{userRole}"></label>
+    <input type="text" th:field="*{userRole}" id="userRole" th:placeholder="#{userRole}"/>
+    <span th:if="${#fields.hasErrors('userRole')}" th:errors="*{userRole}"></span>
     <input type="submit" th:value="#{user.add.addUser}"/>
 </form>
 </body>

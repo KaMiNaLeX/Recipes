@@ -22,34 +22,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    /*
     @Value("${spring.queries.users-query}")
     private String usersQuery;
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
-    */
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .jdbcAuthentication()
                 .dataSource(dataSource)
-                //.usersByUsernameQuery(usersQuery)
-                //.authoritiesByUsernameQuery(rolesQuery)
+                .usersByUsernameQuery(usersQuery)
+                .authoritiesByUsernameQuery(rolesQuery)
                 .passwordEncoder(passwordEncoder);
     }
 
+    //todo: need to config
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests().antMatchers("/**").permitAll()
-                .antMatchers("/view/**").hasAuthority("ADMIN_ROLE")
-                .anyRequest().permitAll()
-                .and()
-                .formLogin().loginPage("/login")
-                .permitAll()
-                .loginProcessingUrl("/login").usernameParameter("login").passwordParameter("password")
+        http.
+                authorizeRequests()
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/admin/**").hasAuthority("ADMIN_ROLE").anyRequest()
+                .authenticated().and().csrf().disable().formLogin()
+                .loginPage("/view/login").failureUrl("/login?error=true")
+                .loginProcessingUrl("/login").usernameParameter("username").passwordParameter("password")
                 .and()
                 .logout().logoutUrl("/logout");
     }

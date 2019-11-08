@@ -21,25 +21,10 @@ import java.util.UUID;
  * @since 2019.10
  */
 @Controller
-@RequestMapping("/view")
+@RequestMapping("/admin")
 public class UserController {
     @Autowired
     UserService userService;
-
-    @GetMapping("/index")
-    public String showIndexPage() {
-        return "index";
-    }
-
-    @GetMapping("/login")
-    public String showLoginForm() {
-        return "login";
-    }
-
-    @GetMapping("/registration")
-    public String showRegistrationForm() {
-        return "registration";
-    }
 
     @GetMapping("/users")
     public String all(Model model) {
@@ -81,4 +66,6 @@ public class UserController {
         userService.deleteUser(uuid, model);
         return "user/list";
     }
+
+
 }

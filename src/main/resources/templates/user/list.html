@@ -15,6 +15,7 @@
         <th th:text="#{user.lastName}"></th>
         <th th:text="#{user.login}"></th>
         <th th:text="#{user.email}"></th>
+        <th th:text="#{userRole}"></th>
         <th th:text="#{edit}"></th>
         <th th:text="#{delete}"></th>
     </tr>
@@ -27,11 +28,12 @@
         <td th:text="${userEntity.lastName}"></td>
         <td th:text="${userEntity.login}"></td>
         <td th:text="${userEntity.email}"></td>
-        <td><a th:href="@{/view/edit/{id}(id=${userEntity.id})}" th:text="#{edit}"></a></td>
-        <td><a th:href="@{/view/delete/{id}(id=${userEntity.id})}" th:text="#{delete}"></a></td>
+        <td th:text="${userEntity.userRole}"></td>
+        <td><a th:href="@{/admin/edit/{id}(id=${userEntity.id})}" th:text="#{edit}"></a></td>
+        <td><a th:href="@{/admin/delete/{id}(id=${userEntity.id})}" th:text="#{delete}"></a></td>
     </tr>
     </tbody>
 </table>
-<p><a href="/view/signUp" th:text="#{user.add.addUser}"></a></p>
+<p><a href="/admin/signUp" th:text="#{user.add.addUser}"></a></p>
 </body>
 </html>

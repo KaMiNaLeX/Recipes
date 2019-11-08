@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,7 +34,8 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService, ModelMapperService {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserEntity getById(UUID uuid) {
@@ -79,7 +81,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         newUserEntity.setLastName(userEntity.getLastName());
         newUserEntity.setEmail(userEntity.getEmail());
         newUserEntity.setLogin(userEntity.getLogin());
-        newUserEntity.setPassword(userEntity.getPassword());
+        newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         newUserEntity.setUserRole(UserRole.SIMPLE_USER_ROLE);
         userRepository.save(newUserEntity);
         return newUserEntity;
@@ -112,14 +114,15 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         user.setEmail(userEntity.getEmail());
         user.setFirstName(userEntity.getFirstName());
         user.setLastName(userEntity.getLastName());
-        user.setPassword(userEntity.getPassword());
-        user.setUserRole(userEntity.getUserRole());
+        user.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        user.setUserRole(UserRole.SIMPLE_USER_ROLE);
         userRepository.save(user);
         return user;
     }
 
     @Override
     public void addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userRepository.save(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }
