@@ -16,7 +16,7 @@ import java.util.UUID;
  */
 @Data
 @Entity
-@Table(name = "user_role")
+@Table(name = "role")
 public class RoleEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -25,4 +25,6 @@ public class RoleEntity {
     private UUID id;
     @Column(name = "role")
     private String role;
+    @Column(name = "description")
+    private String description;
 }
