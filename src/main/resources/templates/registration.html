@@ -9,10 +9,22 @@
     <button type="Submit" th:text="#{loginPage}"></button>
 </form>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
-<form action="#" th:action="@{/view/addUser}" th:object="${userEntity}" method="post">
-    <label th:text="#{user.firstName}"></label>
-    <input type="text" th:field="*{firstName}" id="firstName" name="firstName" th:placeholder="#{user.firstName}"/>
-    <BR/>
+<form action="#" th:action="@{/client/registration}" th:object="${userEntity}" method="post">
+    <label th:text="#{user.firstName}" for="firstName"></label>
+    <input type="text" th:field="*{firstName}" id="firstName" th:placeholder="#{user.firstName}"/>
+    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+    <label for="lastName" th:text="#{user.lastName}"></label>
+    <input type="text" th:field="*{lastName}" id="lastName" th:placeholder="#{user.lastName}"/>
+    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+    <label for="login" th:text="#{user.login}"></label>
+    <input type="text" th:field="*{login}" id="login" th:placeholder="#{user.login}"/>
+    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
+    <label for="email" th:text="#{user.email}"></label>
+    <input type="text" th:field="*{email}" id="email" th:placeholder="#{user.email}"/>
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <label for="password" th:text="#{user.password}"></label>
+    <input type="text" th:field="*{password}" id="password" th:placeholder="#{user.password}"/>
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     <input type="submit" th:value="#{user.add.addUser}"/>
 </form>
 </body>
