@@ -12,6 +12,7 @@
 <form action="#" th:action="@{/view/addUser}" th:object="${userEntity}" method="post">
     <label th:text="#{user.firstName}"></label>
     <input type="text" th:field="*{firstName}" id="firstName" name="firstName" th:placeholder="#{user.firstName}"/>
+    <BR/>
     <input type="submit" th:value="#{user.add.addUser}"/>
 </form>
 </body>

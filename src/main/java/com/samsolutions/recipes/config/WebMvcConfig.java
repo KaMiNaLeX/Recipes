@@ -1,4 +1,4 @@
-package com.samsolutions.recipes.service.security;
+package com.samsolutions.recipes.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @since 2019.11
  */
 @Configuration
-public class SecurityBeanConfig {
+public class WebMvcConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {

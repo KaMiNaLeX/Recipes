@@ -15,7 +15,7 @@ import java.util.UUID;
  * @since 2019.10
  */
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, Integer> {
+public interface UserRepository extends CrudRepository<UserEntity, UUID> {
 
     UserEntity getById(UUID uuid);
 

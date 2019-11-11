@@ -2,11 +2,12 @@ package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.exeption.UserNotFoundException;
+import com.samsolutions.recipes.model.RoleEntity;
 import com.samsolutions.recipes.model.UserEntity;
+import com.samsolutions.recipes.repository.RoleRepository;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.UserService;
-import com.samsolutions.recipes.service.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,9 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -34,6 +33,8 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService, ModelMapperService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -82,7 +83,6 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         newUserEntity.setEmail(userEntity.getEmail());
         newUserEntity.setLogin(userEntity.getLogin());
         newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        newUserEntity.setUserRole(UserRole.SIMPLE_USER_ROLE);
         userRepository.save(newUserEntity);
         return newUserEntity;
     }
@@ -115,7 +115,6 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         user.setFirstName(userEntity.getFirstName());
         user.setLastName(userEntity.getLastName());
         user.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        user.setUserRole(UserRole.SIMPLE_USER_ROLE);
         userRepository.save(user);
         return user;
     }

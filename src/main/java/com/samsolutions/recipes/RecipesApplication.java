@@ -3,6 +3,7 @@ package com.samsolutions.recipes;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,7 +20,7 @@ import java.util.Locale;
  * @author kaminskiy.alexey
  * @since 2019.10
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class RecipesApplication implements WebMvcConfigurer {
 
     public static void main(String[] args) {

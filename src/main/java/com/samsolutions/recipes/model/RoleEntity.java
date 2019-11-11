@@ -11,29 +11,18 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 /**
- * A user is defined by uuid; it has a firstName,lastName,email,login,password.
- *
  * @author kaminskiy.alexey
- * @since 2019.10
+ * @since 2019.11
  */
-@Entity
 @Data
-@Table(name = "user")
-public class UserEntity {
+@Entity
+@Table(name = "user_role")
+public class RoleEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
-    @Column
-    private String firstName;
-    @Column
-    private String lastName;
-    @Column
-    private String email;
-    @Column
-    private String login;
-    @Column
-    private String password;
-
+    @Column(name = "role")
+    private String role;
 }
