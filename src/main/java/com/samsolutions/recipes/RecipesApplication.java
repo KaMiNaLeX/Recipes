@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -20,12 +21,14 @@ import java.util.Locale;
  * @author kaminskiy.alexey
  * @since 2019.10
  */
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication()
 public class RecipesApplication implements WebMvcConfigurer {
 
     public static void main(String[] args) {
         SpringApplication.run(RecipesApplication.class, args);
+       
     }
+
 
     @Bean
     public LocaleResolver localeResolver() {
