@@ -83,6 +83,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         newUserEntity.setEmail(userEntity.getEmail());
         newUserEntity.setLogin(userEntity.getLogin());
         newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        RoleEntity userRole = roleRepository.findByRole("VIEWER");
+        newUserEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(userRole)));
         userRepository.save(newUserEntity);
         return newUserEntity;
     }
@@ -115,6 +117,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         user.setFirstName(userEntity.getFirstName());
         user.setLastName(userEntity.getLastName());
         user.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        RoleEntity userRole = roleRepository.findByRole("VIEWER");
+        user.setRoles(new HashSet<RoleEntity>(Arrays.asList(userRole)));
         userRepository.save(user);
         return user;
     }
@@ -122,6 +126,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        RoleEntity userRole = roleRepository.findByRole("VIEWER");
+        userEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(userRole)));
         userRepository.save(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }
@@ -140,7 +146,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         userRepository.save(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }
-
+//todo : need to fix
     @Override
     public void deleteUser(UUID uuid, Model model) {
         UserEntity userEntity = userRepository.getById(uuid);

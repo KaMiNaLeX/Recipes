@@ -28,6 +28,7 @@ public class UserController {
 
     @GetMapping("/users")
     public String all(Model model) {
+        userService.all(model);
         return "user/list";
     }
 

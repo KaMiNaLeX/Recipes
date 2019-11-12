@@ -28,7 +28,7 @@
         <td th:text="${userEntity.lastName}"></td>
         <td th:text="${userEntity.login}"></td>
         <td th:text="${userEntity.email}"></td>
-        <td th:text="${userEntity.userRole}"></td>
+        <td th:text="${userEntity.roles}"></td>
         <td><a th:href="@{/admin/edit/{id}(id=${userEntity.id})}" th:text="#{edit}"></a></td>
         <td><a th:href="@{/admin/delete/{id}(id=${userEntity.id})}" th:text="#{delete}"></a></td>
     </tr>
