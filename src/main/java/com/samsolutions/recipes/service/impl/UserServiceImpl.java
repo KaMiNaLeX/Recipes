@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         newUserEntity.setEmail(userEntity.getEmail());
         newUserEntity.setLogin(userEntity.getLogin());
         newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        RoleEntity userRole = roleRepository.findByRole("VIEWER");
+        RoleEntity userRole = roleRepository.findByName("VIEWER");
         newUserEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(userRole)));
         userRepository.save(newUserEntity);
         return newUserEntity;
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         user.setFirstName(userEntity.getFirstName());
         user.setLastName(userEntity.getLastName());
         user.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        RoleEntity userRole = roleRepository.findByRole("VIEWER");
+        RoleEntity userRole = roleRepository.findByName("VIEWER");
         user.setRoles(new HashSet<RoleEntity>(Arrays.asList(userRole)));
         userRepository.save(user);
         return user;
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        RoleEntity userRole = roleRepository.findByRole("VIEWER");
+        RoleEntity userRole = roleRepository.findByName("VIEWER");
         userEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(userRole)));
         userRepository.save(userEntity);
         model.addAttribute("users", userRepository.findAll());
