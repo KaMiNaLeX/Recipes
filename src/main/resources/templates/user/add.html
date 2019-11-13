@@ -22,9 +22,6 @@
     <label for="password" th:text="#{user.password}"></label>
     <input type="text" th:field="*{password}" id="password" th:placeholder="#{user.password}"/>
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    <label for="userRole" th:text="#{userRole}"></label>
-    <input type="text" th:field="*{userRole}" id="userRole" th:placeholder="#{userRole}"/>
-    <span th:if="${#fields.hasErrors('userRole')}" th:errors="*{userRole}"></span>
     <input type="submit" th:value="#{user.add.addUser}"/>
 </form>
 </body>
