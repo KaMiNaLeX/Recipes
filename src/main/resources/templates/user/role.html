@@ -11,8 +11,6 @@
     <tr>
         <th th:text="#{user.login}"></th>
         <th th:text="#{userRole}"></th>
-        <th th:text="#{role.add}"></th>
-        <th th:text="#{role.delete}"></th>
     </tr>
     </thead>
     <tbody>
@@ -21,10 +19,31 @@
     <tr th:object="${userEntity}">
         <td th:text="${userEntity.login}"></td>
         <td th:text="${userEntity.roles}"></td>
-        <td><a th:href="@{/admin/addRole/{login}(login=${userEntity.login})}" th:text="#{role.add}"></a></td>
-        <td><a th:href="@{/admin/addRole/{login}(login=${userEntity.login})}" th:text="#{role.delete}"></a></td>
     </tr>
     </tbody>
 </table>
+<p><a href="/admin/users" th:text="#{adminPage}"></a></p>
+<!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
+<form action="#"
+      th:object="${userEntity}"
+      th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='ADMIN')}"
+      method="get">
+    <label th:text="#{admin}"></label>
+    <input type="submit" th:value="#{role.add}"/>
+</form>
+<form action="#"
+      th:object="${userEntity}"
+      th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='VIEWER')}"
+      method="get">
+    <label th:text="#{viewer}"></label>
+    <input type="submit" th:value="#{role.add}"/>
+</form>
+<form action="#"
+      th:object="${userEntity}"
+      th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='AUTHOR')}"
+      method="get">
+    <label th:text="#{author}"></label>
+    <input type="submit" th:value="#{role.add}"/>
+</form>
 </body>
 </html>

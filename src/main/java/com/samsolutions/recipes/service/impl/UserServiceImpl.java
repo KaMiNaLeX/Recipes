@@ -173,7 +173,12 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
-    public void addRole(String login, String role) {
+    public void addRole(String login, String role, Model model) {
+        UserEntity userEntity = userRepository.getByLogin(login);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", login));
+        }
         userRepository.addRole(login, role);
+        model.addAttribute("userEntity", userEntity);
     }
 }

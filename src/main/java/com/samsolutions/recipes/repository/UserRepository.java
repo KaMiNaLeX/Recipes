@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -26,9 +27,10 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID> {
 
     Page<UserEntity> findAll(Pageable pageable);
 
+    @Transactional
     @Modifying
     @Query(value = "INSERT INTO USER_ROLE (user_id, role_id) values " +
-            "((select id from USER u where u.login =: LOGIN),(select id from ROLE r where r.role =: ROLE))",
+            "((select id from USER u where u.login=:LOGIN),(select id from ROLE r where r.role=:ROLE))",
             countQuery = "SELECT COUNT(*) FROM USER_ROLE", nativeQuery = true)
     void addRole(@Param("LOGIN") String login, @Param("ROLE") String role);
 
