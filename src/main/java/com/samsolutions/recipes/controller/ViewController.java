@@ -42,8 +42,4 @@ public class ViewController {
         return "registration";
     }
 
-    @GetMapping("/admin")
-    public String showAdminForm() {
-        return "admin";
-    }
 }

@@ -142,11 +142,21 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    public void showEditRoleForm(String login, Model model) {
+        UserEntity userEntity = userRepository.getByLogin(login);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", login));
+        }
+        model.addAttribute("userEntity", userEntity);
+    }
+
+    @Override
     public void updateUser(UUID uuid, UserEntity userEntity, BindingResult result, Model model) {
         userRepository.save(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }
-//todo : need to fix
+
+    //todo : need to fix
     @Override
     public void deleteUser(UUID uuid, Model model) {
         UserEntity userEntity = userRepository.getById(uuid);
@@ -160,5 +170,10 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void all(Model model) {
         model.addAttribute("users", userRepository.findAll());
+    }
+
+    @Override
+    public void addRole(String login, String role) {
+        userRepository.addRole(login, role);
     }
 }

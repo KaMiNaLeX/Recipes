@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2 th:text="#{users}"></h2>
+<table>
+    <thead>
+    <tr>
+        <th th:text="#{user.login}"></th>
+        <th th:text="#{userRole}"></th>
+        <th th:text="#{role.add}"></th>
+        <th th:text="#{role.delete}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="users" type="com.samsolutions.recipes.controller"*/-->
+    <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
+    <tr th:object="${userEntity}">
+        <td th:text="${userEntity.login}"></td>
+        <td th:text="${userEntity.roles}"></td>
+        <td><a th:href="@{/admin/addRole/{login}(login=${userEntity.login})}" th:text="#{role.add}"></a></td>
+        <td><a th:href="@{/admin/addRole/{login}(login=${userEntity.login})}" th:text="#{role.delete}"></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
