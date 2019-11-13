@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-/*
+
         http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
@@ -54,15 +54,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/client/login").failureUrl("/client/login?error=true")
-                .defaultSuccessUrl("/admin/users")
+                .defaultSuccessUrl("/client/index")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
-*/
-
     }
 
     @Override

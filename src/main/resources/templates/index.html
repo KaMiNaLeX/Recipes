@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org.thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -19,5 +20,16 @@
 <form th:action="@{/client/login}" method="get">
     <button type="Submit" th:text="#{loginPage}"></button>
 </form>
+<div sec:authorize="isAuthenticated()">
+    <form th:action="@{/}" method="get">
+        <button type="Submit" th:text="#{user.add.addUser}"></button>
+    </form>
+</div>
+<div sec:authorize="hasAuthority('ADMIN')">
+    <form th:action="@{/admin/users}" method="get">
+        <button type="Submit" th:text="#{adminPage}"></button>
+    </form>
+</div>
+
 </body>
 </html>
