@@ -53,7 +53,8 @@ public class UserController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") UUID uuid, @Valid UserEntity userEntity, BindingResult result, Model model) {
+    public String updateUser(
+            @PathVariable("id") UUID uuid, @Valid UserEntity userEntity, BindingResult result, Model model) {
         if (result.hasErrors()) {
             userEntity.setId(uuid);
             return "user/edit";

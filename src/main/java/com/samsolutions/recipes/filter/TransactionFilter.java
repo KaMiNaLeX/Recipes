@@ -23,7 +23,8 @@ import java.io.IOException;
 @Log4j2
 public class TransactionFilter implements Filter {
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         log.info("Starting a transaction for req : {}", req.getRequestURI());
         filterChain.doFilter(servletRequest, servletResponse);
