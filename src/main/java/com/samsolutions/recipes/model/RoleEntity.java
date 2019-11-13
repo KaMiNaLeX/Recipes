@@ -14,15 +14,11 @@ import java.util.UUID;
  * @author kaminskiy.alexey
  * @since 2019.11
  */
-@Data
 @Entity
+@Data
 @Table(name = "role")
-public class RoleEntity {
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+public class RoleEntity extends BaseEntity {
+
     @Column(name = "role")
     private String role;
     @Column(name = "description")

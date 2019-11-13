@@ -1,6 +1,8 @@
 package com.samsolutions.recipes.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.CascadeType;
@@ -24,12 +26,8 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "user")
-public class UserEntity {
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+public class UserEntity extends BaseEntity {
+
     @Column
     private String firstName;
     @Column

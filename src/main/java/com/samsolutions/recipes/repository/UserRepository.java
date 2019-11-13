@@ -19,9 +19,7 @@ import java.util.UUID;
  * @since 2019.10
  */
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, UUID> {
-
-    UserEntity getById(UUID uuid);
+public interface UserRepository extends CrudRepository<UserEntity, UUID>, BaseRepository<UserEntity> {
 
     UserEntity getByLogin(String login);
 
