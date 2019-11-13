@@ -137,3 +137,25 @@ Servlet Filter implementation class with **@Component** annotation.
 ### @Autowired
 Starting with Spring 2.5, the framework introduced a new style of Dependency Injection driven by @Autowired Annotations. 
 This annotation allows Spring to resolve and inject collaborating beans into your bean.Once annotation injection is enabled, autowiring can be used on properties, setters, and constructors.
+
+### @Query
+**@Query** annotation  — its *value* attribute contains the JPQL or SQL to execute.
+
+### i18n
+Internationalization (i18n) is the process of making your application capable of rendering its text in multiple languages. Localization (l10n) means your application has been coded in such a way that it meets language, cultural, or other requirements of a particular locale. These requirements can include formats for date, time, and currency, as well as symbols, icons, and colors, among many other things. i18n enables l10n.
+
+### Pagination and sorting
+Pagination is often helpful when we have a large dataset and we want to present it to the user in smaller chunks.
+Also, we often need to sort that data by some criteria while paging.
+
+### Swagger
+When creating a REST API, good documentation is instrumental.
+Moreover, every change in the API should be simultaneously described in the reference documentation. Accomplishing this manually is a tedious exercise, so automation of the process was inevitable.
+**@EnableSwagger2** - enable Swagger in Spring Boot.
+
+### Thymeleaf
+**Thymeleaf** is a modern server-side Java template engine for both web and standalone environments.
+
+Thymeleaf's main goal is to bring elegant natural templates to your development workflow — HTML that can be correctly displayed in browsers and also work as static prototypes, allowing for stronger collaboration in development teams.
+
+With modules for Spring Framework, a host of integrations with your favourite tools, and the ability to plug in your own functionality, Thymeleaf is ideal for modern-day HTML5 JVM web development — although there is much more it can do.
