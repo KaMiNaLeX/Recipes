@@ -27,8 +27,29 @@
                 <modelmapper.version>2.3.5</modelmapper.version>
                 <javafaker.version>1.0.1</javafaker.version>
                 <swagger2.version>2.9.2</swagger2.version>
+                <web.bootstrap>4.3.1</web.bootstrap>
+                <web.jquery>3.4.1</web.jquery>
+                <web.fontawesome>5.11.2</web.fontawesome>
             </properties>
             <dependencies>
+                <!-- webjar: bootstrap, fontawesome, jquery dependencies -->
+                <dependency>
+                    <!--https://getbootstrap.com/docs/4.3/getting-started/introduction/-->
+                    <groupId>org.webjars</groupId>
+                    <artifactId>bootstrap</artifactId>
+                    <version>${web.bootstrap}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.webjars</groupId>
+                    <artifactId>jquery</artifactId>
+                    <version>${web.jquery}</version>
+                </dependency>
+                <dependency>
+                    <!--https://fontawesome.com/-->
+                    <groupId>org.webjars</groupId>
+                    <artifactId>font-awesome</artifactId>
+                    <version>${web.fontawesome}</version>
+                </dependency>
                 <dependency>
                     <!--https://github.com/thymeleaf/thymeleaf-extras-springsecurity-->
                     <groupId>org.thymeleaf.extras</groupId>
