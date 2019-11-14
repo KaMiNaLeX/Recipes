@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<table>
+    <thead>
+    <tr>
+        <th th:text="#{user.login}"></th>
+        <th th:text="#{userRole}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="users" type="com.samsolutions.recipes.controller"*/-->
+    <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
+    <tr th:object="${userEntity}">
+        <td th:text="${userEntity.login}"></td>
+        <td th:text="${userEntity.roles}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

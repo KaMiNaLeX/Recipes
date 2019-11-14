@@ -5,14 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF­8"/>
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.11.2/css/all.css}"/>
 </head>
 <body>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
 <h1 th:text="#{greeting}"></h1>
 <div sec:authorize="isAuthenticated()">
-    <h3 sec:authentication="name"></h3>
+    <h3 id="name" sec:authentication="name"></h3>
 </div>
 <span th:text="#{lang.change}"></span>
 <div>
@@ -20,13 +18,13 @@
     <a href="?locale=en" th:text="#{lang.eng}">EN</a>
 </div>
 <form th:action="@{/client/registration}" method="get">
-    <button type="Submit" class="btn btn-primary" th:text="#{registrationPage}"></button>
+    <button type="Submit" th:text="#{registrationPage}"></button>
 </form>
 <form th:action="@{/client/login}" method="get">
     <button type="Submit" th:text="#{loginPage}"></button>
 </form>
 <div sec:authorize="isAuthenticated()">
-    <form th:action="@{/admin/users}" method="get">
+    <form th:action="@{/client/profile/{login}(login=)}" method="get">
         <button type="Submit" th:text="#{profile}"></button>
     </form>
 </div>
@@ -35,8 +33,6 @@
         <button type="Submit" th:text="#{adminPage}"></button>
     </form>
 </div>
-<!-- include javascript in the footer -->
-<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
-<script type="text/javascript" th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
 </body>
 </html>

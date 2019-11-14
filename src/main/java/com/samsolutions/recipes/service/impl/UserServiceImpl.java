@@ -147,6 +147,12 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    public void showProfileForm(String login, Model model) {
+        UserEntity userEntity = userRepository.getByLogin(login);
+        model.addAttribute("userEntity", userEntity);
+    }
+
+    @Override
     public void showEditRoleForm(String login, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
         if (userEntity == null) {
