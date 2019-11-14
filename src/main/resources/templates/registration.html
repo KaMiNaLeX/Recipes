@@ -27,5 +27,10 @@
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     <input type="submit" th:value="#{user.add.addUser}"/>
 </form>
+<span th:text="#{lang.change}"></span>
+<div>
+    <a href="?locale=ru" th:text="#{lang.ru}">RU</a>
+    <a href="?locale=en" th:text="#{lang.eng}">EN</a>
+</div>
 </body>
 </html>

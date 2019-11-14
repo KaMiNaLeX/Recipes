@@ -29,7 +29,13 @@
                 <swagger2.version>2.9.2</swagger2.version>
             </properties>
             <dependencies>
-                <dependency><!--https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/-->
+                <dependency>
+                    <!--https://github.com/thymeleaf/thymeleaf-extras-springsecurity-->
+                    <groupId>org.thymeleaf.extras</groupId>
+                    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+                </dependency>
+                <dependency>
+                    <!--https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/-->
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-security</artifactId>
                 </dependency>

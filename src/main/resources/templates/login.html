@@ -12,9 +12,14 @@
     You have been logged out.
 </div>
 <form th:action="@{/client/login}" method="post">
-    <div><label> Login : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><label th:text="#{user.login}">: <input type="text" name="username"/> </label></div>
+    <div><label th:text="#{user.password}">: <input type="password" name="password"/> </label></div>
     <div><input type="submit" value="Sign In"/></div>
 </form>
+<span th:text="#{lang.change}"></span>
+<div>
+    <a href="?locale=ru" th:text="#{lang.ru}">RU</a>
+    <a href="?locale=en" th:text="#{lang.eng}">EN</a>
+</div>
 </body>
 </html>

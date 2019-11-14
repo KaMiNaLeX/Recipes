@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org.thymeleaf-extras-springsecurity5">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF­8"/>
@@ -9,7 +9,9 @@
 <body>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
 <h1 th:text="#{greeting}"></h1>
-
+<div sec:authorize="isAuthenticated()">
+    <h3 sec:authentication="name"></h3>
+</div>
 <span th:text="#{lang.change}"></span>
 <div>
     <a href="?locale=ru" th:text="#{lang.ru}">RU</a>
@@ -22,8 +24,8 @@
     <button type="Submit" th:text="#{loginPage}"></button>
 </form>
 <div sec:authorize="isAuthenticated()">
-    <form th:action="@{/}" method="get">
-        <button type="Submit" th:text="#{user.add.addUser}"></button>
+    <form th:action="@{/admin/users}" method="get">
+        <button type="Submit" th:text="#{profile}"></button>
     </form>
 </div>
 <div sec:authorize="hasAuthority('ADMIN')">
