@@ -40,6 +40,8 @@ public interface UserService {
 
     void addRole(String login, String role, Model model);
 
+    void deleteRole(String login, String role, Model model);
+
     UserEntity createUser(UserEntity userEntity);
 
     List<UserDTO> findAll();

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -183,6 +184,16 @@ public class UserServiceImpl implements UserService, ModelMapperService {
             throw new UserNotFoundException(String.format("User with id %s not found", login));
         }
         userRepository.addRole(login, role);
+        model.addAttribute("userEntity", userEntity);
+    }
+
+    @Override
+    public void deleteRole(String login, String role, Model model) {
+        UserEntity userEntity = userRepository.getByLogin(login);
+        if (userEntity == null) {
+            throw new UserNotFoundException(String.format("User with id %s not found", login));
+        }
+        userRepository.deleteRole(login, role);
         model.addAttribute("userEntity", userEntity);
     }
 }

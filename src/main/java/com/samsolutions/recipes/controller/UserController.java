@@ -80,4 +80,10 @@ public class UserController {
         userService.addRole(login, role, model);
         return "user/role";
     }
+
+    @GetMapping("deleteRole/{login}/{role}")
+    public String deleteRole(@PathVariable("login") String login, @PathVariable("role") String role, Model model) {
+        userService.deleteRole(login, role, model);
+        return "user/role";
+    }
 }

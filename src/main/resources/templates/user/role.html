@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<h2 th:text="#{users}"></h2>
+<h2 th:text="#{managerRoles}"></h2>
 <table>
     <thead>
     <tr>
@@ -22,28 +22,78 @@
     </tr>
     </tbody>
 </table>
-<p><a href="/admin/users" th:text="#{adminPage}"></a></p>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
-<form action="#"
-      th:object="${userEntity}"
-      th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='ADMIN')}"
-      method="get">
-    <label th:text="#{admin}"></label>
-    <input type="submit" th:value="#{role.add}"/>
-</form>
-<form action="#"
-      th:object="${userEntity}"
-      th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='VIEWER')}"
-      method="get">
-    <label th:text="#{viewer}"></label>
-    <input type="submit" th:value="#{role.add}"/>
-</form>
-<form action="#"
-      th:object="${userEntity}"
-      th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='AUTHOR')}"
-      method="get">
-    <label th:text="#{author}"></label>
-    <input type="submit" th:value="#{role.add}"/>
-</form>
+<h3 th:text="#{roleOperations}"></h3>
+<table>
+    <thead>
+    <tr>
+        <th th:text="#{userRole}"></th>
+        <th th:text="#{role.add}"></th>
+        <th th:text="#{role.delete}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="users" type="com.samsolutions.recipes.controller"*/-->
+    <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
+    <tr th:object="${userEntity}">
+        <td th:text="#{admin}"></td>
+        <td>
+            <form action="#"
+                  th:object="${userEntity}"
+                  th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='ADMIN')}"
+                  method="get">
+                <input type="submit" th:value="#{role.add}"/>
+            </form>
+        </td>
+        <td>
+            <form action="#"
+                  th:object="${userEntity}"
+                  th:action="@{/admin/deleteRole/{login}/{role}(login=${userEntity.login},role='ADMIN')}"
+                  method="get">
+                <input id="delete" type="submit" th:value="#{role.delete}"/>
+            </form>
+        </td>
+    </tr>
+    <tr th:object="${userEntity}">
+        <td th:text="#{author}"></td>
+        <td>
+            <form action="#"
+                  th:object="${userEntity}"
+                  th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='AUTHOR')}"
+                  method="get">
+                <input type="submit" th:value="#{role.add}"/>
+            </form>
+        </td>
+        <td>
+            <form action="#"
+                  th:object="${userEntity}"
+                  th:action="@{/admin/deleteRole/{login}/{role}(login=${userEntity.login},role='AUTHOR')}"
+                  method="get">
+                <input type="submit" th:value="#{role.delete}"/>
+            </form>
+        </td>
+    </tr>
+    <tr th:object="${userEntity}">
+        <td th:text="#{viewer}"></td>
+        <td>
+            <form action="#"
+                  th:object="${userEntity}"
+                  th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='VIEWER')}"
+                  method="get">
+                <input type="submit" th:value="#{role.add}"/>
+            </form>
+        </td>
+        <td>
+            <form action="#"
+                  th:object="${userEntity}"
+                  th:action="@{/admin/deleteRole/{login}/{role}(login=${userEntity.login},role='VIEWER')}"
+                  method="get">
+                <input type="submit" th:value="#{role.delete}"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p><a href="/admin/users" th:text="#{adminPage}"></a></p>
 </body>
 </html>
