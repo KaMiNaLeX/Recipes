@@ -10,7 +10,9 @@ import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.repository.UserRoleRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.UserService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +35,7 @@ import java.util.*;
  * @author kaminskiy.alexey
  * @since 2019.10
  */
+@Log4j2
 @Service
 public class UserServiceImpl implements UserService, ModelMapperService {
     @Autowired
@@ -185,17 +188,16 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
-    @Transactional
     public void addRole(String login, String role, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
         RoleEntity roleEntity = roleRepository.findByName(role);
-        UserRoleEntity userRoleEntity = new UserRoleEntity();
-        userRoleEntity.setUserId(userEntity.getId());
-        userRoleEntity.setRoleId(roleEntity.getId());
-        try {
-            userRoleRepository.save(userRoleEntity);
-        } catch (Exception e) {
-            e.getMessage();
+        UserRoleEntity userRoleEntity = userRoleRepository.findByUserIdAndRoleId(userEntity.getId(), roleEntity.getId());
+        if (userRoleEntity == null) {
+            UserRoleEntity newUserRoleEntity = new UserRoleEntity();
+            newUserRoleEntity.setUserId(userEntity.getId());
+            newUserRoleEntity.setRoleId(roleEntity.getId());
+            userRoleRepository.save(newUserRoleEntity);
+            model.addAttribute("userEntity", userEntity);
         }
         model.addAttribute("userEntity", userEntity);
     }
