@@ -4,8 +4,10 @@ import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.exeption.UserNotFoundException;
 import com.samsolutions.recipes.model.RoleEntity;
 import com.samsolutions.recipes.model.UserEntity;
+import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.RoleRepository;
 import com.samsolutions.recipes.repository.UserRepository;
+import com.samsolutions.recipes.repository.UserRoleRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +17,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.sql.SQLException;
+import java.util.*;
 
 
 /**
@@ -40,6 +39,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -184,12 +185,18 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void addRole(String login, String role, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", login));
+        RoleEntity roleEntity = roleRepository.findByName(role);
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        userRoleEntity.setUserId(userEntity.getId());
+        userRoleEntity.setRoleId(roleEntity.getId());
+        try {
+            userRoleRepository.save(userRoleEntity);
+        } catch (Exception e) {
+            e.getMessage();
         }
-        userRepository.addRole(login, role);
         model.addAttribute("userEntity", userEntity);
     }
 
