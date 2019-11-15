@@ -12,7 +12,6 @@ import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +21,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
 import javax.validation.Valid;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -173,11 +174,10 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     //todo : need to fix
     @Override
+    @Transactional
     public void deleteUser(UUID uuid, Model model) {
+        userRoleRepository.deleteByUserId(uuid);
         UserEntity userEntity = userRepository.getById(uuid);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
-        }
         userRepository.delete(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }

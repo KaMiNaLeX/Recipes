@@ -27,13 +27,6 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID>, BaseRe
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO USER_ROLE (user_id, role_id) values " +
-            "((select id from USER u where u.login=:LOGIN),(select id from ROLE r where r.name=:ROLE))",
-            countQuery = "SELECT COUNT(*) FROM USER_ROLE", nativeQuery = true)
-    void addRole(@Param("LOGIN") String login, @Param("ROLE") String role);
-
-    @Transactional
-    @Modifying
     @Query(value = "DELETE FROM user_role WHERE user_id = (select id from USER u where u.login=:LOGIN) AND " +
             "role_id = (select id from ROLE r where r.name=:ROLE)",
             countQuery = "SELECT COUNT(*) FROM USER_ROLE", nativeQuery = true)
