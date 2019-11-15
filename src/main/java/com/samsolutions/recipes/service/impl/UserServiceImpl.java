@@ -21,10 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
@@ -95,7 +94,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         newUserEntity.setLogin(userEntity.getLogin());
         newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         RoleEntity userRole = roleRepository.findByName("VIEWER");
-        newUserEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(userRole)));
+        newUserEntity.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         userRepository.save(newUserEntity);
         return newUserEntity;
     }
@@ -113,8 +112,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     public List<UserEntity> getAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("login"));
         Page<UserEntity> pageEntity = userRepository.findAll(pageable);
-        List<UserEntity> list = pageEntity.getContent();
-        return list;
+        return pageEntity.getContent();
     }
 
     @Override
@@ -129,16 +127,17 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         user.setLastName(userEntity.getLastName());
         user.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         RoleEntity userRole = roleRepository.findByName("VIEWER");
-        user.setRoles(new HashSet<RoleEntity>(Arrays.asList(userRole)));
+        user.setRoles(new HashSet<RoleEntity>(Collections.singletonList(userRole)));
         userRepository.save(user);
         return user;
     }
 
     @Override
     public void addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
+        userEntity.setId(UUID.randomUUID());
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         RoleEntity userRole = roleRepository.findByName("VIEWER");
-        userEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(userRole)));
+        userEntity.setRoles(new HashSet<RoleEntity>(Collections.singletonList(userRole)));
         userRepository.save(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }
@@ -177,6 +176,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void saveChanges(UUID uuid, UserEntity userEntity, BindingResult result, Model model) {
         //UserEntity userEntity1 = userRepository.getByEmail(userEntity.getEmail());
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userRepository.save(userEntity);
         model.addAttribute("userEntity", userEntity);
     }
