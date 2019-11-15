@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/client")
@@ -19,14 +21,26 @@ public class ViewController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/profile/{login}")
-    public String showProfileForm(@PathVariable("login") String login, Model model) {
-        userService.showProfileForm(login, model);
+    @GetMapping("/profile")
+    public String showProfileForm(Principal principal, Model model) {
+        UUID uuid = userService.getByLogin(principal.getName()).getId();
+        userService.showProfileForm(uuid, model);
+        return "profile";
+    }
+
+    @PostMapping("/profile/save/{id}")
+    public String saveProfile(@PathVariable("id") UUID uuid, @Valid UserEntity userEntity, BindingResult result, Model model) {
+        userService.saveChanges(uuid, userEntity, result, model);
         return "profile";
     }
 
     @GetMapping("/index")
     public String showIndexPage() {
+        return "index";
+    }
+
+    @GetMapping("/")
+    public String showIndex() {
         return "index";
     }
 

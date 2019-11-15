@@ -30,11 +30,13 @@ public interface UserService {
 
     void showUpdateForm(UUID uuid, Model model);
 
-    void showProfileForm(String login, Model model);
+    void showProfileForm(UUID uuid, Model model);
 
     void showEditRoleForm(String login, Model model);
 
     void updateUser(UUID uuid, UserEntity userEntity, BindingResult result, Model model);
+
+    void saveChanges(UUID uuid, UserEntity userEntity, BindingResult result, Model model);
 
     void deleteUser(UUID uuid, Model model);
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
@@ -10,17 +10,42 @@
     <thead>
     <tr>
         <th th:text="#{user.login}"></th>
-        <th th:text="#{userRole}"></th>
+        <th th:text="#{user.firstName}"></th>
+        <th th:text="#{user.lastName}"></th>
+        <th th:text="#{user.email}"></th>
+        <th th:text="#{user.password}"></th>
     </tr>
     </thead>
     <tbody>
     <!--/*@thymesVar id="users" type="com.samsolutions.recipes.controller"*/-->
     <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
-    <tr th:object="${userEntity}">
-        <td th:text="${userEntity.login}"></td>
-        <td th:text="${userEntity.roles}"></td>
+    <form action="#"
+          th:action="@{/client/profile/save/{id}(id=${userEntity.id})}"
+          th:object="${userEntity}"
+          method="post">
+        <tr th:object="${userEntity}">
+            <td><label th:text="${userEntity.login}"></label><input type="text" th:field="*{login}"/>
+            </td>
+            <td><input type="text" th:field="*{firstName}"/></td>
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            <td><input type="text" th:field="*{lastName}"/></td>
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            <td><input type="text" th:field="*{email}"/></td>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            <td><input type="text" th:field="*{password}"/></td>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            <td>
+                <input type="submit" th:value="#{saveChanges}"/>
+            </td>
+    </form>
     </tr>
     </tbody>
 </table>
+<p><a href="/client/index/" th:text="#{homePage}"></a></p>
+<span th:text="#{lang.change}"></span>
+<div>
+    <a href="?locale=ru" th:text="#{lang.ru}">RU</a>
+    <a href="?locale=en" th:text="#{lang.eng}">EN</a>
+</div>
 </body>
 </html>

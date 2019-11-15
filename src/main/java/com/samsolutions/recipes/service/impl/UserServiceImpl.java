@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -152,8 +153,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
-    public void showProfileForm(String login, Model model) {
-        UserEntity userEntity = userRepository.getByLogin(login);
+    public void showProfileForm(UUID uuid, Model model) {
+        UserEntity userEntity = userRepository.getById(uuid);
         model.addAttribute("userEntity", userEntity);
     }
 
@@ -170,6 +171,14 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     public void updateUser(UUID uuid, UserEntity userEntity, BindingResult result, Model model) {
         userRepository.save(userEntity);
         model.addAttribute("users", userRepository.findAll());
+    }
+
+    //todo : need to fix
+    @Override
+    public void saveChanges(UUID uuid, UserEntity userEntity, BindingResult result, Model model) {
+        //UserEntity userEntity1 = userRepository.getByEmail(userEntity.getEmail());
+        userRepository.save(userEntity);
+        model.addAttribute("userEntity", userEntity);
     }
 
     //todo : need to fix

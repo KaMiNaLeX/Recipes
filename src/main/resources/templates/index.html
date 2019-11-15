@@ -24,7 +24,7 @@
     <button type="Submit" th:text="#{loginPage}"></button>
 </form>
 <div sec:authorize="isAuthenticated()">
-    <form th:action="@{/client/profile/{login}(login=)}" method="get">
+    <form  th:action="@{/client/profile}" method="get">
         <button type="Submit" th:text="#{profile}"></button>
     </form>
 </div>
