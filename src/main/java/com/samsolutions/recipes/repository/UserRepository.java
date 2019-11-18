@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.repository;
 
+import com.samsolutions.recipes.DTO.RoleDTO;
 import com.samsolutions.recipes.model.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +37,8 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID>, BaseRe
             countQuery = "SELECT COUNT(*) FROM USER_ROLE", nativeQuery = true)
     void deleteRole(@Param("LOGIN") String login, @Param("ROLE") String role);
 
-    @Query(value = "SELECT name, description"
+    @Query(value = "SELECT r.name as " + RoleDTO.NAME + ","
+            + "r.description as " + RoleDTO.DESCRIPTION
             + " FROM role r "
             + " INNER JOIN user_role ur1 on r.id = ur1.role_id"
             + " INNER JOIN user u on ur1.user_id = u.id WHERE u.login=:LOGIN",

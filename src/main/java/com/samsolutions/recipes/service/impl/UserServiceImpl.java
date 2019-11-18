@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 /**
@@ -171,24 +172,12 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void showEditRoleForm(String login, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        List<Map<String, Object>> list = userRepository.allRoles(login);
-        List<RoleDTO> roleDTOList = new ArrayList<>();
-        RoleDTO roleDTO = new RoleDTO();
-        roleDTOList.add(roleDTO);
-        try {
-            mapListMapToDto(list, roleDTOList, RoleDTO.class);
-        } catch (NoSuchMethodException e) {
-            log.error("allRoles:NoSuchMethodException");
-        } catch (InvocationTargetException e) {
-            log.error("allRoles:InvocationTargetException");
-        } catch (InstantiationException e) {
-            log.error("allRoles:InstantiationException");
-        } catch (IllegalAccessException e) {
-            log.error("allRoles:IllegalAccessException");
-        }
-        //List<UserRoleEntity> userRoleEntityList = userRoleRepository.getByUserId(userEntity.getId());
+        List<Map<String, Object>> results = userRepository.allRoles(login);
+        results.stream().map(RoleDTO::new)
+                .collect(Collectors.toList());
+
         model.addAttribute("userEntity", userEntity);
-        model.addAttribute("userRoles", roleDTOList);
+        model.addAttribute("userRoles", results);
     }
 
     @Override
