@@ -34,7 +34,7 @@ public class UserRestController {
         return userService.getAll(page, size);
     }
 
-    @GetMapping("/")
+    @GetMapping("/d")
     public List<UserDTO> findAll() {
         return userService.findAll();
     }
