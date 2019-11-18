@@ -32,7 +32,7 @@
             <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
             <td><input type="text" th:field="*{email}"/></td>
             <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-            <td><input type="text" th:field="*{password}"/></td>
+            <td><input type="password" th:field="*{password}"/></td>
             <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
             <td>
                 <input type="submit" th:value="#{saveChanges}"/>

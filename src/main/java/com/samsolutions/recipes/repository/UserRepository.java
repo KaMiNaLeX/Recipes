@@ -28,8 +28,6 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID>, BaseRe
 
     Page<UserEntity> findAll(Pageable pageable);
 
-    UserEntity getByEmail(String email);
-
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM user_role WHERE user_id = (select id from USER u where u.login=:LOGIN) AND"

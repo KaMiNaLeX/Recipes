@@ -198,17 +198,17 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     //todo : need to fix
     @Override
     public void saveChanges(UUID uuid, UserEntity userEntity, BindingResult result, Model model) {
-        //UserEntity userEntity1 = userRepository.getByEmail(userEntity.getEmail());
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        userRepository.save(userEntity);
+        UserEntity checkEntity = userRepository.getById(uuid);
+        if (checkEntity.getPassword().equals(userEntity.getPassword())) {
+
+        }
+        updateUser(userEntity, result, model);
         model.addAttribute("userEntity", userEntity);
     }
 
-    //todo : need to fix
     @Override
     public void deleteUser(String login, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        // userRoleRepository.deleteByUserId(userEntity.getId());
         userRepository.delete(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }

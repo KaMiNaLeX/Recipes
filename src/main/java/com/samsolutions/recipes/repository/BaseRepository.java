@@ -13,4 +13,6 @@ import java.util.UUID;
 @NoRepositoryBean
 public interface BaseRepository<T extends BaseEntity> extends JpaRepository<T, UUID> {
     T getById(UUID uuid);
+
+    T removeById(UUID uuid);
 }
