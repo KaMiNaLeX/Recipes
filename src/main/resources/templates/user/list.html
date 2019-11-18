@@ -11,12 +11,10 @@
 <table>
     <thead>
     <tr>
-        <th th:text="#{user.uui}"></th>
         <th th:text="#{user.firstName}"></th>
         <th th:text="#{user.lastName}"></th>
         <th th:text="#{user.login}"></th>
         <th th:text="#{user.email}"></th>
-        <th th:text="#{userRole}"></th>
         <th th:text="#{edit}"></th>
         <th th:text="#{delete}"></th>
         <th th:text="#{role.edit}"></th>
@@ -25,14 +23,12 @@
     <tbody>
     <!--/*@thymesVar id="users" type="com.samsolutions.recipes.controller"*/-->
     <tr th:each="userEntity : ${users}">
-        <td th:text="${userEntity.id}"></td>
         <td th:text="${userEntity.firstName}"></td>
         <td th:text="${userEntity.lastName}"></td>
         <td th:text="${userEntity.login}"></td>
         <td th:text="${userEntity.email}"></td>
-        <td th:text="${userEntity.roles}"></td>
-        <td><a th:href="@{/admin/edit/{id}(id=${userEntity.id})}" th:text="#{edit}"></a></td>
-        <td><a th:href="@{/admin/delete/{id}(id=${userEntity.id})}" th:text="#{delete}"></a></td>
+        <td><a th:href="@{/admin/edit/{login}(login=${userEntity.login})}" th:text="#{edit}"></a></td>
+        <td><a th:href="@{/admin/delete/{login}(login=${userEntity.login})}" th:text="#{delete}"></a></td>
         <td><a th:href="@{/admin/editRole/{login}(login=${userEntity.login})}" th:text="#{role.edit}"></a></td>
     </tr>
     </tbody>

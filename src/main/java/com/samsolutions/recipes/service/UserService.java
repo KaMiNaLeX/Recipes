@@ -28,7 +28,7 @@ public interface UserService {
 
     void addUser(@Valid UserEntity userEntity, BindingResult result, Model model);
 
-    void showUpdateForm(UUID uuid, Model model);
+    void showUpdateForm(String login, Model model);
 
     void showProfileForm(UUID uuid, Model model);
 
@@ -38,7 +38,7 @@ public interface UserService {
 
     void saveChanges(UUID uuid, UserEntity userEntity, BindingResult result, Model model);
 
-    void deleteUser(UUID uuid, Model model);
+    void deleteUser(String login, Model model);
 
     void all(Model model);
 

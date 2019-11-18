@@ -46,9 +46,9 @@ public class UserController {
         return "user/list";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") UUID uuid, Model model) {
-        userService.showUpdateForm(uuid, model);
+    @GetMapping("/edit/{login}")
+    public String showUpdateForm(@PathVariable("login") String login, Model model) {
+        userService.showUpdateForm(login, model);
         return "user/edit";
     }
 
@@ -63,9 +63,9 @@ public class UserController {
         return "user/list";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") UUID uuid, Model model) {
-        userService.deleteUser(uuid, model);
+    @GetMapping("/delete/{login}")
+    public String deleteUser(@PathVariable("login") String login, Model model) {
+        userService.deleteUser(login, model);
         return "user/list";
     }
 

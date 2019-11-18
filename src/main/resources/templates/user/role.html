@@ -9,16 +9,15 @@
 <table>
     <thead>
     <tr>
-        <th th:text="#{user.login}"></th>
         <th th:text="#{userRole}"></th>
     </tr>
     </thead>
     <tbody>
     <!--/*@thymesVar id="users" type="com.samsolutions.recipes.controller"*/-->
     <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
-    <tr th:object="${userEntity}">
-        <td th:text="${userEntity.login}"></td>
-        <td th:text="${userEntity.roles}"></td>
+    <tr th:each="RoleDTO : ${userRoles}">
+        <td th:text="${RoleDTO.name}"></td>
+        <td th:text="${RoleDTO.description}"></td>
     </tr>
     </tbody>
 </table>
@@ -94,6 +93,7 @@
     </tr>
     </tbody>
 </table>
+
 <p><a href="/admin/users" th:text="#{adminPage}"></a></p>
 <span th:text="#{lang.change}"></span>
 <div>

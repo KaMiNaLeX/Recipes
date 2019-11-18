@@ -1,9 +1,16 @@
 package com.samsolutions.recipes.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.List;
 
 /**
  * A user is defined by uuid; it has a firstName,lastName,email,login,password.
@@ -12,7 +19,10 @@ import java.util.Set;
  * @since 2019.10
  */
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
 public class UserEntity extends BaseEntity {
     @Column
@@ -26,15 +36,10 @@ public class UserEntity extends BaseEntity {
     @Column
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<RoleEntity> roles;
-
-    /*
-    @OneToMany
-    private Set<UserRoleEntity> roles;
-    */
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<UserRoleEntity> userRoles;
 
 }

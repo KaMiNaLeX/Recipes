@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.service.impl;
 
+import com.samsolutions.recipes.DTO.RoleDTO;
 import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.exeption.UserNotFoundException;
 import com.samsolutions.recipes.model.RoleEntity;
@@ -21,11 +22,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
 import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -93,8 +95,14 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         newUserEntity.setEmail(userEntity.getEmail());
         newUserEntity.setLogin(userEntity.getLogin());
         newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        RoleEntity userRole = roleRepository.findByName("VIEWER");
-        newUserEntity.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+
+        RoleEntity role = roleRepository.findByName("VIEWER");
+        List<UserRoleEntity> list = new ArrayList<>();
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        userRoleEntity.setRole(role);
+        userRoleEntity.setUser(newUserEntity);
+        list.add(userRoleEntity);
+        newUserEntity.setUserRoles(list);
         userRepository.save(newUserEntity);
         return newUserEntity;
     }
@@ -118,36 +126,39 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public UserEntity updateUser(UUID uuid, UserEntity userEntity) {
         UserEntity user = userRepository.getById(uuid);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
-        }
         user.setLogin(userEntity.getLogin());
         user.setEmail(userEntity.getEmail());
         user.setFirstName(userEntity.getFirstName());
         user.setLastName(userEntity.getLastName());
         user.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        RoleEntity userRole = roleRepository.findByName("VIEWER");
-        user.setRoles(new HashSet<RoleEntity>(Collections.singletonList(userRole)));
+
+        RoleEntity role = roleRepository.findByName("VIEWER");
+        List<UserRoleEntity> list = new ArrayList<>();
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        userRoleEntity.setRole(role);
+        userRoleEntity.setUser(user);
+        list.add(userRoleEntity);
+        user.setUserRoles(list);
         userRepository.save(user);
         return user;
     }
 
     @Override
     public void addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
-        userEntity.setId(UUID.randomUUID());
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        RoleEntity userRole = roleRepository.findByName("VIEWER");
-        userEntity.setRoles(new HashSet<RoleEntity>(Collections.singletonList(userRole)));
         userRepository.save(userEntity);
+
+        RoleEntity role = roleRepository.findByName("VIEWER");
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        userRoleEntity.setUserId(userEntity.getId());
+        userRoleEntity.setRoleId(role.getId());
+        userRoleRepository.save(userRoleEntity);
         model.addAttribute("users", userRepository.findAll());
     }
 
     @Override
-    public void showUpdateForm(UUID uuid, Model model) {
-        UserEntity userEntity = userRepository.getById(uuid);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
-        }
+    public void showUpdateForm(String login, Model model) {
+        UserEntity userEntity = userRepository.getByLogin(login);
         model.addAttribute("userEntity", userEntity);
     }
 
@@ -160,10 +171,24 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void showEditRoleForm(String login, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", login));
+        List<Map<String, Object>> list = userRepository.allRoles(login);
+        List<RoleDTO> roleDTOList = new ArrayList<>();
+        RoleDTO roleDTO = new RoleDTO();
+        roleDTOList.add(roleDTO);
+        try {
+            mapListMapToDto(list, roleDTOList, RoleDTO.class);
+        } catch (NoSuchMethodException e) {
+            log.error("allRoles:NoSuchMethodException");
+        } catch (InvocationTargetException e) {
+            log.error("allRoles:InvocationTargetException");
+        } catch (InstantiationException e) {
+            log.error("allRoles:InstantiationException");
+        } catch (IllegalAccessException e) {
+            log.error("allRoles:IllegalAccessException");
         }
+        //List<UserRoleEntity> userRoleEntityList = userRoleRepository.getByUserId(userEntity.getId());
         model.addAttribute("userEntity", userEntity);
+        model.addAttribute("userRoles", roleDTOList);
     }
 
     @Override
@@ -184,9 +209,9 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     //todo : need to fix
     @Override
     @Transactional
-    public void deleteUser(UUID uuid, Model model) {
-        userRoleRepository.deleteByUserId(uuid);
-        UserEntity userEntity = userRepository.getById(uuid);
+    public void deleteUser(String login, Model model) {
+        UserEntity userEntity = userRepository.getByLogin(login);
+        userRoleRepository.deleteByUserId(userEntity.getId());
         userRepository.delete(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }
@@ -203,6 +228,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         UserRoleEntity userRoleEntity = userRoleRepository.findByUserIdAndRoleId(userEntity.getId(), roleEntity.getId());
         if (userRoleEntity == null) {
             UserRoleEntity newUserRoleEntity = new UserRoleEntity();
+            newUserRoleEntity.setUser(userEntity);
+            newUserRoleEntity.setRole(roleEntity);
             newUserRoleEntity.setUserId(userEntity.getId());
             newUserRoleEntity.setRoleId(roleEntity.getId());
             userRoleRepository.save(newUserRoleEntity);
@@ -214,9 +241,6 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void deleteRole(String login, String role, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", login));
-        }
         userRepository.deleteRole(login, role);
         model.addAttribute("userEntity", userEntity);
     }
