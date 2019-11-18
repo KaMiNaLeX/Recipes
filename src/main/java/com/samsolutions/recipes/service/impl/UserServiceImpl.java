@@ -197,10 +197,9 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     //todo : need to fix
     @Override
-    @Transactional
     public void deleteUser(String login, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        userRoleRepository.deleteByUserId(userEntity.getId());
+       // userRoleRepository.deleteByUserId(userEntity.getId());
         userRepository.delete(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }
@@ -217,12 +216,11 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         UserRoleEntity userRoleEntity = userRoleRepository.findByUserIdAndRoleId(userEntity.getId(), roleEntity.getId());
         if (userRoleEntity == null) {
             UserRoleEntity newUserRoleEntity = new UserRoleEntity();
-            newUserRoleEntity.setUser(userEntity);
-            newUserRoleEntity.setRole(roleEntity);
             newUserRoleEntity.setUserId(userEntity.getId());
             newUserRoleEntity.setRoleId(roleEntity.getId());
             userRoleRepository.save(newUserRoleEntity);
             model.addAttribute("userEntity", userEntity);
+            showEditRoleForm(login, model);
         }
         model.addAttribute("userEntity", userEntity);
     }
@@ -231,6 +229,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     public void deleteRole(String login, String role, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
         userRepository.deleteRole(login, role);
+        showEditRoleForm(login, model);
         model.addAttribute("userEntity", userEntity);
     }
 }

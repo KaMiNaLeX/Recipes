@@ -30,7 +30,7 @@ public class RoleEntity extends BaseEntity {
     private String description;
     @OneToMany(
             mappedBy = "role",
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.REMOVE, CascadeType.REFRESH},
             orphanRemoval = true
     )
     private List<UserRoleEntity> userRoles;

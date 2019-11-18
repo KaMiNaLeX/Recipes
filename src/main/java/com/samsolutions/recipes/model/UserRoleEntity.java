@@ -31,10 +31,10 @@ public class UserRoleEntity {
     private UUID userId;
     @Column(name = "role_id")
     private UUID roleId;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity user;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)
     private RoleEntity role;
 
