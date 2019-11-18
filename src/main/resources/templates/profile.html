@@ -1,46 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th th:text="#{user.login}"></th>
-        <th th:text="#{user.firstName}"></th>
-        <th th:text="#{user.lastName}"></th>
-        <th th:text="#{user.email}"></th>
-        <th th:text="#{user.password}"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <!--/*@thymesVar id="users" type="com.samsolutions.recipes.controller"*/-->
-    <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
-    <form action="#"
-          th:action="@{/client/profile/save/{id}(id=${userEntity.id})}"
-          th:object="${userEntity}"
-          method="post">
-        <tr th:object="${userEntity}">
-            <td><label th:text="${userEntity.login}"></label><input type="text" th:field="*{login}"/>
-            </td>
-            <td><input type="text" th:field="*{firstName}"/></td>
-            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-            <td><input type="text" th:field="*{lastName}"/></td>
-            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-            <td><input type="text" th:field="*{email}"/></td>
-            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-            <td><input type="password" th:field="*{password}"/></td>
-            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-            <td>
-                <input type="submit" th:value="#{saveChanges}"/>
-            </td>
-    </form>
-    </tr>
-    </tbody>
-</table>
+<!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
+<form action="#"
+      th:action="@{/client/save/{id}(id=${userEntity.id})}"
+      th:object="${userEntity}"
+      method="post">
+    <label th:text="#{user.firstName}" for="firstName"></label>
+    <input type="text" th:field="*{firstName}" id="firstName" th:placeholder="#{user.firstName}"/>
+    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+    <label for="lastName" th:text="#{user.lastName}"></label>
+    <input type="text" th:field="*{lastName}" id="lastName" th:placeholder="#{user.lastName}"/>
+    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+    <label for="login" th:text="#{user.login}"></label>
+    <input type="text" readonly th:field="*{login}" id="login" th:placeholder="#{user.login}"/>
+    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
+    <label for="email" th:text="#{user.email}"></label>
+    <input type="text" th:field="*{email}" id="email" th:placeholder="#{user.email}"/>
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <label for="password" th:text="#{user.password}"></label>
+    <input type="password" th:field="*{password}" id="password" th:placeholder="#{user.password}"/>
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    <input type="submit" th:value="#{edit}"/>
+</form>
 <p><a href="/client/index/" th:text="#{homePage}"></a></p>
 <span th:text="#{lang.change}"></span>
 <div>

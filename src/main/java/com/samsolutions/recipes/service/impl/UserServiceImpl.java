@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
             newUserEntity.setFirstName(userEntity.getFirstName());
             newUserEntity.setLastName(userEntity.getLastName());
             newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-            newUserEntity.setLogin(userEntity.getPassword());
+            newUserEntity.setLogin(userEntity.getLogin());
             newUserEntity.setEmail(userEntity.getEmail());
             userRepository.save(newUserEntity);
         } catch (Exception e) {
@@ -197,11 +197,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     //todo : need to fix
     @Override
-    public void saveChanges(UUID uuid, UserEntity userEntity, BindingResult result, Model model) {
-        UserEntity checkEntity = userRepository.getById(uuid);
-        if (checkEntity.getPassword().equals(userEntity.getPassword())) {
-
-        }
+    public void saveChanges(UserEntity userEntity, BindingResult result, Model model) {
         updateUser(userEntity, result, model);
         model.addAttribute("userEntity", userEntity);
     }

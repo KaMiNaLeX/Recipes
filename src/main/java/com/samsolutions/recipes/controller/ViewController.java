@@ -28,13 +28,13 @@ public class ViewController {
         return "profile";
     }
 
-    @PostMapping("/profile/save/{id}")
+    @PostMapping("/save/{id}")
     public String saveProfile(@PathVariable("id") UUID uuid, @Valid UserEntity userEntity, BindingResult result, Model model) {
         if (result.hasErrors()) {
             userEntity.setId(uuid);
             return "profile";
         }
-        userService.saveChanges(uuid, userEntity, result, model);
+        userService.saveChanges(userEntity, result, model);
         return "profile";
     }
 

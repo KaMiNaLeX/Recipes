@@ -36,7 +36,7 @@ public interface UserService {
 
     void updateUser(UserEntity userEntity, BindingResult result, Model model);
 
-    void saveChanges(UUID uuid, UserEntity userEntity, BindingResult result, Model model);
+    void saveChanges(UserEntity userEntity, BindingResult result, Model model);
 
     void deleteUser(String login, Model model);
 
