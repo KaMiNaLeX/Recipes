@@ -19,12 +19,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -182,13 +180,19 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     @Override
     public void updateUser(UserEntity userEntity, BindingResult result, Model model) {
-        UserEntity userEntity1 = userRepository.getByLogin(userEntity.getLogin());
-        UserEntity userEntity2 = userRepository.getByLogin(userEntity.getEmail());
-        if (userEntity1 == null && userEntity2 == null) {
-            userRepository.save(userEntity);
+        try {
+            UserEntity newUserEntity = userRepository.getById(userEntity.getId());
+            newUserEntity.setFirstName(userEntity.getFirstName());
+            newUserEntity.setLastName(userEntity.getLastName());
+            newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+            newUserEntity.setLogin(userEntity.getPassword());
+            newUserEntity.setEmail(userEntity.getEmail());
+            userRepository.save(newUserEntity);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
             model.addAttribute("users", userRepository.findAll());
         }
-        model.addAttribute("users", userRepository.findAll());
     }
 
     //todo : need to fix

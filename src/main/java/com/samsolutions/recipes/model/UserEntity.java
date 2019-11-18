@@ -5,11 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -37,7 +33,7 @@ public class UserEntity extends BaseEntity {
     private String password;
 
     @OneToMany(mappedBy = "user",
-            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
             orphanRemoval = true
     )
     private List<UserRoleEntity> userRoles;
