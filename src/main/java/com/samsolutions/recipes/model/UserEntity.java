@@ -37,7 +37,7 @@ public class UserEntity extends BaseEntity {
     private String password;
 
     @OneToMany(mappedBy = "user",
-            cascade = {CascadeType.REMOVE, CascadeType.PERSIST},
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
             orphanRemoval = true
     )
     private List<UserRoleEntity> userRoles;

@@ -59,7 +59,7 @@ public class UserController {
             userEntity.setId(uuid);
             return "user/edit";
         }
-        userService.updateUser(uuid, userEntity, result, model);
+        userService.updateUser(userEntity, result, model);
         return "user/list";
     }
 

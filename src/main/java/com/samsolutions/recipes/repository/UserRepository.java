@@ -45,4 +45,5 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID>, BaseRe
             countQuery = "SELECT COUNT(*) FROM USER", nativeQuery = true)
     List<Map<String, Object>> allRoles(@Param("LOGIN") String login);
 
+
 }

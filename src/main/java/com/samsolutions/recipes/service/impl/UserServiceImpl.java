@@ -181,8 +181,13 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
-    public void updateUser(UUID uuid, UserEntity userEntity, BindingResult result, Model model) {
-        userRepository.save(userEntity);
+    public void updateUser(UserEntity userEntity, BindingResult result, Model model) {
+        UserEntity userEntity1 = userRepository.getByLogin(userEntity.getLogin());
+        UserEntity userEntity2 = userRepository.getByLogin(userEntity.getEmail());
+        if (userEntity1 == null && userEntity2 == null) {
+            userRepository.save(userEntity);
+            model.addAttribute("users", userRepository.findAll());
+        }
         model.addAttribute("users", userRepository.findAll());
     }
 
@@ -199,7 +204,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void deleteUser(String login, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
-       // userRoleRepository.deleteByUserId(userEntity.getId());
+        // userRoleRepository.deleteByUserId(userEntity.getId());
         userRepository.delete(userEntity);
         model.addAttribute("users", userRepository.findAll());
     }

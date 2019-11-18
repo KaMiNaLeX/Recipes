@@ -34,7 +34,7 @@ public interface UserService {
 
     void showEditRoleForm(String login, Model model);
 
-    void updateUser(UUID uuid, UserEntity userEntity, BindingResult result, Model model);
+    void updateUser(UserEntity userEntity, BindingResult result, Model model);
 
     void saveChanges(UUID uuid, UserEntity userEntity, BindingResult result, Model model);
 
