@@ -14,22 +14,27 @@
     <div sec:authorize="isAuthenticated()">
         <h3 id="name" sec:authentication="name"></h3>
     </div>
+    <br/>
     <form th:action="@{/client/registration}" method="get">
         <button class="btn btn-primary" type="Submit" th:text="#{registrationPage}"></button>
     </form>
+    <br/>
     <form th:action="@{/client/login}" method="get">
         <button class="btn btn-primary" type="Submit" th:text="#{loginPage}"></button>
     </form>
+    <br/>
     <div sec:authorize="isAuthenticated()">
         <form th:action="@{/client/profile}" method="get">
             <button class="btn btn-primary" type="Submit" th:text="#{profile}"></button>
         </form>
     </div>
+    <br/>
     <div sec:authorize="hasAuthority('ADMIN')">
         <form th:action="@{/admin/users}" method="get">
             <button class="btn btn-primary" type="Submit" th:text="#{adminPage}"></button>
         </form>
     </div>
+    <br/>
     <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
     <div>
         <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>

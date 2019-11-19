@@ -6,32 +6,62 @@
     <title>Title</title>
 </head>
 <body>
-<!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
-<form action="#"
-      th:action="@{/admin/update/{id}(id=${userEntity.id})}"
-      th:object="${userEntity}"
-      method="post">
-    <label th:text="#{user.firstName}" for="firstName"></label>
-    <input type="text" th:field="*{firstName}" id="firstName" th:placeholder="#{user.firstName}"/>
-    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-    <label for="lastName" th:text="#{user.lastName}"></label>
-    <input type="text" th:field="*{lastName}" id="lastName" th:placeholder="#{user.lastName}"/>
-    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-    <label for="login" th:text="#{user.login}"></label>
-    <input type="text" th:field="*{login}" id="login" th:placeholder="#{user.login}"/>
-    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
-    <label for="email" th:text="#{user.email}"></label>
-    <input type="text" th:field="*{email}" id="email" th:placeholder="#{user.email}"/>
-    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-    <label for="password" th:text="#{user.password}"></label>
-    <input type="password" th:field="*{password}" id="password" th:placeholder="#{user.password}"/>
-    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    <input type="submit" th:value="#{edit}"/>
-</form>
-<span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
-<div>
-    <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>
-    <a class="badge badge-dark" href="?locale=en" th:text="#{lang.eng}">EN</a>
+<div class="container-fluid">
+    <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
+    <form action="#"
+          th:action="@{/admin/update/{id}(id=${userEntity.id})}"
+          th:object="${userEntity}"
+          method="post">
+        <div class="form-group row">
+            <label th:text="#{user.firstName}" class="col-sm-2 col-form-label" for="firstName"></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{firstName}" id="firstName"
+                       th:placeholder="#{user.firstName}"/>
+            </div>
+        </div>
+        <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('firstName')}"
+              th:errors="*{firstName}"></span>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="lastName" th:text="#{user.lastName}"></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{lastName}" id="lastName"
+                       th:placeholder="#{user.lastName}"/>
+            </div>
+        </div>
+        <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('lastName')}"
+              th:errors="*{lastName}"></span>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="login" th:text="#{user.login}"></label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" th:field="*{login}" id="login"
+                       th:placeholder="#{user.login}"/>
+            </div>
+        </div>
+        <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="email" th:text="#{user.email}"></label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" th:field="*{email}" id="email" th:placeholder="#{user.email}"/>
+            </div>
+        </div>
+        <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="password" th:text="#{user.password}"></label>
+            <div class="col-sm-10">
+                <input class="form-control" type="password" th:field="*{password}" id="password"
+                       th:placeholder="#{user.password}"/>
+            </div>
+        </div>
+        <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}"></span>
+        <input class="btn btn-primary" type="submit" th:value="#{saveChanges}"/>
+    </form>
+    <p><a class="badge badge-light" href="/admin/users" th:text="#{adminPage}"></a></p>
+    <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
+    <div>
+        <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>
+        <a class="badge badge-dark" href="?locale=en" th:text="#{lang.eng}">EN</a>
+    </div>
 </div>
 </body>
 </html>

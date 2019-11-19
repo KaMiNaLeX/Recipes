@@ -54,7 +54,7 @@
         </div>
         <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('password')}"
               th:errors="*{password}"></span>
-        <input class="btn btn-primary" type="submit" th:value="#{edit}"/>
+        <input class="btn btn-primary" type="submit" th:value="#{saveChanges}"/>
     </form>
     <p><a href="/client/index/" class="badge badge-light" th:text="#{homePage}"></a></p>
     <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>

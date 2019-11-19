@@ -88,22 +88,20 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     @Override
     public UserEntity createUser(UserEntity userEntity) {
-        UserEntity newUserEntity = new UserEntity();
-        newUserEntity.setFirstName(userEntity.getFirstName());
-        newUserEntity.setLastName(userEntity.getLastName());
-        newUserEntity.setEmail(userEntity.getEmail());
-        newUserEntity.setLogin(userEntity.getLogin());
-        newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        try {
+            userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+            userRepository.save(userEntity);
 
-        RoleEntity role = roleRepository.findByName("VIEWER");
-        List<UserRoleEntity> list = new ArrayList<>();
-        UserRoleEntity userRoleEntity = new UserRoleEntity();
-        userRoleEntity.setRole(role);
-        userRoleEntity.setUser(newUserEntity);
-        list.add(userRoleEntity);
-        newUserEntity.setUserRoles(list);
-        userRepository.save(newUserEntity);
-        return newUserEntity;
+            RoleEntity role = roleRepository.findByName("VIEWER");
+            UserRoleEntity userRoleEntity = new UserRoleEntity();
+            userRoleEntity.setUserId(userEntity.getId());
+            userRoleEntity.setRoleId(role.getId());
+            userRoleRepository.save(userRoleEntity);
+            return userEntity;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return null;
     }
 
     @Override
@@ -124,35 +122,38 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     @Override
     public UserEntity updateUser(UUID uuid, UserEntity userEntity) {
-        UserEntity user = userRepository.getById(uuid);
-        user.setLogin(userEntity.getLogin());
-        user.setEmail(userEntity.getEmail());
-        user.setFirstName(userEntity.getFirstName());
-        user.setLastName(userEntity.getLastName());
-        user.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        try {
+            UserEntity newUserEntity = userRepository.getById(uuid);
+            newUserEntity.setFirstName(userEntity.getFirstName());
+            newUserEntity.setLastName(userEntity.getLastName());
+            newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+            newUserEntity.setLogin(userEntity.getLogin());
+            newUserEntity.setEmail(userEntity.getEmail());
+            userRepository.save(newUserEntity);
+            return newUserEntity;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
 
-        RoleEntity role = roleRepository.findByName("VIEWER");
-        List<UserRoleEntity> list = new ArrayList<>();
-        UserRoleEntity userRoleEntity = new UserRoleEntity();
-        userRoleEntity.setRole(role);
-        userRoleEntity.setUser(user);
-        list.add(userRoleEntity);
-        user.setUserRoles(list);
-        userRepository.save(user);
-        return user;
     }
 
     @Override
     public void addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        userRepository.save(userEntity);
+        try {
+            userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+            userRepository.save(userEntity);
 
-        RoleEntity role = roleRepository.findByName("VIEWER");
-        UserRoleEntity userRoleEntity = new UserRoleEntity();
-        userRoleEntity.setUserId(userEntity.getId());
-        userRoleEntity.setRoleId(role.getId());
-        userRoleRepository.save(userRoleEntity);
-        model.addAttribute("users", userRepository.findAll());
+            RoleEntity role = roleRepository.findByName("VIEWER");
+            UserRoleEntity userRoleEntity = new UserRoleEntity();
+            userRoleEntity.setUserId(userEntity.getId());
+            userRoleEntity.setRoleId(role.getId());
+            userRoleRepository.save(userRoleEntity);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            model.addAttribute("users", userRepository.findAll());
+        }
     }
 
     @Override

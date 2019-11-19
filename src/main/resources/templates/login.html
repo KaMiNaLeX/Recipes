@@ -6,28 +6,34 @@
 </head>
 <body>
 <div class="container">
-<div th:if="${param.error}">
-    Invalid login and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/client/login}" method="post">
-    <div class="form-group">
-        <label for="exampleInputEmail1" th:text="#{user.login}">:</label>
-        <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" type="text" name="username"/>
+    <div th:if="${param.error}">
+        Invalid login and password.
     </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1" th:text="#{user.password}">:</label>
-        <input class="form-control" id="exampleInputPassword1" type="password" name="password"/>
+    <div th:if="${param.logout}">
+        You have been logged out.
     </div>
-    <input class="btn btn-primary" type="submit" value="Sign In"/>
-</form>
-<span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
-<div>
-    <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>
-    <a class="badge badge-dark" href="?locale=en" th:text="#{lang.eng}">EN</a>
-</div>
+    <form th:action="@{/client/login}" method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1" th:text="#{user.login}">:</label>
+            <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" type="text"
+                   name="username"/>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" th:text="#{user.password}">:</label>
+            <input class="form-control" id="exampleInputPassword1" type="password" name="password"/>
+        </div>
+        <input class="btn btn-primary" type="submit" th:value="#{signIn}"/>
+    </form>
+    <br/>
+    <form th:action="@{/client/registration}" method="get">
+        <button class="btn btn-primary" type="Submit" th:text="#{registrationPage}"></button>
+    </form>
+    <p><a class="badge badge-light" href="/" th:text="#{homePage}"></a></p>
+    <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
+    <div>
+        <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>
+        <a class="badge badge-dark" href="?locale=en" th:text="#{lang.eng}">EN</a>
+    </div>
 </div>
 <script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
