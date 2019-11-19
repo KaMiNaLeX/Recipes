@@ -15,12 +15,12 @@
     <form th:action="@{/client/login}" method="post">
         <div class="form-group">
             <label for="exampleInputEmail1" th:text="#{user.login}">:</label>
-            <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" type="text"
-                   name="username"/>
+            <input class="form-control is-valid" id="exampleInputEmail1" aria-describedby="emailHelp" type="text"
+                   name="username" required/>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1" th:text="#{user.password}">:</label>
-            <input class="form-control" id="exampleInputPassword1" type="password" name="password"/>
+            <input class="form-control is-valid" id="exampleInputPassword1" type="password" name="password" required/>
         </div>
         <input class="btn btn-primary" type="submit" th:value="#{signIn}"/>
     </form>

@@ -15,8 +15,8 @@
         <div class="form-group row">
             <label th:text="#{user.firstName}" class="col-sm-2 col-form-label" for="firstName"></label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" th:field="*{firstName}" id="firstName"
-                       th:placeholder="#{user.firstName}"/>
+                <input type="text" class="form-control is-valid" th:field="*{firstName}" id="firstName"
+                       th:placeholder="#{user.firstName}" required/>
             </div>
         </div>
         <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('firstName')}"
@@ -24,8 +24,8 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="lastName" th:text="#{user.lastName}"></label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" th:field="*{lastName}" id="lastName"
-                       th:placeholder="#{user.lastName}"/>
+                <input type="text" class="form-control is-valid" th:field="*{lastName}" id="lastName"
+                       th:placeholder="#{user.lastName}" required/>
             </div>
         </div>
         <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('lastName')}"
@@ -33,23 +33,24 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="login" th:text="#{user.login}"></label>
             <div class="col-sm-10">
-                <input class="form-control" type="text" th:field="*{login}" id="login"
-                       th:placeholder="#{user.login}"/>
+                <input class="form-control is-valid" type="text" th:field="*{login}" id="login"
+                       th:placeholder="#{user.login}" required/>
             </div>
         </div>
         <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="email" th:text="#{user.email}"></label>
             <div class="col-sm-10">
-                <input class="form-control" type="text" th:field="*{email}" id="email" th:placeholder="#{user.email}"/>
+                <input class="form-control is-valid" type="text" th:field="*{email}" id="email"
+                       th:placeholder="#{user.email}" required/>
             </div>
         </div>
         <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="password" th:text="#{user.password}"></label>
             <div class="col-sm-10">
-                <input class="form-control" type="password" th:field="*{password}" id="password"
-                       th:placeholder="#{user.password}"/>
+                <input class="form-control is-valid" type="password" th:field="*{password}" id="password"
+                       th:placeholder="#{user.password}" required/>
             </div>
         </div>
         <span class="badge badge-pill badge-light" th:if="${#fields.hasErrors('password')}"
