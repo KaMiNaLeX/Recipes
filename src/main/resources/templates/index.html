@@ -4,35 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF­8"/>
-
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
     <title>Title</title>
 </head>
 <body>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
 <h1 th:text="#{greeting}"></h1>
-<div sec:authorize="isAuthenticated()">
-    <h3 id="name" sec:authentication="name"></h3>
-</div>
-<span th:text="#{lang.change}"></span>
-<div>
-    <a href="?locale=ru" th:text="#{lang.ru}">RU</a>
-    <a href="?locale=en" th:text="#{lang.eng}">EN</a>
-</div>
-<form th:action="@{/client/registration}" method="get">
-    <button type="Submit" th:text="#{registrationPage}"></button>
-</form>
-<form th:action="@{/client/login}" method="get">
-    <button type="Submit" th:text="#{loginPage}"></button>
-</form>
-<div sec:authorize="isAuthenticated()">
-    <form  th:action="@{/client/profile}" method="get">
-        <button type="Submit" th:text="#{profile}"></button>
+<div class="container-fluid">
+    <div sec:authorize="isAuthenticated()">
+        <h3 id="name" sec:authentication="name"></h3>
+    </div>
+    <form th:action="@{/client/registration}" method="get">
+        <button class="btn btn-primary" type="Submit" th:text="#{registrationPage}"></button>
     </form>
-</div>
-<div sec:authorize="hasAuthority('ADMIN')">
-    <form th:action="@{/admin/users}" method="get">
-        <button type="Submit" th:text="#{adminPage}"></button>
+    <form th:action="@{/client/login}" method="get">
+        <button class="btn btn-primary" type="Submit" th:text="#{loginPage}"></button>
     </form>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/client/profile}" method="get">
+            <button class="btn btn-primary" type="Submit" th:text="#{profile}"></button>
+        </form>
+    </div>
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <form th:action="@{/admin/users}" method="get">
+            <button class="btn btn-primary" type="Submit" th:text="#{adminPage}"></button>
+        </form>
+    </div>
+    <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
+    <div>
+        <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>
+        <a class="badge badge-dark" href="?locale=en" th:text="#{lang.eng}">EN</a>
+    </div>
 </div>
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
 <script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>

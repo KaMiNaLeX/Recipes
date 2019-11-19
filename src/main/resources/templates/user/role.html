@@ -7,10 +7,11 @@
 </head>
 <body>
 <h2 th:text="#{managerRoles}"></h2>
-<table>
-    <thead>
+<table class="table">
+    <thead class="thead-dark">
     <tr>
-        <th th:text="#{userRole}"></th>
+        <th scope="col" th:text="#{userRole}"></th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -24,12 +25,12 @@
 </table>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
 <h3 th:text="#{roleOperations}"></h3>
-<table>
-    <thead>
+<table class="table">
+    <thead class="thead-dark">
     <tr>
-        <th th:text="#{userRole}"></th>
-        <th th:text="#{role.add}"></th>
-        <th th:text="#{role.delete}"></th>
+        <th scope="col" th:text="#{userRole}"></th>
+        <th scope="col" th:text="#{role.add}"></th>
+        <th scope="col" th:text="#{role.delete}"></th>
     </tr>
     </thead>
     <tbody>
@@ -42,7 +43,7 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='ADMIN')}"
                   method="get">
-                <input type="submit" th:value="#{role.add}"/>
+                <input type="submit" class="btn btn-success" th:value="#{role.add}"/>
             </form>
         </td>
         <td>
@@ -50,7 +51,7 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/deleteRole/{login}/{role}(login=${userEntity.login},role='ADMIN')}"
                   method="get">
-                <input id="delete" type="submit" th:value="#{role.delete}"/>
+                <input id="delete" type="submit" class="btn btn-danger" th:value="#{role.delete}"/>
             </form>
         </td>
     </tr>
@@ -61,7 +62,7 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='AUTHOR')}"
                   method="get">
-                <input type="submit" th:value="#{role.add}"/>
+                <input type="submit" class="btn btn-success" th:value="#{role.add}"/>
             </form>
         </td>
         <td>
@@ -69,7 +70,7 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/deleteRole/{login}/{role}(login=${userEntity.login},role='AUTHOR')}"
                   method="get">
-                <input type="submit" th:value="#{role.delete}"/>
+                <input type="submit" class="btn btn-danger" th:value="#{role.delete}"/>
             </form>
         </td>
     </tr>
@@ -80,7 +81,7 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='VIEWER')}"
                   method="get">
-                <input type="submit" th:value="#{role.add}"/>
+                <input type="submit" class="btn btn-success" th:value="#{role.add}"/>
             </form>
         </td>
         <td>
@@ -88,18 +89,18 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/deleteRole/{login}/{role}(login=${userEntity.login},role='VIEWER')}"
                   method="get">
-                <input type="submit" th:value="#{role.delete}"/>
+                <input type="submit" class="btn btn-danger" th:value="#{role.delete}"/>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
 
-<p><a href="/admin/users" th:text="#{adminPage}"></a></p>
-<span th:text="#{lang.change}"></span>
+<p><a class="badge badge-light" href="/admin/users" th:text="#{adminPage}"></a></p>
+<span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
 <div>
-    <a href="?locale=ru" th:text="#{lang.ru}">RU</a>
-    <a href="?locale=en" th:text="#{lang.eng}">EN</a>
+    <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>
+    <a class="badge badge-dark" href="?locale=en" th:text="#{lang.eng}">EN</a>
 </div>
 </body>
 </html>

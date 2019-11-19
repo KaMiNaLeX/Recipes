@@ -5,6 +5,7 @@
     <title>Spring Security Example </title>
 </head>
 <body>
+<div class="container">
 <div th:if="${param.error}">
     Invalid login and password.
 </div>
@@ -22,10 +23,11 @@
     </div>
     <input class="btn btn-primary" type="submit" value="Sign In"/>
 </form>
-<span th:text="#{lang.change}"></span>
+<span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
 <div>
-    <a href="?locale=ru" th:text="#{lang.ru}">RU</a>
-    <a href="?locale=en" th:text="#{lang.eng}">EN</a>
+    <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>
+    <a class="badge badge-dark" href="?locale=en" th:text="#{lang.eng}">EN</a>
+</div>
 </div>
 <script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>

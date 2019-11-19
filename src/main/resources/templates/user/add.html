@@ -25,5 +25,10 @@
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     <input type="submit" class="btn btn-primary" th:value="#{user.add.addUser}"/>
 </form>
+<span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
+<div>
+    <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>
+    <a class="badge badge-dark" href="?locale=en" th:text="#{lang.eng}">EN</a>
+</div>
 </body>
 </html>
