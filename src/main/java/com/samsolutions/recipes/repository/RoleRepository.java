@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.repository;
 
 import com.samsolutions.recipes.model.RoleEntity;
+import com.samsolutions.recipes.model.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,6 @@ import java.util.UUID;
  */
 @Repository
 public interface RoleRepository extends JpaRepository<RoleEntity, UUID>, BaseRepository<RoleEntity> {
-    RoleEntity findByName(String name);
+
+    RoleEntity findByName(RoleName name);
 }

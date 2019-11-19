@@ -4,6 +4,7 @@ import com.samsolutions.recipes.DTO.RoleDTO;
 import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.exeption.UserNotFoundException;
 import com.samsolutions.recipes.model.RoleEntity;
+import com.samsolutions.recipes.model.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.RoleRepository;
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
             userRepository.save(userEntity);
 
-            RoleEntity role = roleRepository.findByName("VIEWER");
+            RoleEntity role = roleRepository.findByName(RoleName.VIEWER);
             UserRoleEntity userRoleEntity = new UserRoleEntity();
             userRoleEntity.setUserId(userEntity.getId());
             userRoleEntity.setRoleId(role.getId());
@@ -144,7 +145,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
             userRepository.save(userEntity);
 
-            RoleEntity role = roleRepository.findByName("VIEWER");
+            RoleEntity role = roleRepository.findByName(RoleName.VIEWER);
             UserRoleEntity userRoleEntity = new UserRoleEntity();
             userRoleEntity.setUserId(userEntity.getId());
             userRoleEntity.setRoleId(role.getId());
@@ -217,7 +218,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public void addRole(String login, String role, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        RoleEntity roleEntity = roleRepository.findByName(role);
+        RoleEntity roleEntity = roleRepository.findByName(RoleName.valueOf(role));
         UserRoleEntity userRoleEntity = userRoleRepository.findByUserIdAndRoleId(userEntity.getId(), roleEntity.getId());
         if (userRoleEntity == null) {
             UserRoleEntity newUserRoleEntity = new UserRoleEntity();
@@ -228,6 +229,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
             prepareModelForEditRoleForm(login, model);
         }
         model.addAttribute("userEntity", userEntity);
+        prepareModelForEditRoleForm(login, model);
     }
 
     @Override

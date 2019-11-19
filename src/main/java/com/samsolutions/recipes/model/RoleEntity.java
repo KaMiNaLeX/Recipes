@@ -5,11 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -24,8 +20,9 @@ import java.util.List;
 @Table(name = "role")
 public class RoleEntity extends BaseEntity {
 
-    @Column(name = "name")
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 6)
+    private RoleName name;
     @Column(name = "description")
     private String description;
     @OneToMany(
