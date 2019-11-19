@@ -32,6 +32,11 @@
                 <web.fontawesome>5.11.2</web.fontawesome>
             </properties>
             <dependencies>
+                <dependency>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                    <version>2.5</version>
+                </dependency>
                 <!-- webjar: bootstrap, fontawesome, jquery dependencies -->
                 <dependency>
                     <!--https://getbootstrap.com/docs/4.3/getting-started/introduction/-->
