@@ -32,7 +32,7 @@ public interface UserService {
 
     void showProfileForm(UUID uuid, Model model);
 
-    void showEditRoleForm(String login, Model model);
+    void prepareModelForEditRoleForm(String login, Model model);
 
     void updateUser(UserEntity userEntity, BindingResult result, Model model);
 

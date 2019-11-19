@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
-    public void showEditRoleForm(String login, Model model) {
+    public void prepareModelForEditRoleForm(String login, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
         List<Map<String, Object>> results = userRepository.allRoles(login);
         results.stream().map(RoleDTO::new)
@@ -196,7 +196,6 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         }
     }
 
-    //todo : need to fix
     @Override
     public void saveChanges(UserEntity userEntity, BindingResult result, Model model) {
         updateUser(userEntity, result, model);
@@ -226,7 +225,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
             newUserRoleEntity.setRoleId(roleEntity.getId());
             userRoleRepository.save(newUserRoleEntity);
             model.addAttribute("userEntity", userEntity);
-            showEditRoleForm(login, model);
+            prepareModelForEditRoleForm(login, model);
         }
         model.addAttribute("userEntity", userEntity);
     }
@@ -235,7 +234,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     public void deleteRole(String login, String role, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
         userRepository.deleteRole(login, role);
-        showEditRoleForm(login, model);
+        prepareModelForEditRoleForm(login, model);
         model.addAttribute("userEntity", userEntity);
     }
 }

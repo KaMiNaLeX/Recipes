@@ -70,8 +70,8 @@ public class UserController {
     }
 
     @GetMapping("/editRole/{login}")
-    public String showEditRoleForm(@PathVariable("login") String login, Model model) {
-        userService.showEditRoleForm(login, model);
+    public String prepareModelForEditRoleForm(@PathVariable("login") String login, Model model) {
+        userService.prepareModelForEditRoleForm(login, model);
         return "user/role";
     }
 
