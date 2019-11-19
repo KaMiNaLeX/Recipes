@@ -29,6 +29,7 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     public CategoryEntity createCategory(CategoryEntity categoryEntity) {
         CategoryEntity newCategory = new CategoryEntity();
         newCategory.setName(categoryEntity.getName());
+        categoryRepository.save(newCategory);
         return newCategory;
     }
 
@@ -36,12 +37,14 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     public CategoryEntity updateCategory(UUID uuid, CategoryEntity categoryEntity) {
         CategoryEntity updateCategory = categoryRepository.getById(uuid);
         updateCategory.setName(categoryEntity.getName());
+        categoryRepository.save(updateCategory);
         return updateCategory;
     }
 
     @Override
     public void removeById(UUID uuid) {
-        categoryRepository.removeById(uuid);
+        CategoryEntity categoryEntity = categoryRepository.getById(uuid);
+        categoryRepository.delete(categoryEntity);
     }
 
     @Override

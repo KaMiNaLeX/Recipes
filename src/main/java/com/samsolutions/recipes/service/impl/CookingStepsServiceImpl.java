@@ -26,7 +26,7 @@ public class CookingStepsServiceImpl implements CookingStepsService {
             CookingStepsEntity step = new CookingStepsEntity();
             InputStream inputStream = this.getClass()
                     .getClassLoader()
-                    .getResourceAsStream("/static/img/test.jpg");
+                    .getResourceAsStream("/static/img/test.png");
             step.setNumber(cookingStepsEntity.getNumber());
             step.setName(cookingStepsEntity.getName());
             step.setDescription(cookingStepsEntity.getDescription());
