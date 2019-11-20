@@ -6,14 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+
 
 /**
  * User repository.
@@ -22,7 +21,7 @@ import java.util.UUID;
  * @since 2019.10
  */
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, UUID>, BaseRepository<UserEntity> {
+public interface UserRepository extends BaseRepository<UserEntity> {
 
     UserEntity getByLogin(String login);
 

@@ -25,14 +25,19 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "user")
 public class UserEntity extends BaseEntity {
+
     @Column
     private String firstName;
+
     @Column
     private String lastName;
+
     @Column
     private String email;
+
     @Column
     private String login;
+
     @Column
     private String password;
 

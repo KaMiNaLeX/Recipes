@@ -29,8 +29,10 @@ public class RoleEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 6)
     private RoleName name;
+
     @Column(name = "description")
     private String description;
+
     @OneToMany(
             mappedBy = "role",
             cascade = {CascadeType.REMOVE, CascadeType.REFRESH},

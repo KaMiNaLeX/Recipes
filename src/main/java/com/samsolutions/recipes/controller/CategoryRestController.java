@@ -22,7 +22,7 @@ import java.util.UUID;
  * @since 2019.11
  */
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 public class CategoryRestController {
 
     @Autowired

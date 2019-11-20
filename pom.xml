@@ -30,12 +30,14 @@
                 <web.bootstrap>4.3.1</web.bootstrap>
                 <web.jquery>3.4.1</web.jquery>
                 <web.fontawesome>5.11.2</web.fontawesome>
+                <io.version>2.6</io.version>
             </properties>
             <dependencies>
                 <dependency>
+                    <!--https://commons.apache.org/proper/commons-io/javadocs/api-2.5/index.html-->
                     <groupId>commons-io</groupId>
                     <artifactId>commons-io</artifactId>
-                    <version>2.5</version>
+                    <version>${io.version}</version>
                 </dependency>
                 <!-- webjar: bootstrap, fontawesome, jquery dependencies -->
                 <dependency>

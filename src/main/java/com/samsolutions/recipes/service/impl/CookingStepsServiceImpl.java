@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author kaminskiy.alexey
@@ -24,16 +23,12 @@ public class CookingStepsServiceImpl implements CookingStepsService {
     public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) {
         try {
             CookingStepsEntity step = new CookingStepsEntity();
-            InputStream inputStream = this.getClass()
-                    .getClassLoader()
-                    .getResourceAsStream("/static/img/test.png");
             step.setNumber(cookingStepsEntity.getNumber());
             step.setName(cookingStepsEntity.getName());
             step.setDescription(cookingStepsEntity.getDescription());
-
-            assert inputStream != null;
-            step.setContent(IOUtils.toByteArray(inputStream));
+            step.setContent(IOUtils.toByteArray(getClass().getResourceAsStream("/static/img/test.png")));
             return step;
+
         } catch (IOException e) {
             e.printStackTrace();
         }

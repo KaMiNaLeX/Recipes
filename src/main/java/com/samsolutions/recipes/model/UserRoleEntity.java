@@ -27,13 +27,17 @@ public class UserRoleEntity {
     @Id
     @Column(name = "created_on")
     private Date createdOn = new Date();
+
     @Column(name = "user_id")
     private UUID userId;
+
     @Column(name = "role_id")
     private UUID roleId;
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity user;
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)
     private RoleEntity role;

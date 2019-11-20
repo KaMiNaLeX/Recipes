@@ -91,12 +91,11 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     public UserEntity createUser(UserEntity userEntity) {
         try {
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-            userRepository.save(userEntity);
+            UserEntity saveUser = userRepository.save(userEntity);
 
-            RoleEntity role = roleRepository.findByName(RoleName.VIEWER);
             UserRoleEntity userRoleEntity = new UserRoleEntity();
-            userRoleEntity.setUserId(userEntity.getId());
-            userRoleEntity.setRoleId(role.getId());
+            userRoleEntity.setUser(saveUser);
+            userRoleEntity.setRole(roleRepository.findByName(RoleName.VIEWER));
             userRoleRepository.save(userRoleEntity);
             return userEntity;
         } catch (Exception e) {
