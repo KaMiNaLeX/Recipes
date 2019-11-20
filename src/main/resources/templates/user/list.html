@@ -6,6 +6,12 @@
     <title>Title</title>
 </head>
 <body>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/" th:text="#{homePage}"></a></li>
+        <li class="breadcrumb-item active" aria-current="page" th:text="#{adminPage}"></li>
+    </ol>
+</nav>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
 <h2 th:text="#{users}"></h2>
 <table class="table">
@@ -41,7 +47,6 @@
     <input type="submit" class="btn btn-success" th:value="#{user.add.addUser}"/>
 </form>
 </p>
-<p><a class="badge badge-light" href="/" th:text="#{homePage}"></a></p>
 <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
 <div>
     <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>

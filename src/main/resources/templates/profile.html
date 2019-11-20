@@ -7,6 +7,12 @@
 </head>
 <body>
 <div class="container-fluid">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/" th:text="#{homePage}"></a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="#{profile}"></li>
+        </ol>
+    </nav>
     <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
     <form action="#"
           th:action="@{/client/save/{id}(id=${userEntity.id})}"
@@ -57,7 +63,6 @@
               th:errors="*{password}"></span>
         <input class="btn btn-primary" type="submit" th:value="#{saveChanges}"/>
     </form>
-    <p><a href="/client/index/" class="badge badge-light" th:text="#{homePage}"></a></p>
     <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
     <div>
         <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>

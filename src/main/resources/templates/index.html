@@ -10,7 +10,11 @@
 <body>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
 <h1 th:text="#{index.message}"></h1>
-<i class="fas fa-pizza-slice"></i>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page" th:text="#{homePage}"></li>
+    </ol>
+</nav>
 <div class="container-fluid">
     <div sec:authorize="isAuthenticated()">
         <h3 id="name" sec:authentication="name"></h3>
@@ -22,6 +26,10 @@
     <br/>
     <form th:action="@{/client/login}" method="get">
         <button class="btn btn-primary" type="Submit" th:text="#{loginPage}"></button>
+    </form>
+    <br/>
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="get">
+        <button class="btn btn-primary" type="Submit" th:text="#{logout}"></button>
     </form>
     <br/>
     <div sec:authorize="isAuthenticated()">

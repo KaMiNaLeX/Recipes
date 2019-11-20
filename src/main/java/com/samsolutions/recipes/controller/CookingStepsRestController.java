@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019.11
  */
 @RestController
-@RequestMapping("/step")
+@RequestMapping("/api/step")
 public class CookingStepsRestController {
     @Autowired
     CookingStepsService cookingStepsService;

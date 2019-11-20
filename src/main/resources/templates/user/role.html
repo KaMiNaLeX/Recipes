@@ -7,6 +7,13 @@
 </head>
 <body>
 <h2 th:text="#{managerRoles}"></h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/" th:text="#{homePage}"></a></li>
+        <li class="breadcrumb-item"><a href="/admin/users" th:text="#{adminPage}"></a></li>
+        <li class="breadcrumb-item active" aria-current="page" th:text="#{role.edit}"></li>
+    </ol>
+</nav>
 <table class="table">
     <thead class="thead-dark">
     <tr>
@@ -95,8 +102,6 @@
     </tr>
     </tbody>
 </table>
-
-<p><a class="badge badge-light" href="/admin/users" th:text="#{adminPage}"></a></p>
 <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
 <div>
     <a class="badge badge-dark" href="?locale=ru" th:text="#{lang.ru}">RU</a>

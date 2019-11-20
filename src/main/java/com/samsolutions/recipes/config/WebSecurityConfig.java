@@ -50,8 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/client/login").permitAll()
                 .antMatchers("/client/registration").permitAll()
                 .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/step/**").permitAll()
-                .antMatchers("/category/**").permitAll()
+                .antMatchers("/api/step/**").permitAll()
+                .antMatchers("/api/category/**").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated()
                 .and()
@@ -64,8 +64,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
-                .and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
+                .and()
+                .exceptionHandling();
     }
 
     @Override
