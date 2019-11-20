@@ -79,6 +79,11 @@
                     <version>${swagger2.version}</version>
                 </dependency>
                 <dependency>
+                    <groupId>io.springfox</groupId>
+                    <artifactId>springfox-swagger-ui</artifactId>
+                    <version>${swagger2.version}</version>
+                </dependency>
+                <dependency>
                     <!--http://javadox.com/com.github.javafaker/javafaker/0.5/com/github/javafaker/Faker.html-->
                     <groupId>com.github.javafaker</groupId>
                     <artifactId>javafaker</artifactId>

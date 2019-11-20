@@ -49,9 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/client/login").permitAll()
                 .antMatchers("/client/registration").permitAll()
-                .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/api/step/**").permitAll()
-                .antMatchers("/api/category/**").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated()
                 .and()
@@ -71,6 +69,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/v2/api-docs",
+                        "/webjars/**");
     }
 }
