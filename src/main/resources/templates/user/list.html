@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.11.2/css/all.css}"/>
     <title>Title</title>
 </head>
 <body>
@@ -45,6 +46,9 @@
       th:action="@{/admin/signUp}"
       method="get">
     <input type="submit" class="btn btn-success" th:value="#{user.add.addUser}"/>
+    <span style="color: forestgreen">
+        <i class="fas fa-user-plus fa-1x"></i>
+    </span>
 </form>
 </p>
 <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>

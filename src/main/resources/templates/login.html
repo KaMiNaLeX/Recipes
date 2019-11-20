@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.11.2/css/all.css}"/>
     <title>Spring Security Example </title>
 </head>
 <body>
@@ -28,11 +29,17 @@
             <label for="exampleInputPassword1" th:text="#{user.password}">:</label>
             <input class="form-control is-valid" id="exampleInputPassword1" type="password" name="password" required/>
         </div>
-        <input class="btn btn-primary" type="submit" th:value="#{signIn}"/>
+        <input class="btn btn-success" type="submit" th:value="#{signIn}"/>
+        <span style="color: forestgreen">
+        <i class="fas fa-sign-in-alt fa-1x"></i>
+        </span>
     </form>
     <br/>
     <form th:action="@{/client/registration}" method="get">
         <button class="btn btn-primary" type="Submit" th:text="#{registrationPage}"></button>
+        <span style="color: dodgerblue">
+            <i class="fas fa-user-plus fa-1x"></i>
+        </span>
     </form>
     <span class="badge badge-pill badge-light" th:text="#{lang.change}"></span>
     <div>

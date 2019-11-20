@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <title>Title</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.11.2/css/all.css}"/>
 </head>
 <body>
 <!--/*@thymesVar id="userEntity" type="com.samsolutions.recipes.model.UserEntity"*/-->
@@ -67,6 +68,9 @@
         <div class="form-group row">
             <div class="col-sm-10">
                 <input type="submit" class="btn btn-success" th:value="#{user.add.addUser}"/>
+                <span style="color: forestgreen">
+                <i class="fas fa-user-plus fa-1x"></i>
+                </span>
             </div>
         </div>
     </form>

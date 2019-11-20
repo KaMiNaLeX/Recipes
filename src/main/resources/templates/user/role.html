@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.11.2/css/all.css}"/>
     <title>Title</title>
 </head>
 <body>
@@ -50,6 +51,9 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='ADMIN')}"
                   method="get">
+                <span style="color: forestgreen;">
+                <i class="fas fa-plus fa-1x"></i>
+                </span>
                 <input type="submit" class="btn btn-success" th:value="#{role.add}"/>
             </form>
         </td>
@@ -58,6 +62,9 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/deleteRole/{login}/{role}(login=${userEntity.login},role='ADMIN')}"
                   method="get">
+                 <span style="color: red;">
+                <i class="fas fa-minus fa-1x"></i>
+                  </span>
                 <input id="delete" type="submit" class="btn btn-danger" th:value="#{role.delete}"/>
             </form>
         </td>
@@ -69,6 +76,9 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='AUTHOR')}"
                   method="get">
+                <span style="color: forestgreen;">
+                <i class="fas fa-plus fa-1x"></i>
+                </span>
                 <input type="submit" class="btn btn-success" th:value="#{role.add}"/>
             </form>
         </td>
@@ -77,6 +87,9 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/deleteRole/{login}/{role}(login=${userEntity.login},role='AUTHOR')}"
                   method="get">
+                 <span style="color: red;">
+                <i class="fas fa-minus fa-1x"></i>
+                </span>
                 <input type="submit" class="btn btn-danger" th:value="#{role.delete}"/>
             </form>
         </td>
@@ -88,6 +101,9 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/addRole/{login}/{role}(login=${userEntity.login},role='VIEWER')}"
                   method="get">
+                <span style="color: forestgreen;">
+                <i class="fas fa-plus fa-1x"></i>
+                </span>
                 <input type="submit" class="btn btn-success" th:value="#{role.add}"/>
             </form>
         </td>
@@ -96,6 +112,9 @@
                   th:object="${userEntity}"
                   th:action="@{/admin/deleteRole/{login}/{role}(login=${userEntity.login},role='VIEWER')}"
                   method="get">
+                <span style="color: red;">
+                <i class="fas fa-minus fa-1x"></i>
+                </span>
                 <input type="submit" class="btn btn-danger" th:value="#{role.delete}"/>
             </form>
         </td>
