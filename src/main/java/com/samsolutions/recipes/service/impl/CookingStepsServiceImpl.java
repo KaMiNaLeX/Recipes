@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author kaminskiy.alexey
@@ -33,5 +35,36 @@ public class CookingStepsServiceImpl implements CookingStepsService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) {
+        CookingStepsEntity updateStep = cookingStepsRepository.getById(id);
+        updateStep.setName(cookingStepsEntity.getName());
+        updateStep.setDescription(cookingStepsEntity.getDescription());
+        updateStep.setNumber(cookingStepsEntity.getNumber());
+        try {
+            updateStep.setContent(IOUtils.toByteArray(getClass().getResourceAsStream("/static/img/test.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        cookingStepsRepository.save(updateStep);
+        return updateStep;
+    }
+
+    @Override
+    public void removeStepById(UUID uuid) {
+        CookingStepsEntity deleteStep = cookingStepsRepository.getById(uuid);
+        cookingStepsRepository.delete(deleteStep);
+    }
+
+    @Override
+    public List<CookingStepsEntity> findAll() {
+        return cookingStepsRepository.findAll();
+    }
+
+    @Override
+    public CookingStepsEntity getById(UUID uuid) {
+        return cookingStepsRepository.getById(uuid);
     }
 }

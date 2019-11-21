@@ -48,7 +48,7 @@ public class CategoryRestController {
         return categoryService.createCategory(categoryEntity);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public CategoryEntity updateCategory(@PathVariable("id") UUID uuid, @RequestBody CategoryEntity categoryEntity) {
         return categoryService.updateCategory(uuid, categoryEntity);
     }
