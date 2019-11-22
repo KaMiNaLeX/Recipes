@@ -24,4 +24,6 @@ public interface CategoryService {
 
     CategoryEntity getById(UUID uuid);
 
+    CategoryEntity getByName(String name);
+
 }

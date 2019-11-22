@@ -61,4 +61,9 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
         return categoryRepository.getById(uuid);
     }
 
+    @Override
+    public CategoryEntity getByName(String name) {
+        return categoryRepository.getByName(name);
+    }
+
 }
