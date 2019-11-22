@@ -5,52 +5,46 @@ import com.samsolutions.recipes.service.CategoryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import java.util.Collections;
-import java.util.List;
 
-import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 /**
  * @author kaminskiy.alexey
  * @since 2019.11
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(CategoryRestController.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(properties = "spring.security.user.password=kamina#")
 public class CategoryRestControllerIT {
 
     @Autowired
-    MockMvc mockMvc;
+    private TestRestTemplate testRestTemplate;
 
     @MockBean
     CategoryService categoryService;
 
     @Test
-    public void givenCategories_whenGetCategories_thenReturnJson() throws Exception {
+    public void shouldReturnListOfCategories() throws Exception {
         CategoryEntity breakfast = new CategoryEntity();
         breakfast.setName("Breakfast");
         breakfast.setDescription("Dishes for breakfast");
         breakfast.setTag("Healthy food,breakfast");
 
-        List<CategoryEntity> allCategories = Collections.singletonList(breakfast);
-
-        given(categoryService.findAll()).willReturn(allCategories);
-
-        mockMvc.perform(get("/api/category/")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect((ResultMatcher) jsonPath("$[0].name", is(breakfast.getName())));
-
+        when(categoryService.findAll()).thenReturn(Collections.singletonList(breakfast)
+        );
+        ResponseEntity<CategoryEntity[]> categories = testRestTemplate
+                .withBasicAuth("kamina", "kamina#")
+                .getForEntity("/api/category/", CategoryEntity[].class);
+        assertThat(categories.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(categories.getBody()).hasSize(1);
     }
 }
