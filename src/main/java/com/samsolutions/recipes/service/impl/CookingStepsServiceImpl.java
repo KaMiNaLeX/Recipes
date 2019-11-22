@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,36 +21,29 @@ public class CookingStepsServiceImpl implements CookingStepsService {
     @Autowired
     CookingStepsRepository cookingStepsRepository;
 
-    //todo: need to fix
     @Override
-    public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) {
-        try {
+    public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
             CookingStepsEntity step = new CookingStepsEntity();
             step.setNumber(cookingStepsEntity.getNumber());
             step.setName(cookingStepsEntity.getName());
             step.setDescription(cookingStepsEntity.getDescription());
-            step.setContent(IOUtils.toByteArray(getClass().getResourceAsStream("/static/img/test.png")));
+            step.setContent(IOUtils.toByteArray(inputStream));
             return step;
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return null;
     }
 
     @Override
-    public CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) {
-        CookingStepsEntity updateStep = cookingStepsRepository.getById(id);
-        updateStep.setName(cookingStepsEntity.getName());
-        updateStep.setDescription(cookingStepsEntity.getDescription());
-        updateStep.setNumber(cookingStepsEntity.getNumber());
-        try {
-            updateStep.setContent(IOUtils.toByteArray(getClass().getResourceAsStream("/static/img/test.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
+    public CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
+            CookingStepsEntity updateStep = cookingStepsRepository.getById(id);
+            updateStep.setName(cookingStepsEntity.getName());
+            updateStep.setDescription(cookingStepsEntity.getDescription());
+            updateStep.setNumber(cookingStepsEntity.getNumber());
+            updateStep.setContent(IOUtils.toByteArray(inputStream));
+            cookingStepsRepository.save(updateStep);
+            return updateStep;
         }
-        cookingStepsRepository.save(updateStep);
-        return updateStep;
     }
 
     @Override

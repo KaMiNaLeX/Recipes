@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class CookingStepsRestController {
     CookingStepsService cookingStepsService;
 
     @PostMapping("/create")
-    public CookingStepsEntity createStep(@RequestBody CookingStepsEntity step) {
+    public CookingStepsEntity createStep(@RequestBody CookingStepsEntity step) throws IOException {
         return cookingStepsService.createStep(step);
     }
 
@@ -46,7 +47,7 @@ public class CookingStepsRestController {
     }
 
     @PutMapping("update/{id}")
-    public CookingStepsEntity updateStep(@PathVariable("id") UUID uuid, CookingStepsEntity step) {
+    public CookingStepsEntity updateStep(@PathVariable("id") UUID uuid, CookingStepsEntity step) throws IOException {
         return cookingStepsService.updateStep(uuid, step);
     }
 }
