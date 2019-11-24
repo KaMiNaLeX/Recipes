@@ -10,11 +10,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collections;
-import java.util.UUID;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -35,32 +33,34 @@ public class CategoryRestControllerIT {
 
     @Test
     public void shouldReturnListOfCategories() throws Exception {
-        CategoryEntity breakfast = new CategoryEntity();
-        breakfast.setName("Breakfast");
-        breakfast.setDescription("Dishes for breakfast");
-        breakfast.setTag("Healthy food,breakfast");
+        CategoryEntity breakfast = new CategoryEntity("Breakfast",
+                "Dishes for breakfast",
+                "Healthy food,breakfast");
 
-        when(categoryService.findAll()).thenReturn(Collections.singletonList(breakfast)
-        );
+        CategoryEntity dinner = new CategoryEntity("Dinner",
+                "Dishes for dinner",
+                "Healthy food,dinner");
+
+        when(categoryService.findAll()).thenReturn(Arrays.asList(breakfast, dinner));
         ResponseEntity<CategoryEntity[]> categories = testRestTemplate
                 .withBasicAuth("kamina", "kamina")
                 .getForEntity("/api/category/", CategoryEntity[].class);
         assertThat(categories.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(categories.getBody()).hasSize(1);
+        assertThat(categories.getBody()).hasSize(2);
     }
 
     //todo: need to fix
     @Test
-    public void shouldReturnOneCategory() throws Exception {
+    public void shouldReturnOneCategoryById() throws Exception {
         CategoryEntity breakfast = new CategoryEntity();
-        breakfast.setId(UUID.randomUUID());
         breakfast.setName("Breakfast");
         breakfast.setDescription("Dishes for breakfast");
         breakfast.setTag("Healthy food,breakfast");
         when(categoryService.getById(breakfast.getId())).thenReturn(breakfast);
         ResponseEntity<CategoryEntity> category = testRestTemplate
                 .withBasicAuth("kamina", "kamina")
-                .getForEntity("/api/category/id/{id}", CategoryEntity.class, breakfast.getId());
+                .getForEntity("/api/category/id/{id}", CategoryEntity.class,
+                        categoryService.getById(breakfast.getId()));
         assertThat(category.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(category.getBody()).isEqualTo(breakfast);
     }
@@ -76,4 +76,5 @@ public class CategoryRestControllerIT {
                 .postForEntity("/api/category/create", breakfast, CategoryEntity.class);
         assertThat(category.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
+
 }

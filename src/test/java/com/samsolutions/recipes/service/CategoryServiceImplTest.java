@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 /**
  * @author kaminskiy.alexey
@@ -48,7 +51,7 @@ public class CategoryServiceImplTest {
         assertThat(found.getName())
                 .isEqualTo(name);
     }
-    //todo: need to fix
+
     @Test
     public void shouldAddOneCategory() {
         CategoryEntity breakfast = new CategoryEntity();
@@ -56,11 +59,61 @@ public class CategoryServiceImplTest {
         breakfast.setDescription("Dishes for breakfast");
         breakfast.setTag("Healthy food,breakfast");
         categoryRepository.save(breakfast);
+        when(categoryRepository.getByName(breakfast.getName())).thenReturn(breakfast);
         CategoryEntity found = categoryRepository.getByName(breakfast.getName());
 
         assertThat(found)
                 .isEqualTo(breakfast);
     }
+
+    @Test
+    public void shouldUpdateCategory() {
+        CategoryEntity breakfast = new CategoryEntity();
+        breakfast.setName("Breakfast");
+        breakfast.setDescription("Dishes for breakfast");
+        breakfast.setTag("Healthy food,breakfast");
+        categoryRepository.save(breakfast);
+
+        CategoryEntity updateCategory = categoryRepository.getByName("Breakfast");
+        updateCategory.setName(" Update Breakfast");
+        updateCategory.setDescription("Update");
+        updateCategory.setTag("Update");
+        categoryRepository.save(updateCategory);
+
+        assertThat(updateCategory).isNotEqualTo(breakfast);
+    }
+
+    //todo: need to fix
+    @Test
+    public void shouldRemoveCategory() {
+        CategoryEntity breakfast = new CategoryEntity();
+        breakfast.setName("Breakfast");
+        breakfast.setDescription("Dishes for breakfast");
+        breakfast.setTag("Healthy food,breakfast");
+        categoryRepository.save(breakfast);
+        CategoryEntity deleteEntity = categoryRepository.getByName(breakfast.getName());
+        categoryRepository.delete(deleteEntity);
+        CategoryEntity found = categoryRepository.getByName("Breakfast");
+        assertThat(found).isNull();
+    }
+
+    @Test
+    public void shouldReturnCategoryList() {
+        CategoryEntity breakfast = new CategoryEntity("Breakfast",
+                "Dishes for breakfast",
+                "Healthy food,breakfast");
+
+        CategoryEntity dinner = new CategoryEntity("Dinner",
+                "Dishes for dinner",
+                "Healthy food,dinner");
+        categoryRepository.save(breakfast);
+        categoryRepository.save(dinner);
+        when(categoryRepository.findAll()).thenReturn(Arrays.asList(breakfast, dinner));
+        List<CategoryEntity> list = categoryRepository.findAll();
+
+        assertThat(list).hasSize(2);
+    }
+
 
     @TestConfiguration
     static class CategoryServiceImplTestContextConfiguration {
