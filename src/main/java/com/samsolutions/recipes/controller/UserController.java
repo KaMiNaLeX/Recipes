@@ -24,7 +24,7 @@ import java.util.UUID;
 @RequestMapping("/admin")
 public class UserController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping("/users")
     public String all(Model model) {

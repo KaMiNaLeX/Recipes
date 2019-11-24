@@ -19,7 +19,7 @@ import java.util.UUID;
 @RequestMapping("/client")
 public class ViewController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping("/profile")
     public String showProfileForm(Principal principal, Model model) {
@@ -29,7 +29,8 @@ public class ViewController {
     }
 
     @PostMapping("/save/{id}")
-    public String saveProfile(@PathVariable("id") UUID uuid, @Valid UserEntity userEntity, BindingResult result, Model model) {
+    public String saveProfile(@PathVariable("id") UUID uuid, @Valid UserEntity userEntity,
+                              BindingResult result, Model model) {
         if (result.hasErrors()) {
             userEntity.setId(uuid);
             return "profile";

@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * @since 2019.11
  */
 @Repository
-public interface IngredientRepository extends BaseRepository<IngredientEntity>{
+public interface IngredientRepository extends BaseRepository<IngredientEntity> {
 }

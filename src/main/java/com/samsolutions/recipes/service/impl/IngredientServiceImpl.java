@@ -17,7 +17,7 @@ import java.util.UUID;
 public class IngredientServiceImpl implements IngredientService {
 
     @Autowired
-    IngredientRepository ingredientRepository;
+    private IngredientRepository ingredientRepository;
 
     @Override
     public IngredientEntity createIngredient(IngredientEntity ingredient) {

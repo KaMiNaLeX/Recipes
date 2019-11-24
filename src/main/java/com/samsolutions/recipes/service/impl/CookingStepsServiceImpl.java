@@ -19,7 +19,7 @@ import java.util.UUID;
 @Service
 public class CookingStepsServiceImpl implements CookingStepsService {
     @Autowired
-    CookingStepsRepository cookingStepsRepository;
+    private CookingStepsRepository cookingStepsRepository;
 
     @Override
     public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) throws IOException {

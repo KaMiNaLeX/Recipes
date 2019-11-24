@@ -24,7 +24,7 @@ import java.util.UUID;
 @RequestMapping("/api/step")
 public class CookingStepsRestController {
     @Autowired
-    CookingStepsService cookingStepsService;
+    private CookingStepsService cookingStepsService;
 
     @PostMapping("/create")
     public CookingStepsEntity createStep(@RequestBody CookingStepsEntity step) throws IOException {

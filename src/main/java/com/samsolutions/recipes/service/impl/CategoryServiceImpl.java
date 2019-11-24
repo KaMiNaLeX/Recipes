@@ -23,7 +23,7 @@ import java.util.UUID;
 @Service
 public class CategoryServiceImpl implements CategoryService, ModelMapperService {
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Override
     public CategoryEntity createCategory(CategoryEntity categoryEntity) {

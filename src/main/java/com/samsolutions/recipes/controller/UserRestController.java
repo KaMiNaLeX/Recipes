@@ -27,7 +27,7 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class UserRestController {
     @Autowired
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     @GetMapping("/getAll")
     public List<UserEntity> getAll(@RequestParam("page") int page, @RequestParam("size") int size) {

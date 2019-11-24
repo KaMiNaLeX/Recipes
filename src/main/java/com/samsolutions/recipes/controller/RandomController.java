@@ -23,10 +23,10 @@ import java.util.List;
 public class RandomController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/users")
     public List<UserEntity> getRandomUser() {

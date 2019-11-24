@@ -24,7 +24,7 @@ import java.util.UUID;
 public class IngredientController {
 
     @Autowired
-    IngredientService ingredientService;
+    private IngredientService ingredientService;
 
     @GetMapping("/")
     public List<IngredientEntity> findAll() {

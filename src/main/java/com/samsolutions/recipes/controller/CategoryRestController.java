@@ -26,7 +26,7 @@ import java.util.UUID;
 public class CategoryRestController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @GetMapping("/")
     public List<CategoryEntity> findAll() {
