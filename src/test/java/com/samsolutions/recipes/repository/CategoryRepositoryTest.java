@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CategoryRepositoryTest {
 
     @MockBean
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Test
     public void shouldReturnOneCategory() {

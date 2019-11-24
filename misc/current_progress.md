@@ -1,5 +1,38 @@
 https://dbdesigner.page.link/wPXo
-## WEEK 5(16)
+## WEEK 7()
+**2019.11.25**
+
+Learn Integration tests. **h**
+
+## WEEK 6(22)
+**2019.11.22**
+
+Learn Integration tests. **4h**
+
+**2019.11.21**
+
+Add REST. **4h**
+
+**2019.11.20**
+
+Fontawesome. **4h**
+
+**2019.11.19**
+
+Learn Hibernate relations. **4h**
+
+**2019.11.18**
+
+Learn Hibernate relations. **6h**
+
+## WEEK 5(24)
+**2019.11.15**
+
+BootStrap. **4h**
+
+**2019.11.14**
+
+BootStrap. **4h**
 
 **2019.11.13**
 

@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 public class CategoryRestControllerIT {
 
     @MockBean
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
     private TestRestTemplate testRestTemplate;

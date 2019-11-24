@@ -159,3 +159,119 @@ Moreover, every change in the API should be simultaneously described in the refe
 Thymeleaf's main goal is to bring elegant natural templates to your development workflow — HTML that can be correctly displayed in browsers and also work as static prototypes, allowing for stronger collaboration in development teams.
 
 With modules for Spring Framework, a host of integrations with your favourite tools, and the ability to plug in your own functionality, Thymeleaf is ideal for modern-day HTML5 JVM web development — although there is much more it can do.
+
+### Spring Security
+Spring Security is a powerful and highly customizable authentication and access-control framework.
+Spring Security is a framework that focuses on providing both authentication and authorization to Java applications.
+If you want use Spring Security + Thymeleaf you need to config this security.
+**@EnableWebSecurity** - enable Spring Security.
+
+### Security Dialect
+The Spring Security dialect allows us to conditionally display content based on user roles, permissions or other security expressions. It also gives us access to the Spring Authentication object.
+We can see the attributes specific to the Spring Security Dialect:
+* **sec:authorize**
+* **sec:authentication**
+
+### sec:authorize
+Simply put, we use sec:authorize attribute to control displayed content.
+
+For example, if we want to only show content to a user with the role USER – we can do: <div sec:authorize=”hasRole(‘USER')”>.
+
+And, if we want to broaden the access to all authenticated users we can use the following expression: <div sec:authorize=”isAuthenticated()”>.
+
+### sec:authentication
+
+The Spring Security Authentication interface exposes useful methods concerning the authenticated principal or authentication request.
+
+To access an authentication object withing Thymeleaf, we can simply use <div sec:authentication=”name”> or <div sec:authentication=”principal.authorities”>.
+
+The former gives us access to the name of the authenticated user, the later allows us to access roles of the authenticated user.
+
+### @MappedSuperclass
+The **@MappedSuperclass** annotation allows you to include a class and its jpa annotations in a derived class without making the base class an entity.
+
+### @NoRepositoryBean
+Annotation to exclude repository interfaces from being picked up and thus in consequence getting an instance being created.
+This will typically be used when providing an extended base interface for all repositories in combination with a custom repository base class to implement methods declared in that intermediate interface. In this case you typically derive your concrete repository interfaces from the intermediate one but don't want to create a Spring bean for the intermediate interface.
+
+### Bootstrap
+Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your ideas or build your entire app with our Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful plugins built on jQuery.
+
+### Font Awesome
+The internet's most popular icon toolkit has been redesigned and built from scratch. On top of this, features like icon font ligatures, an SVG framework, official NPM packages for popular frontend libraries like React, and access to a new CDN.
+
+### @Many-to-Many
+A relationship is a connection between two types of entities. In case of a many-to-many relationship, both sides can relate to multiple instances of the other side.
+For example, when the students mark the courses they like: a student can like many courses, and many students can like the same course.
+Since both sides should be able to reference the other, we need to create a separate table to hold the foreign keys:
+![Example](https://www.baeldung.com/wp-content/uploads/2018/11/simple-model-updated.png)
+Such a table is called a join table. Note, that in a join table, the combination of the foreign keys will be its composite primary key.
+
+### @One-to-Many
+Simply put, **one-to-many mapping means that one row in a table is mapped to multiple rows in another table.**
+![](https://www.baeldung.com/wp-content/uploads/2017/02/C-1.png)
+For this example, we will implement a cart system, where we have a table for each cart and another table for each item. **One cart can have many items, so here we have a one-to-many mapping**.
+
+### Cascade Types
+Entity relationships often depend on the existence of another entity — for example, the Person–Address relationship. Without the Person, the Address entity doesn't have any meaning of its own. When we delete the Person entity, our Address entity should also get deleted.
+
+Cascading is the way to achieve this. When we perform some action on the target entity, the same action will be applied to the associated entity.
+All JPA-specific cascade operations are represented by the javax.persistence.CascadeType enum containing entries:
+* **ALL**
+
+**Propagates all operations — including Hibernate-specific ones — from a parent to a child entity.**
+* **MERGE**
+
+The merge operation copies the state of the given object onto the persistent object with the same identifier. **CascadeType.MERGE propagates the merge operation from a parent to a child entity**.
+* **PERSIST**
+
+The persist operation makes a transient instance persistent. **CascadeType PERSIST propagates the persist operation from a parent to a child entity**. When we save the person entity, the address entity will also get saved.
+* **REMOVE**
+
+As the name suggests, the remove operation removes the row corresponding to the entity from the database and also from the persistent context.
+
+**CascadeType.REMOVE propagates the remove operation from parent to child entity**. 
+* **REFRESH**
+
+Refresh operations **re-read the value of a given instance from the database**. In some cases, we may change an instance after persisting in the database, but later we need to undo those changes.
+
+In that kind of scenario, this may be useful. **When we use this operation with CascadeType REFRESH, the child entity also gets reloaded from the database whenever the parent entity is refreshed**.
+* **DETACH**
+
+The detach operation removes the entity from the persistent context. **When we use CascaseType.DETACH, the child entity will also get removed from the persistent context**.
+
+### Integration testing
+Integration testing is the phase in software testing in which individual software modules are combined and tested as a group. Integration testing is conducted to evaluate the compliance of a system or component with specified functional requirements.
+
+### Testing Annotations
+**@RunWith(SpringRunner.class)** is used to provide a bridge between Spring Boot test features and JUnit. Whenever we are using any Spring Boot testing features in our JUnit tests, this annotation will be required.
+**@DataJpaTest** provides some standard setup needed for testing the persistence layer:
+* **configuring H2, an in-memory database**
+* **setting Hibernate, Spring Data, and the DataSource**
+* **performing an @EntityScan**
+* **turning on SQL logging**
+
+To carry out some DB operation, we need some records already setup in our database. To setup this data, we can use **TestEntityManager**. The TestEntityManager provided by Spring Boot is an alternative to the standard JPA EntityManager that provides methods commonly used when writing tests.
+
+**@TestConfiguration**
+During component scanning, we might find components or configurations created only for specific tests accidentally get picked up everywhere. To help prevent that, Spring Boot provides @TestConfiguration annotation that can be used on classes in src/test/java to indicate that they should not be picked up by scanning.
+
+**@MockBean**
+Another interesting thing here is the use of @MockBean. It creates a Mock for the Repository which can be used to bypass the call to the actual Repository.
+
+**@Before**
+Annotation denotes the methods to be called before the test is executed, the methods must be public void. This is where the test presets are usually placed.
+
+**@WebMvcTest**
+To test the Controllers, we can use @WebMvcTest. It will auto-configure the Spring MVC infrastructure for our unit tests.
+
+In most of the cases, @WebMvcTest will be limited to bootstrap a single controller. It is used along with @MockBean to provide mock implementations for required dependencies.
+
+@WebMvcTest also auto-configures MockMvc which offers a powerful way of easy testing MVC controllers without starting a full HTTP server.
+
+**@SpringBootTest**
+The @SpringBootTest annotation can be used when we need to bootstrap the entire container. The annotation works by creating the ApplicationContext that will be utilized in our tests.
+
+**@TestPropertySource**
+We can use the @TestPropertySource annotation to configure locations of properties files specific to our tests. Please note that the property file loaded with @TestPropertySource will override the existing application.properties file.
+

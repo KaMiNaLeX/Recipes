@@ -25,12 +25,14 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CategoryServiceImplTest {
+public class CategoryServiceImplIT {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
+
     @MockBean
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
+
 
     @Before
     public void setUp() {

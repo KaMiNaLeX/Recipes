@@ -29,10 +29,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CategoryRestControllerTest {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @MockBean
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Test
     public void shouldReturnListOfCategories() throws Exception {
