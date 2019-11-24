@@ -94,8 +94,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
             UserEntity saveUser = userRepository.save(userEntity);
 
             UserRoleEntity userRoleEntity = new UserRoleEntity();
-            userRoleEntity.setUser(saveUser);
-            userRoleEntity.setRole(roleRepository.findByName(RoleName.VIEWER));
+            userRoleEntity.setUserId(saveUser.getId());
+            userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
             userRoleRepository.save(userRoleEntity);
             return userEntity;
         } catch (Exception e) {
@@ -145,8 +145,8 @@ public class UserServiceImpl implements UserService, ModelMapperService {
             UserEntity saveUser = userRepository.save(userEntity);
 
             UserRoleEntity userRoleEntity = new UserRoleEntity();
-            userRoleEntity.setUser(saveUser);
-            userRoleEntity.setRole(roleRepository.findByName(RoleName.VIEWER));
+            userRoleEntity.setUserId(saveUser.getId());
+            userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
             userRoleRepository.save(userRoleEntity);
         } catch (Exception e) {
             log.error(e.getMessage());

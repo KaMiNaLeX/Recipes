@@ -3,9 +3,8 @@ package com.samsolutions.recipes.repository;
 import com.samsolutions.recipes.model.CategoryEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,25 +17,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 public class CategoryRepositoryTest {
 
-    @Autowired
-    TestEntityManager testEntityManager;
-
-    @Autowired
+    @MockBean
     CategoryRepository categoryRepository;
 
     @Test
-    public void whenFindById_ThenReturnCategory() {
+    public void shouldReturnOneCategory() {
         //given
         CategoryEntity breakfast = new CategoryEntity();
         breakfast.setName("Breakfast");
         breakfast.setDescription("Dishes for breakfast");
         breakfast.setTag("Healthy food,breakfast");
 
-        testEntityManager.persist(breakfast);
-        testEntityManager.flush();
-
+        categoryRepository.save(breakfast);
         //when
-        CategoryEntity found = categoryRepository.getById(breakfast.getId());
+        CategoryEntity found = categoryRepository.getByName(breakfast.getName());
 
         //then
         assertThat(found.getId())
