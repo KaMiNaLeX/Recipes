@@ -1,10 +1,12 @@
 package com.samsolutions.recipes.repository;
 
+import com.samsolutions.recipes.BaseTest;
 import com.samsolutions.recipes.model.CategoryEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,12 +15,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author kaminskiy.alexey
  * @since 2019.11
  */
-@RunWith(SpringRunner.class)
-@DataJpaTest
-public class CategoryRepositoryTest {
+public class CategoryRepositoryTest extends BaseTest {
+
+    @MockBean
+    private TestEntityManager entityManager;
 
     @MockBean
     private CategoryRepository categoryRepository;
+
+    //todo: need to fix
 
     @Test
     public void shouldReturnOneCategory() {
@@ -28,7 +33,7 @@ public class CategoryRepositoryTest {
         breakfast.setDescription("Dishes for breakfast");
         breakfast.setTag("Healthy food,breakfast");
 
-        categoryRepository.save(breakfast);
+        entityManager.persistAndFlush(breakfast);
         //when
         CategoryEntity found = categoryRepository.getByName(breakfast.getName());
 
@@ -36,4 +41,5 @@ public class CategoryRepositoryTest {
         assertThat(found.getId())
                 .isEqualTo(breakfast.getId());
     }
+
 }
