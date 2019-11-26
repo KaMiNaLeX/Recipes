@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
             userRoleEntity.setUserId(saveUser.getId());
             userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
             userRoleRepository.save(userRoleEntity);
-            return userEntity;
+            return saveUser;
         } catch (Exception e) {
             log.error(e.getMessage());
         }

@@ -29,6 +29,7 @@ public class CookingStepsServiceImpl implements CookingStepsService {
             step.setName(cookingStepsEntity.getName());
             step.setDescription(cookingStepsEntity.getDescription());
             step.setContent(IOUtils.toByteArray(inputStream));
+            cookingStepsRepository.save(step);
             return step;
         }
     }

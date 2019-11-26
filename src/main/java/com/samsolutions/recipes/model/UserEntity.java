@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,4 +48,13 @@ public class UserEntity extends BaseEntity {
     )
     private List<UserRoleEntity> userRoles;
 
+    @JsonIgnore
+    public List<UserRoleEntity> getUserRoles() {
+        return userRoles;
+    }
+
+    @JsonIgnore
+    public void setUserRoles(List<UserRoleEntity> userRoles) {
+        this.userRoles = userRoles;
+    }
 }

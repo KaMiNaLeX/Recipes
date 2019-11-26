@@ -54,7 +54,7 @@ public class UserRestController {
         userService.removeByLogin(login);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/id/{id}")
     public void removeById(@PathVariable("id") UUID uuid) {
         userService.removeById(uuid);
     }

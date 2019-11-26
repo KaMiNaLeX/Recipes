@@ -47,7 +47,7 @@ public class CookingStepsRestController {
     }
 
     @PutMapping("update/{id}")
-    public CookingStepsEntity updateStep(@PathVariable("id") UUID uuid, CookingStepsEntity step) throws IOException {
+    public CookingStepsEntity updateStep(@PathVariable("id") UUID uuid, @RequestBody CookingStepsEntity step) throws IOException {
         return cookingStepsService.updateStep(uuid, step);
     }
 }
