@@ -77,23 +77,6 @@ public class CategoryServiceImplIT extends BaseTest {
         assertThat(updateCategory).isNotEqualTo(breakfast);
     }
 
-    //todo: need to fix
-    /*
-    @Test
-    public void shouldRemoveCategory() {
-        CategoryEntity breakfast = new CategoryEntity();
-        breakfast.setName("Breakfast");
-        breakfast.setDescription("Dishes for breakfast");
-        breakfast.setTag("Healthy food,breakfast");
-        categoryRepository.save(breakfast);
-        CategoryEntity deleteEntity = categoryRepository.getByName(breakfast.getName());
-        categoryRepository.delete(deleteEntity);
-        CategoryEntity found = categoryRepository.getByName(breakfast.getName());
-        assertThat(found).isNull();
-    }
-
-     */
-
     @Test
     public void shouldReturnCategoryList() {
         CategoryEntity breakfast = new CategoryEntity("Breakfast",
