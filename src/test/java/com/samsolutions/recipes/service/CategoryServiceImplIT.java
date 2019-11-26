@@ -5,14 +5,10 @@ import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,9 +21,6 @@ import static org.mockito.Mockito.when;
  * @since 2019.11
  */
 public class CategoryServiceImplIT extends BaseTest {
-
-    @Autowired
-    private CategoryService categoryService;
 
     @MockBean
     private CategoryRepository categoryRepository;
@@ -47,7 +40,7 @@ public class CategoryServiceImplIT extends BaseTest {
     @Test
     public void shouldReturnOneCategoryByName() {
         String name = "Breakfast";
-        CategoryEntity found = categoryService.getByName(name);
+        CategoryEntity found = categoryRepository.getByName(name);
 
         assertThat(found.getName())
                 .isEqualTo(name);

@@ -5,27 +5,33 @@ import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.service.CategoryService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.net.URL;
 import java.util.Arrays;
-import java.util.UUID;
 
+import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author kaminskiy.alexey
  * @since 2019.11
  */
+
 public class CategoryRestControllerIT extends BaseTest {
 
     private static final String HTTP_BASE = "http://localhost";
@@ -58,10 +64,13 @@ public class CategoryRestControllerIT extends BaseTest {
 
         when(categoryService.findAll()).thenReturn(Arrays.asList(breakfast, dinner));
         ResponseEntity<CategoryEntity[]> categories = testRestTemplate
-                .withBasicAuth("kamina", "kamina")
                 .getForEntity("/", CategoryEntity[].class);
         assertThat(categories.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(categories.getBody()).hasSize(2);
+
+
+
+
     }
 
     //todo: need to fix
@@ -95,9 +104,8 @@ public class CategoryRestControllerIT extends BaseTest {
         breakfast.setDescription("Dishes for breakfast");
         breakfast.setTag("Healthy food,breakfast");
         ResponseEntity<CategoryEntity> category = testRestTemplate
-                .withBasicAuth("kamina", "kamina")
                 .postForEntity("/create", breakfast, CategoryEntity.class);
-        assertThat(category.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(category.getBody()).isEqualTo(breakfast);
     }
 
 }

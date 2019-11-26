@@ -2,12 +2,11 @@ package com.samsolutions.recipes.repository;
 
 import com.samsolutions.recipes.BaseTest;
 import com.samsolutions.recipes.model.CategoryEntity;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +22,16 @@ public class CategoryRepositoryTest extends BaseTest {
     @MockBean
     private CategoryRepository categoryRepository;
 
-    //todo: need to fix
+    @Before
+    public void setUp() {
+        CategoryEntity breakfast = new CategoryEntity();
+        breakfast.setName("Breakfast");
+        breakfast.setDescription("Dishes for breakfast");
+        breakfast.setTag("Healthy food,breakfast");
+
+        Mockito.when(categoryRepository.getByName(breakfast.getName()))
+                .thenReturn(breakfast);
+    }
 
     @Test
     public void shouldReturnOneCategory() {
