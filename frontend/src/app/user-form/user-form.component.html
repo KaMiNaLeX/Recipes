@@ -1,0 +1,48 @@
+<div class="user my-5">
+  <div class="user-body">
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+      <div class="form-group">
+        <label for="login">Login</label>
+        <input type="text" [(ngModel)]="user.login"
+               class="form-control" id="login" name="login" placeholder="Enter your login"
+               required #login="ngModel">
+        <div [hidden]="!login.pristine" class="alert alert-danger">Login is required</div>
+      </div>
+
+      <div class="form-group">
+        <label for="firstName">FirstName</label>
+        <input type="text" [(ngModel)]="user.firstName"
+               class="form-control" id="firstName" name="firstName" placeholder="Enter your FirstName"
+               required #firstName="ngModel">
+        <div [hidden]="!firstName.pristine" class="alert alert-danger">FirstName is required</div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">LastName</label>
+        <input type="text" [(ngModel)]="user.lastName"
+               class="form-control" id="lastName" name="lastName" placeholder="Enter your LastName"
+               required #lastName="ngModel">
+        <div [hidden]="!lastName.pristine" class="alert alert-danger">LastName is required</div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" [(ngModel)]="user.email"
+               class="form-control" id="email" name="email" placeholder="Enter your email address"
+               required #email="ngModel">
+        <div [hidden]="!email.pristine" class="alert alert-danger">Email is required</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" [(ngModel)]="user.password"
+               class="form-control" id="password" name="password" placeholder="Enter your password"
+               required #password="ngModel">
+        <div [hidden]="!password.pristine" class="alert alert-danger">Password is required</div>
+      </div>
+
+      <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-info">Submit</button>
+    </form>
+  </div>
+</div>
