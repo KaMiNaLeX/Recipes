@@ -24,7 +24,7 @@ import java.util.UUID;
  * @since 2019.10
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserRestController {
     @Autowired
     private UserServiceImpl userService;

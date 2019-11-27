@@ -11,11 +11,11 @@ export class UserService {
   private baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = '/api/users';
+    this.baseUrl = '/api/user';
   }
 
   public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}`);
+    return this.http.get<User[]>(`${this.baseUrl}/`);
   }
 
   public create(user: User) {

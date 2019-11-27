@@ -67,7 +67,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "frontend:build:production"
+              "browserTarget": "frontend:build:production",
+              "port": 4200
             }
           }
         },
