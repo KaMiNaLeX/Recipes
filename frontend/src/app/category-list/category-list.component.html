@@ -1,13 +1,15 @@
 <div class="card-columns">
   <div class="card" *ngFor="let category of categories" style="width: 500px;">
-    <img src="assets/images/test.jpg"  class="card-img-top" alt="">
-    <div class="card-body">
-      <h5 class="card-title">{{ category.name }}</h5>
-      <p class="card-text">{{ category.description }}</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">{{ category.tag }}</small>
+    <div class="card border-primary mb-3" style="max-width: 500px;">
+      <img src="assets/images/test.jpg" class="card-img-top" alt="">
+      <div class="card-body">
+        <h5 class="card-title">{{ category.name }}</h5>
+        <p class="card-text">{{ category.description }}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">{{ category.tag }}</small>
+      </div>
     </div>
   </div>
 </div>

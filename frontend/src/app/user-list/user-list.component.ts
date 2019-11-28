@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "../model/user";
 import {UserService} from "../service/user.service";
 
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -22,7 +23,7 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     this.userService.delete(id)
       .subscribe(
         data => {
@@ -35,7 +36,7 @@ export class UserListComponent implements OnInit {
         error => console.log(error));
   }
 
-  view(id: number) {
+  view(id: string) {
     window.alert(id);
   }
 

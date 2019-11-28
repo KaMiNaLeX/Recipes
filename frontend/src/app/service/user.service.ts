@@ -22,7 +22,7 @@ export class UserService {
     return this.http.post<User>(`${this.baseUrl}/create`, user);
   }
 
-  public delete(id: number): Observable<any> {
+  public delete(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/delete/id/${id}`, {responseType: 'text'});
   }
 
