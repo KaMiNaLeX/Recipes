@@ -19,15 +19,15 @@ export class UserService {
   }
 
   public create(user: User) {
-    return this.http.post<User>(`${this.baseUrl}`, user);
+    return this.http.post<User>(`${this.baseUrl}/create`, user);
   }
 
   public delete(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, {responseType: 'text'});
+    return this.http.delete(`${this.baseUrl}/delete/id/${id}`, {responseType: 'text'});
   }
 
   get(id: number): Observable<Object> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/id/${id}`);
   }
 
   update(id: number, userData: any): Observable<Object> {

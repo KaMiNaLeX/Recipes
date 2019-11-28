@@ -9,13 +9,15 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {UserService} from "./service/user.service";
 import {LoginComponent} from './login/login.component';
+import { CategoryListComponent } from './category-list/category-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserListComponent,
     UserFormComponent,
-    LoginComponent
+    LoginComponent,
+    CategoryListComponent
   ],
   imports: [
     BrowserModule,
