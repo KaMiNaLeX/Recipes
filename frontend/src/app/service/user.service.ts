@@ -26,11 +26,11 @@ export class UserService {
     return this.http.delete(`${this.baseUrl}/delete/id/${id}`, {responseType: 'text'});
   }
 
-  get(id: number): Observable<Object> {
+  get(id: string): Observable<Object> {
     return this.http.get(`${this.baseUrl}/id/${id}`);
   }
 
-  update(id: number, userData: any): Observable<Object> {
+  update(id: string, userData: any): Observable<Object> {
     return this.http.post(`${this.baseUrl}/${id}`, userData);
   }
 }

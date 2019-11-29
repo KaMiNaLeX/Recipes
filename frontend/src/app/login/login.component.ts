@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    let url = '/client/login';
+    let url = '/api/user/login/';
     let result = this.http.post<Observable<boolean>>(url, {
       userName: this.user.username,
       password: this.user.password
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
           'token',
           btoa(this.user.username + ':' + this.user.password)
         );
-        this.router.navigate(['/']);
+        this.router.navigate(['']);
       } else {
         alert("Authentication failed.")
       }

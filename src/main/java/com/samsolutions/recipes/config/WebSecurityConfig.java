@@ -49,13 +49,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/client/login").permitAll()
                 .antMatchers("/client/registration").permitAll()
+                .antMatchers("/api/user/login").permitAll()
                 .antMatchers("/users", "/home", "/index.html").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated()
                 .and()
-                .csrf().disable().formLogin()
+                .csrf().disable()
+                .formLogin()
                 .loginPage("/client/login").failureUrl("/client/login?error=true")
-                .defaultSuccessUrl("/client/index")
+                .defaultSuccessUrl("/")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
@@ -63,7 +65,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .and()
-                .exceptionHandling();
+                .exceptionHandling()
+                .and()
+                .httpBasic();
     }
 
     @Override
