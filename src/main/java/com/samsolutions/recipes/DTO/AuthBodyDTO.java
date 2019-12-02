@@ -1,6 +1,6 @@
-package com.samsolutions.recipes.controller;
+package com.samsolutions.recipes.DTO;
 
-public class AuthBody {
+public class AuthBodyDTO {
 
     private String email;
     private String password;
