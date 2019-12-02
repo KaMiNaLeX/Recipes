@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "../model/user";
 import {UserService} from "../service/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {error} from "util";
 
 @Component({
   selector: 'app-user-profile',
@@ -23,7 +22,7 @@ export class UserProfileComponent implements OnInit {
 
     this.userService.get(this.id).subscribe(data => {
       console.log(data)
-      this.user = data;
+     // this.user = data;
     }, error => console.log(error));
   }
 

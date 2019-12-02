@@ -32,19 +32,6 @@ public class UserRestController {
     @Autowired
     private UserServiceImpl userService;
 
-    @RequestMapping("/login")
-    public boolean login(@RequestBody UserEntity user) {
-        return user.getLogin().equals("kamina") && user.getPassword().equals("kamina");
-    }
-
-    @RequestMapping("/user")
-    public Principal user(HttpServletRequest request) {
-        String authToken = request.getHeader("Authorization")
-                .substring("Basic".length()).trim();
-        return () -> new String(Base64.getDecoder()
-                .decode(authToken)).split(":")[0];
-    }
-
     @GetMapping("/getAll")
     public List<UserEntity> getAll(@RequestParam("page") int page, @RequestParam("size") int size) {
         return userService.getAll(page, size);

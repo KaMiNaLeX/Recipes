@@ -3,6 +3,7 @@ package com.samsolutions.recipes.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -17,6 +18,7 @@ import javax.sql.DataSource;
  * @author kaminskiy.alexey
  * @since 2019.11
  */
+/*
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -51,22 +53,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/client/registration").permitAll()
                 .antMatchers("/api/user/login").permitAll()
                 .antMatchers("/users", "/home", "/index.html").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated()
                 .and()
                 .csrf().disable()
-                .formLogin()
-                .loginPage("/client/login").failureUrl("/client/login?error=true")
-                .defaultSuccessUrl("/")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
-                .and()
-                .exceptionHandling()
-                .and()
+
+                //.formLogin()
+                //.loginPage("/client/login").failureUrl("/client/login?error=true")
+                //.defaultSuccessUrl("/")
+                //.usernameParameter("username")
+                //.passwordParameter("password")
+                //.and()
+                //.logout()
+                //.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                //.logoutSuccessUrl("/")
+                //.and()
+                //.exceptionHandling()
+                //.and()
                 .httpBasic();
     }
 
@@ -81,4 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/**",
                         "/webjars/**");
     }
+
 }
+
+ */

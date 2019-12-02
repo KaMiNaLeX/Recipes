@@ -23,6 +23,8 @@ import java.util.Map;
 @Repository
 public interface UserRepository extends BaseRepository<UserEntity> {
 
+    UserEntity findByEmail(String email);
+
     UserEntity getByLogin(String login);
 
     Page<UserEntity> findAll(Pageable pageable);
