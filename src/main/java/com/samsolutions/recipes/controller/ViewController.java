@@ -15,6 +15,13 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.UUID;
 
+/**
+ * User controller to manage users.
+ *
+ * @author kaminskiy.alexey
+ * @since 2019.11
+ */
+
 @Controller
 @RequestMapping("/client")
 public class ViewController {

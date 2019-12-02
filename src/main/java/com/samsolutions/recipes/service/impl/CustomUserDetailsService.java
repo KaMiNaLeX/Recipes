@@ -16,6 +16,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author kaminskiy.alexey
+ * @since 2019.12
+ */
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

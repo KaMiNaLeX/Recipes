@@ -6,6 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * UserRole Repository.
+ *
+ * @author kaminskiy.alexey
+ * @since 2019.10
+ */
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRoleEntity, UUID> {
     UserRoleEntity findByUserIdAndRoleId(UUID userId, UUID roleId);

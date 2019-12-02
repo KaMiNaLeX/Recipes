@@ -15,7 +15,12 @@ import javax.persistence.Table;
 import java.util.Date;
 import java.util.UUID;
 
-
+/**
+ * UserRole entity.
+ *
+ * @author kaminskiy.alexey
+ * @since 2019.10
+ */
 @Entity
 @Getter
 @Setter

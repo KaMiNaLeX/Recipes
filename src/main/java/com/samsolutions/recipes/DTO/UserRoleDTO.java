@@ -5,6 +5,12 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * UserRole DTO.
+ *
+ * @author kaminskiy.alexey
+ * @since 2019.10
+ */
 @Getter
 @Setter
 public class UserRoleDTO {

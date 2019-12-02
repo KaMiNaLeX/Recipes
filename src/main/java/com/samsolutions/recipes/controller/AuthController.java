@@ -20,7 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
-
+/**
+ * Auth controller to login users.
+ *
+ * @author kaminskiy.alexey
+ * @since 2019.12
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

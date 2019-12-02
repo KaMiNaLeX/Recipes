@@ -7,6 +7,13 @@ import lombok.Setter;
 
 import java.util.Map;
 
+/**
+ * Role DTO.
+ *
+ * @author kaminskiy.alexey
+ * @since 2019.10
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor
