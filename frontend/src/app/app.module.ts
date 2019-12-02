@@ -11,6 +11,7 @@ import {CategoryListComponent} from './category-list/category-list.component';
 import {LoginComponent} from "./auth/login/login.component";
 import {TokenInterceptor} from "./interceptors/token.interceptor";
 import {CategoryService} from "./service/category.service";
+import {UserProfileComponent} from './user-profile/user-profile.component';
 
 import {
   MatInputModule,
@@ -32,7 +33,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     UserListComponent,
     UserFormComponent,
     LoginComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

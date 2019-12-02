@@ -59,7 +59,7 @@
     <div th:if="${param.logout}">
         You have been logged out.
     </div>
-    <form th:action="@{/client/login}" method="post">
+    <form th:action="@{/api/auth/login}" method="post">
         <div class="form-group">
             <label for="exampleInputEmail1" th:text="#{user.login}">:</label>
             <input class="form-control is-valid" id="exampleInputEmail1" aria-describedby="emailHelp" type="text"

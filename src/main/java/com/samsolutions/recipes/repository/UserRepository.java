@@ -27,6 +27,8 @@ public interface UserRepository extends BaseRepository<UserEntity> {
 
     UserEntity getByLogin(String login);
 
+    UserEntity getByEmail(String email);
+
     Page<UserEntity> findAll(Pageable pageable);
 
     @Transactional

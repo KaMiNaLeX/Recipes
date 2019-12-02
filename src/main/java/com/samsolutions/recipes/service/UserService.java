@@ -53,4 +53,6 @@ public interface UserService {
     List<UserEntity> getAll(int page, int size);
 
     UserEntity updateUser(UUID uuid, UserEntity userEntity);
+
+    UserEntity getByEmail(String email);
 }

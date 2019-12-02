@@ -139,6 +139,11 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    public UserEntity getByEmail(String email) {
+        return userRepository.getByEmail(email);
+    }
+
+    @Override
     public void addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
         try {
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));

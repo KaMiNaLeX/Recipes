@@ -15,7 +15,7 @@ export class UserService {
   }
 
   public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/`);
+    return this.http.get<User[]>(`${this.baseUrl}/getAll?page=0&size=10`);
   }
 
   public create(user: User) {
@@ -28,6 +28,10 @@ export class UserService {
 
   get(id: string): Observable<Object> {
     return this.http.get(`${this.baseUrl}/id/${id}`);
+  }
+
+  getByEmail(email: string): Observable<Object> {
+    return this.http.get(`${this.baseUrl}/email/${email}`);
   }
 
   update(id: string, userData: any): Observable<Object> {

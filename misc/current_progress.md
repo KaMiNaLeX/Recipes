@@ -1,8 +1,29 @@
 https://dbdesigner.page.link/wPXo
-## WEEK 7()
+## WEEK 8()
+**2019.12.02**
+
+JWT + Angular. **5h**
+
+## WEEK 7(26)
+**2019.11.29**
+
+Learn Angular. **6h**
+
+**2019.11.28**
+
+Learn Angular. **6h**
+
+**2019.11.27**
+
+Learn Angular. **6h**
+
+**2019.11.26**
+
+Learn Integration tests. **4h**
+
 **2019.11.25**
 
-Learn Integration tests. **h**
+Learn Integration tests. **4h**
 
 ## WEEK 6(22)
 **2019.11.22**

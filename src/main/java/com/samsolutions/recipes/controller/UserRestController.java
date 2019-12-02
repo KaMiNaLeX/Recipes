@@ -34,6 +34,11 @@ public class UserRestController {
         return userService.getAll(page, size);
     }
 
+    @GetMapping("/email/{email}")
+    public UserEntity getByEmail(@PathVariable("email") String email) {
+        return userService.getByEmail(email);
+    }
+
     @GetMapping("/")
     public List<UserDTO> findAll() {
         return userService.findAll();
