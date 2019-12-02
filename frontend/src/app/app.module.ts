@@ -5,12 +5,26 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {UserListComponent} from './user-list/user-list.component';
 import {UserFormComponent} from './user-form/user-form.component';
-import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {UserService} from "./service/user.service";
-import {LoginComponent} from './login/login.component';
-import { CategoryListComponent } from './category-list/category-list.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import {CategoryListComponent} from './category-list/category-list.component';
+import {LoginComponent} from "./auth/login/login.component";
+import {TokenInterceptor} from "./interceptors/token.interceptor";
+import {CategoryService} from "./service/category.service";
+
+import {
+  MatInputModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSortModule,
+  MatTableModule,
+  MatIconModule,
+  MatButtonModule,
+  MatCardModule,
+  MatFormFieldModule
+} from '@angular/material';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -18,16 +32,40 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     UserListComponent,
     UserFormComponent,
     LoginComponent,
-    CategoryListComponent,
-    UserProfileComponent
+    CategoryListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
     FormsModule
   ],
-  providers: [UserService],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: UserService,
+      useClass: UserService
+    },
+    {
+      provide: CategoryService,
+      useClass: CategoryService
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
