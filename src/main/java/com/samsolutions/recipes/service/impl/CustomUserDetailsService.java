@@ -79,6 +79,5 @@ public class CustomUserDetailsService implements UserDetailsService {
         userRoleEntity.setUserId(saveUser.getId());
         userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
         userRoleRepository.save(userRoleEntity);
-        userRepository.save(user);
     }
 }

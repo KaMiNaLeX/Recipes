@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
   onFormSubmit(form: NgForm) {
     this.authService.login(form)
       .subscribe(res => {
-        if (res.token) {
+        if (res.token && res.username) {
           localStorage.setItem('token', res.token);
-         // localStorage.setItem('email', email);
+          localStorage.setItem('email', res.username);
           this.router.navigate(['category']);
         }
       }, (err) => {
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    this.router.navigate(['register']);
+    this.router.navigate(['registry']);
   }
 
 }
