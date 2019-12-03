@@ -1,17 +1,22 @@
-<div class="col-md-6 user-container">
-  <h2 class="text-center">Edit User</h2>
+<div class="container-fluid">
+  <h2>Edit User</h2>
+  <br/>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-    <div class="hidden">
-      <input type="text" formControlName="id" placeholder="id" name="id" class="form-control" id="id">
+    <div hidden="hidden" class="form-group">
+      <input type="text" formControlName="id" placeholder="id" name="id" class="form-control" id="id"
+             readonly="true">
     </div>
+
     <div class="form-group">
       <label for="login">Login:</label>
-      <input type="text" formControlName="login" placeholder="login" name="login" class="form-control" id="login" readonly="true">
+      <input type="text" formControlName="login" placeholder="login" name="login" class="form-control" id="login"
+             readonly="true">
     </div>
 
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="text" formControlName="email" placeholder="email" name="email" class="form-control" id="email" readonly="true">
+      <input type="text" formControlName="email" placeholder="email" name="email" class="form-control" id="email"
+             readonly="true">
     </div>
 
     <div class="form-group">
@@ -23,6 +28,12 @@
       <label for="lastName">Last Name:</label>
       <input formControlName="lastName" placeholder="Last name" name="lastName" class="form-control" id="lastName">
     </div>
-    <button class="btn btn-success">Update</button>
+
+    <div hidden="hidden" class="form-group">
+      <input type="password" formControlName="password" placeholder="password" name="password" class="form-control"
+             id="password"
+             readonly="true">
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
   </form>
 </div>

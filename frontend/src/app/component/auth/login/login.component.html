@@ -1,21 +1,25 @@
-<div class="row">
+<div class="container-fluid">
   <div class="col-md-6 login-container">
     <h2 style="margin: auto">Login </h2>
+    <br/>
     <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" class="form-control" formControlName="email" id="email" autocomplete="off">
-        <div class="error" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">Email is required</div>
+        <div class="error" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">Email is required
+        </div>
       </div>
       <div class="form-group">
         <label for="pwd">Password:</label>
         <input type="password" class="form-control" formControlName="password" id="pwd" autocomplete="off">
-        <div class="error" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Password is required</div>
+        <div class="error" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Password is
+          required
+        </div>
       </div>
       <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Login</button>
-      <div class="button-row">
-        <button type="button" mat-flat-button color="primary" (click)="register()">Register</button>
-      </div>
     </form>
+    <br/>
+    <button type="button" mat-flat-button color="primary" class="btn btn-primary" (click)="register()">Register
+    </button>
   </div>
 </div>

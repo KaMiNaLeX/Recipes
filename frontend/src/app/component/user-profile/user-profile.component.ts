@@ -14,6 +14,7 @@ export class UserProfileComponent implements OnInit {
 
   user: User;
   editForm: FormGroup;
+  id = '';
 
   constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
   }
@@ -26,10 +27,12 @@ export class UserProfileComponent implements OnInit {
       return;
     }
     this.editForm = this.formBuilder.group({
+      id: ['', Validators.required],
       login: ['', Validators.required],
       firstName: ['', Validators.required],
       email: ['', Validators.required],
-      lastName: ['', Validators.required]
+      lastName: ['', Validators.required],
+      password: ['', Validators.required]
     });
     this.userService.getByEmail(email)
       .subscribe(data => {
