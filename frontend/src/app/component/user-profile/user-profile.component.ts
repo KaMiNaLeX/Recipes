@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../model/user";
+import {User} from "../../model/user";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {UserService} from "../service/user.service";
+import {UserService} from "../../service/user.service";
 import {first} from "rxjs/operators";
 
 @Component({
@@ -37,25 +37,22 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  /*
-    onSubmit() {
-      let email = window.localStorage.getItem("email");
-      this.userService.update(email, this.editForm.value)
-        .pipe(first())
-        .subscribe(
-          data => {
-            if (data.status === 200) {
-              alert('User updated successfully.');
-              this.router.navigate(['/']);
-            } else {
-              alert(data.message);
-            }
-          },
-          error => {
-            alert(error);
-          });
-    }
-
-   */
+  onSubmit() {
+    let email = window.localStorage.getItem("email");
+    this.userService.update(email, this.editForm.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data != null) {
+            alert('User updated successfully.');
+            this.router.navigate(['profile']);
+          } else {
+            alert('User does not update');
+          }
+        },
+        error => {
+          alert(error);
+        });
+  }
 
 }

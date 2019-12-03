@@ -3,15 +3,15 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {UserListComponent} from './user-list/user-list.component';
-import {UserFormComponent} from './user-form/user-form.component';
+import {UserListComponent} from './component/user-list/user-list.component';
+import {UserFormComponent} from './component/user-form/user-form.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {UserService} from "./service/user.service";
-import {CategoryListComponent} from './category-list/category-list.component';
-import {LoginComponent} from "./auth/login/login.component";
+import {CategoryListComponent} from './component/category-list/category-list.component';
+import {LoginComponent} from "./component/auth/login/login.component";
 import {TokenInterceptor} from "./interceptors/token.interceptor";
 import {CategoryService} from "./service/category.service";
-import {UserProfileComponent} from './user-profile/user-profile.component';
+import {UserProfileComponent} from './component/user-profile/user-profile.component';
 
 import {
   MatInputModule,
@@ -26,6 +26,8 @@ import {
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { RegisterComponent } from './component/auth/register/register.component';
+import {AuthService} from "./service/auth.service";
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     UserFormComponent,
     LoginComponent,
     CategoryListComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,11 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
       provide: CategoryService,
       useClass: CategoryService
     },
+    {
+      provide: AuthService,
+      useClass: AuthService
+    }
+
   ],
   bootstrap: [AppComponent]
 })

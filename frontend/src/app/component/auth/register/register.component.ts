@@ -1,16 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthService} from "../../service/auth.service";
+import {AuthService} from "../../../service/auth.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
-  loginForm: FormGroup;
+  registerForm: FormGroup;
+  firstName = '';
+  lastName = '';
+  login = '';
   email = '';
   password = '';
   isLoadingResults = false;
@@ -19,27 +22,23 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
+      'firstName': [null, Validators.required],
+      'lastName': [null, Validators.required],
+      'login': [null, Validators.required],
       'email': [null, Validators.required],
       'password': [null, Validators.required]
     });
   }
 
   onFormSubmit(form: NgForm) {
-    this.authService.login(form)
+    this.authService.register(form)
       .subscribe(res => {
-        if (res.token) {
-          localStorage.setItem('token', res.token);
-         // localStorage.setItem('email', email);
-          this.router.navigate(['category']);
-        }
+        this.router.navigate(['login']);
       }, (err) => {
         console.log(err);
+        alert(err.error);
       });
-  }
-
-  register() {
-    this.router.navigate(['register']);
   }
 
 }

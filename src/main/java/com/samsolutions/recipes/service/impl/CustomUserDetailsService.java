@@ -1,14 +1,18 @@
 package com.samsolutions.recipes.service.impl;
 
+import com.samsolutions.recipes.model.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
+import com.samsolutions.recipes.repository.RoleRepository;
 import com.samsolutions.recipes.repository.UserRepository;
+import com.samsolutions.recipes.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +30,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     public UserEntity findUserByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -56,5 +69,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private UserDetails buildUserForAuthentication(UserEntity user, List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+    }
+
+    public void saveUser(UserEntity user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        UserEntity saveUser = userRepository.save(user);
+
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        userRoleEntity.setUserId(saveUser.getId());
+        userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
+        userRoleRepository.save(userRoleEntity);
+        userRepository.save(user);
     }
 }
