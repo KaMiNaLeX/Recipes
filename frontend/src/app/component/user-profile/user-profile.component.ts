@@ -14,7 +14,6 @@ export class UserProfileComponent implements OnInit {
 
   user: User;
   editForm: FormGroup;
-  id = '';
 
   constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
   }
@@ -41,8 +40,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    let email = window.localStorage.getItem("email");
-    this.userService.update(email, this.editForm.value)
+    let id = window.localStorage.getItem("id");
+    this.userService.update(id, this.editForm.value)
       .pipe(first())
       .subscribe(
         data => {

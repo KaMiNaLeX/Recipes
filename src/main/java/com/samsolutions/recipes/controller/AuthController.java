@@ -4,6 +4,7 @@ import com.samsolutions.recipes.DTO.AuthBodyDTO;
 import com.samsolutions.recipes.config.JwtTokenProvider;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.repository.UserRepository;
+import com.samsolutions.recipes.service.UserService;
 import com.samsolutions.recipes.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -48,9 +48,11 @@ public class AuthController {
     public ResponseEntity login(@RequestBody AuthBodyDTO data) {
         try {
             String username = data.getEmail();
+            UserEntity user = userService.findUserByEmail(username);
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
             String token = jwtTokenProvider.createToken(username, this.users.findByEmail(username).getUserRoles());
             Map<Object, Object> model = new HashMap<>();
+            model.put("id", user.getId());
             model.put("username", username);
             model.put("token", token);
             return ok(model);

@@ -35,6 +35,6 @@ export class UserService {
   }
 
   update(id: string, userData: any): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/${id}`, userData);
+    return this.http.put(`${this.baseUrl}/${id}`, userData);
   }
 }
