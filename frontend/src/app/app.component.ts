@@ -14,12 +14,13 @@ export class AppComponent {
   title = 'frontend';
   principal = null;
   authenticated = false;
-  admin = null;
+  admin = false;
 
   logout() {
     this.authService.logout();
     this.router.navigate(['login']);
     this.authenticated = false;
+    this.admin = false;
   }
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
@@ -30,12 +31,12 @@ export class AppComponent {
 
   role() {
     this.authService.role().subscribe(data => {
-      this.admin = this.authenticated && data['roles'] && data['roles'].indexOf('VIEWER') > -1;
+      this.admin = this.authenticated && data['roles'] && data['roles'].indexOf('ADMIN') > -1;
     });
   }
 
   authenticate() {
-    this.principal = this.authService.principal()
+    this.principal = this.authService.principal();
     if (this.principal != null) {
       this.authenticated = true;
     } else this.authenticated = false;

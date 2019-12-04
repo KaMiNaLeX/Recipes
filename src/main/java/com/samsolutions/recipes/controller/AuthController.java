@@ -2,7 +2,9 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.DTO.AuthBodyDTO;
 import com.samsolutions.recipes.config.JwtTokenProvider;
+import com.samsolutions.recipes.model.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
+import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -85,9 +89,16 @@ public class AuthController {
     public ResponseEntity userRole(Principal user) {
         String username = user.getName();
         UserEntity userEntity = userService.findUserByEmail(username);
+        List<UserRoleEntity> userRoleList = userEntity.getUserRoles();
+        List<RoleName> roleNameList = new ArrayList<>();
+        for (int i = 0; i < userRoleList.size(); i++) {
+            UserRoleEntity userRoleEntity = userRoleList.get(i);
+            RoleName roleName = userRoleEntity.getRole().getName();
+            roleNameList.add(roleName);
+        }
         Map<Object, Object> model = new HashMap<>();
         model.put("username", username);
-        model.put("roles", username);
+        model.put("roles", roleNameList);
         return ok(model);
     }
 }
