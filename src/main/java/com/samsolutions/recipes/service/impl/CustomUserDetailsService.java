@@ -44,6 +44,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
+    public UserEntity getByLogin(String login) {
+        return userRepository.getByLogin(login);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 

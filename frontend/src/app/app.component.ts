@@ -12,8 +12,8 @@ import {HttpClient} from "@angular/common/http";
 export class AppComponent {
 
   title = 'frontend';
+  principal = null;
   authenticated = false;
-  id = null;
 
   logout() {
     this.authService.logout();
@@ -27,12 +27,10 @@ export class AppComponent {
   }
 
   authenticate() {
-    this.id = localStorage.getItem('id');
-    if (this.id != null) {
+    this.principal = this.authService.principal();
+    if (this.principal != null) {
       this.authenticated = true;
-    } else {
-      this.authenticated = false;
-    }
+    } else this.authenticated = false;
   }
 
 
