@@ -6,14 +6,15 @@
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" class="form-control" formControlName="email" id="email" autocomplete="off">
-        <div class="error" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">Email is required
+        <div class="alert alert-danger" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">Email
+          is not correct!
         </div>
       </div>
       <div class="form-group">
         <label for="pwd">Password:</label>
         <input type="password" class="form-control" formControlName="password" id="pwd" autocomplete="off">
         <div class="error" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Password is
-          required
+          not correct!
         </div>
       </div>
       <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Login</button>

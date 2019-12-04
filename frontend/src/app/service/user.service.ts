@@ -30,8 +30,12 @@ export class UserService {
     return this.http.get(`${this.baseUrl}/id/${id}`);
   }
 
-  getByEmail(email: string): Observable<Object> {
-    return this.http.get(`${this.baseUrl}/email/${email}`);
+  getByEmail(email: string): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/email/${email}`);
+  }
+
+  getByLogin(login: string): Observable<User> {
+    return this.http.get <User>(`${this.baseUrl}/login/${login}`);
   }
 
   update(id: string, userData: any): Observable<Object> {

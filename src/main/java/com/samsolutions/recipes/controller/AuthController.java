@@ -70,8 +70,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody UserEntity user) {
         UserEntity userExists = userService.findUserByEmail(user.getEmail());
+        UserEntity userExists2 = userService.getByLogin(user.getLogin());
         if (userExists != null) {
-            throw new BadCredentialsException("User with username: " + user.getEmail() + " already exists");
+            throw new BadCredentialsException("User with email: " + user.getEmail() + " already exists");
+        }
+        if (userExists2 != null) {
+            throw new BadCredentialsException("User with login: " + user.getLogin() + " already exists");
         }
         userService.saveUser(user);
         Map<Object, Object> model = new HashMap<>();
@@ -81,12 +85,17 @@ public class AuthController {
 
     @GetMapping("/user")
     public UUID user(Principal user) {
+        if (user == null) {
+            throw new BadCredentialsException("User does not login");
+        }
         return userService.findUserByEmail(user.getName()).getId();
     }
 
-    //todo: need to fix
     @GetMapping("/role")
     public ResponseEntity userRole(Principal user) {
+        if (user == null) {
+            throw new BadCredentialsException("User does not login");
+        }
         String username = user.getName();
         UserEntity userEntity = userService.findUserByEmail(username);
         List<UserRoleEntity> userRoleList = userEntity.getUserRoles();
