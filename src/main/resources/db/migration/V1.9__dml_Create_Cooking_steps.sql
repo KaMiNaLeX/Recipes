@@ -5,6 +5,7 @@ CREATE TABLE cooking_steps
     name        varchar(255) NOT NULL,
     description varchar(255) NOT NULL,
     content     blob NOT NULL,
+    -- thumbnail
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;

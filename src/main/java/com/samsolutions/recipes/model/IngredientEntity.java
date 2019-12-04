@@ -24,6 +24,9 @@ public class IngredientEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "calories")
     private double calories;
 
