@@ -28,6 +28,10 @@ export class AuthService {
     return this.http.get(apiUrl + 'user');
   }
 
+  role() {
+    return this.http.get(apiUrl + 'role');
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('email');

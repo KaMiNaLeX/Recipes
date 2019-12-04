@@ -77,6 +77,17 @@ public class AuthController {
 
     @GetMapping("/user")
     public UUID user(Principal user) {
-        return userService.getByLogin(user.getName()).getId();
+        return userService.findUserByEmail(user.getName()).getId();
+    }
+
+    //todo: need to fix
+    @GetMapping("/role")
+    public ResponseEntity userRole(Principal user) {
+        String username = user.getName();
+        UserEntity userEntity = userService.findUserByEmail(username);
+        Map<Object, Object> model = new HashMap<>();
+        model.put("username", username);
+        model.put("roles", username);
+        return ok(model);
     }
 }

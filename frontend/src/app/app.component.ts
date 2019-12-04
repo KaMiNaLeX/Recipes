@@ -14,6 +14,7 @@ export class AppComponent {
   title = 'frontend';
   principal = null;
   authenticated = false;
+  admin = null;
 
   logout() {
     this.authService.logout();
@@ -24,10 +25,17 @@ export class AppComponent {
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
               private http: HttpClient) {
     this.authenticate();
+    this.role();
+  }
+
+  role() {
+    this.authService.role().subscribe(data => {
+      this.admin = this.authenticated && data['roles'] && data['roles'].indexOf('VIEWER') > -1;
+    });
   }
 
   authenticate() {
-    this.principal = this.authService.principal();
+    this.principal = this.authService.principal()
     if (this.principal != null) {
       this.authenticated = true;
     } else this.authenticated = false;
