@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.controller;
 
+import com.samsolutions.recipes.DTO.CookingStepDTO;
 import com.samsolutions.recipes.model.CookingStepsEntity;
 import com.samsolutions.recipes.service.CookingStepsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class CookingStepsRestController {
     @PostMapping("/create")
     public CookingStepsEntity createStep(@RequestBody CookingStepsEntity step) throws IOException {
         return cookingStepsService.createStep(step);
+    }
+
+    @PostMapping("/DTO/create")
+    public CookingStepDTO createStepDTO(@RequestBody CookingStepDTO step) throws IOException {
+        return cookingStepsService.createStepDTO(step);
     }
 
     @GetMapping("/")

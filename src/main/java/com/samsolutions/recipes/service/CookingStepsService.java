@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.service;
 
+import com.samsolutions.recipes.DTO.CookingStepDTO;
 import com.samsolutions.recipes.model.CookingStepsEntity;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ import java.util.UUID;
 @Service
 public interface CookingStepsService {
     CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) throws IOException;
+
+    CookingStepDTO createStepDTO(CookingStepDTO cookingStepDTO) throws IOException;
 
     CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) throws IOException;
 
