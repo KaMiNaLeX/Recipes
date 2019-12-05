@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author kaminskiy.alexey
@@ -49,6 +50,9 @@ public class RecipeEntity extends BaseEntity {
 
     @Column(name = "last_modified")
     private Date lastModified = new Date();
+
+    @Column(name = "author_id")
+    private UUID authorId;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "author_id", referencedColumnName = "id", insertable = false, updatable = false)
