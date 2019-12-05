@@ -1,4 +1,4 @@
-package com.samsolutions.recipes.model;
+package com.samsolutions.recipes.model.Enum;
 
 /**
  * @author kaminskiy.alexey

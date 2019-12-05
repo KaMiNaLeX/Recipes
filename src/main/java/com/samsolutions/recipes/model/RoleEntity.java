@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.samsolutions.recipes.model.Enum.RoleName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

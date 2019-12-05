@@ -2,7 +2,7 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.DTO.AuthBodyDTO;
 import com.samsolutions.recipes.config.JwtTokenProvider;
-import com.samsolutions.recipes.model.RoleName;
+import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.UserRepository;

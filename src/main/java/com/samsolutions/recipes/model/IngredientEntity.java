@@ -1,13 +1,20 @@
 package com.samsolutions.recipes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.samsolutions.recipes.model.Enum.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 /**
  * @author kaminskiy.alexey
@@ -30,6 +37,23 @@ public class IngredientEntity extends BaseEntity {
     @Column(name = "calories")
     private double calories;
 
-    @Column(name = "type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private Type type;
+
+    @OneToMany(mappedBy = "ingredient",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            orphanRemoval = true
+    )
+    private List<RecipeIngredientEntity> recipeIngredientEntityList;
+
+    @JsonIgnore
+    public List<RecipeIngredientEntity> getRecipeIngredientEntityList() {
+        return recipeIngredientEntityList;
+    }
+
+    @JsonIgnore
+    public void setRecipeIngredientEntityList(List<RecipeIngredientEntity> recipeIngredientEntityList) {
+        this.recipeIngredientEntityList = recipeIngredientEntityList;
+    }
 }

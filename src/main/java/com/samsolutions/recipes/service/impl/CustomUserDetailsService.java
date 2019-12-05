@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.service.impl;
 
-import com.samsolutions.recipes.model.RoleName;
+import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.RoleRepository;

@@ -4,7 +4,7 @@ import com.samsolutions.recipes.DTO.RoleDTO;
 import com.samsolutions.recipes.DTO.UserDTO;
 import com.samsolutions.recipes.exeption.UserNotFoundException;
 import com.samsolutions.recipes.model.RoleEntity;
-import com.samsolutions.recipes.model.RoleName;
+import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.RoleRepository;

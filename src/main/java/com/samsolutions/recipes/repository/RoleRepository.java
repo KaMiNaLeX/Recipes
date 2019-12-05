@@ -1,7 +1,7 @@
 package com.samsolutions.recipes.repository;
 
 import com.samsolutions.recipes.model.RoleEntity;
-import com.samsolutions.recipes.model.RoleName;
+import com.samsolutions.recipes.model.Enum.RoleName;
 import org.springframework.stereotype.Repository;
 
 /**

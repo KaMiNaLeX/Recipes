@@ -48,6 +48,28 @@ public class UserEntity extends BaseEntity {
     )
     private List<UserRoleEntity> userRoles;
 
+    @OneToMany(mappedBy = "user",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            orphanRemoval = true
+    )
+    private List<FavoriteEntity> favoriteEntityList;
+
+    @OneToMany(mappedBy = "user",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            orphanRemoval = true
+    )
+    private List<RecipeEntity> recipeEntityList;
+
+    @JsonIgnore
+    public List<RecipeEntity> getRecipeEntityList() {
+        return recipeEntityList;
+    }
+
+    @JsonIgnore
+    public void setRecipeEntityList(List<RecipeEntity> recipeEntityList) {
+        this.recipeEntityList = recipeEntityList;
+    }
+
     @JsonIgnore
     public List<UserRoleEntity> getUserRoles() {
         return userRoles;
@@ -56,5 +78,15 @@ public class UserEntity extends BaseEntity {
     @JsonIgnore
     public void setUserRoles(List<UserRoleEntity> userRoles) {
         this.userRoles = userRoles;
+    }
+
+    @JsonIgnore
+    public List<FavoriteEntity> getFavoriteEntityList() {
+        return favoriteEntityList;
+    }
+
+    @JsonIgnore
+    public void setFavoriteEntityList(List<FavoriteEntity> favoriteEntityList) {
+        this.favoriteEntityList = favoriteEntityList;
     }
 }
