@@ -1,12 +1,17 @@
 package com.samsolutions.recipes.service.impl;
 
+import com.samsolutions.recipes.model.CategoryEntity;
+import com.samsolutions.recipes.model.CategoryRecipeEntity;
 import com.samsolutions.recipes.model.RecipeEntity;
+import com.samsolutions.recipes.repository.CategoryRecipeRepository;
+import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.repository.RecipeRepository;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +26,12 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryRecipeRepository categoryRecipeRepository;
 
     @Override
     public List<RecipeEntity> findAll() {
@@ -67,6 +78,18 @@ public class RecipeServiceImpl implements RecipeService {
     public void removeById(UUID uuid) {
         RecipeEntity removeEntity = recipeRepository.getById(uuid);
         recipeRepository.delete(removeEntity);
+    }
+
+    @Override
+    public List<RecipeEntity> getByCategoryName(String categoryName) {
+        CategoryEntity category = categoryRepository.getByName(categoryName);
+        List<CategoryRecipeEntity> categoryRecipeEntityList = categoryRecipeRepository.findAllByCategoryId(category.getId());
+        List<RecipeEntity> recipeEntityList = new ArrayList<>();
+        for (int i = 0; i < categoryRecipeEntityList.size(); i++) {
+            RecipeEntity recipeEntity = recipeRepository.getById(categoryRecipeEntityList.get(i).getRecipeId());
+            recipeEntityList.add(recipeEntity);
+        }
+        return recipeEntityList;
     }
 
 

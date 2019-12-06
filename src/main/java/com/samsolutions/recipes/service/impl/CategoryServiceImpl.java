@@ -27,12 +27,7 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
 
     @Override
     public CategoryEntity createCategory(CategoryEntity categoryEntity) {
-        CategoryEntity newCategory = new CategoryEntity();
-        newCategory.setName(categoryEntity.getName());
-        newCategory.setDescription(categoryEntity.getDescription());
-        newCategory.setTag(categoryEntity.getTag());
-        categoryRepository.save(newCategory);
-        return newCategory;
+        return categoryRepository.save(categoryEntity);
     }
 
     @Override

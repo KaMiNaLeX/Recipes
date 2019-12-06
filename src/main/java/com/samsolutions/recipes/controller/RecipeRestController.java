@@ -55,4 +55,9 @@ public class RecipeRestController {
     public void negativeVote(@PathVariable("id") UUID uuid) {
         recipeService.negativeVote(uuid);
     }
+
+    @GetMapping("/categoryName/{name}")
+    public List<RecipeEntity> findAllByCategoryName(@PathVariable("name") String categoryName) {
+        return recipeService.getByCategoryName(categoryName);
+    }
 }

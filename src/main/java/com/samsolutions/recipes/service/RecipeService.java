@@ -24,4 +24,6 @@ public interface RecipeService {
     void negativeVote(UUID uuid);
 
     void removeById(UUID uuid);
+
+    List<RecipeEntity> getByCategoryName(String categoryName);
 }
