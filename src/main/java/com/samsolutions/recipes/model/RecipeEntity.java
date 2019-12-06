@@ -76,6 +76,22 @@ public class RecipeEntity extends BaseEntity {
     )
     private List<RecipeIngredientEntity> recipeIngredientEntityList;
 
+    @OneToMany(mappedBy = "recipe",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            orphanRemoval = true
+    )
+    private List<CategoryRecipeEntity> categoryRecipeEntities;
+
+    @JsonIgnore
+    public List<CategoryRecipeEntity> getCategoryRecipeEntities() {
+        return categoryRecipeEntities;
+    }
+
+    @JsonIgnore
+    public void setCategoryRecipeEntities(List<CategoryRecipeEntity> categoryRecipeEntities) {
+        this.categoryRecipeEntities = categoryRecipeEntities;
+    }
+
     @JsonIgnore
     public List<CookingStepsEntity> getCookingStepsEntityList() {
         return cookingStepsEntityList;

@@ -77,6 +77,7 @@ public class CategoryServiceImplIT extends BaseTest {
         assertThat(updateCategory).isNotEqualTo(breakfast);
     }
 
+    /*
     @Test
     public void shouldReturnCategoryList() {
         CategoryEntity breakfast = new CategoryEntity("Breakfast",
@@ -93,6 +94,8 @@ public class CategoryServiceImplIT extends BaseTest {
 
         assertThat(list).hasSize(2);
     }
+    
+     */
 
 
     @TestConfiguration

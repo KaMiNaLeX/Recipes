@@ -21,7 +21,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/api/ingredient")
-public class IngredientController {
+public class IngredientRestController {
 
     @Autowired
     private IngredientService ingredientService;
