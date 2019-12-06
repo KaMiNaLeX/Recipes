@@ -28,6 +28,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { RegisterComponent } from './component/auth/register/register.component';
 import {AuthService} from "./service/auth.service";
+import { RecipeListComponent } from './component/recipe-list/recipe-list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {AuthService} from "./service/auth.service";
     LoginComponent,
     CategoryListComponent,
     UserProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    RecipeListComponent
   ],
   imports: [
     BrowserModule,

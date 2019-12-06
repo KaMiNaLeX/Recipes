@@ -2,6 +2,7 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.DTO.AuthBodyDTO;
 import com.samsolutions.recipes.config.JwtTokenProvider;
+import com.samsolutions.recipes.exeption.NotFoundException;
 import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
@@ -93,21 +94,26 @@ public class AuthController {
 
     @GetMapping("/role")
     public ResponseEntity userRole(Principal user) {
-        if (user == null) {
-            throw new BadCredentialsException("User does not login");
+        try {
+            if (user == null) {
+                throw new BadCredentialsException("User does not login");
+            }
+            String username = user.getName();
+            UserEntity userEntity = userService.findUserByEmail(username);
+            List<UserRoleEntity> userRoleList = userEntity.getUserRoles();
+            List<RoleName> roleNameList = new ArrayList<>();
+            for (int i = 0; i < userRoleList.size(); i++) {
+                UserRoleEntity userRoleEntity = userRoleList.get(i);
+                RoleName roleName = userRoleEntity.getRole().getName();
+                roleNameList.add(roleName);
+            }
+            Map<Object, Object> model = new HashMap<>();
+            model.put("username", username);
+            model.put("roles", roleNameList);
+            return ok(model);
+        } catch (NotFoundException ex) {
+            throw new NotFoundException("NOT_FOUND!");
         }
-        String username = user.getName();
-        UserEntity userEntity = userService.findUserByEmail(username);
-        List<UserRoleEntity> userRoleList = userEntity.getUserRoles();
-        List<RoleName> roleNameList = new ArrayList<>();
-        for (int i = 0; i < userRoleList.size(); i++) {
-            UserRoleEntity userRoleEntity = userRoleList.get(i);
-            RoleName roleName = userRoleEntity.getRole().getName();
-            roleNameList.add(roleName);
-        }
-        Map<Object, Object> model = new HashMap<>();
-        model.put("username", username);
-        model.put("roles", roleNameList);
-        return ok(model);
+
     }
 }

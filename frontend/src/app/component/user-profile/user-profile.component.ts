@@ -21,7 +21,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     let email = window.localStorage.getItem("email");
     if (!email) {
-      alert("Invalid action.")
+      alert("Invalid action.");
       this.router.navigate(['/']);
       return;
     }

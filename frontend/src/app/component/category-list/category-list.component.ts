@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Category} from "../../model/category";
 import {CategoryService} from "../../service/category.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-category-list',
@@ -13,13 +14,19 @@ export class CategoryListComponent implements OnInit {
   category: Category = new Category();
   showDeleteMessage = false;
 
-  constructor(private categoryService: CategoryService) {
+  constructor(private categoryService: CategoryService, private router: Router) {
   }
 
   ngOnInit() {
     this.categoryService.findAll().subscribe(data => {
       this.categories = data;
     });
+  }
+
+  getRipesByCategoryName(name: string) {
+    sessionStorage.removeItem('categoryName');
+    sessionStorage.setItem('categoryName', name);
+    this.router.navigate(['recipe-list']);
   }
 
   deleteCategory(id: number) {
