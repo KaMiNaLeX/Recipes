@@ -1,11 +1,14 @@
 package com.samsolutions.recipes.service.impl;
 
+import com.samsolutions.recipes.dto.IngredientDTO;
 import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.repository.IngredientRepository;
 import com.samsolutions.recipes.service.IngredientService;
+import com.samsolutions.recipes.service.ModelMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,32 +17,36 @@ import java.util.UUID;
  * @since 2019.11
  */
 @Service
-public class IngredientServiceImpl implements IngredientService {
+public class IngredientServiceImpl implements IngredientService, ModelMapperService {
 
     @Autowired
     private IngredientRepository ingredientRepository;
 
     @Override
-    public IngredientEntity createIngredient(IngredientEntity ingredient) {
+    public IngredientDTO createIngredient(IngredientDTO ingredient) {
         IngredientEntity saveIngredient = new IngredientEntity();
-        saveIngredient.setName(ingredient.getName());
-        saveIngredient.setCalories(ingredient.getCalories());
-        saveIngredient.setType(ingredient.getType());
-        return ingredientRepository.save(saveIngredient);
+        map(ingredient, saveIngredient);
+        map(ingredientRepository.save(saveIngredient), ingredient);
+        return ingredient;
     }
 
     @Override
-    public List<IngredientEntity> findAll() {
-        return ingredientRepository.findAll();
+    public List<IngredientDTO> findAll() {
+        List<IngredientDTO> ingredientDTOList = new ArrayList<>();
+        IngredientDTO ingredientDTO = new IngredientDTO();
+        ingredientDTOList.add(ingredientDTO);
+        map(ingredientRepository.findAll(), ingredientDTOList);
+        return ingredientDTOList;
     }
 
+    //todo: Why ingredient = null?
     @Override
-    public IngredientEntity updateIngredient(UUID uuid, IngredientEntity ingredient) {
+    public IngredientDTO updateIngredient(UUID uuid, IngredientDTO ingredient) {
         IngredientEntity updateIngredient = ingredientRepository.getById(uuid);
-        updateIngredient.setName(ingredient.getName());
-        updateIngredient.setCalories(ingredient.getCalories());
-        updateIngredient.setType(ingredient.getType());
-        return ingredientRepository.save(updateIngredient);
+        ingredient.setId(updateIngredient.getId());
+        map(ingredient, updateIngredient);
+        map(ingredientRepository.save(updateIngredient), ingredient);
+        return ingredient;
     }
 
     @Override
@@ -49,7 +56,9 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public IngredientEntity getById(UUID uuid) {
-        return ingredientRepository.getById(uuid);
+    public IngredientDTO getById(UUID uuid) {
+        IngredientDTO ingredientDTO = new IngredientDTO();
+        map(ingredientRepository.getById(uuid), ingredientDTO);
+        return ingredientDTO;
     }
 }

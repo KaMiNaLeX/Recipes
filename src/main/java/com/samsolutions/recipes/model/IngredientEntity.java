@@ -1,6 +1,5 @@
 package com.samsolutions.recipes.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.samsolutions.recipes.model.Enum.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,13 +46,4 @@ public class IngredientEntity extends BaseEntity {
     )
     private List<RecipeIngredientEntity> recipeIngredientEntityList;
 
-    @JsonIgnore
-    public List<RecipeIngredientEntity> getRecipeIngredientEntityList() {
-        return recipeIngredientEntityList;
-    }
-
-    @JsonIgnore
-    public void setRecipeIngredientEntityList(List<RecipeIngredientEntity> recipeIngredientEntityList) {
-        this.recipeIngredientEntityList = recipeIngredientEntityList;
-    }
 }

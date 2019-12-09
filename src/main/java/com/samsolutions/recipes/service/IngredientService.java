@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.service;
 
-import com.samsolutions.recipes.model.IngredientEntity;
+import com.samsolutions.recipes.dto.IngredientDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,13 +11,13 @@ import java.util.UUID;
  */
 public interface IngredientService {
 
-    IngredientEntity createIngredient(IngredientEntity ingredient);
+    IngredientDTO createIngredient(IngredientDTO ingredient);
 
-    List<IngredientEntity> findAll();
+    List<IngredientDTO> findAll();
 
-    IngredientEntity updateIngredient(UUID uuid, IngredientEntity ingredient);
+    IngredientDTO updateIngredient(UUID uuid, IngredientDTO ingredient);
 
     void removeById(UUID uuid);
 
-    IngredientEntity getById(UUID uuid);
+    IngredientDTO getById(UUID uuid);
 }

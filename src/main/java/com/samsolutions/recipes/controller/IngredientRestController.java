@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.model.IngredientEntity;
+import com.samsolutions.recipes.dto.IngredientDTO;
 import com.samsolutions.recipes.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,22 +27,22 @@ public class IngredientRestController {
     private IngredientService ingredientService;
 
     @GetMapping("/")
-    public List<IngredientEntity> findAll() {
+    public List<IngredientDTO> findAll() {
         return ingredientService.findAll();
     }
 
     @GetMapping("/{id}")
-    public IngredientEntity getById(@PathVariable("id") UUID uuid) {
+    public IngredientDTO getById(@PathVariable("id") UUID uuid) {
         return ingredientService.getById(uuid);
     }
 
     @PostMapping("/create")
-    public IngredientEntity createIngredient(@RequestBody IngredientEntity ingredient) {
+    public IngredientDTO createIngredient(@RequestBody IngredientDTO ingredient) {
         return ingredientService.createIngredient(ingredient);
     }
 
     @PutMapping("/update/{id}")
-    public IngredientEntity updateIngredient(@PathVariable("id") UUID uuid, IngredientEntity ingredient) {
+    public IngredientDTO updateIngredient(@PathVariable("id") UUID uuid, IngredientDTO ingredient) {
         return ingredientService.updateIngredient(uuid, ingredient);
     }
 
