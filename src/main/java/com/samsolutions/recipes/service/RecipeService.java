@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.service;
 
-import com.samsolutions.recipes.model.RecipeEntity;
+import com.samsolutions.recipes.dto.RecipeDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,11 +11,11 @@ import java.util.UUID;
  */
 public interface RecipeService {
 
-    List<RecipeEntity> findAll();
+    List<RecipeDTO> findAll();
 
-    RecipeEntity create(RecipeEntity recipeEntity);
+    RecipeDTO create(RecipeDTO recipeDTO);
 
-    RecipeEntity update(UUID uuid, RecipeEntity recipeEntity);
+    RecipeDTO update(UUID uuid, RecipeDTO recipeDTO);
 
     void positiveVote(UUID uuid);
 
@@ -23,5 +23,5 @@ public interface RecipeService {
 
     void removeById(UUID uuid);
 
-    List<RecipeEntity> getByCategoryName(String categoryName);
+    List<RecipeDTO> getByCategoryName(String categoryName);
 }

@@ -22,8 +22,7 @@ public interface FavoriteRepository extends BaseRepository<FavoriteEntity> {
             + " r.cooking_time as " + RecipeDTO.COOKINGTIME + ","
             + " r.last_modified as " + RecipeDTO.LASTMODIFIED + ","
             + " r.negative_votes as " + RecipeDTO.NEGATIVEVOTES + ","
-            + " r.positive_votes as " + RecipeDTO.POSITIVEVOTES + ","
-            + " u.login as " + RecipeDTO.AUTHOR
+            + " r.positive_votes as " + RecipeDTO.POSITIVEVOTES
             + " FROM recipe r "
             + " inner join user u on r.author_id = u.id"
             + " inner join favorite f on u.id = f.user_id where f.id=:ID",

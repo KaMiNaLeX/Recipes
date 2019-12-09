@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.model.RecipeEntity;
+import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,18 +27,18 @@ public class RecipeRestController {
     private RecipeService recipeService;
 
     @GetMapping("/")
-    public List<RecipeEntity> findAll() {
+    public List<RecipeDTO> findAll() {
         return recipeService.findAll();
     }
 
     @PostMapping("/create")
-    public RecipeEntity create(@RequestBody RecipeEntity recipeEntity) {
-        return recipeService.create(recipeEntity);
+    public RecipeDTO create(@RequestBody RecipeDTO recipeDTO) {
+        return recipeService.create(recipeDTO);
     }
 
     @PutMapping("/update/{id}")
-    public RecipeEntity update(@PathVariable("id") UUID uuid, RecipeEntity recipeEntity) {
-        return recipeService.update(uuid, recipeEntity);
+    public RecipeDTO update(@PathVariable("id") UUID uuid, RecipeDTO recipeDTO) {
+        return recipeService.update(uuid, recipeDTO);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -57,7 +57,8 @@ public class RecipeRestController {
     }
 
     @GetMapping("/categoryName/{name}")
-    public List<RecipeEntity> findAllByCategoryName(@PathVariable("name") String categoryName) {
+    public List<RecipeDTO> findAllByCategoryName(@PathVariable("name") String categoryName) {
         return recipeService.getByCategoryName(categoryName);
     }
+
 }

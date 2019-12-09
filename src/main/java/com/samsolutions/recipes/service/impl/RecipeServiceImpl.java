@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.service.impl;
 
+import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.CategoryRecipeEntity;
@@ -8,6 +9,7 @@ import com.samsolutions.recipes.repository.CategoryRecipeRepository;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.repository.RecipeRepository;
 import com.samsolutions.recipes.repository.UserRepository;
+import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
 /**
  * @author kaminskiy.alexey
  * @since 2019.12
  */
 @Service
-public class RecipeServiceImpl implements RecipeService {
+public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     @Autowired
     private RecipeRepository recipeRepository;
 
@@ -35,30 +38,33 @@ public class RecipeServiceImpl implements RecipeService {
     private CategoryRecipeRepository categoryRecipeRepository;
 
     @Override
-    public List<RecipeEntity> findAll() {
-        return recipeRepository.findAll();
+    public List<RecipeDTO> findAll() {
+        List<RecipeDTO> recipeDTOList = new ArrayList<>();
+        RecipeDTO recipeDTO = new RecipeDTO();
+        recipeDTOList.add(recipeDTO);
+        map(recipeRepository.findAll(), recipeDTOList);
+        return recipeDTOList;
     }
 
     @Override
-    public RecipeEntity create(RecipeEntity recipeEntity) {
-        recipeEntity.setNegativeVotes(0);
-        recipeEntity.setPositiveVotes(0);
-        recipeEntity.setUser(userRepository.getById(recipeEntity.getAuthorId()));
-        return recipeRepository.save(recipeEntity);
+    public RecipeDTO create(RecipeDTO recipeDTO) {
+        recipeDTO.setNegativeVotes(0);
+        recipeDTO.setPositiveVotes(0);
+        RecipeEntity recipeEntity = new RecipeEntity();
+        map(recipeDTO, recipeEntity);
+        map(recipeRepository.save(recipeEntity), recipeDTO);
+        return recipeDTO;
     }
 
-    //todo: why AuthorId = null?
+    //todo: need to fix. Why recipeDTO = null
     @Override
-    public RecipeEntity update(UUID uuid, RecipeEntity recipeEntity) {
+    public RecipeDTO update(UUID uuid, RecipeDTO recipeDTO) {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);
-        updateEntity.setPositiveVotes(recipeEntity.getPositiveVotes());
-        updateEntity.setNegativeVotes(recipeEntity.getNegativeVotes());
-        updateEntity.setAuthorId(recipeEntity.getAuthorId());
-        updateEntity.setCookingDifficulty(recipeEntity.getCookingDifficulty());
-        updateEntity.setCookingTime(recipeEntity.getCookingTime());
-        updateEntity.setName(recipeEntity.getName());
-        updateEntity.setUser(userRepository.getById(recipeEntity.getAuthorId()));
-        return recipeRepository.save(updateEntity);
+        recipeDTO.setId(updateEntity.getId());
+        recipeDTO.setAuthorId(recipeDTO.getAuthorId());
+        map(recipeDTO, updateEntity);
+        map(recipeRepository.save(updateEntity), recipeDTO);
+        return recipeDTO;
     }
 
     @Override
@@ -81,9 +87,14 @@ public class RecipeServiceImpl implements RecipeService {
         recipeRepository.delete(removeEntity);
     }
 
+
     @Override
-    public List<RecipeEntity> getByCategoryName(String categoryName) {
+    public List<RecipeDTO> getByCategoryName(String categoryName) {
         try {
+            List<RecipeDTO> recipeDTOList = new ArrayList<>();
+            RecipeDTO recipeDTO = new RecipeDTO();
+            recipeDTOList.add(recipeDTO);
+
             CategoryEntity category = categoryRepository.getByName(categoryName);
             List<CategoryRecipeEntity> categoryRecipeEntityList =
                     categoryRecipeRepository.findAllByCategoryId(category.getId());
@@ -92,12 +103,12 @@ public class RecipeServiceImpl implements RecipeService {
                 RecipeEntity recipeEntity = recipeRepository.getById(categoryRecipeEntityList.get(i).getRecipeId());
                 recipeEntityList.add(recipeEntity);
             }
-            return recipeEntityList;
+            map(recipeEntityList, recipeDTOList);
+            return recipeDTOList;
         } catch (NotFoundException | NullPointerException ex) {
             throw new NotFoundException("NOT_FOUND");
         }
 
     }
-
 
 }
