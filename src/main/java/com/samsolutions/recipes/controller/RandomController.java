@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Controller to create User with random fields.
+ * This controller is used to generate random fake data. To the programmer not to invent values, we use a faker.
+ * This controller is not used in production.
  *
  * @author kaminskiy.alexey
  * @since 2019.10

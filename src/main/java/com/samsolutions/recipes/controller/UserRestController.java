@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.DTO.UserDTO;
+import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

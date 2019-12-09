@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.service.impl;
 
-import com.samsolutions.recipes.DTO.CookingStepDTO;
+import com.samsolutions.recipes.dto.CookingStepDTO;
 import com.samsolutions.recipes.model.CookingStepsEntity;
 import com.samsolutions.recipes.repository.CookingStepsRepository;
 import com.samsolutions.recipes.repository.RecipeRepository;

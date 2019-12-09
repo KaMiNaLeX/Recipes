@@ -1,4 +1,4 @@
-package com.samsolutions.recipes.exeption;
+package com.samsolutions.recipes.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

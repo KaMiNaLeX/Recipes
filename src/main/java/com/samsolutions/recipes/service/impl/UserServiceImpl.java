@@ -1,8 +1,8 @@
 package com.samsolutions.recipes.service.impl;
 
-import com.samsolutions.recipes.DTO.RoleDTO;
-import com.samsolutions.recipes.DTO.UserDTO;
-import com.samsolutions.recipes.exeption.UserNotFoundException;
+import com.samsolutions.recipes.dto.RoleDTO;
+import com.samsolutions.recipes.dto.UserDTO;
+import com.samsolutions.recipes.exception.UserNotFoundException;
 import com.samsolutions.recipes.model.RoleEntity;
 import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -236,6 +237,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void deleteRole(String login, String role, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
         userRepository.deleteRole(login, role);

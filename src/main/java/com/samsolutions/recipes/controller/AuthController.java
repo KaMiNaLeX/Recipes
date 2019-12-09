@@ -1,8 +1,8 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.DTO.AuthBodyDTO;
+import com.samsolutions.recipes.dto.AuthBodyDTO;
 import com.samsolutions.recipes.config.JwtTokenProvider;
-import com.samsolutions.recipes.exeption.NotFoundException;
+import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;

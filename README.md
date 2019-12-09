@@ -10,7 +10,7 @@
 
 ## Technologies
 * JDK 
-* Spring Boot 2.1.9
+* Spring Boot 2.2.0
 * Spring Security
 * Thymeleaf
 

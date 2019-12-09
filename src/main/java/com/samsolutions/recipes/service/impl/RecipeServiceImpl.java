@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.service.impl;
 
-import com.samsolutions.recipes.exeption.NotFoundException;
+import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.CategoryRecipeEntity;
 import com.samsolutions.recipes.model.RecipeEntity;
@@ -85,7 +85,8 @@ public class RecipeServiceImpl implements RecipeService {
     public List<RecipeEntity> getByCategoryName(String categoryName) {
         try {
             CategoryEntity category = categoryRepository.getByName(categoryName);
-            List<CategoryRecipeEntity> categoryRecipeEntityList = categoryRecipeRepository.findAllByCategoryId(category.getId());
+            List<CategoryRecipeEntity> categoryRecipeEntityList =
+                    categoryRecipeRepository.findAllByCategoryId(category.getId());
             List<RecipeEntity> recipeEntityList = new ArrayList<>();
             for (int i = 0; i < categoryRecipeEntityList.size(); i++) {
                 RecipeEntity recipeEntity = recipeRepository.getById(categoryRecipeEntityList.get(i).getRecipeId());

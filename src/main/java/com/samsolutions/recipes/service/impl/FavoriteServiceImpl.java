@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.service.impl;
 
-import com.samsolutions.recipes.DTO.RecipeDTO;
+import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.model.FavoriteEntity;
 import com.samsolutions.recipes.repository.FavoriteRepository;
 import com.samsolutions.recipes.service.FavoriteService;

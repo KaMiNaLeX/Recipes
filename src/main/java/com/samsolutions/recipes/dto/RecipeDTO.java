@@ -1,6 +1,5 @@
-package com.samsolutions.recipes.DTO;
+package com.samsolutions.recipes.dto;
 
-import com.samsolutions.recipes.model.Enum.CookingDifficulty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

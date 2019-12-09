@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.repository;
 
-import com.samsolutions.recipes.DTO.RoleDTO;
+import com.samsolutions.recipes.dto.RoleDTO;
 import com.samsolutions.recipes.model.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,6 @@ public interface UserRepository extends BaseRepository<UserEntity> {
 
     Page<UserEntity> findAll(Pageable pageable);
 
-    @Transactional
     @Modifying
     @Query(value = "DELETE FROM user_role WHERE user_id = (select id from USER u where u.login=:LOGIN) AND"
             + " role_id = (select id from ROLE r where r.name=:ROLE)",

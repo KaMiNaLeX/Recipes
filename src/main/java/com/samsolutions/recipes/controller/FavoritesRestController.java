@@ -1,7 +1,6 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.DTO.FavoriteDTO;
-import com.samsolutions.recipes.DTO.RecipeDTO;
+import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.model.FavoriteEntity;
 import com.samsolutions.recipes.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.samsolutions.recipes.DTO;
+package com.samsolutions.recipes.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

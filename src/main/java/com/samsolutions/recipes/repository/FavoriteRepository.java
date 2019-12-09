@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.repository;
 
-import com.samsolutions.recipes.DTO.RecipeDTO;
+import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.model.FavoriteEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

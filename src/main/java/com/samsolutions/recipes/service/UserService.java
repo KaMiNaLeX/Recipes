@@ -1,8 +1,7 @@
 package com.samsolutions.recipes.service;
 
-import com.samsolutions.recipes.DTO.UserDTO;
+import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.model.UserEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -16,7 +15,6 @@ import java.util.UUID;
  * @author kaminskiy.alexey
  * @since 2019.10
  */
-@Service
 public interface UserService {
     UserEntity getById(UUID uuid);
 
