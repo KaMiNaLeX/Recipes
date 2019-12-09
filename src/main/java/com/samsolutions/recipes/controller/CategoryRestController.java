@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.model.CategoryEntity;
+import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,12 +29,12 @@ public class CategoryRestController {
     private CategoryService categoryService;
 
     @GetMapping("/")
-    public List<CategoryEntity> findAll() {
+    public List<CategoryDTO> findAll() {
         return categoryService.findAll();
     }
 
     @GetMapping("/id/{id}")
-    public CategoryEntity getById(@PathVariable("id") UUID uuid) {
+    public CategoryDTO getById(@PathVariable("id") UUID uuid) {
         return categoryService.getById(uuid);
     }
 
@@ -44,12 +44,12 @@ public class CategoryRestController {
     }
 
     @PostMapping("/create")
-    public CategoryEntity createCategory(@RequestBody CategoryEntity categoryEntity) {
-        return categoryService.createCategory(categoryEntity);
+    public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO) {
+        return categoryService.createCategory(categoryDTO);
     }
 
     @PutMapping("/update/{id}")
-    public CategoryEntity updateCategory(@PathVariable("id") UUID uuid, @RequestBody CategoryEntity categoryEntity) {
-        return categoryService.updateCategory(uuid, categoryEntity);
+    public CategoryDTO updateCategory(@PathVariable("id") UUID uuid, @RequestBody CategoryDTO categoryDTO) {
+        return categoryService.updateCategory(uuid, categoryDTO);
     }
 }

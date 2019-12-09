@@ -1,6 +1,6 @@
 package com.samsolutions.recipes.service;
 
-import com.samsolutions.recipes.model.CategoryEntity;
+import com.samsolutions.recipes.dto.CategoryDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,16 +12,16 @@ import java.util.UUID;
  * @since 2019.11
  */
 public interface CategoryService {
-    CategoryEntity createCategory(CategoryEntity categoryEntity);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
 
-    CategoryEntity updateCategory(UUID uuid, CategoryEntity categoryEntity);
+    CategoryDTO updateCategory(UUID uuid, CategoryDTO categoryDTO);
 
     void removeById(UUID uuid);
 
-    List<CategoryEntity> findAll();
+    List<CategoryDTO> findAll();
 
-    CategoryEntity getById(UUID uuid);
+    CategoryDTO getById(UUID uuid);
 
-    CategoryEntity getByName(String name);
+    CategoryDTO getByName(String name);
 
 }

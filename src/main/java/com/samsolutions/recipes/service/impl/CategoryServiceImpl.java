@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.service.impl;
 
+import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.service.CategoryService;
@@ -8,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,18 +28,24 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     private CategoryRepository categoryRepository;
 
     @Override
-    public CategoryEntity createCategory(CategoryEntity categoryEntity) {
-        return categoryRepository.save(categoryEntity);
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        CategoryEntity categoryEntity = new CategoryEntity();
+        map(categoryDTO, categoryEntity);
+        map(categoryRepository.save(categoryEntity), categoryDTO);
+        return categoryDTO;
     }
 
     @Override
-    public CategoryEntity updateCategory(UUID uuid, CategoryEntity categoryEntity) {
+    public CategoryDTO updateCategory(UUID uuid, CategoryDTO categoryDTO) {
         CategoryEntity updateCategory = categoryRepository.getById(uuid);
-        updateCategory.setName(categoryEntity.getName());
-        updateCategory.setDescription(categoryEntity.getDescription());
-        updateCategory.setTag(categoryEntity.getTag());
-        categoryRepository.save(updateCategory);
-        return updateCategory;
+        CategoryDTO updateCategoryDTO = new CategoryDTO();
+        updateCategoryDTO.setName(categoryDTO.getName());
+        updateCategoryDTO.setDescription(categoryDTO.getDescription());
+        updateCategoryDTO.setTag(categoryDTO.getTag());
+        updateCategoryDTO.setId(updateCategory.getId());
+        map(updateCategoryDTO, updateCategory);
+        map(categoryRepository.save(updateCategory), updateCategoryDTO);
+        return updateCategoryDTO;
     }
 
     @Override
@@ -47,18 +55,26 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     }
 
     @Override
-    public List<CategoryEntity> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> findAll() {
+        List<CategoryDTO> categoryDTOList = new ArrayList<>();
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTOList.add(categoryDTO);
+        map(categoryRepository.findAll(), categoryDTOList);
+        return categoryDTOList;
     }
 
     @Override
-    public CategoryEntity getById(UUID uuid) {
-        return categoryRepository.getById(uuid);
+    public CategoryDTO getById(UUID uuid) {
+        CategoryDTO categoryDTO = new CategoryDTO();
+        map(categoryRepository.getById(uuid), categoryDTO);
+        return categoryDTO;
     }
 
     @Override
-    public CategoryEntity getByName(String name) {
-        return categoryRepository.getByName(name);
+    public CategoryDTO getByName(String name) {
+        CategoryDTO categoryDTO = new CategoryDTO();
+        map(categoryRepository.getByName(name), categoryDTO);
+        return categoryDTO;
     }
 
 }

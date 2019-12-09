@@ -1,6 +1,5 @@
 package com.samsolutions.recipes.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,13 +41,4 @@ public class CategoryEntity extends BaseEntity {
     )
     private List<CategoryRecipeEntity> categoryRecipeEntities;
 
-    @JsonIgnore
-    public List<CategoryRecipeEntity> getCategoryRecipeEntities() {
-        return categoryRecipeEntities;
-    }
-
-    @JsonIgnore
-    public void setCategoryRecipeEntities(List<CategoryRecipeEntity> categoryRecipeEntities) {
-        this.categoryRecipeEntities = categoryRecipeEntities;
-    }
 }
