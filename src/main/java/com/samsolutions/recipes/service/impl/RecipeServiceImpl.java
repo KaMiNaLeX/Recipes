@@ -224,6 +224,8 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         }
         map(ingredientEntityList, createRecipeDTO.getIngredientRecipeDTOList());
         map(recipeEntity.getRecipeIngredientEntityList(), createRecipeDTO.getIngredientRecipeDTOList());
+        int size = createRecipeDTO.getIngredientRecipeDTOList().size();
+        createRecipeDTO.getIngredientRecipeDTOList().remove(size - 1);
         return createRecipeDTO;
     }
 

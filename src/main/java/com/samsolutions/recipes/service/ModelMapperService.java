@@ -13,17 +13,6 @@ import java.util.List;
  */
 
 public interface ModelMapperService {
-    /*
-    static Field[] add(Field[] arr, Field[] elements) {
-        Field[] tempArr = new Field[arr.length + elements.length];
-        System.arraycopy(arr, 0, tempArr, 0, arr.length);
-
-        for (int i = 0; i < elements.length; i++)
-            tempArr[arr.length + i] = elements[i];
-        return tempArr;
-    }
-
-     */
 
     default void map(Object src, Object dest) {
         ModelMapper modelMapper = new ModelMapper();
