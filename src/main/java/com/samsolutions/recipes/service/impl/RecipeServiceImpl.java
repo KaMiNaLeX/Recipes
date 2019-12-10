@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
+import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.CategoryRecipeEntity;
@@ -114,6 +115,12 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             throw new NotFoundException("NOT_FOUND");
         }
 
+    }
+
+    @Override
+    @Transactional
+    public CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) {
+        return null;
     }
 
 }

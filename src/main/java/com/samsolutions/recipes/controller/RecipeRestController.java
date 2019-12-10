@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
+import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,6 +60,11 @@ public class RecipeRestController {
     @GetMapping("/categoryName/{name}")
     public List<RecipeDTO> findAllByCategoryName(@PathVariable("name") String categoryName) {
         return recipeService.getByCategoryName(categoryName);
+    }
+
+    @PostMapping("/createRecipe")
+    public CreateRecipeDTO createRecipeDTO(@RequestBody CreateRecipeDTO createRecipeDTO) {
+        return recipeService.createRecipeDTO(createRecipeDTO);
     }
 
 }
