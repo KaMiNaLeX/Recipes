@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,9 +51,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
         UserEntity user = userRepository.findByEmail(email);
-
         if (user != null) {
             List<GrantedAuthority> authorities = getUserAuthority(user.getUserRoles());
             return buildUserForAuthentication(user, authorities);
@@ -75,6 +74,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
 
+    @Transactional
     public void saveUser(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         UserEntity saveUser = userRepository.save(user);

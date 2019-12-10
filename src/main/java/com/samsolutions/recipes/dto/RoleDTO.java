@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Role DTO.
@@ -22,6 +23,7 @@ public class RoleDTO {
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
 
+    private UUID id;
     private String name;
     private String description;
 

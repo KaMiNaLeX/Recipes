@@ -37,7 +37,7 @@ public class RecipeRestController {
     }
 
     @PutMapping("/update/{id}")
-    public RecipeDTO update(@PathVariable("id") UUID uuid, RecipeDTO recipeDTO) {
+    public RecipeDTO update(@PathVariable("id") UUID uuid, @RequestBody RecipeDTO recipeDTO) {
         return recipeService.update(uuid, recipeDTO);
     }
 

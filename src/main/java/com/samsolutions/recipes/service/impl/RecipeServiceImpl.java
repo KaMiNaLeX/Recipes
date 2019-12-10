@@ -13,6 +13,7 @@ import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +57,8 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         return recipeDTO;
     }
 
-    //todo: need to fix. Why recipeDTO = null
     @Override
+    @Transactional
     public RecipeDTO update(UUID uuid, RecipeDTO recipeDTO) {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);
         recipeDTO.setId(updateEntity.getId());
@@ -68,6 +69,7 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void positiveVote(UUID uuid) {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);
         updateEntity.setPositiveVotes(updateEntity.getPositiveVotes() + 1);
@@ -75,6 +77,7 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void negativeVote(UUID uuid) {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);
         updateEntity.setNegativeVotes(updateEntity.getNegativeVotes() + 1);
@@ -82,6 +85,7 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void removeById(UUID uuid) {
         RecipeEntity removeEntity = recipeRepository.getById(uuid);
         recipeRepository.delete(removeEntity);
@@ -89,6 +93,7 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
 
 
     @Override
+    @Transactional
     public List<RecipeDTO> getByCategoryName(String categoryName) {
         try {
             List<RecipeDTO> recipeDTOList = new ArrayList<>();

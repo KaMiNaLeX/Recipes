@@ -7,6 +7,7 @@ import com.samsolutions.recipes.service.IngredientService;
 import com.samsolutions.recipes.service.ModelMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,8 @@ public class IngredientServiceImpl implements IngredientService, ModelMapperServ
         return ingredientDTOList;
     }
 
-    //todo: Why ingredient = null?
     @Override
+    @Transactional
     public IngredientDTO updateIngredient(UUID uuid, IngredientDTO ingredient) {
         IngredientEntity updateIngredient = ingredientRepository.getById(uuid);
         ingredient.setId(updateIngredient.getId());
@@ -50,6 +51,7 @@ public class IngredientServiceImpl implements IngredientService, ModelMapperServ
     }
 
     @Override
+    @Transactional
     public void removeById(UUID uuid) {
         IngredientEntity removeIngredient = ingredientRepository.getById(uuid);
         ingredientRepository.delete(removeIngredient);

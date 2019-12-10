@@ -1,6 +1,5 @@
 package com.samsolutions.recipes.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.samsolutions.recipes.model.Enum.RoleName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,13 +41,4 @@ public class RoleEntity extends BaseEntity {
     )
     private List<UserRoleEntity> userRoles;
 
-    @JsonIgnore
-    public List<UserRoleEntity> getUserRoles() {
-        return userRoles;
-    }
-
-    @JsonIgnore
-    public void setUserRoles(List<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
-    }
 }

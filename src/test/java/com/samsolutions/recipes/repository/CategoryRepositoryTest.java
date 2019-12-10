@@ -46,8 +46,7 @@ public class CategoryRepositoryTest extends BaseTest {
         CategoryEntity found = categoryRepository.getByName(breakfast.getName());
 
         //then
-        assertThat(found.getId())
-                .isEqualTo(breakfast.getId());
+        assertThat(found.getId()).isEqualTo(breakfast.getId());
     }
 
 }

@@ -7,6 +7,7 @@ import com.samsolutions.recipes.service.FavoriteService;
 import com.samsolutions.recipes.service.ModelMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class FavoriteServiceImpl implements FavoriteService, ModelMapperService 
     }
 
     @Override
+    @Transactional
     public void removeById(UUID uuid) {
         FavoriteEntity favoriteEntity = favoriteRepository.getById(uuid);
         favoriteRepository.removeById(favoriteEntity.getId());

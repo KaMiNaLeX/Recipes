@@ -68,18 +68,21 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
 
     @Override
+    @Transactional
     public void removeByLogin(String login) {
         UserEntity userEntity = userRepository.getByLogin(login);
         userRepository.delete(userEntity);
     }
 
     @Override
+    @Transactional
     public void removeById(UUID uuid) {
         UserEntity userEntity = userRepository.getById(uuid);
         userRepository.delete(userEntity);
     }
 
     @Override
+    @Transactional
     public UserEntity createUser(UserEntity userEntity) {
         try {
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
@@ -113,6 +116,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public UserEntity updateUser(UUID uuid, UserEntity userEntity) {
         try {
             UserEntity newUserEntity = userRepository.getById(uuid);
@@ -139,6 +143,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void addUser(@Valid UserEntity userEntity, BindingResult result, Model model) {
         try {
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
@@ -168,6 +173,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void prepareModelForEditRoleForm(String login, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
         List<Map<String, Object>> results = userRepository.allRoles(login);
@@ -179,6 +185,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void updateUser(UserEntity userEntity, BindingResult result, Model model) {
         try {
             UserEntity newUserEntity = userRepository.getById(userEntity.getId());
@@ -202,6 +209,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(String login, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
         userRepository.delete(userEntity);
@@ -214,6 +222,7 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
+    @Transactional
     public void addRole(String login, String role, Model model) {
         UserEntity userEntity = userRepository.getByLogin(login);
         RoleEntity roleEntity = roleRepository.findByName(RoleName.valueOf(role));

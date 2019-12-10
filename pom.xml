@@ -11,8 +11,8 @@
     <groupId>com.samsolutions</groupId>
     <artifactId>recipes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Recipes</name>
-    <description>Recipes Management System</description>
+    <name>Recipes Management System</name>
+    <description>Discover the best recipes all over the world. Cook what you want, eat what you dream about!</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -32,6 +32,7 @@
     </properties>
     <dependencies>
         <dependency>
+            <!--https://jwt.io/introduction/-->
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>${jwt.version}</version>

@@ -42,7 +42,7 @@ public class IngredientRestController {
     }
 
     @PutMapping("/update/{id}")
-    public IngredientDTO updateIngredient(@PathVariable("id") UUID uuid, IngredientDTO ingredient) {
+    public IngredientDTO updateIngredient(@PathVariable("id") UUID uuid, @RequestBody IngredientDTO ingredient) {
         return ingredientService.updateIngredient(uuid, ingredient);
     }
 

@@ -8,6 +8,7 @@ import com.samsolutions.recipes.service.ModelMapperService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     }
 
     @Override
+    @Transactional
     public CategoryDTO updateCategory(UUID uuid, CategoryDTO categoryDTO) {
         CategoryEntity updateCategory = categoryRepository.getById(uuid);
         CategoryDTO updateCategoryDTO = new CategoryDTO();
@@ -49,6 +51,7 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     }
 
     @Override
+    @Transactional
     public void removeById(UUID uuid) {
         CategoryEntity categoryEntity = categoryRepository.getById(uuid);
         categoryRepository.delete(categoryEntity);

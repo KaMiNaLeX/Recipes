@@ -39,7 +39,8 @@ public class RecipeDTO {
     public RecipeDTO(Map<String, Object> values) {
         this.id = values.get(ID) != null ? (UUID) values.get(ID) : null;
         this.name = values.get(NAME) != null ? (String) values.get(NAME) : null;
-        this.cookingDifficulty = values.get(COOKINGDIFFICULTY) != null ? (CookingDifficulty) values.get(COOKINGDIFFICULTY) : null;
+        this.cookingDifficulty = values.get(COOKINGDIFFICULTY) != null ? (CookingDifficulty)
+                values.get(COOKINGDIFFICULTY) : null;
         this.cookingTime = values.get(COOKINGTIME) != null ? (int) values.get(COOKINGTIME) : null;
         this.negativeVotes = values.get(NEGATIVEVOTES) != null ? (int) values.get(NEGATIVEVOTES) : null;
         this.lastModified = values.get(LASTMODIFIED) != null ? (Date) values.get(LASTMODIFIED) : null;

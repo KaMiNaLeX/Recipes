@@ -9,6 +9,7 @@ import com.samsolutions.recipes.service.ModelMapperService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,8 +30,8 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
     @Autowired
     private RecipeRepository recipeRepository;
 
-
     @Override
+    @Transactional
     public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) throws IOException {
         try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
             cookingStepsEntity.setActive(true);
@@ -43,6 +44,7 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
 
     //todo: need to fix
     @Override
+    @Transactional
     public CookingStepDTO createStepDTO(CookingStepDTO cookingStepDTO) throws IOException {
         try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
             CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
@@ -55,7 +57,9 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
         }
     }
 
+
     @Override
+    @Transactional
     public CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) throws IOException {
         try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
             CookingStepsEntity updateStep = cookingStepsRepository.getById(id);
@@ -71,7 +75,9 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
         }
     }
 
+
     @Override
+    @Transactional
     public void removeStepById(UUID uuid) {
         CookingStepsEntity deleteStep = cookingStepsRepository.getById(uuid);
         cookingStepsRepository.delete(deleteStep);
