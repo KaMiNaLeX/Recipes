@@ -16,9 +16,9 @@ import java.util.UUID;
  * @since 2019.10
  */
 public interface UserService {
-    UserEntity getById(UUID uuid);
+    UserDTO getById(UUID uuid);
 
-    UserEntity getByLogin(String login);
+    UserDTO getByLogin(String login);
 
     void removeByLogin(String login);
 
@@ -52,5 +52,5 @@ public interface UserService {
 
     UserEntity updateUser(UUID uuid, UserEntity userEntity);
 
-    UserEntity getByEmail(String email);
+    UserDTO getByEmail(String email);
 }

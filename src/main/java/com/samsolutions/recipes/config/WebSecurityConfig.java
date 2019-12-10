@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs",
                         "/autoconfig",
                         "/assets/**",
-                        "/api/**",
+                        //"/api/**",
                         "/webjars/**");
     }
 

@@ -3,6 +3,8 @@ package com.samsolutions.recipes.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 /**
  * User DTO.
  *
@@ -12,6 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
+
+    private UUID id;
     private String firstName;
     private String lastName;
     private String email;

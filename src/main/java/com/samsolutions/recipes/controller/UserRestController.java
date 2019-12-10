@@ -35,7 +35,7 @@ public class UserRestController {
     }
 
     @GetMapping("/email/{email}")
-    public UserEntity getByEmail(@PathVariable("email") String email) {
+    public UserDTO getByEmail(@PathVariable("email") String email) {
         return userService.getByEmail(email);
     }
 
@@ -45,12 +45,12 @@ public class UserRestController {
     }
 
     @GetMapping("/id/{id}")
-    public UserEntity getById(@PathVariable("id") UUID uuid) {
+    public UserDTO getById(@PathVariable("id") UUID uuid) {
         return userService.getById(uuid);
     }
 
     @GetMapping("/login/{login}")
-    public UserEntity getByLogin(@PathVariable("login") String login) {
+    public UserDTO getByLogin(@PathVariable("login") String login) {
         return userService.getByLogin(login);
     }
 

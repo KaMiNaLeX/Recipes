@@ -2,9 +2,8 @@ package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.RoleDTO;
 import com.samsolutions.recipes.dto.UserDTO;
-import com.samsolutions.recipes.exception.UserNotFoundException;
-import com.samsolutions.recipes.model.RoleEntity;
 import com.samsolutions.recipes.model.Enum.RoleName;
+import com.samsolutions.recipes.model.RoleEntity;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.RoleRepository;
@@ -52,39 +51,31 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserEntity getById(UUID uuid) {
+    public UserDTO getById(UUID uuid) {
         UserEntity userEntity = userRepository.getById(uuid);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
-        }
-        return userEntity;
+        UserDTO userDTO = new UserDTO();
+        map(userEntity, userDTO);
+        return userDTO;
     }
 
     @Override
-    public UserEntity getByLogin(String login) {
+    public UserDTO getByLogin(String login) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", login));
-        }
-        return userEntity;
+        UserDTO userDTO = new UserDTO();
+        map(userEntity, userDTO);
+        return userDTO;
     }
 
 
     @Override
     public void removeByLogin(String login) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", login));
-        }
         userRepository.delete(userEntity);
     }
 
     @Override
     public void removeById(UUID uuid) {
         UserEntity userEntity = userRepository.getById(uuid);
-        if (userEntity == null) {
-            throw new UserNotFoundException(String.format("User with id %s not found", uuid));
-        }
         userRepository.delete(userEntity);
     }
 
@@ -140,8 +131,11 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     }
 
     @Override
-    public UserEntity getByEmail(String email) {
-        return userRepository.getByEmail(email);
+    public UserDTO getByEmail(String email) {
+        UserEntity userEntity = userRepository.getByEmail(email);
+        UserDTO userDTO = new UserDTO();
+        map(userEntity, userDTO);
+        return userDTO;
     }
 
     @Override
