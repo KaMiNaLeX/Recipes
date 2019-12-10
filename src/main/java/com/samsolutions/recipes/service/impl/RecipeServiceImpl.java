@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
+import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.IngredientRecipeDTO;
@@ -192,9 +193,17 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         RecipeEntity recipeEntity = recipeRepository.getById(uuid);
         CreateRecipeDTO createRecipeDTO = new CreateRecipeDTO();
         map(recipeEntity, createRecipeDTO);
-        //map categoryName
-        CategoryRecipeEntity categoryRecipeEntity = new CategoryRecipeEntity();
-        categoryRecipeRepository.findAllByCategoryId(uuid);
+        //map categoryRecipeEntityList to DTO
+        List<CategoryRecipeDTO> categoryRecipeDTOList = new ArrayList<>();
+        List<CategoryRecipeEntity> categoryRecipeEntityList = categoryRecipeRepository.findAllByRecipeId(uuid);
+        for (int i = 0; i < categoryRecipeEntityList.size(); i++) {
+            CategoryEntity categoryEntity = categoryRecipeEntityList.get(i).getCategory();
+            CategoryRecipeDTO categoryRecipeDTO = new CategoryRecipeDTO();
+            map(categoryEntity, categoryRecipeDTO);
+            categoryRecipeDTOList.add(categoryRecipeDTO);
+            createRecipeDTO.setCategoryRecipeDTOList(categoryRecipeDTOList);
+        }
+
         //map cookingStepRecipeEntityList to DTO
         CookingStepRecipeDTO cookingStepRecipeDTO = new CookingStepRecipeDTO();
         List<CookingStepRecipeDTO> cookingStepRecipeDTOList = new ArrayList<>();
@@ -206,6 +215,14 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         List<IngredientRecipeDTO> ingredientRecipeDTOList = new ArrayList<>();
         ingredientRecipeDTOList.add(ingredientRecipeDTO);
         createRecipeDTO.setIngredientRecipeDTOList(ingredientRecipeDTOList);
+
+        List<RecipeIngredientEntity> recipeIngredientEntityList = recipeEntity.getRecipeIngredientEntityList();
+        List<IngredientEntity> ingredientEntityList = new ArrayList<>();
+        for (int i = 0; i < recipeIngredientEntityList.size(); i++) {
+            IngredientEntity ingredientEntity = recipeIngredientEntityList.get(i).getIngredient();
+            ingredientEntityList.add(ingredientEntity);
+        }
+        map(ingredientEntityList, createRecipeDTO.getIngredientRecipeDTOList());
         map(recipeEntity.getRecipeIngredientEntityList(), createRecipeDTO.getIngredientRecipeDTOList());
         return createRecipeDTO;
     }

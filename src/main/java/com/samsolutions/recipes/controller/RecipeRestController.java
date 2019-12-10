@@ -68,4 +68,9 @@ public class RecipeRestController {
         return recipeService.createRecipeDTO(createRecipeDTO);
     }
 
+    @GetMapping("/id/{id}")
+    public CreateRecipeDTO getByRecipeId(@PathVariable("id") UUID uuid) {
+        return recipeService.getByRecipeId(uuid);
+    }
+
 }

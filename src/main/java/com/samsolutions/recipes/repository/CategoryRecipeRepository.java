@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface CategoryRecipeRepository extends BaseRepository<CategoryRecipeEntity> {
     List<CategoryRecipeEntity> findAllByCategoryId(UUID uuid);
 
-
+    List<CategoryRecipeEntity> findAllByRecipeId(UUID recipeId);
 }
