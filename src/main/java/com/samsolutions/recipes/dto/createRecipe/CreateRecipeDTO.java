@@ -27,7 +27,7 @@ public class CreateRecipeDTO {
     private int negativeVotes;
     private Date lastModified;
     private UUID authorId;
-    private String categoryName;
+    private List<CategoryRecipeDTO> categoryRecipeDTOList;
     private List<IngredientRecipeDTO> ingredientRecipeDTOList;
     private List<CookingStepRecipeDTO> cookingStepRecipeDTOList;
 }
