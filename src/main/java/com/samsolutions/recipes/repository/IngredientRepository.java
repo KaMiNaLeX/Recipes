@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IngredientRepository extends BaseRepository<IngredientEntity> {
+    IngredientEntity getByName(String name);
 }
