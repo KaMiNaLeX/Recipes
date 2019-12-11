@@ -30,4 +30,6 @@ public interface RecipeService {
     CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) throws IOException;
 
     CreateRecipeDTO getByRecipeId(UUID uuid);
+
+    List<CreateRecipeDTO> getByAuthorId(UUID authorId);
 }

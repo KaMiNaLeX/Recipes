@@ -229,4 +229,50 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         return createRecipeDTO;
     }
 
+    @Override
+    public List<CreateRecipeDTO> getByAuthorId(UUID authorId) {
+        List<CreateRecipeDTO> createRecipeDTOList = new ArrayList<>();
+        List<RecipeEntity> recipeEntityList = recipeRepository.getByAuthorId(authorId);
+        for (int i = 0; i < recipeEntityList.size(); i++) {
+            //map recipeEntity to DTO
+            CreateRecipeDTO createRecipeDTO = new CreateRecipeDTO();
+            map(recipeEntityList.get(i), createRecipeDTO);
+            createRecipeDTOList.add(createRecipeDTO);
+            //map categoryRecipeEntityList to DTO
+            List<CategoryRecipeDTO> categoryRecipeDTOList = new ArrayList<>();
+            List<CategoryRecipeEntity> categoryRecipeEntityList =
+                    categoryRecipeRepository.findAllByRecipeId(recipeEntityList.get(i).getId());
+            for (int j = 0; j < categoryRecipeEntityList.size(); j++) {
+                CategoryEntity categoryEntity = categoryRecipeEntityList.get(j).getCategory();
+                CategoryRecipeDTO categoryRecipeDTO = new CategoryRecipeDTO();
+                map(categoryEntity, categoryRecipeDTO);
+                categoryRecipeDTOList.add(categoryRecipeDTO);
+                createRecipeDTO.setCategoryRecipeDTOList(categoryRecipeDTOList);
+            }
+            //map cookingStepRecipeEntityList to DTO
+            CookingStepRecipeDTO cookingStepRecipeDTO = new CookingStepRecipeDTO();
+            List<CookingStepRecipeDTO> cookingStepRecipeDTOList = new ArrayList<>();
+            cookingStepRecipeDTOList.add(cookingStepRecipeDTO);
+            createRecipeDTO.setCookingStepRecipeDTOList(cookingStepRecipeDTOList);
+            map(recipeEntityList.get(i).getCookingStepsEntityList(), createRecipeDTO.getCookingStepRecipeDTOList());
+            //map recipeIngredientEntityList to DTO
+            IngredientRecipeDTO ingredientRecipeDTO = new IngredientRecipeDTO();
+            List<IngredientRecipeDTO> ingredientRecipeDTOList = new ArrayList<>();
+            ingredientRecipeDTOList.add(ingredientRecipeDTO);
+            createRecipeDTO.setIngredientRecipeDTOList(ingredientRecipeDTOList);
+
+            List<RecipeIngredientEntity> recipeIngredientEntityList = recipeEntityList.get(i).getRecipeIngredientEntityList();
+            List<IngredientEntity> ingredientEntityList = new ArrayList<>();
+            for (int j = 0; j < recipeIngredientEntityList.size(); j++) {
+                IngredientEntity ingredientEntity = recipeIngredientEntityList.get(j).getIngredient();
+                ingredientEntityList.add(ingredientEntity);
+            }
+            map(ingredientEntityList, createRecipeDTO.getIngredientRecipeDTOList());
+            map(recipeEntityList.get(i).getRecipeIngredientEntityList(), createRecipeDTO.getIngredientRecipeDTOList());
+            int size = createRecipeDTO.getIngredientRecipeDTOList().size();
+            createRecipeDTO.getIngredientRecipeDTOList().remove(size - 1);
+        }
+        return createRecipeDTOList;
+    }
+
 }
