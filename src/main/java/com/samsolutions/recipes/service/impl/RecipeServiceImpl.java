@@ -223,9 +223,12 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             ingredientEntityList.add(ingredientEntity);
         }
         map(ingredientEntityList, createRecipeDTO.getIngredientRecipeDTOList());
-        map(recipeEntity.getRecipeIngredientEntityList(), createRecipeDTO.getIngredientRecipeDTOList());
         int size = createRecipeDTO.getIngredientRecipeDTOList().size();
-        createRecipeDTO.getIngredientRecipeDTOList().remove(size - 1);
+        int countNull = size - 1;
+        map(recipeEntity.getRecipeIngredientEntityList(), createRecipeDTO.getIngredientRecipeDTOList());
+        for (int x = 0; x < countNull; x++) {
+            createRecipeDTO.getIngredientRecipeDTOList().remove(size);
+        }
         return createRecipeDTO;
     }
 
@@ -268,9 +271,12 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
                 ingredientEntityList.add(ingredientEntity);
             }
             map(ingredientEntityList, createRecipeDTO.getIngredientRecipeDTOList());
-            map(recipeEntityList.get(i).getRecipeIngredientEntityList(), createRecipeDTO.getIngredientRecipeDTOList());
             int size = createRecipeDTO.getIngredientRecipeDTOList().size();
-            createRecipeDTO.getIngredientRecipeDTOList().remove(size - 1);
+            int countNull = size - 1;
+            map(recipeEntityList.get(i).getRecipeIngredientEntityList(), createRecipeDTO.getIngredientRecipeDTOList());
+            for (int x = 0; x < countNull; x++) {
+                createRecipeDTO.getIngredientRecipeDTOList().remove(size);
+            }
         }
         return createRecipeDTOList;
     }
