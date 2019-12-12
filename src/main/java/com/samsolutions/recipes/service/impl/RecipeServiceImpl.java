@@ -5,6 +5,7 @@ import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.IngredientRecipeDTO;
+import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.CategoryRecipeEntity;
@@ -28,7 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -361,6 +364,47 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         RecipeDTO recipeDTO = new RecipeDTO();
         recipeDTOList.add(recipeDTO);
         map(recipeRepository.findAllByName(name), recipeDTOList);
+        return recipeDTOList;
+    }
+
+    @Override
+    public List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO) {
+        List<RecipeEntity> recipeEntityList = new ArrayList<>();
+        List<IngredientEntity> ingredientEntityList = new ArrayList<>();
+        for (int i = 0; i < ingredientNameListDTO.getIngredientNameDTOList().size(); i++) {
+            IngredientEntity findIngredientEntity =
+                    ingredientRepository.getByName(ingredientNameListDTO.getIngredientNameDTOList().get(i).getName());
+            ingredientEntityList.add(findIngredientEntity);
+            List<RecipeIngredientEntity> recipeIngredientEntityList =
+                    recipeIngredientRepository.findAllByIngredientId(findIngredientEntity.getId());
+            for (int j = 0; j < recipeIngredientEntityList.size(); j++) {
+                RecipeEntity recipeEntity = recipeRepository.getById(recipeIngredientEntityList.get(j).getRecipeId());
+                recipeEntityList.add(recipeEntity);
+            }
+        }
+
+        List<RecipeEntity> resultList = new ArrayList<>();
+        Map<RecipeEntity, Integer> countMap = new HashMap<>();
+        for (RecipeEntity item : recipeEntityList) {
+            if (countMap.containsKey(item)) {
+                countMap.put(item, countMap.get(item) + 1);
+            } else countMap.put(item, 1);
+            for (Object key : countMap.keySet().toArray()) {
+                if (countMap.get(key) == 1) {
+                    countMap.remove(key);
+                }
+            }
+            if (!resultList.contains(item)) {
+                resultList.add(item);
+            }
+
+        }
+
+        List<RecipeDTO> recipeDTOList = new ArrayList<>();
+        RecipeDTO recipeDTO = new RecipeDTO();
+        recipeDTOList.add(recipeDTO);
+
+        map(resultList, recipeDTOList);
         return recipeDTOList;
     }
 

@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.controller;
 
+import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.service.RecipeService;
@@ -88,4 +89,10 @@ public class RecipeRestController {
     public List<RecipeDTO> findAllByName(@PathVariable("name") String name) {
         return recipeService.findAllByName(name);
     }
+
+    @PostMapping("/ingredientName")
+    public List<RecipeDTO> findAllByIngredientName(@RequestBody IngredientNameListDTO ingredientNameList) throws IOException {
+        return recipeService.findAllByIngredient(ingredientNameList);
+    }
+
 }

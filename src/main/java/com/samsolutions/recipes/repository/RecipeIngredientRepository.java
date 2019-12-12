@@ -14,4 +14,6 @@ import java.util.UUID;
 public interface RecipeIngredientRepository extends BaseRepository<RecipeIngredientEntity> {
 
     List<RecipeIngredientEntity> findAllByRecipeId(UUID recipeId);
+
+    List<RecipeIngredientEntity> findAllByIngredientId(UUID uuid);
 }
