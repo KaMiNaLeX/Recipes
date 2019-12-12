@@ -43,6 +43,12 @@ public class RecipeRestController {
         return recipeService.update(uuid, recipeDTO);
     }
 
+    @PutMapping("/updateRecipe/{id}")
+    public CreateRecipeDTO updateRecipe(@PathVariable("id") UUID uuid, @RequestBody CreateRecipeDTO recipeDTO)
+            throws IOException {
+        return recipeService.updateRecipe(uuid, recipeDTO);
+    }
+
     @DeleteMapping("/delete/{id}")
     public void removeById(@PathVariable("id") UUID uuid) {
         recipeService.removeById(uuid);

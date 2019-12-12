@@ -87,6 +87,37 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     }
 
     @Override
+    public CreateRecipeDTO updateRecipe(UUID uuid, CreateRecipeDTO createRecipeDTO) throws IOException {
+        RecipeEntity updateEntity = recipeRepository.getById(uuid);
+        createRecipeDTO.setId(updateEntity.getId());
+        map(createRecipeDTO, updateEntity);
+        //update category
+        List<CategoryEntity> categoryEntityList = new ArrayList<>();
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntityList.add(categoryEntity);
+        map(createRecipeDTO.getCategoryRecipeDTOList(), categoryEntityList);
+
+        List<CategoryRecipeEntity> updateCategoryRecipeList = updateEntity.getCategoryRecipeEntities();
+        for (int i = 0; i < categoryEntityList.size(); i++) {
+            CategoryEntity categoryEntity1 = categoryRepository.getByName(categoryEntityList.get(i).getName());
+            if (updateCategoryRecipeList.size() < categoryEntityList.size()) {
+                CategoryRecipeEntity categoryRecipeEntity = new CategoryRecipeEntity();
+                categoryRecipeEntity.setRecipeId(updateEntity.getId());
+                categoryRecipeEntity.setCategoryId(categoryEntity1.getId());
+                updateCategoryRecipeList.add(categoryRecipeEntity);
+                int lastIndex = updateCategoryRecipeList.size() - 1;
+                categoryRecipeRepository.save(updateCategoryRecipeList.get(lastIndex));
+            }
+            updateCategoryRecipeList.get(i).setCategoryId(categoryEntity1.getId());
+            updateCategoryRecipeList.get(i).setRecipeId(updateEntity.getId());
+            map(categoryRecipeRepository.save(updateCategoryRecipeList.get(i)), createRecipeDTO.getCategoryRecipeDTOList());
+        }
+        map(recipeRepository.save(updateEntity), createRecipeDTO);
+        return createRecipeDTO;
+    }
+
+
+    @Override
     @Transactional
     public void positiveVote(UUID uuid) {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);

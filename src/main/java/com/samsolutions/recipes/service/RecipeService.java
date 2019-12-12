@@ -19,6 +19,8 @@ public interface RecipeService {
 
     RecipeDTO update(UUID uuid, RecipeDTO recipeDTO);
 
+    CreateRecipeDTO updateRecipe(UUID uuid, CreateRecipeDTO recipeDTO) throws IOException;
+
     void positiveVote(UUID uuid);
 
     void negativeVote(UUID uuid);
