@@ -18,4 +18,5 @@ public class CookingStepRecipeDTO {
     private int number;
     private String name;
     private String description;
+    private boolean active;
 }

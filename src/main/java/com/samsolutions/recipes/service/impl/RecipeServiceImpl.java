@@ -91,13 +91,18 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);
         createRecipeDTO.setId(updateEntity.getId());
         map(createRecipeDTO, updateEntity);
+        map(recipeRepository.save(updateEntity), createRecipeDTO);
         //update category
         List<CategoryEntity> categoryEntityList = new ArrayList<>();
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntityList.add(categoryEntity);
         map(createRecipeDTO.getCategoryRecipeDTOList(), categoryEntityList);
 
-        List<CategoryRecipeEntity> updateCategoryRecipeList = updateEntity.getCategoryRecipeEntities();
+        List<CategoryRecipeEntity> updateCategoryRecipeList =
+                categoryRecipeRepository.findAllByRecipeId(updateEntity.getId());
+        for (int i = 0; i < updateCategoryRecipeList.size(); i++) {
+            categoryRecipeRepository.delete(updateCategoryRecipeList.get(i));
+        }
         for (int i = 0; i < categoryEntityList.size(); i++) {
             CategoryEntity categoryEntity1 = categoryRepository.getByName(categoryEntityList.get(i).getName());
             if (updateCategoryRecipeList.size() < categoryEntityList.size()) {
@@ -108,11 +113,49 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
                 int lastIndex = updateCategoryRecipeList.size() - 1;
                 categoryRecipeRepository.save(updateCategoryRecipeList.get(lastIndex));
             }
+
             updateCategoryRecipeList.get(i).setCategoryId(categoryEntity1.getId());
             updateCategoryRecipeList.get(i).setRecipeId(updateEntity.getId());
             map(categoryRecipeRepository.save(updateCategoryRecipeList.get(i)), createRecipeDTO.getCategoryRecipeDTOList());
         }
-        map(recipeRepository.save(updateEntity), createRecipeDTO);
+        //update CookingStepsEntityList
+        try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
+            List<CookingStepsEntity> cookingStepsEntityList = new ArrayList<>();
+            CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
+            cookingStepsEntityList.add(cookingStepsEntity);
+            map(createRecipeDTO.getCookingStepRecipeDTOList(), cookingStepsEntityList);
+
+            List<CookingStepsEntity> updateCookingStepsList =
+                    cookingStepsRepository.findAllByRecipeId(updateEntity.getId());
+            for (int i = 0; i < updateCookingStepsList.size(); i++) {
+                cookingStepsRepository.delete(updateCookingStepsList.get(i));
+            }
+
+            for (int i = 0; i < cookingStepsEntityList.size(); i++) {
+                cookingStepsEntityList.get(i).setContent(IOUtils.toByteArray(inputStream));
+                cookingStepsEntityList.get(i).setRecipeId(updateEntity.getId());
+                map(cookingStepsRepository.save(cookingStepsEntityList.get(i)), createRecipeDTO.getCookingStepRecipeDTOList());
+            }
+        }
+        //update RecipeIngredientList
+        List<RecipeIngredientEntity> recipeIngredientEntityList = new ArrayList<>();
+        RecipeIngredientEntity recipeIngredientEntity = new RecipeIngredientEntity();
+        recipeIngredientEntityList.add(recipeIngredientEntity);
+        map(createRecipeDTO.getIngredientRecipeDTOList(), recipeIngredientEntityList);
+
+        List<RecipeIngredientEntity> updateRecipeIngredientList =
+                recipeIngredientRepository.findAllByRecipeId(updateEntity.getId());
+        for (int i = 0; i < updateRecipeIngredientList.size(); i++) {
+            recipeIngredientRepository.delete(updateRecipeIngredientList.get(i));
+        }
+        for (int i = 0; i < recipeIngredientEntityList.size(); i++) {
+            IngredientEntity ingredientEntity =
+                    ingredientRepository.getByName(createRecipeDTO.getIngredientRecipeDTOList().get(i).getName());
+            recipeIngredientEntityList.get(i).setIngredientId(ingredientEntity.getId());
+            recipeIngredientEntityList.get(i).setRecipeId(updateEntity.getId());
+            map(recipeIngredientRepository.save(recipeIngredientEntityList.get(i)), createRecipeDTO.getIngredientRecipeDTOList());
+        }
+
         return createRecipeDTO;
     }
 

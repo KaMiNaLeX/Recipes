@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/random")
-public class FakeDataGenerator {
+public class FakeDataGeneratorController {
 
     @Autowired
     private UserRepository userRepository;
