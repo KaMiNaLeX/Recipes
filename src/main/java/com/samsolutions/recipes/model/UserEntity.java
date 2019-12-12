@@ -61,32 +61,8 @@ public class UserEntity extends BaseEntity {
     private List<RecipeEntity> recipeEntityList;
 
     @JsonIgnore
-    public List<RecipeEntity> getRecipeEntityList() {
-        return recipeEntityList;
-    }
-
-    @JsonIgnore
-    public void setRecipeEntityList(List<RecipeEntity> recipeEntityList) {
-        this.recipeEntityList = recipeEntityList;
-    }
-
-    @JsonIgnore
     public List<UserRoleEntity> getUserRoles() {
         return userRoles;
     }
 
-    @JsonIgnore
-    public void setUserRoles(List<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
-    }
-
-    @JsonIgnore
-    public List<FavoriteEntity> getFavoriteEntityList() {
-        return favoriteEntityList;
-    }
-
-    @JsonIgnore
-    public void setFavoriteEntityList(List<FavoriteEntity> favoriteEntityList) {
-        this.favoriteEntityList = favoriteEntityList;
-    }
 }

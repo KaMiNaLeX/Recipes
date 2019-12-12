@@ -54,33 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
     }
 
-    /*
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/client/login").permitAll()
-                .antMatchers("/client/registration").permitAll()
-                .antMatchers("/api/user/login").permitAll()
-                .antMatchers("/users", "/home", "/index.html").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-                .authenticated()
-                .and()
-                .csrf().disable()
-                .formLogin()
-                .loginPage("/client/login").failureUrl("/client/login?error=true")
-                .defaultSuccessUrl("/")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/");
-    }
-
-     */
-
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()

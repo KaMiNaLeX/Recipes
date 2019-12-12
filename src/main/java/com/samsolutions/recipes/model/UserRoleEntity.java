@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,4 +48,23 @@ public class UserRoleEntity {
     @JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)
     private RoleEntity role;
 
+    @JsonIgnore
+    public UserEntity getUser() {
+        return user;
+    }
+
+    @JsonIgnore
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    @JsonIgnore
+    public RoleEntity getRole() {
+        return role;
+    }
+
+    @JsonIgnore
+    public void setRole(RoleEntity role) {
+        this.role = role;
+    }
 }
