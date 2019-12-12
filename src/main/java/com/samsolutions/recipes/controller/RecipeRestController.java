@@ -83,4 +83,9 @@ public class RecipeRestController {
     public List<CreateRecipeDTO> getByAuthorId(@PathVariable("id") UUID uuid) {
         return recipeService.getByAuthorId(uuid);
     }
+
+    @GetMapping("/name/{name}")
+    public List<RecipeDTO> findAllByName(@PathVariable("name") String name) {
+        return recipeService.findAllByName(name);
+    }
 }

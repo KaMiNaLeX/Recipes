@@ -34,4 +34,6 @@ public interface RecipeService {
     CreateRecipeDTO getByRecipeId(UUID uuid);
 
     List<CreateRecipeDTO> getByAuthorId(UUID authorId);
+
+    List<RecipeDTO> findAllByName(String name);
 }

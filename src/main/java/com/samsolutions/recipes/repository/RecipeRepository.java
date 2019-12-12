@@ -14,4 +14,6 @@ import java.util.UUID;
 public interface RecipeRepository extends BaseRepository<RecipeEntity> {
 
     List<RecipeEntity> getByAuthorId(UUID authorId);
+
+    List<RecipeEntity> findAllByName(String name);
 }

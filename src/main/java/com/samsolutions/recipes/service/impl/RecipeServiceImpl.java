@@ -355,4 +355,14 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         return createRecipeDTOList;
     }
 
+    @Override
+    public List<RecipeDTO> findAllByName(String name) {
+        List<RecipeDTO> recipeDTOList = new ArrayList<>();
+        RecipeDTO recipeDTO = new RecipeDTO();
+        recipeDTOList.add(recipeDTO);
+        map(recipeRepository.findAllByName(name), recipeDTOList);
+        return recipeDTOList;
+    }
+
+
 }
