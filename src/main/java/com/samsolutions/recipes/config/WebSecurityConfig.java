@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/autoconfig",
                         "/assets/**",
                         "/api/**",
+                        "/random/**",
                         "/webjars/**");
     }
 

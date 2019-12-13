@@ -8,3 +8,15 @@ INSERT INTO CATEGORY (id, name, description, tag)
 values (unhex(replace(uuid(), '-', '')), 'Deserts', 'Deserts', 'Desert');
 INSERT INTO CATEGORY (id, name, description, tag)
 values (unhex(replace(uuid(), '-', '')), 'Pastry', 'Pastry', 'Pastry');
+INSERT INTO CATEGORY (id, name, description, tag)
+values (unhex(replace(uuid(), '-', '')), 'Soup', 'Soup', 'Soup');
+INSERT INTO CATEGORY (id, name, description, tag)
+values (unhex(replace(uuid(), '-', '')), 'Drink', 'Soup', 'Soup');
+INSERT INTO CATEGORY (id, name, description, tag)
+values (unhex(replace(uuid(), '-', '')), 'Vegetarian food', 'Vegan', 'Vegan');
+INSERT INTO CATEGORY (id, name, description, tag)
+values (unhex(replace(uuid(), '-', '')), 'All Types', 'All types dishes ', 'All');
+INSERT INTO CATEGORY (id, name, description, tag)
+values (unhex(replace(uuid(), '-', '')), 'Dinner', 'Dinner', 'Dinner');
+INSERT INTO CATEGORY (id, name, description, tag)
+values (unhex(replace(uuid(), '-', '')), 'Breakfast', 'Breakfast', 'Breakfast');
