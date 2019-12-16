@@ -23,6 +23,10 @@ export class AppComponent {
     this.admin = false;
   }
 
+  addRecipe(){
+    this.router.navigate(['addRecipe']);
+  }
+
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
               private http: HttpClient) {
     this.authenticate();

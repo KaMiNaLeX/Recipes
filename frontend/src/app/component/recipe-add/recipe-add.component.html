@@ -1,0 +1,95 @@
+<div id="first" class="container-fluid">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Dish description</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Ingredients</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Cooking</a>
+    </li>
+  </ul>
+  <div class="col-md-6 login-container">
+    <h2 style="margin: auto">Description</h2>
+    <br/>
+    <form #recipeForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" autocomplete="off">
+      </div>
+      <br/>
+      <h2 style="margin: auto">Selection of characteristics</h2>
+      <br/>
+      <div class="form-group">
+        <div class="row">
+          <div class="col">
+            <label for="minute">Difficulty:</label>
+            <br/>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input form-control" type="radio" name="inlineRadioOptions"
+                     [(ngModel)]="createRecipeDTO.cookingDifficulty" id="inlineRadio1" value="option1">
+              <label class="form-check-label" for="inlineRadio1">EASY</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input form-control" type="radio" name="inlineRadioOptions"
+                     [(ngModel)]="createRecipeDTO.cookingDifficulty" id="inlineRadio2" value="option2">
+              <label class="form-check-label" for="inlineRadio2">MEDIUM</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input form-control" type="radio" name="inlineRadioOptions"
+                     [(ngModel)]="createRecipeDTO.cookingDifficulty" id="inlineRadio3" value="option3">
+              <label class="form-check-label" for="inlineRadio2">HARD</label>
+            </div>
+          </div>
+          <div class="col">
+            <label for="minute">Minutes:</label>
+            <input style="width: 100px" type="text" name="minute" [(ngModel)]="createRecipeDTO.cookingTime"
+                   class="form-control"
+                   id="minute"
+                   autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col">
+            <label for="minute">Category:</label>
+            <br/>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input form-control" type="checkbox"
+                     [(ngModel)]="createRecipeDTO.categoryRecipeDTOList"
+                     id="inlineCheckbox1" name="inlineCheckOptions" value="option1">
+              <label class="form-check-label" for="inlineCheckbox1">Asia kitchen</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input form-control" type="checkbox"
+                     [(ngModel)]="createRecipeDTO.categoryRecipeDTOList"
+                     id="inlineCheckbox2" name="inlineCheckOptions" value="option2">
+              <label class="form-check-label" for="inlineCheckbox2">Russia kitchen</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Continue</button>
+    </form>
+  </div>
+</div>
+
+<div id="second" class="container-fluid">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a class="nav-link" href="">Dish description</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="">Ingredients</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="">Cooking</a>
+    </li>
+  </ul>
+  <div class="col-md-6 login-container">
+    <h2 style="margin: auto">Description</h2>
+    <button type="submit" class="btn btn-success">Continue</button>
+  </div>
+</div>

@@ -3,8 +3,8 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {UserListComponent} from './component/user-list/user-list.component';
-import {UserFormComponent} from './component/user-form/user-form.component';
+import {UserListComponent} from './component/admin/user-list/user-list.component';
+import {UserFormComponent} from './component/admin/user-form/user-form.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {UserService} from "./service/user.service";
 import {CategoryListComponent} from './component/category-list/category-list.component';
@@ -29,6 +29,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { RegisterComponent } from './component/auth/register/register.component';
 import {AuthService} from "./service/auth.service";
 import { RecipeListComponent } from './component/recipe-list/recipe-list.component';
+import { RecipeAddComponent } from './component/recipe-add/recipe-add.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { RecipeListComponent } from './component/recipe-list/recipe-list.compone
     CategoryListComponent,
     UserProfileComponent,
     RegisterComponent,
-    RecipeListComponent
+    RecipeListComponent,
+    RecipeAddComponent
   ],
   imports: [
     BrowserModule,
