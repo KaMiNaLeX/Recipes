@@ -88,9 +88,60 @@
       <button class="btn btn-link" (click)="toCooking()">Cooking</button>
     </li>
   </ul>
+  <h2 style="margin: auto">Add ingredients</h2>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Ingredient</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Unit</th>
+      <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="ingredient">
+      <td name="i.name"></td>
+      <td name="i.amount"></td>
+      <td name="i.unit"></td>
+      <td>
+        <button hidden="true" id="delete" name="delete" (click)="deleteIngredient()" class='btn btn-danger'>Delete</button>
+      </td>
+    </tr>
+    </tbody>
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label for="name">Ingredient name:</label>
+          <input type="text" name="name" [(ngModel)]="createRecipeDTO.ingredientRecipeDTOList"
+                 class="form-control"
+                 id="ingredientName"
+                 autocomplete="off">
+        </div>
+        <div class="col">
+          <label for="name">Amount:</label>
+          <input type="text" name="amount"
+                 class="form-control"
+                 id="amount"
+                 autocomplete="off">
+        </div>
+        <div class="col">
+          <label for="name">Unit:</label>
+          <select class="custom-select">
+            <option selected>Open this select menu</option>
+            <option value="GRAM">GRAM</option>
+            <option value="MML">MML</option>
+            <option value="PIECE">PIECE</option>
+          </select>
+        </div>
+        <div class="col">
+          <br/>
+          <button type="submit" (click)="addIngredient()" class="btn btn-success">Add ingredient +</button>
+        </div>
+      </div>
+    </div>
+  </table>
   <div class="col-md-6 login-container">
-    <h2 style="margin: auto">Description</h2>
-    <button type="submit" (click)="toCooking()" class="btn btn-success">Continue</button>
+    <button type="submit" (click)="toCooking()" class="btn btn-success ">Continue</button>
   </div>
 </div>
 
