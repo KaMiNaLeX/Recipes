@@ -1,13 +1,13 @@
-<div id="first" class="container-fluid">
+<div [hidden]="!first" id="first" class="container-fluid">
   <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-      <a class="nav-link active" href="#">Dish description</a>
+      <button class="btn btn-primary btn-lg btn-block">Dish description</button>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Ingredients</a>
+      <button class="btn btn-link" (click)="toIngredient()">Ingredients</button>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Cooking</a>
+      <button class="btn btn-link" (click)="toCooking()">Cooking</button>
     </li>
   </ul>
   <div class="col-md-6 login-container">
@@ -71,21 +71,39 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-success">Continue</button>
+      <button type="submit" class="btn btn-success" (click)="toIngredient()">Continue</button>
     </form>
   </div>
 </div>
 
-<div id="second" class="container-fluid">
+<div [hidden]="!second" id="second" class="container-fluid">
   <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-      <a class="nav-link" href="">Dish description</a>
+      <button class="btn btn-link" (click)="toDescription()">Dish description</button>
     </li>
     <li class="nav-item">
-      <a class="nav-link active" href="">Ingredients</a>
+      <button class="btn btn-primary btn-lg btn-block">Ingredients</button>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="">Cooking</a>
+      <button class="btn btn-link" (click)="toCooking()">Cooking</button>
+    </li>
+  </ul>
+  <div class="col-md-6 login-container">
+    <h2 style="margin: auto">Description</h2>
+    <button type="submit" (click)="toCooking()" class="btn btn-success">Continue</button>
+  </div>
+</div>
+
+<div [hidden]="!third" id="third" class="container-fluid">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="toDescription()">Dish description</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="toIngredient()">Ingredients</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-primary btn-lg btn-block">Cooking</button>
     </li>
   </ul>
   <div class="col-md-6 login-container">
