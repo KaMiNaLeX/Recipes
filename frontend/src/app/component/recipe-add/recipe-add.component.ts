@@ -68,8 +68,17 @@ export class RecipeAddComponent implements OnInit {
   }
 
   deleteIngredient() {
-
     window.alert("[cde");
+  }
+
+  addCookingStep() {
+    let div = document.getElementById("cookingStep");
+    let div2 = div.cloneNode(true);
+    div.parentNode.insertBefore(div2, div);
+
+    document.getElementsByName("c.name")[0].textContent = "test";
+    document.getElementsByName("c.description")[0].textContent = "test";
+    document.getElementsByName("c.number")[0].textContent = "1";
   }
 
 }
