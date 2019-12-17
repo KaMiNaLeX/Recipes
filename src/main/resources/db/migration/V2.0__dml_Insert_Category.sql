@@ -15,8 +15,6 @@ values (unhex(replace(uuid(), '-', '')), 'Drink', 'Soup', 'Soup');
 INSERT INTO CATEGORY (id, name, description, tag)
 values (unhex(replace(uuid(), '-', '')), 'Vegetarian food', 'Vegan', 'Vegan');
 INSERT INTO CATEGORY (id, name, description, tag)
-values (unhex(replace(uuid(), '-', '')), 'All Types', 'All types dishes ', 'All');
-INSERT INTO CATEGORY (id, name, description, tag)
 values (unhex(replace(uuid(), '-', '')), 'Dinner', 'Dinner', 'Dinner');
 INSERT INTO CATEGORY (id, name, description, tag)
 values (unhex(replace(uuid(), '-', '')), 'Breakfast', 'Breakfast', 'Breakfast');

@@ -12,7 +12,7 @@ import {CategoryService} from "../../service/category.service";
   styleUrls: ['./recipe-add.component.css']
 })
 export class RecipeAddComponent implements OnInit {
-
+  submitted = false;
   createRecipeDTO: CreateRecipeDTO;
   first = true;
   second = false;
@@ -31,7 +31,9 @@ export class RecipeAddComponent implements OnInit {
 
   ngOnInit() {
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
-      this.categories = data
+      this.categories = data;
+      this.first = true;
+      this.second = false;
     });
   }
 
@@ -51,7 +53,6 @@ export class RecipeAddComponent implements OnInit {
     this.createRecipeDTO.cookingTime = time;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
     this.createRecipeDTO.categoryRecipeDTOList = this.checkedArray;
-
   }
 
   toCooking() {
@@ -64,27 +65,15 @@ export class RecipeAddComponent implements OnInit {
     this.checkedArray.push(category);
   }
 
-  addIngredient(name: string, amount: number, unit: string, note: string) {
-    this.ingredient.name = name;
-    this.ingredient.amount = amount;
-    this.ingredient.unit = unit;
-    this.ingredient.note = note;
-    this.ingredients.push(this.ingredient);
+  addIngredient() {
+    let ingredient = new IngredientRecipeDTO();
+    ingredient.name = (<HTMLInputElement>document.getElementById("ingredientName")).value;
+    ingredient.amount = +(<HTMLInputElement>document.getElementById("amount")).value;
+    ingredient.unit = (<HTMLInputElement>document.getElementById("unit")).value;
+    ingredient.note = (<HTMLInputElement>document.getElementById("note")).value;
+    this.ingredients.push(ingredient);
+    this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
 
-
-    let div = document.getElementById("ingredient");
-    let count = document.getElementsByName("ingredient").length;
-    let div2 = div.cloneNode(true);
-    div.id += (count);
-    div.parentNode.insertBefore(div2, div);
-
-    let emptyDiv = document.getElementById("ingredient1");
-    emptyDiv.hidden = true;
-
-    document.getElementsByName("i.name")[0].textContent = this.ingredient.name;
-    document.getElementsByName("i.amount")[0].textContent = this.ingredient.amount.toString();
-    document.getElementsByName("i.unit")[0].textContent = this.ingredient.unit;
-    document.getElementsByName("i.note")[0].textContent = this.ingredient.note;
   }
 
   deleteIngredient() {
@@ -97,7 +86,7 @@ export class RecipeAddComponent implements OnInit {
     div.parentNode.insertBefore(div2, div);
 
     document.getElementsByName("c.name")[0].textContent = "test";
-    document.getElementsByName("c.description")[0].textContent = "lexaloil ooooooooooo ooooooooooooooooo ooooooooooooo ooooooooooooooo oooooooooooooo oooooooooooooooooooooooo ooooooooooooooooo ooooooooooooooooo oooooooooooooo oooooooooooo ooooooooo ooooox";
+    document.getElementsByName("c.description")[0].textContent = "";
     document.getElementsByName("c.number")[0].textContent = "1";
   }
 

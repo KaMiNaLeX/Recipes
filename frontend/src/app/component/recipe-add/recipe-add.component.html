@@ -9,7 +9,7 @@
       </button>
     </li>
     <li class="nav-item">
-      <button class="btn btn-link" (click)="toCooking()">Cooking</button>
+      <button class="btn btn-link">Cooking</button>
     </li>
   </ul>
   <div class="col-md-6 login-container">
@@ -17,7 +17,9 @@
     <br/>
     <div class="form-group">
       <label for="name">Name:</label>
-      <input type="text" [(ngModel)]="createRecipeDTO.name" class="form-control" id="name" autocomplete="off">
+      <input type="text" [(ngModel)]="createRecipeDTO.name" class="form-control" id="name"
+             autocomplete="off" #name="ngModel" required>
+      <div *ngIf="name.invalid" style="color: red">Required</div>
     </div>
     <br/>
     <h2 style="margin: auto">Selection of characteristics</h2>
@@ -29,26 +31,28 @@
           <br/>
           <div class="form-check form-check-inline">
             <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
-                   name="exampleRadios" id="exampleRadios1" value="EASY">
+                   name="exampleRadios" id="exampleRadios1" value="EASY" #difficulty="ngModel" required>
             <label class="form-check-label" for="exampleRadios1">EASY</label>
           </div>
           <div class="form-check form-check-inline">
             <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
-                   name="exampleRadios" id="exampleRadios2" value="MEDIUM">
+                   name="exampleRadios" id="exampleRadios2" value="MEDIUM" #difficulty="ngModel" required>
             <label class="form-check-label" for="exampleRadios2">MEDIUM</label>
           </div>
           <div class="form-check form-check-inline">
             <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
-                   name="exampleRadios" id="exampleRadios3" value="HARD">
+                   name="exampleRadios" id="exampleRadios3" value="HARD" #difficulty="ngModel" required>
             <label class="form-check-label" for="exampleRadios3">HARD</label>
           </div>
+          <div *ngIf="difficulty.invalid" style="color: red">Required</div>
         </div>
         <div class="col">
           <label for="minute">Minutes:</label>
           <input style="width: 100px" type="text" name="minute" [(ngModel)]="createRecipeDTO.cookingTime"
                  class="form-control"
                  id="minute"
-                 autocomplete="off">
+                 autocomplete="off" #minutes="ngModel" required>
+          <div *ngIf="minutes.invalid" style="color: red">Required</div>
         </div>
       </div>
     </div>
@@ -59,7 +63,7 @@
           <br/>
           <div class="form-check form-check-inline" *ngFor="let category of categories">
             <input (change)="checkArray(category)" class="form-check-input" type="checkbox"
-                   id="inlineCheckbox1" value="{{category.name}}">
+                   id="inlineCheckbox1" value="{{category.name}}" name="check">
             <label class="form-check-label" for="inlineCheckbox1">{{category.name}}</label>
           </div>
         </div>
@@ -72,6 +76,7 @@
     </button>
   </div>
 </div>
+
 
 <div [hidden]="!second" id="second" class="container-fluid">
   <ul class="nav nav-pills nav-fill">
@@ -97,11 +102,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr id="ingredient" name="ingredient">
-      <td name="i.name"></td>
-      <td name="i.amount"></td>
-      <td name="i.unit"></td>
-      <td name="i.note"></td>
+    <tr id="ingredient" name="ingredient" *ngFor="let ingredient of ingredients">
+      <td name="i.name">{{ingredient.name}}</td>
+      <td name="i.amount">{{ingredient.amount}}</td>
+      <td name="i.unit">{{ingredient.unit}}</td>
+      <td name="i.note">{{ingredient.note}}</td>
       <td>
         <button name="delete" (click)="deleteIngredient()" class='btn btn-danger'>Delete
         </button>
@@ -113,21 +118,21 @@
     <div class="row">
       <div class="col">
         <label for="name">Ingredient name:</label>
-        <input type="text" name="name" [(ngModel)]="ingredient.name"
+        <input type="text" name="name"
                class="form-control"
                id="ingredientName"
                autocomplete="off">
       </div>
       <div class="col">
         <label for="name">Amount:</label>
-        <input type="text" name="amount" [(ngModel)]="ingredient.amount"
+        <input type="text" name="amount"
                class="form-control"
                id="amount"
                autocomplete="off">
       </div>
       <div class="col">
         <label for="name">Unit:</label>
-        <select class="custom-select" [(ngModel)]="ingredient.unit">
+        <select class="custom-select" id="unit">
           <option selected>Open this select menu</option>
           <option value="GRAM">GRAM</option>
           <option value="MML">MML</option>
@@ -136,14 +141,15 @@
       </div>
       <div class="col">
         <label for="name">Note:</label>
-        <input type="text" name="note" [(ngModel)]="ingredient.note"
+        <input type="text" name="note"
                class="form-control"
                id="note"
                autocomplete="off">
       </div>
       <div class="col">
         <br/>
-        <button type="submit" (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit,ingredient.note)"
+        <button type="submit"
+                (click)="addIngredient()"
                 class="btn btn-success">Add ingredient +
         </button>
       </div>
@@ -161,7 +167,9 @@
       <button class="btn btn-link" (click)="toDescription()">Dish description</button>
     </li>
     <li class="nav-item">
-      <button class="btn btn-link" (click)="toIngredient()">Ingredients</button>
+      <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
+              createRecipeDTO.cookingTime)">Ingredients
+      </button>
     </li>
     <li class="nav-item">
       <button class="btn btn-primary btn-lg btn-block">Cooking</button>
@@ -191,17 +199,16 @@
       </tr>
       </tbody>
     </table>
-    <form #recipeForm="ngForm">
-      <div class="form-group">
-        <label>Name of cooking step:</label>
-        <input type="text" name="s.name" class="form-control" autocomplete="off">
-      </div>
-      <div class="form-group">
-        <label>Description:</label>
-        <textarea name="s.description" class="form-control" autocomplete="off"></textarea>
-      </div>
-      <button type="submit" class="btn btn-success" (click)="addCookingStep()">Add cooking step +</button>
-    </form>
-    <button type="submit" class="btn btn-success">Continue</button>
+
+    <div class="form-group">
+      <label>Name of cooking step:</label>
+      <input type="text" name="s.name" class="form-control" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>Description:</label>
+      <textarea name="s.description" class="form-control" autocomplete="off"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success" (click)="addCookingStep()">Add cooking step +</button>
+    <button type="submit" class="btn btn-success">Create recipe</button>
   </div>
 </div>
