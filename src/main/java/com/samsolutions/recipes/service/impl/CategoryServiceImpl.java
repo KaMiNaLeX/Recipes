@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.CategoryDTO;
+import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.service.CategoryService;
@@ -62,6 +63,15 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTOList.add(categoryDTO);
+        map(categoryRepository.findAll(), categoryDTOList);
+        return categoryDTOList;
+    }
+
+    @Override
+    public List<CategoryRecipeDTO> findAllCategoriesDTO() {
+        List<CategoryRecipeDTO> categoryDTOList = new ArrayList<>();
+        CategoryRecipeDTO categoryRecipeDTO = new CategoryRecipeDTO();
+        categoryDTOList.add(categoryRecipeDTO);
         map(categoryRepository.findAll(), categoryDTOList);
         return categoryDTOList;
     }

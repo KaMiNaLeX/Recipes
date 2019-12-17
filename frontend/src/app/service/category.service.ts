@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../model/user";
 import {Category} from "../model/category";
+import {CategoryRecipeDTO} from "../model/createRecipe/category-recipe-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class CategoryService {
 
   public findAll(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.baseUrl}/`);
+  }
+
+  public findAllCategoriesDTO(): Observable<CategoryRecipeDTO[]> {
+    return this.http.get<CategoryRecipeDTO[]>(`${this.baseUrl}/findAll`);
   }
 
   public create(category: Category) {

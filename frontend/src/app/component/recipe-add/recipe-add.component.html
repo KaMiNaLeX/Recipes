@@ -55,22 +55,17 @@
         <div class="col">
           <label for="minute">Category:</label>
           <br/>
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="createRecipeDTO.categoryRecipeDTOList" class="form-check-input" type="checkbox"
-                   id="inlineCheckbox1" value="Asia kitchen">
-            <label class="form-check-label" for="inlineCheckbox1">Asia kitchen</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="createRecipeDTO.categoryRecipeDTOList" class="form-check-input" type="checkbox"
-                   id="inlineCheckbox2" value="Russian kitchen">
-            <label class="form-check-label" for="inlineCheckbox2">Russian kitchen</label>
+          <div class="form-check form-check-inline" *ngFor="let category of categories">
+            <input  class="form-check-input" type="checkbox"
+                   id="inlineCheckbox1" value="{{category.name}}">
+            <label class="form-check-label" for="inlineCheckbox1">{{category.name}}</label>
           </div>
         </div>
       </div>
     </div>
     <button class="btn btn-success"
             (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
-              createRecipeDTO.cookingTime,createRecipeDTO.categoryRecipeDTOList)">
+              createRecipeDTO.cookingTime,categories)">
       Continue
     </button>
   </div>

@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.CategoryDTO;
+import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,8 @@ public interface CategoryService {
     void removeById(UUID uuid);
 
     List<CategoryDTO> findAll();
+
+    List<CategoryRecipeDTO> findAllCategoriesDTO();
 
     CategoryDTO getById(UUID uuid);
 

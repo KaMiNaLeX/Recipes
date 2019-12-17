@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.CategoryDTO;
+import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,4 +53,10 @@ public class CategoryRestController {
     public CategoryDTO updateCategory(@PathVariable("id") UUID uuid, @RequestBody CategoryDTO categoryDTO) {
         return categoryService.updateCategory(uuid, categoryDTO);
     }
+
+    @GetMapping("/findAll")
+    public List<CategoryRecipeDTO> findAllCategoriesDTO() {
+        return categoryService.findAllCategoriesDTO();
+    }
+
 }

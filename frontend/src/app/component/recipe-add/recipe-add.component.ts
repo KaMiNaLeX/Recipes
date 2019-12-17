@@ -4,6 +4,7 @@ import {RecipeService} from "../../service/recipe.service";
 import {CreateRecipeDTO} from "../../model/createRecipe/create-recipe-dto";
 import {IngredientRecipeDTO} from "../../model/createRecipe/ingredient-recipe-dto";
 import {CategoryRecipeDTO} from "../../model/createRecipe/category-recipe-dto";
+import {CategoryService} from "../../service/category.service";
 
 @Component({
   selector: 'app-recipe-add',
@@ -18,12 +19,17 @@ export class RecipeAddComponent implements OnInit {
   third = false;
   ingredients: IngredientRecipeDTO[] = [];
   ingredient: IngredientRecipeDTO = new IngredientRecipeDTO();
+  categories: CategoryRecipeDTO[];
 
-  constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService) {
+  constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
+              private categoryService: CategoryService) {
     this.createRecipeDTO = new CreateRecipeDTO();
   }
 
   ngOnInit() {
+    this.categoryService.findAllCategoriesDTO().subscribe(data => {
+      this.categories = data
+    });
   }
 
   toDescription() {
