@@ -20,6 +20,7 @@ export class RecipeAddComponent implements OnInit {
   ingredients: IngredientRecipeDTO[] = [];
   ingredient: IngredientRecipeDTO = new IngredientRecipeDTO();
   categories: CategoryRecipeDTO[];
+  category: CategoryRecipeDTO = new CategoryRecipeDTO();
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService) {
@@ -42,6 +43,21 @@ export class RecipeAddComponent implements OnInit {
     this.first = false;
     this.second = true;
     this.third = false;
+
+    let checkedArray = new Array<CategoryRecipeDTO>();
+    for (let i = 0; i < category.length; i++) {
+      this.category = category.values().next().value;
+      if (this.category.checked != false) {
+        checkedArray.push(this.category);
+      }
+    }
+
+
+    this.createRecipeDTO.name = name;
+    this.createRecipeDTO.cookingDifficulty = difficulty;
+    this.createRecipeDTO.cookingTime = time;
+    this.createRecipeDTO.categoryRecipeDTOList = category;
+    this.createRecipeDTO.authorId = localStorage.getItem("id");
   }
 
   toCooking() {
