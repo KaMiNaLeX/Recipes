@@ -59,6 +59,7 @@ export class RecipeAddComponent implements OnInit {
     this.first = false;
     this.second = false;
     this.third = true;
+    this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
   }
 
   checkArray(category: CategoryRecipeDTO) {
@@ -72,8 +73,6 @@ export class RecipeAddComponent implements OnInit {
     ingredient.unit = (<HTMLInputElement>document.getElementById("unit")).value;
     ingredient.note = (<HTMLInputElement>document.getElementById("note")).value;
     this.ingredients.push(ingredient);
-    this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
-
   }
 
   deleteIngredient(ingredientName: string) {
