@@ -65,12 +65,12 @@ export class RecipeAddComponent implements OnInit {
     this.checkedArray.push(category);
   }
 
-  addIngredient() {
+  addIngredient(name: string, amount: number, unit: string, note: string) {
     let ingredient = new IngredientRecipeDTO();
-    ingredient.name = (<HTMLInputElement>document.getElementById("ingredientName")).value;
-    ingredient.amount = +(<HTMLInputElement>document.getElementById("amount")).value;
-    ingredient.unit = (<HTMLInputElement>document.getElementById("unit")).value;
-    ingredient.note = (<HTMLInputElement>document.getElementById("note")).value;
+    ingredient.name = name;
+    ingredient.amount = amount;
+    ingredient.unit = unit;
+    ingredient.note = note;
     this.ingredients.push(ingredient);
   }
 

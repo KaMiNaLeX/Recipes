@@ -121,18 +121,20 @@
         <input type="text" name="name"
                class="form-control"
                id="ingredientName"
-               autocomplete="off">
+               autocomplete="off"
+               [(ngModel)]="ingredient.name">
       </div>
       <div class="col">
         <label for="name">Amount:</label>
         <input type="text" name="amount"
                class="form-control"
                id="amount"
-               autocomplete="off">
+               autocomplete="off"
+               [(ngModel)]="ingredient.amount">
       </div>
       <div class="col">
         <label for="name">Unit:</label>
-        <select class="custom-select" id="unit">
+        <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit">
           <option selected>Open this select menu</option>
           <option value="GRAM">GRAM</option>
           <option value="MML">MML</option>
@@ -144,12 +146,13 @@
         <input type="text" name="note"
                class="form-control"
                id="note"
-               autocomplete="off">
+               autocomplete="off"
+               [(ngModel)]="ingredient.note">
       </div>
       <div class="col">
         <br/>
         <button type="submit"
-                (click)="addIngredient()"
+                (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit,ingredient.note)"
                 class="btn btn-success">Add ingredient +
         </button>
       </div>
