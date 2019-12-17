@@ -134,11 +134,8 @@
       </div>
       <div class="col">
         <label for="name">Unit:</label>
-        <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit">
-          <option selected>Open this select menu</option>
-          <option value="GRAM">GRAM</option>
-          <option value="MML">MML</option>
-          <option value="PIECE">PIECE</option>
+        <select class="custom-select"  id="unit" [(ngModel)]="ingredient.unit">
+          <option *ngFor="let u of unit" value="{{u}}">{{u}}</option>
         </select>
       </div>
       <div class="col">

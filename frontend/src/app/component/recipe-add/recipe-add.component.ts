@@ -25,17 +25,21 @@ export class RecipeAddComponent implements OnInit {
   checkedArray: CategoryRecipeDTO[] = [];
   cookingStep: CookingStepRecipeDTO = new CookingStepRecipeDTO();
   cookingSteps: CookingStepRecipeDTO[] = [];
+  unit: String[] = [];
+
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService) {
     this.createRecipeDTO = new CreateRecipeDTO();
+
   }
 
   ngOnInit() {
+    this.unit.push("PIECE", "GRAM", "MML", "KG", "L", "TEASPOON", "TABLESPOON", "CUP", "LEAF", "BY_TASTE");
+    this.first = true;
+    this.second = false;
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
       this.categories = data;
-      this.first = true;
-      this.second = false;
     });
   }
 
