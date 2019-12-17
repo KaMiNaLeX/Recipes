@@ -108,7 +108,7 @@
       <td name="i.unit">{{ingredient.unit}}</td>
       <td name="i.note">{{ingredient.note}}</td>
       <td>
-        <button name="delete" (click)="deleteIngredient()" class='btn btn-danger'>Delete
+        <button name="delete" (click)="deleteIngredient(ingredient.name)" class='btn btn-danger'>Delete
         </button>
       </td>
     </tr>

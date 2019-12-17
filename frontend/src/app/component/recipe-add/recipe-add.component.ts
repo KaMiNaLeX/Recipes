@@ -76,8 +76,15 @@ export class RecipeAddComponent implements OnInit {
 
   }
 
-  deleteIngredient() {
-    window.alert("[cde");
+  deleteIngredient(ingredientName: string) {
+    for (let i = 0; i < this.ingredients.length; i++) {
+      let ingredient = new IngredientRecipeDTO();
+      ingredient = this.ingredients[i];
+      if (ingredient.name == ingredientName) {
+        this.ingredients.splice(i, 1);
+        window.alert("Delete");
+      }
+    }
   }
 
   addCookingStep() {
