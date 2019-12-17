@@ -188,13 +188,12 @@
       </tr>
       </thead>
       <tbody>
-      <tr id="cookingStep">
-        <td name="c.number"></td>
-        <td name="c.name"></td>
-        <td name="c.description"></td>
+      <tr id="cookingStep" *ngFor="let step of cookingSteps">
+        <td name="c.number">{{step.number}}</td>
+        <td name="c.name">{{step.name}}</td>
+        <td name="c.description">{{step.description}}</td>
         <td>
-          <button class='btn btn-danger'>Delete
-          </button>
+          <button class='btn btn-danger' (click)="deleteStep(step.name)">Delete</button>
         </td>
       </tr>
       </tbody>
@@ -202,13 +201,18 @@
 
     <div class="form-group">
       <label>Name of cooking step:</label>
-      <input type="text" name="s.name" class="form-control" autocomplete="off">
+      <input type="text" name="s.name" [(ngModel)]="cookingStep.name" class="form-control" autocomplete="off">
     </div>
     <div class="form-group">
       <label>Description:</label>
-      <textarea name="s.description" class="form-control" autocomplete="off"></textarea>
+      <textarea name="s.description" class="form-control" [(ngModel)]="cookingStep.description"
+                autocomplete="off"></textarea>
     </div>
-    <button type="submit" class="btn btn-success" (click)="addCookingStep()">Add cooking step +</button>
-    <button type="submit" class="btn btn-success">Create recipe</button>
+    <button type="submit" class="btn btn-success"
+            (click)="addCookingStep(cookingStep.name,cookingStep.description,cookingSteps.length)">Add
+      cooking step +
+
+    </button>
+    <button type="submit" class="btn btn-success" (click)="onSubmit()">Create recipe</button>
   </div>
 </div>
