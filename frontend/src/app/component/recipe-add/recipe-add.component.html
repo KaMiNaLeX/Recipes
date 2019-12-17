@@ -5,7 +5,7 @@
     </li>
     <li class="nav-item">
       <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
-              createRecipeDTO.cookingTime,categories)">Ingredients
+              createRecipeDTO.cookingTime)">Ingredients
       </button>
     </li>
     <li class="nav-item">
@@ -58,7 +58,7 @@
           <label for="minute">Category:</label>
           <br/>
           <div class="form-check form-check-inline" *ngFor="let category of categories">
-            <input [(ngModel)]=category.checked class="form-check-input" type="checkbox"
+            <input (change)="checkArray(category)" class="form-check-input" type="checkbox"
                    id="inlineCheckbox1" value="{{category.name}}">
             <label class="form-check-label" for="inlineCheckbox1">{{category.name}}</label>
           </div>
@@ -67,7 +67,7 @@
     </div>
     <button class="btn btn-success"
             (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
-              createRecipeDTO.cookingTime,categories)">
+              createRecipeDTO.cookingTime)">
       Continue
     </button>
   </div>

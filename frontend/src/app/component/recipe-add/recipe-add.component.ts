@@ -21,6 +21,8 @@ export class RecipeAddComponent implements OnInit {
   ingredient: IngredientRecipeDTO = new IngredientRecipeDTO();
   categories: CategoryRecipeDTO[];
   category: CategoryRecipeDTO = new CategoryRecipeDTO();
+  checkedArray: CategoryRecipeDTO[] = [];
+
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService) {
@@ -39,31 +41,27 @@ export class RecipeAddComponent implements OnInit {
     this.third = false;
   }
 
-  toIngredient(name: string, difficulty: string, time: number, category: Array<CategoryRecipeDTO>) {
+  toIngredient(name: string, difficulty: string, time: number) {
     this.first = false;
     this.second = true;
     this.third = false;
 
-    let checkedArray = new Array<CategoryRecipeDTO>();
-    for (let i = 0; i < category.length; i++) {
-      this.category = category.values().next().value;
-      if (this.category.checked != false) {
-        checkedArray.push(this.category);
-      }
-    }
-
-
     this.createRecipeDTO.name = name;
     this.createRecipeDTO.cookingDifficulty = difficulty;
     this.createRecipeDTO.cookingTime = time;
-    this.createRecipeDTO.categoryRecipeDTOList = category;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
+    this.createRecipeDTO.categoryRecipeDTOList = this.checkedArray;
+
   }
 
   toCooking() {
     this.first = false;
     this.second = false;
     this.third = true;
+  }
+
+  checkArray(category: CategoryRecipeDTO) {
+    this.checkedArray.push(category);
   }
 
   addIngredient(name: string, amount: number, unit: string, note: string) {
