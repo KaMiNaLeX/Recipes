@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Recipe} from "../model/recipe";
+import {CreateRecipeDTO} from "../model/createRecipe/create-recipe-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,9 @@ export class RecipeService {
 
   public getRecipesByCategoryName(categoryName: string): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.baseUrl}/categoryName/${categoryName}`);
+  }
+
+  public createRecipe(recipe: CreateRecipeDTO) {
+    return this.http.post<CreateRecipeDTO>(`${this.baseUrl}/createRecipe`, recipe);
   }
 }

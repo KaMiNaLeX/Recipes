@@ -110,14 +110,25 @@ export class RecipeAddComponent implements OnInit {
   }
 
   onSubmit() {
+    let date: Date = new Date();
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
     this.createRecipeDTO.categoryRecipeDTOList = this.checkedArray;
-    if (this.createRecipeDTO.cookingStepRecipeDTOList != null && this.createRecipeDTO.ingredientRecipeDTOList != null &&
-      this.createRecipeDTO.categoryRecipeDTOList != null) {
-
-
+    this.createRecipeDTO.lastModified = date;
+    if (this.createRecipeDTO.cookingStepRecipeDTOList.length != 0 &&
+      this.createRecipeDTO.ingredientRecipeDTOList.length != 0 &&
+      this.createRecipeDTO.categoryRecipeDTOList.length != 0 &&
+      this.createRecipeDTO.cookingTime != null &&
+      this.createRecipeDTO.name != null &&
+      this.createRecipeDTO.cookingDifficulty != null) {
+      this.recipeService.createRecipe(this.createRecipeDTO).subscribe(data => {
+        this.createRecipeDTO = data;
+      });
+      this.router.navigate(['category']);
+      window.alert("Recipe is created!")
+    } else {
+      window.alert("Please fill in all fields!")
     }
   }
 }

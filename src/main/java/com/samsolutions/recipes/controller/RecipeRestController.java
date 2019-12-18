@@ -1,10 +1,11 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
+import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,6 +71,7 @@ public class RecipeRestController {
         return recipeService.getByCategoryName(categoryName);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PostMapping("/createRecipe")
     public CreateRecipeDTO createRecipeDTO(@RequestBody CreateRecipeDTO createRecipeDTO) throws IOException {
         return recipeService.createRecipeDTO(createRecipeDTO);

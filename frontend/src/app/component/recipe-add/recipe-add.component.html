@@ -134,7 +134,7 @@
       </div>
       <div class="col">
         <label for="name">Unit:</label>
-        <select class="custom-select"  id="unit" [(ngModel)]="ingredient.unit">
+        <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit">
           <option *ngFor="let u of unit" value="{{u}}">{{u}}</option>
         </select>
       </div>
@@ -211,8 +211,10 @@
     <button type="submit" class="btn btn-success"
             (click)="addCookingStep(cookingStep.name,cookingStep.description,cookingSteps.length)">Add
       cooking step +
-
     </button>
-    <button type="submit" class="btn btn-success" (click)="onSubmit()">Create recipe</button>
+    <br/>
+    <form (ngSubmit)="onSubmit()">
+      <button type="submit" class="btn btn-success">Create recipe</button>
+    </form>
   </div>
 </div>
