@@ -41,12 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().disable().csrf().disable().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers("/api/auth/login").permitAll()
-                .antMatchers("/api/auth/register").permitAll()
-                .antMatchers("/api/auth/role").permitAll()
-                .antMatchers("/api/auth/user").permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/client/login").permitAll()
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/category/").permitAll()
+                .antMatchers("/api/recipe/categoryName/**").permitAll()
+                .antMatchers("/api/recipe/**").hasAuthority("AUTHOR")
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf()
                 .disable().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
@@ -63,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs",
                         "/autoconfig",
                         "/assets/**",
-                        "/api/**",
+                        //"/api/**",
                         "/random/**",
                         "/webjars/**");
     }

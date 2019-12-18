@@ -15,7 +15,7 @@ export class UserService {
   }
 
   public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/getAll?page=0&size=10`);
+    return this.http.get<User[]>(`${this.baseUrl}/`);
   }
 
   public create(user: User) {

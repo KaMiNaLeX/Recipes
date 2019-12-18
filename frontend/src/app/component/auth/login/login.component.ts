@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    this.router.navigate(['registry']);
+    this.router.navigate(['register']);
   }
 
 }

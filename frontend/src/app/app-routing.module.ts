@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'category', component: CategoryListComponent},
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: UserProfileComponent},
-  {path: 'registry', component: RegisterComponent},
+  {path: 'register', component: RegisterComponent},
   {path: 'recipe-list', component: RecipeListComponent},
   {path: 'addRecipe', component: RecipeAddComponent}
 ];
