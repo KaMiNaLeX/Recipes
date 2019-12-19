@@ -23,4 +23,18 @@ export class RecipeAuthorComponent implements OnInit {
     this.router.navigate(['recipe-view']);
   }
 
+  delete(id: string) {
+
+    this.recipeService.delete(id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.recipeService.getByAuthorId(localStorage.getItem('id')).subscribe(data => {
+            this.recipes = data;
+          })
+        },
+        error => console.log(error));
+    window.alert("Recipe is deleted!");
+  }
+
 }

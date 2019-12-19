@@ -1,3 +1,11 @@
 .top {
   position: absolute;
 }
+
+.div {
+  display: flex;
+}
+.divChild + .divChild {
+  margin-left: 12px;
+}
+

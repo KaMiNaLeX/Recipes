@@ -9,11 +9,16 @@
           <h5 class="card-title">{{ recipe.name }}</h5>
           <p class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</p>
           <p class="card-text">Time:{{ recipe.cookingTime }} minutes</p>
-          <p class="card-text">Like:{{ recipe.positiveVotes }}</p>
-          <p class="card-text">Dislike:{{ recipe.negativeVotes }}</p>
-          <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
-            <button type="submit" class="btn btn-primary">View</button>
-          </form>
+          <label class="card-text">Like:{{ recipe.positiveVotes }}</label>
+          <label class="card-text">Dislike:{{ recipe.negativeVotes }}</label>
+          <div class="div">
+            <form class="divChild" (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
+              <button type="submit" class="btn btn-primary">View</button>
+            </form>
+            <form class="divChild" (ngSubmit)="delete(recipe.id)" #addToCartForm="ngForm">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
           <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
         </div>
       </div>

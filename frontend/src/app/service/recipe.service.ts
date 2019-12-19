@@ -30,4 +30,8 @@ export class RecipeService {
   public getByAuthorId(id: string): Observable<CreateRecipeDTO[]> {
     return this.http.get<CreateRecipeDTO[]>(`${this.baseUrl}/authorId/${id}`);
   }
+
+  public delete(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete/${id}`, {responseType: 'text'});
+  }
 }
