@@ -22,4 +22,8 @@ export class RecipeService {
   public createRecipe(recipe: CreateRecipeDTO) {
     return this.http.post<CreateRecipeDTO>(`${this.baseUrl}/createRecipe`, recipe);
   }
+
+  public getById(id: string): Observable<CreateRecipeDTO> {
+    return this.http.get<CreateRecipeDTO>(`${this.baseUrl}/id/${id}`);
+  }
 }

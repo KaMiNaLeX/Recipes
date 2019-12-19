@@ -23,6 +23,8 @@ export class RecipeListComponent implements OnInit {
   }
 
   view(id: string) {
+    sessionStorage.setItem('recipe', id);
+    this.router.navigate(['recipe-view']);
     window.alert(id);
   }
 

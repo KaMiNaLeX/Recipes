@@ -1,0 +1,57 @@
+<div id="first" class="container-fluid">
+  <div class="col-md-6 login-container">
+    <div class="form-group">
+      <h2>Name:{{createRecipeDTO.name}}</h2>
+    </div>
+    <br/>
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">Difficulty: {{createRecipeDTO.cookingDifficulty}}</label>
+          </div>
+        </div>
+        <div class="col">
+          <label>Minutes:{{createRecipeDTO.cookingTime}}</label>
+        </div>
+      </div>
+    </div>
+    <h2 style="margin: auto">Ingredients</h2>
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Ingredient</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Note</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr id="ingredient" name="ingredient" *ngFor="let ingredient of createRecipeDTO.ingredientRecipeDTOList">
+        <td name="i.name">{{ingredient.name}}</td>
+        <td name="i.amount">{{ingredient.amount}}</td>
+        <td name="i.unit">{{ingredient.unit}}</td>
+        <td name="i.note">{{ingredient.note}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <h2 style="margin: auto">Cooking</h2>
+    <br/>
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Number</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr id="cookingStep" *ngFor="let step of createRecipeDTO.cookingStepRecipeDTOList">
+        <td name="c.number">{{step.number}}</td>
+        <td name="c.name">{{step.name}}</td>
+        <td name="c.description">{{step.description}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
