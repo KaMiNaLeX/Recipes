@@ -6,6 +6,8 @@ import {IngredientRecipeDTO} from "../../model/createRecipe/ingredient-recipe-dt
 import {CategoryRecipeDTO} from "../../model/createRecipe/category-recipe-dto";
 import {CategoryService} from "../../service/category.service";
 import {CookingStepRecipeDTO} from "../../model/createRecipe/cooking-step-recipe-dto";
+import {IngredientService} from "../../service/ingredient.service";
+import {Ingredient} from "../../model/ingredient";
 
 @Component({
   selector: 'app-recipe-add',
@@ -26,10 +28,10 @@ export class RecipeAddComponent implements OnInit {
   cookingStep: CookingStepRecipeDTO = new CookingStepRecipeDTO();
   cookingSteps: CookingStepRecipeDTO[] = [];
   unit: String[] = [];
-
+  allIngredients: Ingredient[];
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
-              private categoryService: CategoryService) {
+              private categoryService: CategoryService, private ingredientService: IngredientService) {
     this.createRecipeDTO = new CreateRecipeDTO();
 
   }
@@ -41,6 +43,7 @@ export class RecipeAddComponent implements OnInit {
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
       this.categories = data;
     });
+    this.ingredientService.findAll().subscribe(data => this.allIngredients = data);
   }
 
   toDescription() {

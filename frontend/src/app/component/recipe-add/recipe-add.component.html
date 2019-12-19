@@ -118,11 +118,9 @@
     <div class="row">
       <div class="col">
         <label for="name">Ingredient name:</label>
-        <input type="text" name="name"
-               class="form-control"
-               id="ingredientName"
-               autocomplete="off"
-               [(ngModel)]="ingredient.name">
+        <select class="custom-select" id="ingredientName" [(ngModel)]="ingredient.name">
+          <option *ngFor="let ingredient of allIngredients" value="{{ingredient.name}}">{{ingredient.name}}</option>
+        </select>
       </div>
       <div class="col">
         <label for="name">Amount:</label>

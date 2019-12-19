@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,10 +34,17 @@ public class IngredientServiceImpl implements IngredientService, ModelMapperServ
 
     @Override
     public List<IngredientDTO> findAll() {
+        List<IngredientEntity> sortedList = ingredientRepository.findAll();
+        sortedList.sort(new Comparator<IngredientEntity>() {
+            @Override
+            public int compare(IngredientEntity o1, IngredientEntity o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
         List<IngredientDTO> ingredientDTOList = new ArrayList<>();
         IngredientDTO ingredientDTO = new IngredientDTO();
         ingredientDTOList.add(ingredientDTO);
-        map(ingredientRepository.findAll(), ingredientDTOList);
+        map(sortedList, ingredientDTOList);
         return ingredientDTOList;
     }
 

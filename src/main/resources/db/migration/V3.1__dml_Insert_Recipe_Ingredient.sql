@@ -52,7 +52,7 @@ values (unhex(replace(uuid(), '-', '')), (select id
                                           from RECIPE r
                                           where r.name = 'Pizza'
                                             AND r.author_id = (select id from USER u where u.login = 'Siren')),
-        (select id from INGREDIENT i where i.name = 'Сheese'), 100, '', 'GRAM');
+        (select id from INGREDIENT i where i.name = 'Cheese'), 100, '', 'GRAM');
 
 INSERT INTO recipe_ingredient (id, recipe_id, ingredient_id, amount, note, unit)
 values (unhex(replace(uuid(), '-', '')), (select id

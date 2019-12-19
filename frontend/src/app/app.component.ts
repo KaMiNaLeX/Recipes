@@ -26,11 +26,15 @@ export class AppComponent {
   }
 
   addRecipe() {
+    this.router.navigate(['addRecipe']);
+    /*
     if (this.author != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
     } else {
       window.alert("You need have AUTHOR or ADMIN role")
     }
+
+     */
 
   }
 
@@ -50,8 +54,8 @@ export class AppComponent {
 
   role() {
     this.authService.role().subscribe(data => {
-      this.admin = (this.authenticated && data['roles'] && data['roles'].indexOf('ADMIN')) > -1;
-      this.author = (this.authenticated && data['roles'] && data['roles'].indexOf('AUTHOR')) > -1;
+      this.admin = (this.authenticated != false) && (data['roles'] && data['roles'].indexOf('ADMIN')) > -1;
+      this.author = (this.authenticated != false) && (data['roles'] && data['roles'].indexOf('AUTHOR')) > -1;
     });
   }
 

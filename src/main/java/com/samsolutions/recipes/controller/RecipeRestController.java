@@ -71,7 +71,7 @@ public class RecipeRestController {
         return recipeService.getByCategoryName(categoryName);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PostMapping("/createRecipe")
     public CreateRecipeDTO createRecipeDTO(@RequestBody CreateRecipeDTO createRecipeDTO) throws IOException {
         return recipeService.createRecipeDTO(createRecipeDTO);

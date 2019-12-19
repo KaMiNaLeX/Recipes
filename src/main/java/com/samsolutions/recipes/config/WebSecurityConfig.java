@@ -46,8 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/category/").permitAll()
                 .antMatchers("/api/recipe/categoryName/**").permitAll()
-                //.antMatchers("/api/recipe/createRecipe").hasAnyRole("AUTHOR", "ADMIN")
-                //.antMatchers("/api/recipe/createRecipe").hasAuthority(RoleName.ADMIN.toString())
                 .anyRequest()
                 .authenticated().and().csrf()
                 .disable().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
