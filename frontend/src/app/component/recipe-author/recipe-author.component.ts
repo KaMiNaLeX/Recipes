@@ -23,6 +23,11 @@ export class RecipeAuthorComponent implements OnInit {
     this.router.navigate(['recipe-view']);
   }
 
+  edit(id: string) {
+    sessionStorage.setItem('recipe', id);
+    this.router.navigate(['recipe-edit']);
+  }
+
   delete(id: string) {
 
     this.recipeService.delete(id)

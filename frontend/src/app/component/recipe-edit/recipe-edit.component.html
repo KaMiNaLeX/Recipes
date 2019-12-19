@@ -1,0 +1,219 @@
+<div [hidden]="!first" id="first" class="container-fluid">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <button class="btn btn-primary btn-lg btn-block">Dish description</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
+              createRecipeDTO.cookingTime)">Ingredients
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link">Cooking</button>
+    </li>
+  </ul>
+  <div class="col-md-6 login-container">
+    <h2 style="margin: auto">Description</h2>
+    <br/>
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" [(ngModel)]="createRecipeDTO.name" class="form-control" id="name"
+             autocomplete="off" #name="ngModel" placeholder="{{createRecipeDTO.name}}" required>
+      <div *ngIf="name.invalid" style="color: red">Required</div>
+    </div>
+    <br/>
+    <h2 style="margin: auto">Selection of characteristics</h2>
+    <br/>
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label for="minute">Difficulty:</label>
+          <br/>
+          <div class="form-check form-check-inline">
+            <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
+                   name="exampleRadios" id="exampleRadios1" value="EASY" #difficulty="ngModel" required>
+            <label class="form-check-label" for="exampleRadios1">EASY</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
+                   name="exampleRadios" id="exampleRadios2" value="MEDIUM" #difficulty="ngModel" required>
+            <label class="form-check-label" for="exampleRadios2">MEDIUM</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
+                   name="exampleRadios" id="exampleRadios3" value="HARD" #difficulty="ngModel" required>
+            <label class="form-check-label" for="exampleRadios3">HARD</label>
+          </div>
+          <div *ngIf="difficulty.invalid" style="color: red">Required</div>
+        </div>
+        <div class="col">
+          <label for="minute">Minutes:</label>
+          <input style="width: 100px" type="text" name="minute" [(ngModel)]="createRecipeDTO.cookingTime"
+                 class="form-control"
+                 id="minute"
+                 autocomplete="off" #minutes="ngModel"
+                 placeholder="{{createRecipeDTO.cookingTime}}" required>
+          <div *ngIf="minutes.invalid" style="color: red">Required</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label for="minute">Category:</label>
+          <br/>
+          <div class="form-check form-check-inline" *ngFor="let category of categories">
+            <input (change)="checkArray(category)" class="form-check-input" type="checkbox"
+                   id="inlineCheckbox1" value="{{category.name}}" name="check">
+            <label class="form-check-label" for="inlineCheckbox1">{{category.name}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-success"
+            (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
+              createRecipeDTO.cookingTime)">
+      Continue
+    </button>
+  </div>
+</div>
+
+
+<div [hidden]="!second" id="second" class="container-fluid">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="toDescription()">Dish description</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-primary btn-lg btn-block">Ingredients</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="toCooking()">Cooking</button>
+    </li>
+  </ul>
+  <h2 style="margin: auto">Add ingredients</h2>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Ingredient</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Unit</th>
+      <th scope="col">Note</th>
+      <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="ingredient" name="ingredient" *ngFor="let ingredient of ingredients">
+      <td name="i.name">{{ingredient.name}}</td>
+      <td name="i.amount">{{ingredient.amount}}</td>
+      <td name="i.unit">{{ingredient.unit}}</td>
+      <td name="i.note">{{ingredient.note}}</td>
+      <td>
+        <button name="delete" (click)="deleteIngredient(ingredient.name)" class='btn btn-danger'>Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="form-group">
+    <div class="row">
+      <div class="col">
+        <label for="name">Ingredient name:</label>
+        <select class="custom-select" id="ingredientName" [(ngModel)]="ingredient.name">
+          <option *ngFor="let ingredient of allIngredients" value="{{ingredient.name}}">{{ingredient.name}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="name">Amount:</label>
+        <input type="text" name="amount"
+               class="form-control"
+               id="amount"
+               autocomplete="off"
+               [(ngModel)]="ingredient.amount">
+      </div>
+      <div class="col">
+        <label for="name">Unit:</label>
+        <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit">
+          <option *ngFor="let u of unit" value="{{u}}">{{u}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="name">Note:</label>
+        <input type="text" name="note"
+               class="form-control"
+               id="note"
+               autocomplete="off"
+               [(ngModel)]="ingredient.note">
+      </div>
+      <div class="col">
+        <br/>
+        <button type="submit"
+                (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit,ingredient.note)"
+                class="btn btn-success">Add ingredient +
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 login-container">
+    <button type="submit" (click)="toCooking()" class="btn btn-success ">Continue</button>
+  </div>
+</div>
+
+<div [hidden]="!third" id="third" class="container-fluid">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="toDescription()">Dish description</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
+              createRecipeDTO.cookingTime)">Ingredients
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-primary btn-lg btn-block">Cooking</button>
+    </li>
+  </ul>
+  <div class="col-md-6 login-container">
+    <h2 style="margin: auto">Cooking</h2>
+    <br/>
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Number</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr id="cookingStep" *ngFor="let step of cookingSteps">
+        <td name="c.number">{{step.number}}</td>
+        <td name="c.name">{{step.name}}</td>
+        <td name="c.description">{{step.description}}</td>
+        <td>
+          <button class='btn btn-danger' (click)="deleteStep(step.name)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="form-group">
+      <label>Name of cooking step:</label>
+      <input type="text" name="s.name" [(ngModel)]="cookingStep.name" class="form-control" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>Description:</label>
+      <textarea name="s.description" class="form-control" [(ngModel)]="cookingStep.description"
+                autocomplete="off"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success"
+            (click)="addCookingStep(cookingStep.name,cookingStep.description,cookingSteps.length)">Add
+      cooking step +
+    </button>
+    <br/>
+    <form (ngSubmit)="onSubmit()">
+      <button type="submit" class="btn btn-success">Create recipe</button>
+    </form>
+  </div>
+</div>
