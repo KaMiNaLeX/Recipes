@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <div class="card mb-3 card-columns" style="max-width: 600px;" *ngFor="let recipe of recipes">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="assets/images/test.png" class="card-img">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ recipe.name }}</h5>
+          <p class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</p>
+          <p class="card-text">Time:{{ recipe.cookingTime }} minutes</p>
+          <p class="card-text">Like:{{ recipe.positiveVotes }}</p>
+          <p class="card-text">Dislike:{{ recipe.negativeVotes }}</p>
+          <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
+            <button type="submit" class="btn btn-primary">View</button>
+          </form>
+          <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

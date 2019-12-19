@@ -26,4 +26,8 @@ export class RecipeService {
   public getById(id: string): Observable<CreateRecipeDTO> {
     return this.http.get<CreateRecipeDTO>(`${this.baseUrl}/id/${id}`);
   }
+
+  public getByAuthorId(id: string): Observable<CreateRecipeDTO[]> {
+    return this.http.get<CreateRecipeDTO[]>(`${this.baseUrl}/authorId/${id}`);
+  }
 }

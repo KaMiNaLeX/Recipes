@@ -38,6 +38,10 @@ export class AppComponent {
 
   }
 
+  recipes(){
+    this.router.navigate(['recipe-author']);
+  }
+
   categories() {
     this.router.navigate(['category']);
   }
