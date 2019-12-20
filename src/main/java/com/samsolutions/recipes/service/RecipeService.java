@@ -1,8 +1,8 @@
 package com.samsolutions.recipes.service;
 
-import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
+import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,6 +35,8 @@ public interface RecipeService {
     CreateRecipeDTO getByRecipeId(UUID uuid);
 
     List<CreateRecipeDTO> getByAuthorId(UUID authorId);
+
+    List<RecipeDTO> getByAuthorName(String name);
 
     List<RecipeDTO> findAllByName(String name);
 

@@ -30,6 +30,7 @@ import {RecipeAddComponent} from './component/recipe-add/recipe-add.component';
 import { RecipeViewComponent } from './component/recipe-view/recipe-view.component';
 import { RecipeAuthorComponent } from './component/recipe-author/recipe-author.component';
 import { RecipeEditComponent } from './component/recipe-edit/recipe-edit.component';
+import { SearchComponent } from './component/search/search.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { RecipeEditComponent } from './component/recipe-edit/recipe-edit.compone
     RecipeAddComponent,
     RecipeViewComponent,
     RecipeAuthorComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

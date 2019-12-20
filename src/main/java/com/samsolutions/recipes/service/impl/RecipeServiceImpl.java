@@ -7,6 +7,7 @@ import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.IngredientRecipeDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.exception.NotFoundException;
+import com.samsolutions.recipes.exception.UserNotFoundException;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.CategoryRecipeEntity;
 import com.samsolutions.recipes.model.CookingStepsEntity;
@@ -19,6 +20,7 @@ import com.samsolutions.recipes.repository.CookingStepsRepository;
 import com.samsolutions.recipes.repository.IngredientRepository;
 import com.samsolutions.recipes.repository.RecipeIngredientRepository;
 import com.samsolutions.recipes.repository.RecipeRepository;
+import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.apache.commons.io.IOUtils;
@@ -58,6 +60,9 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
 
     @Autowired
     private RecipeIngredientRepository recipeIngredientRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<RecipeDTO> findAll() {
@@ -356,6 +361,21 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             }
         }
         return createRecipeDTOList;
+    }
+
+    @Override
+    @Transactional
+    public List<RecipeDTO> getByAuthorName(String name) {
+        List<RecipeDTO> recipeDTOList = new ArrayList<>();
+        RecipeDTO recipeDTO = new RecipeDTO();
+        recipeDTOList.add(recipeDTO);
+
+        UUID uuid = userRepository.getByLogin(name).getId();
+        if (uuid == null) {
+            throw new UserNotFoundException("User not found");
+        }
+        map(recipeRepository.getByAuthorId(uuid), recipeDTOList);
+        return recipeDTOList;
     }
 
     @Override

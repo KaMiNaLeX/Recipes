@@ -1,0 +1,90 @@
+<div [hidden]="!first" id="first" class="container-fluid">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <button class="btn btn-primary btn-lg btn-block">Search by name</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="byIngredients()">Search by ingredients</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="byRecipes()">Search by recipes</button>
+    </li>
+  </ul>
+  <div class="input-group mb-6 div">
+    <input type="text" class="form-control" placeholder="Search by recipe name" aria-label="Recipient's username"
+           aria-describedby="button-addon2" [(ngModel)]="recipe.name">
+    <div class="input-group-append divChild">
+      <button class="btn btn-outline-primary" type="button" id="button-addon1" (click)="searchByName(recipe.name)">
+        Search
+      </button>
+    </div>
+    <input type="text" class="form-control divChild" placeholder="Search by author name"
+           aria-label="Recipient's username"
+           aria-describedby="button-addon2"
+           id="authorName" [(ngModel)]="author.login">
+    <div class="input-group-append divChild">
+      <button class="btn btn-outline-primary" type="button" id="button-addon2"
+              (click)="searchByAuthorName(author.login)">Search
+      </button>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="!second" id="second" class="container-fluid">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="byName()">Search by name</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-primary btn-lg btn-block">Search by ingredients</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="byRecipes()">Search by recipes</button>
+    </li>
+  </ul>
+</div>
+
+<div [hidden]="!third" id="third" class="container-fluid">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="byName()">Search by name</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="byIngredients()">Search by ingredients</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-primary btn-lg btn-block">Search by recipes</button>
+    </li>
+  </ul>
+  <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+    <div class="card-header">Header</div>
+    <div class="card-body">
+      <h5 class="card-title">Primary card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+        content.</p>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="!recipeDiv" id="recipeDiv" class="container">
+  <div class="card mb-3 card-columns" style="max-width: 600px;" *ngFor="let recipe of recipes">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="assets/images/test.png" class="card-img">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ recipe.name }}</h5>
+          <p class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</p>
+          <p class="card-text">Time:{{ recipe.cookingTime }} minutes</p>
+          <label class="card-text">Like:{{ recipe.positiveVotes }}</label>
+          <label class="card-text">Dislike:{{ recipe.negativeVotes }}</label>
+          <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
+            <button type="submit" class="btn btn-primary">View</button>
+          </form>
+          <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

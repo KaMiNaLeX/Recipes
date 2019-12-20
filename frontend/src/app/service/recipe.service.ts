@@ -38,4 +38,12 @@ export class RecipeService {
   public update(id: string, recipeData: any): Observable<Object> {
     return this.http.put(`${this.baseUrl}/updateRecipe/${id}`, recipeData);
   }
+
+  public getByName(name: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/name/${name}`);
+  }
+
+  public getByAuthorName(name: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/authorName/${name}`);
+  }
 }

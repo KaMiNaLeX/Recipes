@@ -11,6 +11,7 @@ import {RecipeAddComponent} from "./component/recipe-add/recipe-add.component";
 import {RecipeViewComponent} from "./component/recipe-view/recipe-view.component";
 import {RecipeAuthorComponent} from "./component/recipe-author/recipe-author.component";
 import {RecipeEditComponent} from "./component/recipe-edit/recipe-edit.component";
+import {SearchComponent} from "./component/search/search.component";
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path: 'addRecipe', component: RecipeAddComponent},
   {path: 'recipe-view', component: RecipeViewComponent},
   {path: 'recipe-author', component: RecipeAuthorComponent},
-  {path: 'recipe-edit', component: RecipeEditComponent}
+  {path: 'recipe-edit', component: RecipeEditComponent},
+  {path: 'search', component: SearchComponent}
 ];
 
 @NgModule({

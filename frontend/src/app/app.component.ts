@@ -42,6 +42,10 @@ export class AppComponent {
     this.router.navigate(['recipe-author']);
   }
 
+  search(){
+    this.router.navigate(['search']);
+  }
+
   categories() {
     this.router.navigate(['category']);
   }
