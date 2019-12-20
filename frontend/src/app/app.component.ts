@@ -38,7 +38,7 @@ export class AppComponent {
 
   }
 
-  recipes(){
+  recipes() {
     this.router.navigate(['recipe-author']);
   }
 
@@ -53,7 +53,9 @@ export class AppComponent {
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
               private http: HttpClient) {
     this.authenticate();
-    this.role();
+    if (this.authenticated != false) {
+      this.role();
+    }
   }
 
   role() {

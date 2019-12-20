@@ -44,9 +44,6 @@ export class RecipeEditComponent implements OnInit {
     this.second = false;
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
       this.categories = data;
-      for (let i = 0; i < data.length; i++) {
-        let checkButton = document.getElementById('inlineCheckbox1')[i];
-      }
     });
     this.ingredientService.findAll().subscribe(data => this.allIngredients = data);
 
@@ -63,8 +60,6 @@ export class RecipeEditComponent implements OnInit {
       radioButton = document.getElementById('exampleRadios3');
       radioButton.checked = true;
     }
-
-
   }
 
   toDescription() {
@@ -81,12 +76,20 @@ export class RecipeEditComponent implements OnInit {
     this.createRecipeDTO.name = name;
     this.createRecipeDTO.cookingDifficulty = difficulty;
     this.createRecipeDTO.cookingTime = time;
+    this.ingredients = this.createRecipeDTO.ingredientRecipeDTOList;
+    if (this.ingredients.length >= this.createRecipeDTO.ingredientRecipeDTOList.length) {
+      this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
+    }
   }
 
   toCooking() {
     this.first = false;
     this.second = false;
     this.third = true;
+    this.cookingSteps = this.createRecipeDTO.cookingStepRecipeDTOList;
+    if (this.cookingSteps.length >= this.createRecipeDTO.cookingStepRecipeDTOList.length) {
+      this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
+    }
   }
 
   checkArray(category: CategoryRecipeDTO) {
@@ -108,6 +111,7 @@ export class RecipeEditComponent implements OnInit {
       ingredient = this.ingredients[i];
       if (ingredient.name == ingredientName) {
         this.ingredients.splice(i, 1);
+        this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
         window.alert("Delete");
       }
     }
@@ -119,6 +123,7 @@ export class RecipeEditComponent implements OnInit {
       step = this.cookingSteps[i];
       if (step.name == stepName) {
         this.cookingSteps.splice(i, 1);
+        this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
         window.alert("Delete");
       }
     }
@@ -146,11 +151,16 @@ export class RecipeEditComponent implements OnInit {
       this.createRecipeDTO.cookingTime != null &&
       this.createRecipeDTO.name != null &&
       this.createRecipeDTO.cookingDifficulty != null) {
-      this.recipeService.createRecipe(this.createRecipeDTO).subscribe(data => {
-        this.createRecipeDTO = data;
+      this.recipeService.update(this.createRecipeDTO.id, this.createRecipeDTO).subscribe(data => {
+        this.recipeService.getById(sessionStorage.getItem('recipe')).subscribe(data => {
+          this.createRecipeDTO = data;
+          this.first = true;
+          this.second = false;
+          this.third = false;
+        })
       });
-      this.router.navigate(['category']);
-      window.alert("Recipe is created!")
+      //this.router.navigate(['recipe']);
+      window.alert("Recipe is updated!")
     } else {
       window.alert("Please fill in all fields!")
     }
