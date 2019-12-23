@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   principal() {
-    return this.isLoggedIn;
+    return this.http.get(apiUrl + 'user');
   }
 
   role() {

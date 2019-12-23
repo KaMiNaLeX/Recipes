@@ -5,7 +5,7 @@
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
+        <button class="btn btn-link" (click)="login()">Login</button>
       </li>
       <li class="nav-item">
         <button class="btn btn-link" (click)="register()">Registration</button>
@@ -15,7 +15,7 @@
       </li>
       <div [hidden]="!admin">
         <li class="nav-item">
-          <a class="nav-link" href="/users">Users</a>
+          <button class="btn btn-link" (click)="users()">Users</button>
         </li>
       </div>
       <div [hidden]="!admin">
@@ -26,12 +26,14 @@
       <li class="nav-item">
         <button class="btn btn-link" (click)="categories()">Categories</button>
       </li>
-      <li class="nav-item">
-        <button class="btn btn-link" (click)="recipes()">My recipes</button>
-      </li>
+      <div [hidden]="!admin || !author">
+        <li class="nav-item">
+          <button class="btn btn-link" (click)="recipes()">My recipes</button>
+        </li>
+      </div>
       <div [hidden]="!authenticated">
         <li class="nav-item">
-          <a class="nav-link" href="/profile">Profile</a>
+          <button class="btn btn-link" (click)="profile()">Profile</button>
         </li>
       </div>
     </ul>

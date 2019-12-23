@@ -12,7 +12,6 @@ import {HttpClient} from "@angular/common/http";
 export class AppComponent {
 
   title = 'frontend';
-  principal = null;
   authenticated = false;
   admin = false;
   author = false;
@@ -26,23 +25,22 @@ export class AppComponent {
   }
 
   addRecipe() {
-    this.router.navigate(['addRecipe']);
-    /*
     if (this.author != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
     } else {
       window.alert("You need have AUTHOR or ADMIN role")
     }
+  }
 
-     */
-
+  login() {
+    this.router.navigate(['login']);
   }
 
   recipes() {
     this.router.navigate(['recipe-author']);
   }
 
-  search(){
+  search() {
     this.router.navigate(['search']);
   }
 
@@ -54,29 +52,28 @@ export class AppComponent {
     this.router.navigate(['register']);
   }
 
+  profile() {
+    this.router.navigate(['profile']);
+  }
+
+  users() {
+    this.router.navigate(['users']);
+  }
+
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
               private http: HttpClient) {
-    this.authenticate();
-    if (this.authenticated != false) {
+    if (localStorage.getItem('token') != undefined) {
+      this.authenticated = true;
       this.role();
     }
   }
 
   role() {
     this.authService.role().subscribe(data => {
-      this.admin = (this.authenticated != false) && (data['roles'] && data['roles'].indexOf('ADMIN')) > -1;
-      this.author = (this.authenticated != false) && (data['roles'] && data['roles'].indexOf('AUTHOR')) > -1;
+      this.admin = (data['roles'] && data['roles'].indexOf('ADMIN')) > -1;
+      this.author = (data['roles'] && data['roles'].indexOf('AUTHOR')) > -1;
     });
   }
-
-  authenticate() {
-    this.principal = this.authService.principal();
-    if (this.principal != false) {
-      this.authenticated = true;
-    } else this.authenticated = false;
-  }
-
-
 }
 
 

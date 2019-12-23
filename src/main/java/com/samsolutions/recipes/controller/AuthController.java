@@ -1,7 +1,7 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.dto.AuthBodyDTO;
 import com.samsolutions.recipes.config.JwtTokenProvider;
+import com.samsolutions.recipes.dto.AuthBodyDTO;
 import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -85,11 +84,14 @@ public class AuthController {
     }
 
     @GetMapping("/user")
-    public UUID user(Principal user) {
+    public ResponseEntity user(Principal user) {
         if (user == null) {
             throw new BadCredentialsException("User does not login");
+        } else {
+            Map<Object, Object> model = new HashMap<>();
+            model.put("principal", "true");
+            return ok(model);
         }
-        return userService.findUserByEmail(user.getName()).getId();
     }
 
     @GetMapping("/role")
