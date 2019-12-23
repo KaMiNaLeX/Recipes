@@ -28,6 +28,10 @@ export class RecipeAuthorComponent implements OnInit {
     this.router.navigate(['recipe-edit']);
   }
 
+  addRecipe(){
+    this.router.navigate(['recipe-add']);
+  }
+
   delete(id: string) {
 
     this.recipeService.delete(id)

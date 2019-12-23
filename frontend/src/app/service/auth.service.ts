@@ -33,9 +33,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
-    localStorage.removeItem('id');
+    localStorage.clear();
   }
 
   register(data: any): Observable<any> {

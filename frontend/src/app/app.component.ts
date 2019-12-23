@@ -72,6 +72,8 @@ export class AppComponent {
     this.authService.role().subscribe(data => {
       this.admin = (data['roles'] && data['roles'].indexOf('ADMIN')) > -1;
       this.author = (data['roles'] && data['roles'].indexOf('AUTHOR')) > -1;
+      localStorage.setItem('adminRole', this.admin.toString());
+      localStorage.setItem('authorRole', this.author.toString());
     });
   }
 }

@@ -75,7 +75,7 @@
 
 <div [hidden]="!recipeDiv" id="recipeDiv" class="container">
   <div class="card mb-3 card-columns" style="max-width: 600px;" *ngFor="let recipe of recipes">
-    <div class="row no-gutters">
+    <div class="row no-gutters" *ngIf="recipe.name != null">
       <div class="col-md-4">
         <img src="assets/images/test.png" class="card-img">
       </div>
@@ -90,6 +90,23 @@
             <button type="submit" class="btn btn-primary">View</button>
           </form>
           <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="recipe.name == null">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="error-template">
+              <h1>
+                Oops!</h1>
+              <h2>
+                Recipes Not Found</h2>
+              <div class="error-details">
+                There are no results for the given parameters, check the parameters and try again
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
