@@ -1,11 +1,13 @@
 package com.samsolutions.recipes.service.impl;
 
+import com.samsolutions.recipes.dto.RegistrationUserDTO;
 import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.RoleRepository;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.repository.UserRoleRepository;
+import com.samsolutions.recipes.service.ModelMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +29,7 @@ import java.util.Set;
  */
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService, ModelMapperService {
 
     @Autowired
     private UserRepository userRepository;
@@ -75,13 +77,23 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Transactional
-    public void saveUser(UserEntity user) {
+    public void saveUser(RegistrationUserDTO user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        UserEntity saveUser = userRepository.save(user);
+        UserEntity saveUser = new UserEntity();
+        map(user, saveUser);
+        map(userRepository.save(saveUser), user);
 
         UserRoleEntity userRoleEntity = new UserRoleEntity();
         userRoleEntity.setUserId(saveUser.getId());
         userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
         userRoleRepository.save(userRoleEntity);
+
+        if (user.isAuthor()) {
+            UserRoleEntity userRoleEntity2 = new UserRoleEntity();
+            userRoleEntity2.setUserId(saveUser.getId());
+            userRoleEntity2.setRoleId(roleRepository.findByName(RoleName.AUTHOR).getId());
+            userRoleRepository.save(userRoleEntity2);
+        }
+
     }
 }

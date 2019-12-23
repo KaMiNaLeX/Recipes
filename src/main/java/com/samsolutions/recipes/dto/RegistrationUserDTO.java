@@ -1,28 +1,25 @@
 package com.samsolutions.recipes.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 /**
- * User DTO.
- *
  * @author kaminskiy.alexey
- * @since 2019.10
+ * @since 2019.12
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
-
-    private UUID id;
+public class RegistrationUserDTO {
     private String firstName;
     private String lastName;
     private String email;
     private String login;
     private String password;
+    @JsonProperty
+    private boolean isAuthor;
 }

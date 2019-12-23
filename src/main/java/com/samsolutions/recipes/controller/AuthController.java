@@ -2,6 +2,7 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.config.JwtTokenProvider;
 import com.samsolutions.recipes.dto.AuthBodyDTO;
+import com.samsolutions.recipes.dto.RegistrationUserDTO;
 import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
@@ -68,7 +69,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody UserEntity user) {
+    public ResponseEntity register(@RequestBody RegistrationUserDTO user) {
         UserEntity userExists = userService.findUserByEmail(user.getEmail());
         UserEntity userExists2 = userService.getByLogin(user.getLogin());
         if (userExists != null) {
