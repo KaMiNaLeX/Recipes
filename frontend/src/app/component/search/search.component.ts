@@ -85,13 +85,30 @@ export class SearchComponent implements OnInit {
   addSelectIngredient(ingredient: string) {
     let ingredientNameDTO = new IngredientNameDTO();
     ingredientNameDTO.name = ingredient;
-    this.ingredientNameDTO.push(ingredientNameDTO);
-    this.ingredientNameDTOList.ingredientNameDTOList = this.ingredientNameDTO;
-    console.log(this.ingredientNameDTOList.ingredientNameDTOList);
+    let startLength = this.ingredientNameDTO.length;
+    if (this.ingredientNameDTO.length != 0) {
+      for (let i = 0; i < this.ingredientNameDTO.length; i++) {
+        let ingredientInArray = new IngredientNameDTO();
+        ingredientInArray = this.ingredientNameDTO[i];
+        if (ingredientInArray.name == ingredientNameDTO.name) {
+          this.ingredientNameDTO.splice(i, 1);
+          console.log(this.ingredientNameDTO);
+        }
+      }
+      if (startLength == this.ingredientNameDTO.length) {
+        this.ingredientNameDTO.push(ingredientNameDTO);
+        console.log(this.ingredientNameDTO);
+      }
+    } else {
+      this.ingredientNameDTO.push(ingredientNameDTO);
+      console.log(this.ingredientNameDTO);
+    }
+
   }
 
 
   searchByIngredients() {
+    this.ingredientNameDTOList.ingredientNameDTOList = this.ingredientNameDTO;
     this.recipeService.findAllByIngredients(this.ingredientNameDTOList).subscribe(data => this.recipes = data);
     this.recipeDiv = true;
   }
