@@ -5,6 +5,11 @@ import {CategoryService} from "../../service/category.service";
 import {IngredientService} from "../../service/ingredient.service";
 import {Recipe} from "../../model/recipe";
 import {User} from "../../model/user";
+import {Ingredient} from "../../model/ingredient";
+import {IngredientRecipeDTO} from "../../model/createRecipe/ingredient-recipe-dto";
+import {TypeIngredient} from "../../model/type-ingredient.enum";
+import {IngredientNameDTO} from "../../model/findByIngredients/ingredient-name-dto";
+import {IngredientNameListDTO} from "../../model/findByIngredients/ingredient-name-list-dto";
 
 @Component({
   selector: 'app-search',
@@ -16,16 +21,24 @@ export class SearchComponent implements OnInit {
   first = true;
   second = false;
   third = false;
+  typeDiv = false;
   recipeDiv = false;
   recipes: Recipe[];
   recipe: Recipe = new Recipe();
   author: User = new User();
+  allIngredients: Ingredient[];
+  ingredient: IngredientRecipeDTO = new IngredientRecipeDTO();
+  keys = [];
+  typeIngredients: Ingredient[];
+  ingredientNameDTOList: IngredientNameListDTO = new IngredientNameListDTO();
+  ingredientNameDTO: IngredientNameDTO[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService) {
   }
 
   ngOnInit() {
+    this.ingredientService.findAll().subscribe(data => this.allIngredients = data);
   }
 
   byName() {
@@ -38,6 +51,8 @@ export class SearchComponent implements OnInit {
     this.first = false;
     this.second = true;
     this.third = false;
+    let typeIngredient = TypeIngredient;
+    this.keys = Object.values(typeIngredient);
   }
 
   byRecipes() {
@@ -51,7 +66,7 @@ export class SearchComponent implements OnInit {
     this.recipeDiv = true;
   }
 
-  searchByAuthorName(name:string) {
+  searchByAuthorName(name: string) {
     this.recipeService.getByAuthorName(name).subscribe(data => this.recipes = data);
     this.recipeDiv = true;
   }
@@ -62,4 +77,22 @@ export class SearchComponent implements OnInit {
     window.alert(id);
   }
 
+  findIngredientByType(type: TypeIngredient) {
+    this.ingredientService.findAllByType(type).subscribe(data => this.typeIngredients = data);
+    this.typeDiv = true;
+  }
+
+  addSelectIngredient(ingredient: string) {
+    let ingredientNameDTO = new IngredientNameDTO();
+    ingredientNameDTO.name = ingredient;
+    this.ingredientNameDTO.push(ingredientNameDTO);
+    this.ingredientNameDTOList.ingredientNameDTOList = this.ingredientNameDTO;
+    console.log(this.ingredientNameDTOList.ingredientNameDTOList);
+  }
+
+
+  searchByIngredients() {
+    this.recipeService.findAllByIngredients(this.ingredientNameDTOList).subscribe(data => this.recipes = data);
+    this.recipeDiv = true;
+  }
 }

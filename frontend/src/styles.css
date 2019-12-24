@@ -4,8 +4,11 @@
 
 .div {
   display: flex;
+  flex-wrap: wrap;
 }
-.divChild + .divChild {
+
+.divChild {
   margin-left: 12px;
+  margin-top: 12px;
 }
 

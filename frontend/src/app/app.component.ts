@@ -26,7 +26,9 @@ export class AppComponent {
 
   addRecipe() {
     if (this.author != false || this.admin != false) {
-      this.router.navigate(['addRecipe']);
+      this.router.navigate(['addRecipe']).then(() => {
+        window.location.reload();
+      });
     } else {
       window.alert("You need have AUTHOR or ADMIN role")
     }
@@ -41,7 +43,9 @@ export class AppComponent {
   }
 
   search() {
-    this.router.navigate(['search']);
+    this.router.navigate(['search']).then(() => {
+      window.location.reload();
+    });
   }
 
   categories() {

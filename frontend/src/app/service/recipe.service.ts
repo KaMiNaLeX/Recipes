@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Recipe} from "../model/recipe";
 import {CreateRecipeDTO} from "../model/createRecipe/create-recipe-dto";
+import {IngredientNameListDTO} from "../model/findByIngredients/ingredient-name-list-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +46,9 @@ export class RecipeService {
 
   public getByAuthorName(name: string): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.baseUrl}/authorName/${name}`);
+  }
+
+  public findAllByIngredients(ingredientsList: IngredientNameListDTO) {
+    return this.http.post<Recipe[]>(`${this.baseUrl}/ingredientName`, ingredientsList);
   }
 }

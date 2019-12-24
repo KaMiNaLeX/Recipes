@@ -43,12 +43,27 @@
     </li>
   </ul>
   <div>
-    <select class="selectpicker" multiple data-live-search="true">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
+    <select (change)="addSelectIngredient(ingredient.name)" class="selectpicker" data-live-search="true"
+            [(ngModel)]="ingredient.name">
+      <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
+              value="{{ingredient.name}}">{{ingredient.name}}</option>
     </select>
   </div>
+  <div class="div">
+    <div id="outer" class="divChild" *ngFor="let type of keys">
+      <button type="button" (click)="findIngredientByType(type)" class="btn btn-info">{{type}}</button>
+    </div>
+  </div>
+  <div [hidden]="!typeDiv" class="div">
+    <div class="divChild" *ngFor="let ingredient of typeIngredients">
+      <input (change)="addSelectIngredient(ingredient.name)" type="checkbox"
+             id="inlineCheckbox1" value="{{ingredient.name}}" name="check">
+      <label for="inlineCheckbox1">{{ingredient.name}}</label>
+    </div>
+  </div>
+  <button class="btn btn-outline-primary" type="button" id="button-addon3"
+          (click)="searchByIngredients()">Search
+  </button>
 </div>
 
 <div [hidden]="!third" id="third" class="container-fluid">
@@ -112,6 +127,3 @@
     </div>
   </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
