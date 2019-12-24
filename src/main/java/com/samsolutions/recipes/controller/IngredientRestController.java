@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.IngredientDTO;
+import com.samsolutions.recipes.model.Enum.Type;
 import com.samsolutions.recipes.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,6 +35,11 @@ public class IngredientRestController {
     @GetMapping("/{id}")
     public IngredientDTO getById(@PathVariable("id") UUID uuid) {
         return ingredientService.getById(uuid);
+    }
+
+    @GetMapping("/type/{type}")
+    public List<IngredientDTO> findAllByType(@PathVariable("type") Type type) {
+        return ingredientService.findByType(type);
     }
 
     @PostMapping("/create")

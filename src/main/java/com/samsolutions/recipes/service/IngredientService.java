@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.IngredientDTO;
+import com.samsolutions.recipes.model.Enum.Type;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,4 +21,6 @@ public interface IngredientService {
     void removeById(UUID uuid);
 
     IngredientDTO getById(UUID uuid);
+
+    List<IngredientDTO> findByType(Type type);
 }

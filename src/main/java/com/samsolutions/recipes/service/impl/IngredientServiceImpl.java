@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.IngredientDTO;
+import com.samsolutions.recipes.model.Enum.Type;
 import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.repository.IngredientRepository;
 import com.samsolutions.recipes.service.IngredientService;
@@ -70,5 +71,21 @@ public class IngredientServiceImpl implements IngredientService, ModelMapperServ
         IngredientDTO ingredientDTO = new IngredientDTO();
         map(ingredientRepository.getById(uuid), ingredientDTO);
         return ingredientDTO;
+    }
+
+    @Override
+    public List<IngredientDTO> findByType(Type type) {
+        List<IngredientEntity> sortedList = ingredientRepository.findAllByType(type);
+        sortedList.sort(new Comparator<IngredientEntity>() {
+            @Override
+            public int compare(IngredientEntity o1, IngredientEntity o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        List<IngredientDTO> ingredientDTOList = new ArrayList<>();
+        IngredientDTO ingredientDTO = new IngredientDTO();
+        ingredientDTOList.add(ingredientDTO);
+        map(sortedList, ingredientDTOList);
+        return ingredientDTOList;
     }
 }

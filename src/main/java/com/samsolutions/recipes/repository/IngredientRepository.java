@@ -1,7 +1,10 @@
 package com.samsolutions.recipes.repository;
 
+import com.samsolutions.recipes.model.Enum.Type;
 import com.samsolutions.recipes.model.IngredientEntity;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author kaminskiy.alexey
@@ -10,4 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IngredientRepository extends BaseRepository<IngredientEntity> {
     IngredientEntity getByName(String name);
+
+    List<IngredientEntity> findAllByType(Type type);
 }
