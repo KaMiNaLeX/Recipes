@@ -5,12 +5,15 @@ import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.IngredientRecipeDTO;
+import com.samsolutions.recipes.dto.findByData.CookingDifficultyDTO;
+import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.exception.UserNotFoundException;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.CategoryRecipeEntity;
 import com.samsolutions.recipes.model.CookingStepsEntity;
+import com.samsolutions.recipes.model.Enum.CookingDifficulty;
 import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.model.RecipeEntity;
 import com.samsolutions.recipes.model.RecipeIngredientEntity;
@@ -425,6 +428,45 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         recipeDTOList.add(recipeDTO);
 
         map(resultList, recipeDTOList);
+        return recipeDTOList;
+    }
+
+    @Override
+    public List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO) {
+        /*
+        String category = recipeDataDTO.getCategory();
+        if (category.equals("ALL")) {
+            category = null;
+        }
+        if (!recipeDataDTO.isIncludeMeat()) {
+
+        }
+
+         */
+        List<RecipeEntity> recipeEntityList = new ArrayList<>();
+        int time = recipeDataDTO.getCookingTime();
+        if (recipeDataDTO.getCookingDifficultyDTOList().size() == 0 && time != 0) {
+            recipeEntityList.addAll(recipeRepository.findAllByCookingTimeBetween(0, time));
+        } else if (recipeDataDTO.getCookingDifficultyDTOList().size() != 0 && time != 0) {
+            for (int i = 0; i < recipeDataDTO.getCookingDifficultyDTOList().size(); i++) {
+                CookingDifficultyDTO difficultyDTO = recipeDataDTO.getCookingDifficultyDTOList().get(i);
+                recipeEntityList.addAll(
+                        recipeRepository.findAllByCookingTimeBetweenAndCookingDifficulty(
+                                0, time, CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty())));
+            }
+
+        } else if (recipeDataDTO.getCookingDifficultyDTOList().size() != 0 && time == 0) {
+            for (int i = 0; i < recipeDataDTO.getCookingDifficultyDTOList().size(); i++) {
+                CookingDifficultyDTO difficultyDTO = recipeDataDTO.getCookingDifficultyDTOList().get(i);
+                recipeEntityList.addAll(recipeRepository.findAllByCookingDifficulty(
+                        CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty())));
+            }
+        }
+
+        List<RecipeDTO> recipeDTOList = new ArrayList<>();
+        RecipeDTO recipeDTO = new RecipeDTO();
+        recipeDTOList.add(recipeDTO);
+        map(recipeEntityList, recipeDTOList);
         return recipeDTOList;
     }
 

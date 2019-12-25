@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.repository;
 
+import com.samsolutions.recipes.model.Enum.CookingDifficulty;
 import com.samsolutions.recipes.model.RecipeEntity;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,10 @@ public interface RecipeRepository extends BaseRepository<RecipeEntity> {
     List<RecipeEntity> getByAuthorId(UUID authorId);
 
     List<RecipeEntity> findAllByName(String name);
+
+    List<RecipeEntity> findAllByCookingTimeBetween(int start, int end);
+
+    List<RecipeEntity> findAllByCookingDifficulty(CookingDifficulty dif);
+
+    List<RecipeEntity> findAllByCookingTimeBetweenAndCookingDifficulty(int start, int end, CookingDifficulty dif);
 }

@@ -2,6 +2,7 @@ package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
+import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 
 import java.io.IOException;
@@ -41,4 +42,6 @@ public interface RecipeService {
     List<RecipeDTO> findAllByName(String name);
 
     List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO);
+
+    List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO);
 }

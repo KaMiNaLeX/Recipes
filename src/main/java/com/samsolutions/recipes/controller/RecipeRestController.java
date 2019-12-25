@@ -2,10 +2,10 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
+import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -100,6 +100,11 @@ public class RecipeRestController {
     @PostMapping("/ingredientName")
     public List<RecipeDTO> findAllByIngredientName(@RequestBody IngredientNameListDTO ingredientNameList) throws IOException {
         return recipeService.findAllByIngredient(ingredientNameList);
+    }
+
+    @PostMapping("/data")
+    public List<RecipeDTO> findAllByData(@RequestBody RecipeDataDTO recipeDataDTO) {
+        return recipeService.findAllByData(recipeDataDTO);
     }
 
 }
