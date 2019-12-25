@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Recipe} from "../model/recipe";
 import {CreateRecipeDTO} from "../model/createRecipe/create-recipe-dto";
 import {IngredientNameListDTO} from "../model/findByIngredients/ingredient-name-list-dto";
+import {RecipeDataDTO} from "../model/findByData/recipe-data-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +51,9 @@ export class RecipeService {
 
   public findAllByIngredients(ingredientsList: IngredientNameListDTO) {
     return this.http.post<Recipe[]>(`${this.baseUrl}/ingredientName`, ingredientsList);
+  }
+
+  public findAllByData(recipeData: RecipeDataDTO) {
+    return this.http.post<Recipe[]>(`${this.baseUrl}/data`, recipeData);
   }
 }

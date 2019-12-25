@@ -10,6 +10,8 @@ import {IngredientRecipeDTO} from "../../model/createRecipe/ingredient-recipe-dt
 import {TypeIngredient} from "../../model/type-ingredient.enum";
 import {IngredientNameDTO} from "../../model/findByIngredients/ingredient-name-dto";
 import {IngredientNameListDTO} from "../../model/findByIngredients/ingredient-name-list-dto";
+import {RecipeDataDTO} from "../../model/findByData/recipe-data-dto";
+import {CookingDifficultyDTO} from "../../model/findByData/cooking-difficulty-dto";
 
 @Component({
   selector: 'app-search',
@@ -32,6 +34,7 @@ export class SearchComponent implements OnInit {
   typeIngredients: Ingredient[];
   ingredientNameDTOList: IngredientNameListDTO = new IngredientNameListDTO();
   ingredientNameDTO: IngredientNameDTO[] = [];
+  recipeData: RecipeDataDTO = new RecipeDataDTO();
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService) {
@@ -114,6 +117,43 @@ export class SearchComponent implements OnInit {
         console.log(this.ingredientNameDTO);
       }
     }
+  }
+
+  searchByData(time: number) {
+    let easy = (<HTMLInputElement>document.getElementById('Checkbox1'));
+    let medium = (<HTMLInputElement>document.getElementById('Checkbox2'));
+    let hard = (<HTMLInputElement>document.getElementById('Checkbox3'));
+    let cookingDifficultyDTOList = new Array<CookingDifficultyDTO>();
+    let checkedEasy = (easy.checked == true);
+    if (checkedEasy != false) {
+      let dif = new CookingDifficultyDTO();
+      dif.cookingDifficulty = easy.value;
+      cookingDifficultyDTOList.push(dif);
+    }
+    let checkedMedium = (medium.checked == true);
+    if (checkedMedium != false) {
+      let dif = new CookingDifficultyDTO();
+      dif.cookingDifficulty = medium.value;
+      cookingDifficultyDTOList.push(dif);
+    }
+    let checkedHard = (hard.checked == true);
+    if (checkedHard != false) {
+      let dif = new CookingDifficultyDTO();
+      dif.cookingDifficulty = hard.value;
+      cookingDifficultyDTOList.push(dif);
+    }
+
+    if (time == undefined) {
+      time = 0;
+    }
+
+    this.recipeData.cookingTime = +time;
+    this.recipeData.category = "";
+    this.recipeData.includeMeat = true;
+    this.recipeData.cookingDifficultyDTOList = cookingDifficultyDTOList;
+
+    this.recipeService.findAllByData(this.recipeData).subscribe(data => this.recipes = data);
+    this.recipeDiv = true;
   }
 
 

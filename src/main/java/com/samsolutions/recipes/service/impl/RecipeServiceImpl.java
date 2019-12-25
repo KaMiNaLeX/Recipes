@@ -445,14 +445,18 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
          */
         List<RecipeEntity> recipeEntityList = new ArrayList<>();
         int time = recipeDataDTO.getCookingTime();
+        int zero = 0;
+        if (time > 60) {
+            zero = 61;
+        }
         if (recipeDataDTO.getCookingDifficultyDTOList().size() == 0 && time != 0) {
-            recipeEntityList.addAll(recipeRepository.findAllByCookingTimeBetween(0, time));
+            recipeEntityList.addAll(recipeRepository.findAllByCookingTimeBetween(zero, time));
         } else if (recipeDataDTO.getCookingDifficultyDTOList().size() != 0 && time != 0) {
             for (int i = 0; i < recipeDataDTO.getCookingDifficultyDTOList().size(); i++) {
                 CookingDifficultyDTO difficultyDTO = recipeDataDTO.getCookingDifficultyDTOList().get(i);
                 recipeEntityList.addAll(
                         recipeRepository.findAllByCookingTimeBetweenAndCookingDifficulty(
-                                0, time, CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty())));
+                                zero, time, CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty())));
             }
 
         } else if (recipeDataDTO.getCookingDifficultyDTOList().size() != 0 && time == 0) {
