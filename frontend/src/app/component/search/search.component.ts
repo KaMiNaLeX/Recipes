@@ -74,7 +74,6 @@ export class SearchComponent implements OnInit {
   view(id: string) {
     sessionStorage.setItem('recipe', id);
     this.router.navigate(['recipe-view']);
-    window.alert(id);
   }
 
   findIngredientByType(type: TypeIngredient) {
@@ -104,6 +103,17 @@ export class SearchComponent implements OnInit {
       console.log(this.ingredientNameDTO);
     }
 
+  }
+
+  deleteFromCart(name: string) {
+    for (let i = 0; i < this.ingredientNameDTO.length; i++) {
+      let ingredientInArray = new IngredientNameDTO();
+      ingredientInArray = this.ingredientNameDTO[i];
+      if (ingredientInArray.name == name) {
+        this.ingredientNameDTO.splice(i, 1);
+        console.log(this.ingredientNameDTO);
+      }
+    }
   }
 
 

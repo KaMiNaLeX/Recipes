@@ -42,7 +42,21 @@
       <button class="btn btn-link" (click)="byRecipes()">Search by recipes</button>
     </li>
   </ul>
+  <div class="card border-primary mb-3" style="width: 100%">
+    <div class="card-header">Selected ingredients:</div>
+    <div class="card-body text-primary">
+      <div class="div">
+        <ul *ngFor="let i of ingredientNameDTO" class="divChild">
+          <li>
+            <button class="btn btn-light border">{{i.name}}</button>
+            <button class="btn btn-outline-danger border" (click)="deleteFromCart(i.name)">x</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <div>
+    <label>You can select ingredient from this droplist:</label>
     <select (change)="addSelectIngredient(ingredient.name)" class="selectpicker" data-live-search="true"
             [(ngModel)]="ingredient.name">
       <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
@@ -56,14 +70,18 @@
   </div>
   <div [hidden]="!typeDiv" class="div">
     <div class="divChild" *ngFor="let ingredient of typeIngredients">
-      <input (change)="addSelectIngredient(ingredient.name)" type="checkbox"
-             id="inlineCheckbox1" value="{{ingredient.name}}" name="check">
-      <label for="inlineCheckbox1">{{ingredient.name}}</label>
+      <div>
+        <input (change)="addSelectIngredient(ingredient.name)" type="checkbox"
+               id="inlineCheckbox1" value="{{ingredient.name}}" name="check">
+        <label for="inlineCheckbox1">{{ingredient.name}}</label>
+      </div>
     </div>
   </div>
-  <button class="btn btn-outline-primary" type="button" id="button-addon3"
-          (click)="searchByIngredients()">Search
-  </button>
+  <div>
+    <button class="btn btn-success divChild" type="button" id="button-addon3"
+            (click)="searchByIngredients()">Search
+    </button>
+  </div>
 </div>
 
 <div [hidden]="!third" id="third" class="container-fluid">
