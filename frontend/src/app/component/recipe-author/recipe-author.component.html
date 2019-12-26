@@ -1,28 +1,5 @@
 <div class="container-fluid">
   <div class="card mb-3 card-columns" style="max-width: 600px;" *ngFor="let recipe of recipes">
-    <div *ngIf="recipe.name == null">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="error-template">
-              <h1>
-                Oops!</h1>
-              <h2>
-                Recipes Not Found</h2>
-              <div class="error-details">
-                You can add recipe right here right now!
-              </div>
-              <div class="error-actions">
-                <button (click)="addRecipe()" class="btn btn-primary btn-lg"><span
-                  class="glyphicon glyphicon-home"></span>
-                  Add recipe +
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="row no-gutters" *ngIf="recipe.name != null">
       <div class="col-md-4">
         <img src="assets/images/test.png" class="card-img">
@@ -35,17 +12,38 @@
           <label class="card-text">Like:{{ recipe.positiveVotes }}</label>
           <label class="card-text">Dislike:{{ recipe.negativeVotes }}</label>
           <div class="div">
-            <form class="divChild" (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
+            <form class="divChild" (ngSubmit)="view(recipe.id)">
               <button type="submit" class="btn btn-primary">View</button>
             </form>
-            <form class="divChild" (ngSubmit)="edit(recipe.id)" #addToCartForm="ngForm">
+            <form class="divChild" (ngSubmit)="edit(recipe.id)">
               <button type="submit" class="btn btn-success">Edit</button>
             </form>
-            <form class="divChild" (ngSubmit)="delete(recipe.id)" #addToCartForm="ngForm">
+            <form class="divChild" (ngSubmit)="delete(recipe.id)">
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </div>
           <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+        </div>
+      </div>
+    </div>
+    <div class="container" *ngIf="recipe.name == null">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="error-template">
+            <h1>
+              Oops!</h1>
+            <h2>
+              Recipes Not Found</h2>
+            <div class="error-details">
+              You can add recipe right here right now!
+            </div>
+            <div class="error-actions">
+              <button (click)="addRecipe()" class="btn btn-primary btn-lg"><span
+                class="glyphicon glyphicon-home"></span>
+                Add recipe +
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

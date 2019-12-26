@@ -9,7 +9,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./recipe-author.component.css']
 })
 export class RecipeAuthorComponent implements OnInit {
-  recipes: CreateRecipeDTO[];
+  recipes: CreateRecipeDTO[] = [];
+  recipe: CreateRecipeDTO = new CreateRecipeDTO();
 
   constructor(private router: Router, private recipeService: RecipeService) {
   }
@@ -28,7 +29,7 @@ export class RecipeAuthorComponent implements OnInit {
     this.router.navigate(['recipe-edit']);
   }
 
-  addRecipe(){
+  addRecipe() {
     this.router.navigate(['recipe-add']);
   }
 

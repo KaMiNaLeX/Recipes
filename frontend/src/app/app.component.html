@@ -5,20 +5,14 @@
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="login()">Login</button>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-link" (click)="register()">Registration</button>
-      </li>
-      <li class="nav-item">
         <button class="btn btn-link" (click)="search()">Search</button>
       </li>
-      <div [hidden]="!admin">
+      <div *ngIf="admin">
         <li class="nav-item">
           <button class="btn btn-link" (click)="users()">Users</button>
         </li>
       </div>
-      <div [hidden]="!admin">
+      <div *ngIf="admin">
         <li class="nav-item">
           <a class="nav-link" href="/adduser">Add Users</a>
         </li>
@@ -31,18 +25,33 @@
           <button class="btn btn-link" (click)="recipes()">My recipes</button>
         </li>
       </div>
-      <div [hidden]="!authenticated">
-        <li class="nav-item">
-          <button class="btn btn-link" (click)="profile()">Profile</button>
-        </li>
-      </div>
+      <li>
+        <button type="button" class="btn btn-primary" (click)="addRecipe()">+ Add recipe</button>
+      </li>
     </ul>
   </div>
   <div class="button-row">
-    <button type="button" class="btn btn-primary" (click)="addRecipe()">+ Add recipe</button>
+    <div class="dropdown">
+      <button *ngIf="username != 'unauthorized' " class="btn btn-secondary dropdown-toggle" type="button"
+              id="dropdownMenuButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+        {{username}}
+      </button>
+      <button *ngIf="username == 'unauthorized' " class="btn btn-secondary dropdown-toggle" type="button"
+              id="dropdownMenuButton2" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+        You can login or registration here!
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="btn dropdown-item" (click)="login()">Login</button>
+        <button class="btn dropdown-item" (click)="register()">Registration</button>
+        <button [hidden]="!authenticated" class="btn dropdown-item" (click)="profile()">Profile</button>
+        <button [hidden]="!authenticated" type="button" class="btn dropdown-item" (click)="logout()">Log out</button>
+      </div>
+    </div>
   </div>
   <div class="button-row">
-    <button type="button" class="btn btn-danger" (click)="logout()">Log out</button>
+
   </div>
 </nav>
 <div class="container-fluid">

@@ -15,10 +15,13 @@ export class AppComponent {
   authenticated = false;
   admin = false;
   author = false;
+  username = "unauthorized";
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['login']);
+    this.router.navigate(['login']).then(() => {
+      window.location.reload();
+    });
     this.authenticated = false;
     this.admin = false;
     this.author = false;
@@ -69,6 +72,7 @@ export class AppComponent {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
       this.role();
+      this.username = localStorage.getItem('email');
     }
   }
 
