@@ -84,6 +84,10 @@ export class AppComponent {
       localStorage.setItem('authorRole', this.author.toString());
     });
   }
+
+  adminPanel() {
+    this.router.navigate(['admin']);
+  }
 }
 
 

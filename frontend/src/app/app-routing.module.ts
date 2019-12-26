@@ -12,6 +12,9 @@ import {RecipeViewComponent} from "./component/recipe-view/recipe-view.component
 import {RecipeAuthorComponent} from "./component/recipe-author/recipe-author.component";
 import {RecipeEditComponent} from "./component/recipe-edit/recipe-edit.component";
 import {SearchComponent} from "./component/search/search.component";
+import {AdminPanelComponent} from "./component/admin/admin-panel/admin-panel.component";
+import {AddCategoryComponent} from "./component/admin/add-category/add-category.component";
+import {AddIngredientComponent} from "./component/admin/add-ingredient/add-ingredient.component";
 
 
 const routes: Routes = [
@@ -26,7 +29,10 @@ const routes: Routes = [
   {path: 'recipe-view', component: RecipeViewComponent},
   {path: 'recipe-author', component: RecipeAuthorComponent},
   {path: 'recipe-edit', component: RecipeEditComponent},
-  {path: 'search', component: SearchComponent}
+  {path: 'search', component: SearchComponent},
+  {path: 'admin', component: AdminPanelComponent},
+  {path: 'addCategory', component: AddCategoryComponent},
+  {path: 'addIngredient', component: AddIngredientComponent}
 ];
 
 @NgModule({

@@ -1,0 +1,32 @@
+<div class="card my-5">
+  <div class="card-body">
+    <h2>Categories</h2>
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Tag</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.name }}</td>
+        <td>{{ category.description }}</td>
+        <td>{{ category.tag }}</td>
+        <td>
+          <button class='btn btn-success divChild'>Add
+          </button>
+          <button class='btn btn-info divChild'>View
+          </button>
+          <button class='btn btn-warning divChild'>Edit
+          </button>
+          <button class='btn btn-danger divChild'>Delete
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
