@@ -21,4 +21,20 @@ export class AddCategoryComponent implements OnInit {
     });
   }
 
+  view(id: number) {
+    window.alert("ID:" + id);
+  }
+
+  add() {
+
+  }
+
+  edit() {
+
+  }
+
+  delete(id: number) {
+    window.alert("Category " + id + "deleted successful")
+  }
+
 }

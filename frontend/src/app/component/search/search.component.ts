@@ -31,9 +31,9 @@ export class SearchComponent implements OnInit {
   allIngredients: Ingredient[];
   ingredient: IngredientRecipeDTO = new IngredientRecipeDTO();
   keys = [];
-  typeIngredients: Ingredient[];
+  typeIngredients: Ingredient[] = [];
   ingredientNameDTOList: IngredientNameListDTO = new IngredientNameListDTO();
-  ingredientNameDTO: IngredientNameDTO[] = [];
+  ingredientNameDTOS: IngredientNameDTO[] = [];
   recipeData: RecipeDataDTO = new RecipeDataDTO();
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
@@ -80,42 +80,49 @@ export class SearchComponent implements OnInit {
   }
 
   findIngredientByType(type: TypeIngredient) {
-    this.ingredientService.findAllByType(type).subscribe(data => this.typeIngredients = data);
+    this.ingredientService.findAllByType(type).subscribe((i: Ingredient[]) => this.typeIngredients = i);
+    console.log(this.typeIngredients.length);
     this.typeDiv = true;
   }
 
-  addSelectIngredient(ingredient: string) {
+  addSelectIngredient(ingredient: Ingredient) {
     let ingredientNameDTO = new IngredientNameDTO();
-    ingredientNameDTO.name = ingredient;
-    let startLength = this.ingredientNameDTO.length;
-    if (this.ingredientNameDTO.length != 0) {
-      for (let i = 0; i < this.ingredientNameDTO.length; i++) {
+    ingredientNameDTO.name = ingredient.name;
+    if (ingredient.checked == false) {
+      for (let i = 0; i < this.ingredientNameDTOS.length; i++) {
         let ingredientInArray = new IngredientNameDTO();
-        ingredientInArray = this.ingredientNameDTO[i];
+        ingredientInArray = this.ingredientNameDTOS[i];
         if (ingredientInArray.name == ingredientNameDTO.name) {
-          this.ingredientNameDTO.splice(i, 1);
-          console.log(this.ingredientNameDTO);
+          this.ingredientNameDTOS.splice(i, 1);
+          console.log(this.ingredientNameDTOS);
         }
       }
-      if (startLength == this.ingredientNameDTO.length) {
-        this.ingredientNameDTO.push(ingredientNameDTO);
-        console.log(this.ingredientNameDTO);
-      }
-    } else {
-      this.ingredientNameDTO.push(ingredientNameDTO);
-      console.log(this.ingredientNameDTO);
+    }
+    if (ingredient.checked == true) {
+      this.ingredientNameDTOS.push(ingredientNameDTO);
     }
 
   }
 
+  addToCart(name: string) {
+    let ingredientNameDTO = new IngredientNameDTO();
+    ingredientNameDTO.name = name;
+    this.ingredientNameDTOS.push(ingredientNameDTO);
+  }
+
   deleteFromCart(name: string) {
-    for (let i = 0; i < this.ingredientNameDTO.length; i++) {
+    for (let i = 0; i < this.ingredientNameDTOS.length; i++) {
       let ingredientInArray = new IngredientNameDTO();
-      ingredientInArray = this.ingredientNameDTO[i];
+      ingredientInArray = this.ingredientNameDTOS[i];
       if (ingredientInArray.name == name) {
-        this.ingredientNameDTO.splice(i, 1);
-        console.log(this.ingredientNameDTO);
+        this.ingredientNameDTOS.splice(i, 1);
+        this.typeIngredients[i].checked = false;
+        console.log(this.ingredientNameDTOS);
       }
+    }
+    let select = (<HTMLSelectElement>document.getElementById('select'));
+    if (select.value == name) {
+      (<HTMLSelectElement>document.getElementById('select')).value = "Nothing to select";
     }
   }
 
@@ -158,7 +165,7 @@ export class SearchComponent implements OnInit {
 
 
   searchByIngredients() {
-    this.ingredientNameDTOList.ingredientNameDTOList = this.ingredientNameDTO;
+    this.ingredientNameDTOList.ingredientNameDTOList = this.ingredientNameDTOS;
     this.recipeService.findAllByIngredients(this.ingredientNameDTOList).subscribe(data => this.recipes = data);
     this.recipeDiv = true;
   }

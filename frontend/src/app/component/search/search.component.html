@@ -46,7 +46,7 @@
     <div class="card-header">Selected ingredients:</div>
     <div class="card-body text-primary">
       <div class="div">
-        <ul *ngFor="let i of ingredientNameDTO" class="divChild">
+        <ul *ngFor="let i of ingredientNameDTOS" class="divChild">
           <li>
             <button class="btn btn-light border">{{i.name}}</button>
             <button class="btn btn-outline-danger border" (click)="deleteFromCart(i.name)">x</button>
@@ -57,8 +57,8 @@
   </div>
   <div>
     <label>You can select ingredient from this droplist:</label>
-    <select (change)="addSelectIngredient(ingredient.name)" class="selectpicker" data-live-search="true"
-            [(ngModel)]="ingredient.name">
+    <select (change)="addToCart(ingredient.name)" class="selectpicker" data-live-search="true"
+            [(ngModel)]="ingredient.name" id="select">
       <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
               value="{{ingredient.name}}">{{ingredient.name}}</option>
     </select>
@@ -71,8 +71,8 @@
   <div [hidden]="!typeDiv" class="div">
     <div class="divChild" *ngFor="let ingredient of typeIngredients">
       <div>
-        <input (change)="addSelectIngredient(ingredient.name)" type="checkbox"
-               id="inlineCheckbox1" value="{{ingredient.name}}" name="check">
+        <input (change)="addSelectIngredient(ingredient)" type="checkbox"
+               id="inlineCheckbox1" value="{{ingredient.name}}" name="check" [(ngModel)]="ingredient.checked">
         <label for="inlineCheckbox1">{{ingredient.name}}</label>
       </div>
     </div>

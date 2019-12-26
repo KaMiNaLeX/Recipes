@@ -4,4 +4,5 @@ export class Ingredient {
   description: string;
   calories: number;
   type: string;
+  checked = false;
 }

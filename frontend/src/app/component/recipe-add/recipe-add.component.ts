@@ -8,6 +8,7 @@ import {CategoryService} from "../../service/category.service";
 import {CookingStepRecipeDTO} from "../../model/createRecipe/cooking-step-recipe-dto";
 import {IngredientService} from "../../service/ingredient.service";
 import {Ingredient} from "../../model/ingredient";
+import {Unit} from "../../model/unit.enum";
 
 @Component({
   selector: 'app-recipe-add',
@@ -15,7 +16,6 @@ import {Ingredient} from "../../model/ingredient";
   styleUrls: ['./recipe-add.component.css']
 })
 export class RecipeAddComponent implements OnInit {
-  submitted = false;
   createRecipeDTO: CreateRecipeDTO;
   first = true;
   second = false;
@@ -27,7 +27,7 @@ export class RecipeAddComponent implements OnInit {
   checkedArray: CategoryRecipeDTO[] = [];
   cookingStep: CookingStepRecipeDTO = new CookingStepRecipeDTO();
   cookingSteps: CookingStepRecipeDTO[] = [];
-  unit: String[] = [];
+  unit = [];
   allIngredients: Ingredient[];
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
@@ -37,7 +37,8 @@ export class RecipeAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.unit.push("PIECE", "GRAM", "MML", "KG", "L", "TEASPOON", "TABLESPOON", "CUP", "LEAF", "BY_TASTE");
+    let u = Unit;
+    this.unit = Object.values(u);
     this.first = true;
     this.second = false;
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
