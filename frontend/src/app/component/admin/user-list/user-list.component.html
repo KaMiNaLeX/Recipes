@@ -8,7 +8,7 @@
 </div>
 
 <div class="card my-5">
-  <div class="card-body">
+  <div *ngIf="firstDiv" class="card-body">
     <h2>Users</h2>
     <table class="table table-bordered table-striped">
       <thead class="thead-dark">
@@ -27,17 +27,75 @@
         <td>{{ user.lastName }}</td>
         <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
         <td>
-          <button class='btn btn-success divChild'>Add
+          <button class='btn btn-success divChild2' (click)="add()">Add
           </button>
-          <button (click)="view(user.id)" class='btn btn-info divChild'>View
+          <button (click)="view(user.id)" class='btn btn-info divChild2'>View
           </button>
-          <button class='btn btn-warning divChild'>Edit
+          <button class='btn btn-warning divChild2' (click)="edit(user.id)">Edit
           </button>
-          <button (click)="deleteUser(user.id)" class='btn btn-danger divChild'>Delete
+          <button (click)="deleteUser(user.id)" class='btn btn-danger divChild2'>Delete
           </button>
         </td>
       </tr>
       </tbody>
     </table>
+  </div>
+  <div class="container-fluid" *ngIf="secondDiv">
+    <div class="col-md-6 login-container">
+      <h2 style="margin: auto">Add User</h2>
+      <br/>
+      <div class="form-group">
+        <label for="name">First Name:</label>
+        <input type="text" [(ngModel)]="user.firstName" class="form-control" id="name"
+               autocomplete="off" #name="ngModel" required>
+        <div *ngIf="name.invalid" style="color: red">Required</div>
+        <label for="name">Last Name:</label>
+        <input type="text" [(ngModel)]="user.lastName" class="form-control" id="lastName"
+               autocomplete="off" #lastName="ngModel" required>
+        <div *ngIf="lastName.invalid" style="color: red">Required</div>
+        <label for="name">Email:</label>
+        <input type="text" [(ngModel)]="user.email" class="form-control" id="email"
+               autocomplete="off" #email="ngModel" required>
+        <div *ngIf="email.invalid" style="color: red">Required</div>
+        <label for="name">Login:</label>
+        <input type="text" [(ngModel)]="user.login" class="form-control" id="login"
+               autocomplete="off" #login="ngModel" required>
+        <div *ngIf="login.invalid" style="color: red">Required</div>
+        <label for="name">Password:</label>
+        <input type="password" [(ngModel)]="user.password" class="form-control" id="pass"
+               autocomplete="off" #pass="ngModel" required>
+        <div *ngIf="pass.invalid" style="color: red">Required</div>
+      </div>
+      <div>
+        <button class="btn btn-success" (click)="addUser()">Add User</button>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" *ngIf="thirdDiv">
+    <div class="col-md-6 login-container">
+      <h2 style="margin: auto">Edit User</h2>
+      <br/>
+      <div class="form-group">
+        <label for="name">Edit First Name:</label>
+        <input type="text" [(ngModel)]="user.firstName" class="form-control" id="name2"
+               autocomplete="off" #name="ngModel" required>
+        <div *ngIf="name.invalid" style="color: red">Required</div>
+        <label for="name">Last Name:</label>
+        <input type="text" [(ngModel)]="user.lastName" class="form-control" id="lastName2"
+               autocomplete="off" #lastName="ngModel" required>
+        <div *ngIf="lastName.invalid" style="color: red">Required</div>
+        <label for="name">Email:</label>
+        <input type="text" [(ngModel)]="user.email" class="form-control" id="email2"
+               autocomplete="off" #email="ngModel" required>
+        <div *ngIf="email.invalid" style="color: red">Required</div>
+        <label for="name">Login:</label>
+        <input type="text" [(ngModel)]="user.login" class="form-control" id="login2"
+               autocomplete="off" #login="ngModel" required>
+        <div *ngIf="login.invalid" style="color: red">Required</div>
+      </div>
+      <div>
+        <button class="btn btn-success" (click)="editUser()">Edit User</button>
+      </div>
+    </div>
   </div>
 </div>

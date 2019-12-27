@@ -44,13 +44,13 @@ public interface UserService {
 
     void deleteRole(String login, String role, Model model);
 
-    UserEntity createUser(UserEntity userEntity);
+    UserDTO createUser(UserDTO userDTO);
 
     List<UserDTO> findAll();
 
     List<UserEntity> getAll(int page, int size);
 
-    UserEntity updateUser(UUID uuid, UserEntity userEntity);
+    UserDTO updateUser(UUID uuid, UserDTO userDTO);
 
     UserDTO getByEmail(String email);
 }

@@ -83,16 +83,18 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     @Override
     @Transactional
-    public UserEntity createUser(UserEntity userEntity) {
+    public UserDTO createUser(UserDTO userDTO) {
         try {
-            userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-            UserEntity saveUser = userRepository.save(userEntity);
+            UserEntity saveUser = new UserEntity();
+            map(userDTO, saveUser);
+            saveUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            map(userRepository.save(saveUser), userDTO);
 
             UserRoleEntity userRoleEntity = new UserRoleEntity();
             userRoleEntity.setUserId(saveUser.getId());
             userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
             userRoleRepository.save(userRoleEntity);
-            return saveUser;
+            return userDTO;
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -117,16 +119,13 @@ public class UserServiceImpl implements UserService, ModelMapperService {
 
     @Override
     @Transactional
-    public UserEntity updateUser(UUID uuid, UserEntity userEntity) {
+    public UserDTO updateUser(UUID uuid, UserDTO userDTO) {
         try {
             UserEntity newUserEntity = userRepository.getById(uuid);
-            newUserEntity.setFirstName(userEntity.getFirstName());
-            newUserEntity.setLastName(userEntity.getLastName());
-            newUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-            newUserEntity.setLogin(userEntity.getLogin());
-            newUserEntity.setEmail(userEntity.getEmail());
-            userRepository.save(newUserEntity);
-            return newUserEntity;
+            map(userDTO, newUserEntity);
+            newUserEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            map(userRepository.save(newUserEntity), userDTO);
+            return userDTO;
         } catch (Exception e) {
             e.getMessage();
         }

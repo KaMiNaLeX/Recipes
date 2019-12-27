@@ -13,6 +13,9 @@ export class UserListComponent implements OnInit {
   users: User[];
   user: User = new User();
   showDeleteMessage = false;
+  firstDiv = true;
+  secondDiv = false;
+  thirdDiv = false;
 
   constructor(private userService: UserService) {
   }
@@ -21,6 +24,26 @@ export class UserListComponent implements OnInit {
     this.userService.findAll().subscribe(data => {
       this.users = data;
     });
+  }
+
+  add() {
+    this.firstDiv = false;
+    this.secondDiv = true;
+  }
+
+  addUser() {
+    if (this.user.firstName != null && this.user.lastName != null && this.user.login != null &&
+      this.user.email != null && this.user.password != null) {
+      this.userService.create(this.user).subscribe(data => {
+          this.userService.findAll().subscribe(data => {
+            this.users = data;
+          })
+        }
+      );
+      this.firstDiv = true;
+      this.secondDiv = false;
+      window.alert("User is created!");
+    } else window.alert("Please, fill in all fields!");
   }
 
   deleteUser(id: string) {
@@ -38,6 +61,30 @@ export class UserListComponent implements OnInit {
 
   view(id: string) {
     window.alert(id);
+  }
+
+  edit(id: string) {
+    this.firstDiv = false;
+    this.thirdDiv = true;
+    this.userService.get(id).subscribe(data => {
+      this.user = data;
+    });
+  }
+
+  editUser() {
+    if (this.user.firstName != null && this.user.lastName != null && this.user.login != null &&
+      this.user.email != null && this.user.password != null) {
+      this.userService.update(this.user.id, this.user).subscribe(data => {
+          this.user = data;
+          this.userService.findAll().subscribe(data => {
+            this.users = data;
+          })
+        }
+      );
+      this.firstDiv = true;
+      this.thirdDiv = false;
+      window.alert("User is updated!");
+    } else window.alert("Please, fill in all fields!");
   }
 
 }

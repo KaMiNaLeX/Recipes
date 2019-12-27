@@ -26,8 +26,8 @@ export class UserService {
     return this.http.delete(`${this.baseUrl}/delete/id/${id}`, {responseType: 'text'});
   }
 
-  get(id: string): Observable<Object> {
-    return this.http.get(`${this.baseUrl}/id/${id}`);
+  get(id: string): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/id/${id}`);
   }
 
   getByEmail(email: string): Observable<User> {
@@ -38,7 +38,7 @@ export class UserService {
     return this.http.get <User>(`${this.baseUrl}/login/${login}`);
   }
 
-  update(id: string, userData: any): Observable<Object> {
-    return this.http.put(`${this.baseUrl}/${id}`, userData);
+  update(id: string, userData: any): Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/${id}`, userData);
   }
 }

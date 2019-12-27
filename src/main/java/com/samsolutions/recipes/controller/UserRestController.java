@@ -65,13 +65,13 @@ public class UserRestController {
     }
 
     @PostMapping("/create")
-    public UserEntity createUser(@RequestBody UserEntity userEntity) {
-        return userService.createUser(userEntity);
+    public UserDTO createUser(@RequestBody UserDTO userDTO) {
+        return userService.createUser(userDTO);
     }
 
     @PutMapping("/{id}")
-    public UserEntity updateUser(@PathVariable("id") UUID uuid, @RequestBody UserEntity userEntity) {
-        return userService.updateUser(uuid, userEntity);
+    public UserDTO updateUser(@PathVariable("id") UUID uuid, @RequestBody UserDTO userDTO) {
+        return userService.updateUser(uuid, userDTO);
     }
 
 }
