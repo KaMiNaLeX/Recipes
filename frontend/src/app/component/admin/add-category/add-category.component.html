@@ -1,5 +1,5 @@
 <div class="card my-5">
-  <div class="card-body">
+  <div *ngIf="firstDiv" class="card-body">
     <h2>Categories</h2>
     <table class="table table-bordered table-striped">
       <thead class="thead-dark">
@@ -16,40 +16,64 @@
         <td>{{ category.description }}</td>
         <td>{{ category.tag }}</td>
         <td>
-          <button (click)="add()" class='btn btn-success divChild'>Add
+          <button (click)="add()" class='btn btn-success divChild2'>Add
           </button>
-          <button (click)="view(category.id)" class='btn btn-info divChild'>View
+          <button (click)="view(category.id)" class='btn btn-info divChild2'>View
           </button>
-          <button (click)="edit()" class='btn btn-warning divChild'>Edit
+          <button (click)="edit(category.id)" class='btn btn-warning divChild2'>Edit
           </button>
-          <button class='btn btn-danger divChild'
-                  data-toggle="modal" data-target="#staticBackdrop">Delete
+          <button (click)="delete(category.id)" class='btn btn-danger divChild2'>Delete
           </button>
         </td>
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog"
-             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Delete category?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Are you sure you want to delete this category?
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" (click)="delete(category.id)">Delete</button>
-              </div>
-            </div>
-          </div>
-        </div>
       </tr>
       </tbody>
     </table>
+  </div>
+  <div class="container-fluid" *ngIf="secondDiv">
+    <div class="col-md-6 login-container">
+      <h2 style="margin: auto">Add Category</h2>
+      <br/>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" [(ngModel)]="category.name" class="form-control" id="name"
+               autocomplete="off" #name="ngModel" required>
+        <div *ngIf="name.invalid" style="color: red">Required</div>
+        <label for="name">Description:</label>
+        <input type="text" [(ngModel)]="category.description" class="form-control" id="description"
+               autocomplete="off" #description="ngModel" required>
+        <div *ngIf="description.invalid" style="color: red">Required</div>
+        <label for="name">Tag:</label>
+        <input type="text" [(ngModel)]="category.tag" class="form-control" id="tag"
+               autocomplete="off" #tag="ngModel" required>
+        <div *ngIf="tag.invalid" style="color: red">Required</div>
+      </div>
+      <div>
+        <button class="btn btn-success" (click)="addCategory()">Add category</button>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" *ngIf="thirdDiv">
+    <div class="col-md-6 login-container">
+      <h2 style="margin: auto">Edit Category</h2>
+      <br/>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" [(ngModel)]="category.name" class="form-control" id="name2"
+               autocomplete="off" #name="ngModel" value="{{category.name}}" required>
+        <div *ngIf="name.invalid" style="color: red">Required</div>
+        <label for="name">Description:</label>
+        <input type="text" [(ngModel)]="category.description" class="form-control" id="description2"
+               autocomplete="off" #description="ngModel" value="{{category.description}}" required>
+        <div *ngIf="description.invalid" style="color: red">Required</div>
+        <label for="name">Tag:</label>
+        <input type="text" [(ngModel)]="category.tag" value="{{category.tag}}" class="form-control" id="tag2"
+               autocomplete="off" #tag="ngModel" required>
+        <div *ngIf="tag.invalid" style="color: red">Required</div>
+      </div>
+      <div>
+        <button class="btn btn-success" (click)="editCategory()">Edit category</button>
+      </div>
+    </div>
   </div>
 </div>
 

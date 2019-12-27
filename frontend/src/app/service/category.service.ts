@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {User} from "../model/user";
 import {Category} from "../model/category";
 import {CategoryRecipeDTO} from "../model/createRecipe/category-recipe-dto";
 
@@ -32,11 +31,11 @@ export class CategoryService {
     return this.http.delete(`${this.baseUrl}/delete/${id}`, {responseType: 'text'});
   }
 
-  get(id: number): Observable<Object> {
-    return this.http.get(`${this.baseUrl}/id/${id}`);
+  public get(id: number): Observable<Category> {
+    return this.http.get<Category>(`${this.baseUrl}/id/${id}`);
   }
 
-  update(id: number, userData: any): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/update/${id}`, userData);
+  public update(id: number, userData: Category): Observable<Category> {
+    return this.http.put<Category>(`${this.baseUrl}/update/${id}`, userData);
   }
 }
