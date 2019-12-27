@@ -62,6 +62,7 @@
       <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
               value="{{ingredient.name}}">{{ingredient.name}}</option>
     </select>
+    <button class="divChild btn btn-danger" (click)="clearAll()">Clear all ingredients from card</button>
   </div>
   <div class="div">
     <div id="outer" class="divChild" *ngFor="let type of keys">
@@ -187,3 +188,4 @@
     </div>
   </div>
 </div>
+

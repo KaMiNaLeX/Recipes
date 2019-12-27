@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit {
   recipes: Recipe[];
   recipe: Recipe = new Recipe();
   author: User = new User();
-  allIngredients: Ingredient[];
+  allIngredients: Ingredient[] = [];
   ingredient: IngredientRecipeDTO = new IngredientRecipeDTO();
   keys = [];
   typeIngredients: Ingredient[] = [];
@@ -41,7 +41,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ingredientService.findAll().subscribe(data => this.allIngredients = data);
+
   }
 
   byName() {
@@ -51,6 +51,7 @@ export class SearchComponent implements OnInit {
   }
 
   byIngredients() {
+    this.ingredientService.findAll().subscribe((data: Ingredient[]) => this.allIngredients = data);
     this.first = false;
     this.second = true;
     this.third = false;
@@ -80,9 +81,13 @@ export class SearchComponent implements OnInit {
   }
 
   findIngredientByType(type: TypeIngredient) {
-    this.ingredientService.findAllByType(type).subscribe((i: Ingredient[]) => this.typeIngredients = i);
-    console.log(this.typeIngredients.length);
-    this.typeDiv = true;
+    this.ingredientService.findAllByType(type).subscribe((name: IngredientNameDTO[]) => {
+        for (let i = 0; i < name.length; i++) {
+          this.ingredientNameDTOS.push(name[i]);
+        }
+        this.typeDiv = true;
+      }
+    );
   }
 
   addSelectIngredient(ingredient: Ingredient) {
@@ -124,6 +129,10 @@ export class SearchComponent implements OnInit {
     if (select.value == name) {
       (<HTMLSelectElement>document.getElementById('select')).value = "Nothing to select";
     }
+  }
+
+  clearAll() {
+    this.ingredientNameDTOS.splice(0, this.ingredientNameDTOS.length);
   }
 
   searchByData(time: number) {
