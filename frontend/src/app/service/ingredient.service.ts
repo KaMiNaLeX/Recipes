@@ -22,4 +22,16 @@ export class IngredientService {
   public findAllByType(type: TypeIngredient): Observable<Ingredient[]> {
     return this.http.get<Ingredient[]>(`${this.baseUrl}/type/${type}`);
   }
+
+  public create(ingredient: Ingredient) {
+    return this.http.post<Ingredient>(`${this.baseUrl}/create`, ingredient);
+  }
+
+  public get(id: string): Observable<Ingredient> {
+    return this.http.get<Ingredient>(`${this.baseUrl}/${id}`);
+  }
+
+  public update(id: string, userData: Ingredient): Observable<Ingredient> {
+    return this.http.put<Ingredient>(`${this.baseUrl}/update/${id}`, userData);
+  }
 }
