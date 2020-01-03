@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -21,5 +22,7 @@ public class CookingStepDTO {
     private String name;
     private String description;
     private boolean active;
+    private String imgSrc;
+    private MultipartFile file;
     private UUID recipeId;
 }

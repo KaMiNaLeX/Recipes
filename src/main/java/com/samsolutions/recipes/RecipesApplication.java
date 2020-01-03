@@ -1,8 +1,10 @@
 package com.samsolutions.recipes;
 
+import com.samsolutions.recipes.config.property.FileStorageProperty;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,7 +22,11 @@ import java.util.Locale;
  * @author kaminskiy.alexey
  * @since 2019.10
  */
+
 @SpringBootApplication()
+@EnableConfigurationProperties({
+        FileStorageProperty.class
+})
 public class RecipesApplication implements WebMvcConfigurer {
 
     public static void main(String[] args) {
