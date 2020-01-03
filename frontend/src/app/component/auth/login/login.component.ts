@@ -35,9 +35,6 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/category').then(() => {
             window.location.reload();
           });
-          /*          this.router.navigate(['category']).then(() => {
-                      window.location.reload();
-                    });*/
         }
       }, (err) => {
         console.log(err);

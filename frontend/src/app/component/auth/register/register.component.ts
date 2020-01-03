@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../service/auth.service";
 import {UserService} from "../../../service/user.service";
+import {CustomValidator} from "../../../validators/custom-validator";
 
 @Component({
   selector: 'app-register',
@@ -27,28 +28,14 @@ export class RegisterComponent implements OnInit {
 
   //todo: need to fix
   ngOnInit() {
-    this.registerForm = new FormGroup({
+    this.registerForm = this.formBuilder.group({
       'firstName': new FormControl(null, Validators.required),
       'lastName': new FormControl(null, Validators.required),
-      'login': new FormControl(null, [Validators.required]),
+      'login': new FormControl(null, [Validators.required,CustomValidator.validateCharacters]),
       'email': new FormControl(null, [Validators.required, Validators.email]),
       'password': new FormControl(null, [Validators.required, Validators.minLength(5)]),
       'isAuthor': new FormControl()
     });
-  }
-
-  userNameValidator(control: FormGroup): { [s: string]: boolean } {
-    if (control.value != undefined) {
-      this.existsUserEmail = this.userService.getByEmail(control.value);
-      this.existsUserLogin = this.userService.getByLogin(control.value);
-    }
-    if (this.existsUserEmail != null) {
-      return {"email": true};
-    }
-    if (this.existsUserLogin != null) {
-      return {"login": true};
-    }
-    return null;
   }
 
   onFormSubmit(form: NgForm) {
