@@ -26,13 +26,11 @@ import com.samsolutions.recipes.repository.RecipeRepository;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -130,23 +128,21 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             map(categoryRecipeRepository.save(updateCategoryRecipeList.get(i)), createRecipeDTO.getCategoryRecipeDTOList());
         }
         //update CookingStepsEntityList
-        try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
-            List<CookingStepsEntity> cookingStepsEntityList = new ArrayList<>();
-            CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
-            cookingStepsEntityList.add(cookingStepsEntity);
-            map(createRecipeDTO.getCookingStepRecipeDTOList(), cookingStepsEntityList);
+        List<CookingStepsEntity> cookingStepsEntityList = new ArrayList<>();
+        CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
+        cookingStepsEntityList.add(cookingStepsEntity);
+        map(createRecipeDTO.getCookingStepRecipeDTOList(), cookingStepsEntityList);
 
-            List<CookingStepsEntity> updateCookingStepsList =
-                    cookingStepsRepository.findAllByRecipeId(updateEntity.getId());
-            for (int i = 0; i < updateCookingStepsList.size(); i++) {
-                cookingStepsRepository.delete(updateCookingStepsList.get(i));
-            }
+        List<CookingStepsEntity> updateCookingStepsList =
+                cookingStepsRepository.findAllByRecipeId(updateEntity.getId());
+        for (int i = 0; i < updateCookingStepsList.size(); i++) {
+            cookingStepsRepository.delete(updateCookingStepsList.get(i));
+        }
 
-            for (int i = 0; i < cookingStepsEntityList.size(); i++) {
-                cookingStepsEntityList.get(i).setContent(IOUtils.toByteArray(inputStream));
-                cookingStepsEntityList.get(i).setRecipeId(updateEntity.getId());
-                map(cookingStepsRepository.save(cookingStepsEntityList.get(i)), createRecipeDTO.getCookingStepRecipeDTOList());
-            }
+        for (int i = 0; i < cookingStepsEntityList.size(); i++) {
+            cookingStepsEntityList.get(i).setImgSource("/static/img/test.png");
+            cookingStepsEntityList.get(i).setRecipeId(updateEntity.getId());
+            map(cookingStepsRepository.save(cookingStepsEntityList.get(i)), createRecipeDTO.getCookingStepRecipeDTOList());
         }
         //update RecipeIngredientList
         List<RecipeIngredientEntity> recipeIngredientEntityList = new ArrayList<>();
@@ -244,17 +240,15 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             map(categoryRecipeRepository.save(categoryRecipeEntityList.get(i)), createRecipeDTO.getCategoryRecipeDTOList());
         }
         //save CookingStepsEntityList
-        try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
-            List<CookingStepsEntity> cookingStepsEntityList = new ArrayList<>();
-            CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
-            cookingStepsEntityList.add(cookingStepsEntity);
-            map(createRecipeDTO.getCookingStepRecipeDTOList(), cookingStepsEntityList);
-            for (int i = 0; i < cookingStepsEntityList.size(); i++) {
-                cookingStepsEntityList.get(i).setActive(true);
-                cookingStepsEntityList.get(i).setContent(IOUtils.toByteArray(inputStream));
-                cookingStepsEntityList.get(i).setRecipeId(recipeEntity.getId());
-                map(cookingStepsRepository.save(cookingStepsEntityList.get(i)), createRecipeDTO.getCookingStepRecipeDTOList());
-            }
+        List<CookingStepsEntity> cookingStepsEntityList = new ArrayList<>();
+        CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
+        cookingStepsEntityList.add(cookingStepsEntity);
+        map(createRecipeDTO.getCookingStepRecipeDTOList(), cookingStepsEntityList);
+        for (int i = 0; i < cookingStepsEntityList.size(); i++) {
+            cookingStepsEntityList.get(i).setActive(true);
+            cookingStepsEntityList.get(i).setImgSource("/static/img/test.png");
+            cookingStepsEntityList.get(i).setRecipeId(recipeEntity.getId());
+            map(cookingStepsRepository.save(cookingStepsEntityList.get(i)), createRecipeDTO.getCookingStepRecipeDTOList());
         }
         //save RecipeIngredientList
         List<RecipeIngredientEntity> recipeIngredientEntityList = new ArrayList<>();
@@ -435,16 +429,7 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
 
     @Override
     public List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO) {
-        /*
-        String category = recipeDataDTO.getCategory();
-        if (category.equals("ALL")) {
-            category = null;
-        }
-        if (!recipeDataDTO.isIncludeMeat()) {
 
-        }
-
-         */
         List<RecipeEntity> recipeEntityList = new ArrayList<>();
         int time = recipeDataDTO.getCookingTime();
         int zero = 0;

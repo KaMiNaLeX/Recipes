@@ -6,13 +6,11 @@ import com.samsolutions.recipes.repository.CookingStepsRepository;
 import com.samsolutions.recipes.repository.RecipeRepository;
 import com.samsolutions.recipes.service.CookingStepsService;
 import com.samsolutions.recipes.service.ModelMapperService;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,46 +31,39 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
     @Override
     @Transactional
     public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) throws IOException {
-        try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
-            cookingStepsEntity.setActive(true);
-            cookingStepsEntity.setContent(IOUtils.toByteArray(inputStream));
-            cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepsEntity.getRecipeId()));
-            cookingStepsRepository.save(cookingStepsEntity);
-            return cookingStepsEntity;
-        }
+        cookingStepsEntity.setActive(true);
+        cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepsEntity.getRecipeId()));
+        cookingStepsRepository.save(cookingStepsEntity);
+        return cookingStepsEntity;
     }
 
     //todo: need to fix
     @Override
     @Transactional
     public CookingStepDTO createStepDTO(CookingStepDTO cookingStepDTO) throws IOException {
-        try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
-            CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
-            cookingStepsEntity.setContent(IOUtils.toByteArray(inputStream));
-            cookingStepsEntity.setActive(true);
-            cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepDTO.getRecipeId()));
-            map(cookingStepDTO, cookingStepsEntity);
-            map((cookingStepsRepository.save(cookingStepsEntity)), cookingStepDTO);
-            return cookingStepDTO;
-        }
+        CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
+        map(cookingStepDTO, cookingStepsEntity);
+        cookingStepsEntity.setImgSource("/static/img/test.png");
+        cookingStepsEntity.setActive(true);
+        cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepDTO.getRecipeId()));
+        map((cookingStepsRepository.save(cookingStepsEntity)), cookingStepDTO);
+        return cookingStepDTO;
     }
 
 
     @Override
     @Transactional
     public CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) throws IOException {
-        try (InputStream inputStream = getClass().getResourceAsStream("/static/img/test.png")) {
-            CookingStepsEntity updateStep = cookingStepsRepository.getById(id);
-            updateStep.setName(cookingStepsEntity.getName());
-            updateStep.setDescription(cookingStepsEntity.getDescription());
-            updateStep.setNumber(cookingStepsEntity.getNumber());
-            updateStep.setActive(cookingStepsEntity.isActive());
-            updateStep.setRecipeId(cookingStepsEntity.getRecipeId());
-            cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepsEntity.getRecipeId()));
-            updateStep.setContent(IOUtils.toByteArray(inputStream));
-            cookingStepsRepository.save(updateStep);
-            return updateStep;
-        }
+        CookingStepsEntity updateStep = cookingStepsRepository.getById(id);
+        updateStep.setName(cookingStepsEntity.getName());
+        updateStep.setDescription(cookingStepsEntity.getDescription());
+        updateStep.setNumber(cookingStepsEntity.getNumber());
+        updateStep.setActive(cookingStepsEntity.isActive());
+        updateStep.setRecipeId(cookingStepsEntity.getRecipeId());
+        cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepsEntity.getRecipeId()));
+        cookingStepsEntity.setImgSource(cookingStepsEntity.getImgSource());
+        cookingStepsRepository.save(updateStep);
+        return updateStep;
     }
 
 

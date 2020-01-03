@@ -4,8 +4,7 @@ CREATE TABLE cooking_steps
     number      int          NOT NULL,
     name        varchar(255) NOT NULL,
     description varchar(255) NOT NULL,
-    content     blob         NOT NULL,
-    -- thumbnail
+    img_source  varchar(255),
     active      boolean      NOT NULL,
     recipe_id   BINARY(16)   NOT NULL,
     PRIMARY KEY (id)

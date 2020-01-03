@@ -9,7 +9,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.UUID;
@@ -35,9 +34,8 @@ public class CookingStepsEntity extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @Lob
-    @Column(columnDefinition = "BLOB")
-    private byte[] content;
+    @Column(name = "img_source")
+    private String imgSource;
 
     @Column(name = "active")
     private boolean active;

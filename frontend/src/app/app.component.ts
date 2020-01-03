@@ -17,6 +17,15 @@ export class AppComponent {
   author = false;
   username = "unauthorized";
 
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
+              private http: HttpClient) {
+    if (localStorage.getItem('token') != undefined) {
+      this.authenticated = true;
+      this.role();
+      this.username = localStorage.getItem('email');
+    }
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['login']).then(() => {
@@ -65,15 +74,6 @@ export class AppComponent {
 
   users() {
     this.router.navigate(['users']);
-  }
-
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
-              private http: HttpClient) {
-    if (localStorage.getItem('token') != undefined) {
-      this.authenticated = true;
-      this.role();
-      this.username = localStorage.getItem('email');
-    }
   }
 
   role() {
