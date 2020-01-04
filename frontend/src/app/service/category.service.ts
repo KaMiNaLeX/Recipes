@@ -38,4 +38,17 @@ export class CategoryService {
   public update(id: number, userData: Category): Observable<Category> {
     return this.http.put<Category>(`${this.baseUrl}/update/${id}`, userData);
   }
+
+  public addPhoto4Category(stepId: number, file: File) {
+    const data = new FormData();
+    data.append('file', file);
+    fetch(`${this.baseUrl}/addPhoto4Category/${stepId}`, {
+      method: 'POST',
+      body: data
+    }).then(r => {
+
+    }).catch(r => {
+      alert(r);
+    });
+  }
 }

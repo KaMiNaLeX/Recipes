@@ -31,11 +31,7 @@ export class RecipeAddComponent implements OnInit {
   allIngredients: Ingredient[];
 
   selectedFile: File[] = [];
-  public event1;
   imgURL: any;
-  receivedImageData: any;
-  base64Data: any;
-  convertedImage: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService) {

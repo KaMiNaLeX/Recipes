@@ -5,12 +5,15 @@ import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.service.CategoryService;
+import com.samsolutions.recipes.service.FileStorageService;
 import com.samsolutions.recipes.service.ModelMapperService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +31,9 @@ import java.util.UUID;
 public class CategoryServiceImpl implements CategoryService, ModelMapperService {
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
@@ -87,6 +93,16 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     public CategoryDTO getByName(String name) {
         CategoryDTO categoryDTO = new CategoryDTO();
         map(categoryRepository.getByName(name), categoryDTO);
+        return categoryDTO;
+    }
+
+    @Override
+    public CategoryDTO savePhoto(UUID id, MultipartFile file) throws IOException {
+        CategoryEntity categoryEntity = categoryRepository.getById(id);
+        String imageSrc = fileStorageService.storeFile(file);
+        categoryEntity.setImgSource(imageSrc);
+        CategoryDTO categoryDTO = new CategoryDTO();
+        map(categoryRepository.save(categoryEntity), categoryDTO);
         return categoryDTO;
     }
 

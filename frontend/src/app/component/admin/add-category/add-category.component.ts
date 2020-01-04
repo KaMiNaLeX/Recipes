@@ -16,6 +16,9 @@ export class AddCategoryComponent implements OnInit {
   secondDiv = false;
   thirdDiv = false;
 
+  selectedFile: File = null;
+  imgURL: any;
+
   constructor(private router: Router, private categoryService: CategoryService) {
   }
 
@@ -35,8 +38,11 @@ export class AddCategoryComponent implements OnInit {
   }
 
   addCategory() {
+    this.category.imgSource = "pic";
     if (this.category.name != null && this.category.description != null && this.category.tag != null) {
       this.categoryService.create(this.category).subscribe(data => {
+          this.category = data;
+          this.categoryService.addPhoto4Category(this.category.id, this.selectedFile);
           this.categoryService.findAll().subscribe(data => {
             this.categories = data;
           })
@@ -45,6 +51,7 @@ export class AddCategoryComponent implements OnInit {
       this.firstDiv = true;
       this.secondDiv = false;
       window.alert("Category is created!");
+      window.location.reload();
     } else window.alert("Please, fill in all fields!");
   }
 
@@ -60,6 +67,7 @@ export class AddCategoryComponent implements OnInit {
     if (this.category.name != null && this.category.description != null && this.category.tag != null) {
       this.categoryService.update(this.category.id, this.category).subscribe(data => {
           this.category = data;
+          this.categoryService.addPhoto4Category(this.category.id, this.selectedFile);
           this.categoryService.findAll().subscribe(data => {
             this.categories = data;
           })
@@ -67,6 +75,7 @@ export class AddCategoryComponent implements OnInit {
       );
       this.firstDiv = true;
       this.thirdDiv = false;
+      window.location.reload();
       window.alert("Category is updated!");
     } else window.alert("Please, fill in all fields!");
   }
@@ -81,6 +90,17 @@ export class AddCategoryComponent implements OnInit {
         },
         error => console.log(error));
     window.alert("Category is deleted!");
+  }
+
+  handleFileInput(event) {
+    console.log(event);
+    this.selectedFile = event.target.files[0];
+    // Below part is used to display the selected image
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event2) => {
+      this.imgURL = reader.result;
+    }
   }
 
 }

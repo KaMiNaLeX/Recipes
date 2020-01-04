@@ -15,4 +15,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CategoryRecipeDTO {
     private String name;
+    private String imgSource;
 }

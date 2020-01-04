@@ -21,4 +21,5 @@ public class CategoryDTO {
     private String name;
     private String description;
     private String tag;
+    private String imgSource;
 }

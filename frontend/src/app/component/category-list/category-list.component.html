@@ -2,7 +2,7 @@
   <div class="card" *ngFor="let category of categories" style="width: 500px;">
     <form (ngSubmit)="getRipesByCategoryName(category.name)" #addToCartForm="ngForm">
       <div class="card border-primary mb-3" style="max-width: 500px;">
-        <img src="assets/images/test.jpg" class="card-img-top" alt="">
+        <img height="400" weight="500" [src]="category.imgSource" *ngIf="category.imgSource !=''" class="card-img-top" alt="">
         <div class="card-body">
           <h5 class="card-title">{{ category.name }}</h5>
           <p class="card-text">{{ category.description }}</p>

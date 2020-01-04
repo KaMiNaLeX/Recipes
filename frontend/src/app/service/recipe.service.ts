@@ -64,7 +64,7 @@ export class RecipeService {
       method: 'POST',
       body: data
     }).then(r => {
-      alert("Success");
+
     }).catch(r => {
       alert(r);
     });

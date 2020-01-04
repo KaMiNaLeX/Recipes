@@ -35,6 +35,9 @@ public class CategoryEntity extends BaseEntity {
     @Column(name = "tag")
     private String tag;
 
+    @Column(name = "img_source")
+    private String imgSource;
+
     @OneToMany(mappedBy = "category",
             cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
             orphanRemoval = true
