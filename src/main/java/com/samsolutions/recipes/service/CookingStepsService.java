@@ -1,7 +1,9 @@
 package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.CookingStepDTO;
+import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.model.CookingStepsEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +25,10 @@ public interface CookingStepsService {
 
     List<CookingStepsEntity> findAll();
 
+    List<CookingStepDTO> findAllDto();
+
     CookingStepsEntity getById(UUID uuid);
+
+    CookingStepRecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException;
 
 }

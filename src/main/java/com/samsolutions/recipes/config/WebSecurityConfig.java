@@ -1,6 +1,5 @@
 package com.samsolutions.recipes.config;
 
-import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable().csrf().disable().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/getFile/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/category/").permitAll()
                 .antMatchers("/api/recipe/**").permitAll()
@@ -58,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**",
+                        "/upload/**",
                         "/swagger-resources/**",
                         "/swagger-ui.html",
                         "/v2/api-docs",

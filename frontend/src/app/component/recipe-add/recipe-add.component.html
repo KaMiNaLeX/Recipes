@@ -120,7 +120,8 @@
         <label for="name">Ingredient name:</label>
         <br/>
         <select class="selectpicker" data-live-search="true" id="ingredientName" [(ngModel)]="ingredient.name">
-          <option style="width: 500px" *ngFor="let ingredient of allIngredients" value="{{ingredient.name}}">{{ingredient.name}}</option>
+          <option style="width: 500px" *ngFor="let ingredient of allIngredients"
+                  value="{{ingredient.name}}">{{ingredient.name}}</option>
         </select>
       </div>
       <div class="col">
@@ -179,6 +180,7 @@
     <table class="table table-bordered table-striped">
       <thead class="thead-dark">
       <tr>
+        <th scope="col">Photo</th>
         <th scope="col">Number</th>
         <th scope="col">Name</th>
         <th scope="col">Description</th>
@@ -187,6 +189,7 @@
       </thead>
       <tbody>
       <tr id="cookingStep" *ngFor="let step of cookingSteps">
+        <td name="c.photo"><img [src]="step.imgSource" height="100" weight="100" *ngIf="step.imgSource != null"></td>
         <td name="c.number">{{step.number}}</td>
         <td name="c.name">{{step.name}}</td>
         <td name="c.description">{{step.description}}</td>
@@ -205,6 +208,19 @@
       <label>Description:</label>
       <textarea name="s.description" class="form-control" [(ngModel)]="cookingStep.description"
                 autocomplete="off"></textarea>
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+      </div>
+      <div class="custom-file">
+        <input type="file" (change)="handleFileInput($event)" class="custom-file-input"
+               id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+      </div>
+    </div>
+    <div>
+      <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
     </div>
     <button type="submit" class="btn btn-success"
             (click)="addCookingStep(cookingStep.name,cookingStep.description,cookingSteps.length)">Add

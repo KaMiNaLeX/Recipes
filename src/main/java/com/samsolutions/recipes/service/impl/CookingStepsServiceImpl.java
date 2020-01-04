@@ -1,16 +1,20 @@
 package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.CookingStepDTO;
+import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.model.CookingStepsEntity;
 import com.samsolutions.recipes.repository.CookingStepsRepository;
 import com.samsolutions.recipes.repository.RecipeRepository;
 import com.samsolutions.recipes.service.CookingStepsService;
+import com.samsolutions.recipes.service.FileStorageService;
 import com.samsolutions.recipes.service.ModelMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +31,9 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
 
     @Autowired
     private RecipeRepository recipeRepository;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @Override
     @Transactional
@@ -80,7 +87,26 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
     }
 
     @Override
+    public List<CookingStepDTO> findAllDto() {
+        List<CookingStepDTO> cookingStepDTOS = new ArrayList<>();
+        CookingStepDTO cookingStepDTO = new CookingStepDTO();
+        cookingStepDTOS.add(cookingStepDTO);
+        map(cookingStepsRepository.findAll(), cookingStepDTOS);
+        return cookingStepDTOS;
+    }
+
+    @Override
     public CookingStepsEntity getById(UUID uuid) {
         return cookingStepsRepository.getById(uuid);
+    }
+
+    @Override
+    public CookingStepRecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException {
+        CookingStepsEntity stepsEntity = cookingStepsRepository.getById(id);
+        String imageSrc = fileStorageService.storeFile(file);
+        stepsEntity.setImgSource(imageSrc);
+        CookingStepRecipeDTO stepRecipeDTO = new CookingStepRecipeDTO();
+        map(cookingStepsRepository.save(stepsEntity), stepRecipeDTO);
+        return stepRecipeDTO;
     }
 }

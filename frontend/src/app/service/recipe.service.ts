@@ -56,4 +56,17 @@ export class RecipeService {
   public findAllByData(recipeData: RecipeDataDTO) {
     return this.http.post<Recipe[]>(`${this.baseUrl}/data`, recipeData);
   }
+
+  public addPhoto4Step(stepId: string, file: File) {
+    const data = new FormData();
+    data.append('file', file);
+    fetch(`${this.baseUrl}/addPhoto4Step/${stepId}`, {
+      method: 'POST',
+      body: data
+    }).then(r => {
+      alert("Success");
+    }).catch(r => {
+      alert(r);
+    });
+  }
 }

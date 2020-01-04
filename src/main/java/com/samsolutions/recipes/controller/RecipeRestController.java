@@ -1,11 +1,15 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
+import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
+import com.samsolutions.recipes.service.CookingStepsService;
+import com.samsolutions.recipes.service.FileStorageService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,6 +35,12 @@ public class RecipeRestController {
 
     @Autowired
     private RecipeService recipeService;
+
+    @Autowired
+    private FileStorageService fileStorageService;
+
+    @Autowired
+    private CookingStepsService cookingStepsService;
 
     @GetMapping("/")
     public List<RecipeDTO> findAll() {
@@ -105,6 +117,11 @@ public class RecipeRestController {
     @PostMapping("/data")
     public List<RecipeDTO> findAllByData(@RequestBody RecipeDataDTO recipeDataDTO) {
         return recipeService.findAllByData(recipeDataDTO);
+    }
+
+    @PostMapping(value = "/addPhoto4Step/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public CookingStepRecipeDTO createPhoto4Step(@PathVariable("id") UUID id, @RequestParam MultipartFile file) throws IOException {
+        return cookingStepsService.savePhoto(id, file);
     }
 
 }

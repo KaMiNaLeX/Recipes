@@ -30,6 +30,13 @@ export class RecipeAddComponent implements OnInit {
   unit = [];
   allIngredients: Ingredient[];
 
+  selectedFile: File[] = [];
+  public event1;
+  imgURL: any;
+  receivedImageData: any;
+  base64Data: any;
+  convertedImage: any;
+
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService) {
     this.createRecipeDTO = new CreateRecipeDTO();
@@ -110,11 +117,27 @@ export class RecipeAddComponent implements OnInit {
     step.description = description;
     step.number = number + 1;
     step.active = true;
+    step.imgSource = this.imgURL;
     this.cookingSteps.push(step);
+  }
+
+  handleFileInput(event) {
+    console.log(event);
+    this.selectedFile.push(event.target.files[0]);
+
+    // Below part is used to display the selected image
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event2) => {
+      this.imgURL = reader.result;
+    }
   }
 
   onSubmit() {
     let date: Date = new Date();
+    for (let i = 0; i < this.cookingSteps.length; i++) {
+      this.cookingSteps[i].imgSource = null;
+    }
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
@@ -128,11 +151,22 @@ export class RecipeAddComponent implements OnInit {
       this.createRecipeDTO.cookingDifficulty != null) {
       this.recipeService.createRecipe(this.createRecipeDTO).subscribe(data => {
         this.createRecipeDTO = data;
+        this.cookingSteps = [];
+        for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
+          this.cookingSteps.push(this.createRecipeDTO.cookingStepRecipeDTOList[i]);
+          console.log(this.cookingSteps[i]);
+          this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id, this.selectedFile[i]);
+        }
+
       });
+
       this.router.navigate(['category']);
       window.alert("Recipe is created!")
+
     } else {
       window.alert("Please fill in all fields!")
     }
   }
 }
+
+

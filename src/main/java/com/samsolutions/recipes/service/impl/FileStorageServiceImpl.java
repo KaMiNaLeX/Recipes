@@ -35,7 +35,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         Path targetLocation = Paths.get(this.fileStorageLocation + "/" + fileName).toAbsolutePath().normalize();
         Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-        return "http://localhost:8080/getFile/" + fileName;
+        return "http://localhost:4200/getFile/" + fileName;
     }
 
     @Override

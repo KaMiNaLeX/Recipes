@@ -43,6 +43,7 @@
         <thead class="thead-dark">
         <tr>
           <th scope="col">Number</th>
+          <th scope="col">Photo</th>
           <th scope="col">Name</th>
           <th scope="col">Description</th>
         </tr>
@@ -50,6 +51,7 @@
         <tbody>
         <tr id="cookingStep" *ngFor="let step of createRecipeDTO.cookingStepRecipeDTOList">
           <td name="c.number">{{step.number}}</td>
+          <td name="c.photo"><img [src]="step.imgSource" height="100" weight="100" *ngIf="step.imgSource != null"></td>
           <td name="c.name">{{step.name}}</td>
           <td name="c.description">{{step.description}}</td>
         </tr>
