@@ -52,6 +52,7 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
         updateCategoryDTO.setDescription(categoryDTO.getDescription());
         updateCategoryDTO.setTag(categoryDTO.getTag());
         updateCategoryDTO.setId(updateCategory.getId());
+        updateCategoryDTO.setImgSource(categoryDTO.getImgSource());
         map(updateCategoryDTO, updateCategory);
         map(categoryRepository.save(updateCategory), updateCategoryDTO);
         return updateCategoryDTO;

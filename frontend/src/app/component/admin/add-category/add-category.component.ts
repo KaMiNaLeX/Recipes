@@ -19,6 +19,9 @@ export class AddCategoryComponent implements OnInit {
   selectedFile: File = null;
   imgURL: any;
 
+  selectedFile2: File = null;
+  imgURL2: any;
+
   constructor(private router: Router, private categoryService: CategoryService) {
   }
 
@@ -51,7 +54,6 @@ export class AddCategoryComponent implements OnInit {
       this.firstDiv = true;
       this.secondDiv = false;
       window.alert("Category is created!");
-      window.location.reload();
     } else window.alert("Please, fill in all fields!");
   }
 
@@ -60,14 +62,16 @@ export class AddCategoryComponent implements OnInit {
     this.thirdDiv = true;
     this.categoryService.get(id).subscribe(data => {
       this.category = data;
-    })
+    });
   }
 
   editCategory() {
     if (this.category.name != null && this.category.description != null && this.category.tag != null) {
       this.categoryService.update(this.category.id, this.category).subscribe(data => {
           this.category = data;
-          this.categoryService.addPhoto4Category(this.category.id, this.selectedFile);
+          if (this.imgURL2 != null) {
+            this.categoryService.addPhoto4Category(this.category.id, this.selectedFile2);
+          }
           this.categoryService.findAll().subscribe(data => {
             this.categories = data;
           })
@@ -75,7 +79,6 @@ export class AddCategoryComponent implements OnInit {
       );
       this.firstDiv = true;
       this.thirdDiv = false;
-      window.location.reload();
       window.alert("Category is updated!");
     } else window.alert("Please, fill in all fields!");
   }
@@ -103,4 +106,14 @@ export class AddCategoryComponent implements OnInit {
     }
   }
 
+  handleFileInput2(event) {
+    console.log(event);
+    this.selectedFile2 = event.target.files[0];
+    // Below part is used to display the selected image
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event2) => {
+      this.imgURL2 = reader.result;
+    }
+  }
 }
