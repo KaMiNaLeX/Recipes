@@ -50,6 +50,9 @@ public class RecipeEntity extends BaseEntity {
     @Column(name = "last_modified")
     private Date lastModified = new Date();
 
+    @Column(name = "img_source")
+    private String imgSource;
+
     @Column(name = "author_id")
     private UUID authorId;
 

@@ -8,6 +8,7 @@ CREATE TABLE recipe
     negative_votes     int          NOT NULL,
     author_id          BINARY(16)   NOT NULL,
     last_modified      DATETIME(6)  NOT NULL,
+    img_source         varchar(255),
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;

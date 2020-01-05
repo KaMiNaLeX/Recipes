@@ -26,6 +26,7 @@ public class CreateRecipeDTO {
     private int positiveVotes;
     private int negativeVotes;
     private Date lastModified = new Date();
+    private String imgSource;
     private UUID authorId;
     private List<CategoryRecipeDTO> categoryRecipeDTOList;
     private List<IngredientRecipeDTO> ingredientRecipeDTOList;

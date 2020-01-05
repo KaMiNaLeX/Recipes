@@ -69,6 +69,19 @@
         </div>
       </div>
     </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+      </div>
+      <div class="custom-file">
+        <input type="file" (change)="handleFileInput2($event)" class="custom-file-input"
+               id="inputGroupFile02" aria-describedby="inputGroupFileAddon01">
+        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+      </div>
+    </div>
+    <div>
+      <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
+    </div>
     <button class="btn btn-success"
             (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
               createRecipeDTO.cookingTime)">

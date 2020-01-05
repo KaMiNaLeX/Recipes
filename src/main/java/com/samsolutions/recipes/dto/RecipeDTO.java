@@ -34,6 +34,7 @@ public class RecipeDTO {
     private int positiveVotes;
     private int negativeVotes;
     private Date lastModified;
+    private String imgSource;
     private UUID authorId;
 
     public RecipeDTO(Map<String, Object> values) {

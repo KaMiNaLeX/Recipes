@@ -153,7 +153,7 @@
   <div class="card mb-3 card-columns" style="max-width: 600px;" *ngFor="let recipe of recipes">
     <div class="row no-gutters" *ngIf="recipe.name != null">
       <div class="col-md-4">
-        <img src="assets/images/test.png" class="card-img">
+        <img height="200" weight="200" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null" class="card-img">
       </div>
       <div class="col-md-8">
         <div class="card-body">

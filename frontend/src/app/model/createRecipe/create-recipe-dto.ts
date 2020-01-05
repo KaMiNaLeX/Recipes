@@ -11,6 +11,7 @@ export class CreateRecipeDTO {
   negativeVotes: number;
   lastModified: Date = new Date();
   authorId: string;
+  imgSource: string;
   categoryRecipeDTOList: Array<CategoryRecipeDTO>;
   ingredientRecipeDTOList: Array<IngredientRecipeDTO>;
   cookingStepRecipeDTOList: Array<CookingStepRecipeDTO>;

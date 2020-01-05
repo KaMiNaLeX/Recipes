@@ -69,4 +69,17 @@ export class RecipeService {
       alert(r);
     });
   }
+
+  public addPhoto4Recipe(recipeId: string, file: File) {
+    const data = new FormData();
+    data.append('file', file);
+    fetch(`${this.baseUrl}/addPhoto4Recipe/${recipeId}`, {
+      method: 'POST',
+      body: data
+    }).then(r => {
+
+    }).catch(r => {
+      alert(r);
+    });
+  }
 }

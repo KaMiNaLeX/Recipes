@@ -38,7 +38,7 @@ export class AddCategoryComponent implements OnInit {
   }
 
   addCategory() {
-    this.category.imgSource = "pic";
+    this.category.imgSource = " ";
     if (this.category.name != null && this.category.description != null && this.category.tag != null) {
       this.categoryService.create(this.category).subscribe(data => {
           this.category = data;

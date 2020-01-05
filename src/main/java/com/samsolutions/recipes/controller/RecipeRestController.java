@@ -123,5 +123,9 @@ public class RecipeRestController {
     public CookingStepRecipeDTO createPhoto4Step(@PathVariable("id") UUID id, @RequestParam MultipartFile file) throws IOException {
         return cookingStepsService.savePhoto(id, file);
     }
+    @PostMapping(value = "/addPhoto4Recipe/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public RecipeDTO createPhoto4Recipe(@PathVariable("id") UUID id, @RequestParam MultipartFile file) throws IOException {
+        return recipeService.savePhoto(id, file);
+    }
 
 }

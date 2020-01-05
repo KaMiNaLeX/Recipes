@@ -29,6 +29,7 @@ import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,6 +65,9 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FileStorageServiceImpl fileStorageService;
 
     @Override
     public List<RecipeDTO> findAll() {
@@ -457,6 +461,16 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         recipeDTOList.add(recipeDTO);
         map(recipeEntityList, recipeDTOList);
         return recipeDTOList;
+    }
+
+    @Override
+    public RecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException {
+        RecipeEntity recipeEntity = recipeRepository.getById(id);
+        String imageSrc = fileStorageService.storeFile(file);
+        recipeEntity.setImgSource(imageSrc);
+        RecipeDTO recipeDTO = new RecipeDTO();
+        map(recipeRepository.save(recipeEntity), recipeDTO);
+        return recipeDTO;
     }
 
 

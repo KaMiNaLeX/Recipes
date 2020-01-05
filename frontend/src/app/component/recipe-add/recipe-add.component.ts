@@ -9,6 +9,7 @@ import {CookingStepRecipeDTO} from "../../model/createRecipe/cooking-step-recipe
 import {IngredientService} from "../../service/ingredient.service";
 import {Ingredient} from "../../model/ingredient";
 import {Unit} from "../../model/unit.enum";
+import {Recipe} from "../../model/recipe";
 
 @Component({
   selector: 'app-recipe-add',
@@ -32,6 +33,9 @@ export class RecipeAddComponent implements OnInit {
 
   selectedFile: File[] = [];
   imgURL: any;
+
+  selectedFile2: File = null;
+  imgURL2: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService) {
@@ -129,7 +133,19 @@ export class RecipeAddComponent implements OnInit {
     }
   }
 
+  handleFileInput2(event) {
+    console.log(event);
+    this.selectedFile2 = event.target.files[0];
+    // Below part is used to display the selected image
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event2) => {
+      this.imgURL2 = reader.result;
+    }
+  }
+
   onSubmit() {
+    this.createRecipeDTO.imgSource = null;
     let date: Date = new Date();
     for (let i = 0; i < this.cookingSteps.length; i++) {
       this.cookingSteps[i].imgSource = null;
@@ -147,13 +163,13 @@ export class RecipeAddComponent implements OnInit {
       this.createRecipeDTO.cookingDifficulty != null) {
       this.recipeService.createRecipe(this.createRecipeDTO).subscribe(data => {
         this.createRecipeDTO = data;
+        this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile2);
         this.cookingSteps = [];
         for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
           this.cookingSteps.push(this.createRecipeDTO.cookingStepRecipeDTOList[i]);
           console.log(this.cookingSteps[i]);
           this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id, this.selectedFile[i]);
         }
-
       });
 
       this.router.navigate(['category']);
