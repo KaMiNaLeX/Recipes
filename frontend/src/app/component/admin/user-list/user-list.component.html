@@ -73,8 +73,8 @@
       <div *ngIf="lastName.invalid" style="color: red">Required</div>
       <h6 for="name">Email:</h6>
       <input type="text" [(ngModel)]="user.email" class="form-control" id="email"
-             autocomplete="off" #email="ngModel" required>
-      <div *ngIf="email.invalid" style="color: red">Required</div>
+             autocomplete="off" #email="ngModel" required email>
+      <div *ngIf="email.invalid" style="color: red">Required or invalid value</div>
       <h6 for="name">Login:</h6>
       <input type="text" [(ngModel)]="user.login" class="form-control" id="login"
              autocomplete="off" #login="ngModel" required>
@@ -85,7 +85,10 @@
       <div *ngIf="pass.invalid" style="color: red">Required</div>
     </div>
     <div>
-      <button style="width: 300px" class="btn btn-success" (click)="addUser()">Add User</button>
+      <button
+        [disabled]="name.invalid || lastName.invalid || email.invalid || login.invalid || pass.invalid"
+        style="width: 300px" class="btn btn-success" (click)="addUser()">Add User
+      </button>
     </div>
   </div>
 </div>
@@ -117,15 +120,18 @@
       <div *ngIf="lastName.invalid" style="color: red">Required</div>
       <h6 for="name">Email:</h6>
       <input type="text" [(ngModel)]="user.email" class="form-control" id="email2"
-             autocomplete="off" #email="ngModel" required>
-      <div *ngIf="email.invalid" style="color: red">Required</div>
+             autocomplete="off" #email="ngModel" required email>
+      <div *ngIf="email.invalid" style="color: red">Required or invalid value</div>
       <h6 for="name">Login:</h6>
       <input type="text" [(ngModel)]="user.login" class="form-control" id="login2"
              autocomplete="off" #login="ngModel" required>
       <div *ngIf="login.invalid" style="color: red">Required</div>
     </div>
     <div>
-      <button style="width: 300px" class="btn btn-success" (click)="editUser()">Edit User</button>
+      <button
+        [disabled]="name.invalid || lastName.invalid || email.invalid || login.invalid"
+        style="width: 300px" class="btn btn-success" (click)="editUser()">Edit User
+      </button>
     </div>
   </div>
 </div>
