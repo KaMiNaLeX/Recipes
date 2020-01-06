@@ -168,6 +168,14 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
+    let stepTable = (<HTMLTableElement>document.getElementById('stepTable')).rows.length;
+    if (stepTable == 1) {
+      window.alert('Add at least one step');
+    }
+    let ingTable = (<HTMLTableElement>document.getElementById('ingredientTable')).rows.length;
+    if (ingTable == 1) {
+      window.alert('Add at least one ingredient');
+    }
     let y = -1;
     let date: Date = new Date();
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;

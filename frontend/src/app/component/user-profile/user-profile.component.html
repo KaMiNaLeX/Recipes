@@ -23,17 +23,24 @@
       <h6 for="firstName">First Name:</h6>
       <input formControlName="firstName" placeholder="First Name" name="firstName" class="form-control" id="firstName">
     </div>
+    <div class="alert alert-danger"
+         *ngIf="!editForm.get('firstName').valid && editForm.get('firstName').touched">
+      Required
+    </div>
 
     <div class="form-group">
       <h6 for="lastName">Last Name:</h6>
       <input formControlName="lastName" placeholder="Last name" name="lastName" class="form-control" id="lastName">
     </div>
-
+    <div class="alert alert-danger"
+         *ngIf="!editForm.get('lastName').valid && editForm.get('lastName').touched">
+      Required
+    </div>
     <div hidden="hidden" class="form-group">
       <h6 for="password">Password:</h6>
       <input type="password" formControlName="password" placeholder="" name="password" class="form-control"
-             id="password">
+             id="password" >
     </div>
-    <button style="width: 300px" type="submit" class="btn btn-success">Update</button>
+    <button [disabled]="!editForm.valid" style="width: 300px" type="submit" class="btn btn-success">Update</button>
   </form>
 </div>

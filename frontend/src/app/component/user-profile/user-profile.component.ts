@@ -30,7 +30,8 @@ export class UserProfileComponent implements OnInit {
       login: ['', Validators.required],
       firstName: ['', Validators.required],
       email: ['', Validators.required],
-      lastName: ['', Validators.required]
+      lastName: ['', Validators.required],
+      password: ['', Validators.required]
     });
     this.userService.getByEmail(email)
       .subscribe(data => {

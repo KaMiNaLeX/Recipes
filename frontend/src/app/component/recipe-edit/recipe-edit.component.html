@@ -50,8 +50,8 @@
                  class="form-control"
                  id="minute"
                  autocomplete="off" #minutes="ngModel"
-                 placeholder="{{createRecipeDTO.cookingTime}}" required>
-          <div *ngIf="minutes.invalid" style="color: red">Required</div>
+                 placeholder="{{createRecipeDTO.cookingTime}}" required pattern="[0-9]{1,7}">
+          <div *ngIf="minutes.invalid" style="color: red">Required or incorrect value</div>
         </div>
       </div>
     </div>
@@ -105,7 +105,7 @@
     </li>
   </ul>
   <h2 style="margin: auto">Add ingredients</h2>
-  <table class="table table-bordered table-striped">
+  <table id="ingredientTable" class="table table-bordered table-striped">
     <thead class="thead-dark">
     <tr>
       <th scope="col">Ingredient</th>
@@ -132,9 +132,11 @@
     <div class="row">
       <div class="col">
         <h6 for="name">Ingredient name:</h6>
-        <select class="custom-select" id="ingredientName" [(ngModel)]="ingredient.name">
+        <select class="custom-select" id="ingredientName" [(ngModel)]="ingredient.name"
+                #ingName="ngModel" required>
           <option *ngFor="let ingredient of allIngredients" value="{{ingredient.name}}">{{ingredient.name}}</option>
         </select>
+        <div *ngIf="ingName.invalid" style="color: red">Required</div>
       </div>
       <div class="col">
         <h6 for="name">Amount:</h6>
@@ -142,13 +144,17 @@
                class="form-control"
                id="amount"
                autocomplete="off"
-               [(ngModel)]="ingredient.amount">
+               [(ngModel)]="ingredient.amount"
+               #amount="ngModel" required pattern="[0-9]{1,7}">
+        <div *ngIf="amount.invalid" style="color: red">Required or incorrect value</div>
       </div>
       <div class="col">
         <h6 for="name">Unit:</h6>
-        <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit">
+        <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit"
+                #unit1="ngModel" required>
           <option *ngFor="let u of unit" value="{{u}}">{{u}}</option>
         </select>
+        <div *ngIf="unit1.invalid" style="color: red">Required</div>
       </div>
       <div class="col">
         <h6 for="name">Note:</h6>
@@ -160,7 +166,7 @@
       </div>
       <div class="col">
         <br/>
-        <button type="submit"
+        <button type="submit" [disabled]="ingName.invalid || unit1.invalid || amount.invalid"
                 (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit,ingredient.note)"
                 class="btn btn-success">Add ingredient +
         </button>
@@ -187,7 +193,7 @@
   <div class="col-md-6 login-container" style="max-width: 100%">
     <h2 style="margin: auto">Cooking</h2>
     <br/>
-    <table class="table table-bordered table-striped">
+    <table id="stepTable" class="table table-bordered table-striped">
       <thead class="thead-dark">
       <tr>
         <th scope="col">Number</th>
@@ -212,12 +218,15 @@
 
     <div class="form-group">
       <h6>Name of cooking step:</h6>
-      <input type="text" name="s.name" [(ngModel)]="cookingStep.name" class="form-control" autocomplete="off">
+      <input type="text" name="s.name" [(ngModel)]="cookingStep.name" class="form-control" autocomplete="off"
+             #cookName="ngModel" required>
+      <div *ngIf="cookName.invalid" style="color: red">Required</div>
     </div>
     <div class="form-group">
       <h6>Description:</h6>
       <textarea name="s.description" class="form-control" [(ngModel)]="cookingStep.description"
-                autocomplete="off"></textarea>
+                #cookDescription="ngModel" autocomplete="off" required></textarea>
+      <div *ngIf="cookDescription.invalid" style="color: red">Required</div>
     </div>
     <h6>Photo:</h6>
     <div class="input-group mb-3">
@@ -234,7 +243,7 @@
       <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
     </div>
     <div>
-      <button type="submit" class="btn btn-success"
+      <button type="submit" class="btn btn-success" [disabled]="cookDescription.invalid || cookName.invalid"
               (click)="addCookingStep(cookingStep.name,cookingStep.description,cookingSteps.length)">Add
         cooking step +
       </button>
@@ -242,7 +251,9 @@
 
     <br/>
     <form (ngSubmit)="onSubmit()">
-      <button style="width: 300px" type="submit" class="btn btn-success">Edit recipe</button>
+      <button [disabled]="name.invalid || difficulty.invalid || minutes.invalid"
+              style="width: 300px" type="submit" class="btn btn-success">Edit recipe
+      </button>
     </form>
   </div>
 </div>
