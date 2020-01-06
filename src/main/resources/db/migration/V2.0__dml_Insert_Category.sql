@@ -1,20 +1,20 @@
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Asia kitchen', 'Dishes from Asia', 'Asia', '');
+values (unhex(replace(uuid(), '-', '')), 'Asia kitchen', 'Dishes from Asia', 'Asia', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Russia kitchen', 'Dishes from Russia', 'Russia', '');
+values (unhex(replace(uuid(), '-', '')), 'Russia kitchen', 'Dishes from Russia', 'Russia', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Salads', 'Salads', 'Vegetables', '');
+values (unhex(replace(uuid(), '-', '')), 'Salads', 'Salads', 'Vegetables', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Deserts', 'Deserts', 'Desert', '');
+values (unhex(replace(uuid(), '-', '')), 'Deserts', 'Deserts', 'Desert', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Pastry', 'Pastry', 'Pastry', '');
+values (unhex(replace(uuid(), '-', '')), 'Pastry', 'Pastry', 'Pastry', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Soup', 'Soup', 'Soup', '');
+values (unhex(replace(uuid(), '-', '')), 'Soup', 'Soup', 'Soup', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Drink', 'Soup', 'Soup', '');
+values (unhex(replace(uuid(), '-', '')), 'Drink', 'Soup', 'Soup', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Vegetarian food', 'Vegan', 'Vegan', '');
+values (unhex(replace(uuid(), '-', '')), 'Vegetarian food', 'Vegan', 'Vegan', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Dinner', 'Dinner', 'Dinner', '');
+values (unhex(replace(uuid(), '-', '')), 'Dinner', 'Dinner', 'Dinner', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Breakfast', 'Breakfast', 'Breakfast', '');
+values (unhex(replace(uuid(), '-', '')), 'Breakfast', 'Breakfast', 'Breakfast', null);

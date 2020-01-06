@@ -82,7 +82,8 @@
       <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
     </div>
     <form (ngSubmit)="addCategory()">
-      <button style="width: 300px" type="submit" class="btn btn-success">Add category</button>
+      <button style="width: 300px" type="submit" class="btn btn-success" [disabled]="name.invalid || description.invalid
+       || tag.invalid">Add category</button>
     </form>
   </div>
 </div>
@@ -117,7 +118,7 @@
              autocomplete="off" #tag="ngModel" required>
       <div *ngIf="tag.invalid" style="color: red">Required</div>
       <h6>Photo:</h6>
-      <img id="img" [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource !=''">
+      <img id="img" [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource !=null">
     </div>
     <h6>New Photo:</h6>
     <div class="input-group mb-3">
@@ -134,7 +135,9 @@
       <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
     </div>
     <div>
-      <button style="width: 300px" class="btn btn-success" (click)="editCategory()">Edit category</button>
+      <button style="width: 300px" class="btn btn-success" (click)="editCategory()"
+              [disabled]="name.invalid || description.invalid
+       || tag.invalid">Edit category</button>
     </div>
   </div>
 </div>
