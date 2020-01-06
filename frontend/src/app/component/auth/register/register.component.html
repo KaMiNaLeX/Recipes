@@ -1,16 +1,16 @@
 <div class="container-fluid">
-  <div class="col-md-6 login-container">
+  <div class="col-md-6 login-container" style="max-width: 70%">
     <h2 style="margin: auto">Registration </h2>
     <br/>
     <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit(registerForm.value)">
       <div class="form-group">
-        <label for="firstName">First Name:</label>
+        <h6 for="firstName">First Name:</h6>
         <input type="text" class="form-control" formControlName="firstName" id="firstName" autocomplete="off">
         <div class="alert alert-danger"
              *ngIf="!registerForm.get('firstName').valid && registerForm.get('firstName').touched">
         </div>
         <div class="form-group">
-          <label for="lastName">Last Name:</label>
+          <h6 for="lastName">Last Name:</h6>
           <input type="text" class="form-control" formControlName="lastName" id="lastName" autocomplete="off">
           <div class="alert alert-danger"
                *ngIf="!registerForm.get('lastName').valid && registerForm.get('lastName').touched">
@@ -19,21 +19,22 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="login">Login:</label>
+          <h6 for="login">Login:</h6>
           <input type="text" class="form-control" formControlName="login" id="login" autocomplete="off">
           <div class="alert alert-danger" *ngIf="!registerForm.get('login').valid && registerForm.get('login').touched">
             Login is exists or required!
           </div>
         </div>
         <div class="form-group">
-          <label for="email">Email:</label>
+          <h6 for="email">Email:</h6>
           <input type="email" class="form-control" formControlName="email" id="email" autocomplete="off">
-          <div class="alert alert-danger" *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">Email
+          <div class="alert alert-danger" *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">
+            Email
             is not correct!
           </div>
         </div>
         <div class="form-group">
-          <label for="pwd">Password:</label>
+          <h6 for="pwd">Password:</h6>
           <input type="password" class="form-control" formControlName="password" id="pwd" autocomplete="off">
           <div class="alert alert-danger"
                *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
@@ -41,17 +42,18 @@
           </div>
         </div>
         <div class="div">
-          <h5 class="divChild2" for="inlineCheckbox1">AUTHOR role</h5>
-          <input class="divChild" formControlName="isAuthor" type="checkbox"
+          <h6 class="divChild2" for="inlineCheckbox1">AUTHOR role</h6>
+          <input class="divChild2" formControlName="isAuthor" type="checkbox"
                  id="inlineCheckbox1" value="1" name="check">
         </div>
-        <div>
-          <p>This role is designed to allow you to create your own recipes.The standard role does not allow this</p>
+        <p>This role is designed to allow you to create your own recipes.The standard role does not allow this</p>
+        <div class="div">
+          <button style="width: 300px" type="submit" class="btn btn-success divChild2" [disabled]="!registerForm.valid">
+            Registration
+          </button>
+          <button style="width: 300px" type="button" class="btn btn-primary divChild2" (click)="loginPage()">Log in</button>
         </div>
-        <button type="submit" class="btn btn-success" [disabled]="!registerForm.valid">Registration</button>
       </div>
     </form>
-    <br/>
-    <button type="button" mat-flat-button color="primary" class="btn btn-primary" (click)="loginPage()">Log in</button>
   </div>
 </div>

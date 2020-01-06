@@ -1,5 +1,10 @@
-<div class="card my-5">
-  <div *ngIf="firstDiv" class="card-body">
+<div *ngIf="firstDiv" class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#/admin">Admin panel</a></li>
+      <li class="breadcrumb-item active" aria-current="page">All ingredients</li>
+    </ol>
+  </nav>
     <h2>Ingredients</h2>
     <table class="table table-bordered table-striped">
       <thead class="thead-dark">
@@ -30,21 +35,35 @@
     </table>
   </div>
   <div class="container-fluid" *ngIf="secondDiv">
-    <div class="col-md-6 login-container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <button class="btn btn-link" (click)="toAdmin()">Admin panel</button>
+        </li>
+        <li class="breadcrumb-item">
+          <button class="btn btn-link" (click)="toView()">All Ingredients</button>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <button class="btn btn-link" disabled>Add Ingredient</button>
+        </li>
+      </ol>
+    </nav>
+    <div class="col-md-6 login-container" style="max-width: 70%">
       <h2 style="margin: auto">Add Ingredient</h2>
       <br/>
       <div class="form-group">
-        <label for="name">Name:</label>
+        <h6 for="name">Name:</h6>
         <input type="text" [(ngModel)]="ingredient.name" class="form-control" id="name"
                autocomplete="off" #name="ngModel" required>
         <div *ngIf="name.invalid" style="color: red">Required</div>
-        <label for="name">Description:</label>
+        <h6 for="name">Description:</h6>
         <input type="text" [(ngModel)]="ingredient.description" class="form-control" id="description"
                autocomplete="off">
-        <label for="name">Calories:</label>
+        <h6 for="name">Calories:</h6>
         <input type="text" [(ngModel)]="ingredient.calories" class="form-control" id="cal"
                autocomplete="off" #cal="ngModel" required>
         <div *ngIf="cal.invalid" style="color: red">Required</div>
+        <h6 for="name">Type:</h6>
         <select [(ngModel)]="ingredient.type" class="custom-select" id="type"
                 autocomplete="off" #type="ngModel" required>
           <option *ngFor="let key of keys" value="{{key}}">{{key}}</option>
@@ -52,26 +71,40 @@
         <div *ngIf="type.invalid" style="color: red">Required</div>
       </div>
       <div>
-        <button class="btn btn-success" (click)="addIngredient()">Add category</button>
+        <button style="width: 300px" class="btn btn-success" (click)="addIngredient()">Add category</button>
       </div>
     </div>
   </div>
   <div class="container-fluid" *ngIf="thirdDiv">
-    <div class="col-md-6 login-container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <button class="btn btn-link" (click)="toAdmin()">Admin panel</button>
+        </li>
+        <li class="breadcrumb-item">
+          <button class="btn btn-link" (click)="toView()">All Ingredients</button>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <button class="btn btn-link" disabled>Edit Ingredient</button>
+        </li>
+      </ol>
+    </nav>
+    <div class="col-md-6 login-container" style="max-width: 70%">
       <h2 style="margin: auto">Edit Ingredient</h2>
       <br/>
       <div class="form-group">
-        <label for="name">Name:</label>
+        <h6 for="name">Name:</h6>
         <input type="text" [(ngModel)]="ingredient.name" class="form-control" id="name2"
                autocomplete="off" #name="ngModel" required>
         <div *ngIf="name.invalid" style="color: red">Required</div>
-        <label for="name">Description:</label>
+        <h6 for="name">Description:</h6>
         <input type="text" [(ngModel)]="ingredient.description" class="form-control" id="description2"
                autocomplete="off">
-        <label for="name">Calories:</label>
+        <h6 for="name">Calories:</h6>
         <input type="text" [(ngModel)]="ingredient.calories" class="form-control" id="cal2"
                autocomplete="off" #cal="ngModel" required>
         <div *ngIf="cal.invalid" style="color: red">Required</div>
+        <h6 for="name">Type:</h6>
         <select [(ngModel)]="ingredient.type" class="custom-select" id="type2"
                 autocomplete="off" #type="ngModel" required>
           <option *ngFor="let key of keys" value="{{key}}">{{key}}</option>
@@ -79,8 +112,7 @@
         <div *ngIf="type.invalid" style="color: red">Required</div>
       </div>
       <div>
-        <button class="btn btn-success" (click)="editIngredient()">Edit Ingredient</button>
+        <button style="width: 300px" class="btn btn-success" (click)="editIngredient()">Edit Ingredient</button>
       </div>
     </div>
   </div>
-</div>

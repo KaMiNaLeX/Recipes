@@ -31,6 +31,16 @@ export class AddCategoryComponent implements OnInit {
     });
   }
 
+  toAdmin() {
+    this.router.navigate(['admin']);
+  }
+
+  toView() {
+    this.firstDiv = true;
+    this.secondDiv = false;
+    this.thirdDiv = false;
+  }
+
   view(id: number) {
     window.alert("ID:" + id);
   }

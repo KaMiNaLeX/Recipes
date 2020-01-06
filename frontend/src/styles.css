@@ -1,3 +1,7 @@
+.back {
+  background-color: #efd556;
+}
+
 .top {
   position: absolute;
 }
@@ -14,6 +18,20 @@
 
 .divChild2 {
   margin-left: 12px;
+}
+
+.resultDiv {
+  max-width: 1200px;
+  margin: 10px auto;
+  padding-top: 10px;
+  background-color: #fff0b4;
+}
+
+.recipe {
+  max-width: 800px;
+  margin: 20px auto;
+  border-color: black;
+  background-color: #f1e5bc;
 }
 
 input.ng-touched.ng-invalid {

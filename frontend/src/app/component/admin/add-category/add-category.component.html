@@ -1,107 +1,140 @@
-<div class="card my-5">
-  <div *ngIf="firstDiv" class="card-body">
-    <h2>Categories</h2>
-    <table class="table table-bordered table-striped">
-      <thead class="thead-dark">
-      <tr>
-        <th scope="col">Photo</th>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Tag</th>
-        <th scope="col">Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let category of categories">
-        <td><img [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource != null"></td>
-        <td>{{ category.name }}</td>
-        <td>{{ category.description }}</td>
-        <td>{{ category.tag }}</td>
-        <td>
-          <button (click)="add()" class='btn btn-success divChild2'>Add
-          </button>
-          <button (click)="view(category.id)" class='btn btn-info divChild2'>View
-          </button>
-          <button (click)="edit(category.id)" class='btn btn-warning divChild2'>Edit
-          </button>
-          <button (click)="delete(category.id)" class='btn btn-danger divChild2'>Delete
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="container-fluid" *ngIf="secondDiv">
-    <div class="col-md-6 login-container">
-      <h2 style="margin: auto">Add Category</h2>
-      <br/>
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" [(ngModel)]="category.name" class="form-control" id="name"
-               autocomplete="off" #name="ngModel" required>
-        <div *ngIf="name.invalid" style="color: red">Required</div>
-        <label for="name">Description:</label>
-        <input type="text" [(ngModel)]="category.description" class="form-control" id="description"
-               autocomplete="off" #description="ngModel" required>
-        <div *ngIf="description.invalid" style="color: red">Required</div>
-        <label for="name">Tag:</label>
-        <input type="text" [(ngModel)]="category.tag" class="form-control" id="tag"
-               autocomplete="off" #tag="ngModel" required>
-        <div *ngIf="tag.invalid" style="color: red">Required</div>
-      </div>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-        </div>
-        <div class="custom-file">
-          <input type="file" (change)="handleFileInput($event)" class="custom-file-input"
-                 id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-        </div>
-      </div>
-      <div>
-        <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
-      </div>
-      <form (ngSubmit)="addCategory()">
-        <button type="submit" class="btn btn-success">Add category</button>
-      </form>
+<div *ngIf="firstDiv" class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#/admin">Admin panel</a></li>
+      <li class="breadcrumb-item active" aria-current="page">All categories</li>
+    </ol>
+  </nav>
+  <h2>Categories</h2>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Photo</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Tag</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let category of categories">
+      <td><img [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource != null"></td>
+      <td>{{ category.name }}</td>
+      <td>{{ category.description }}</td>
+      <td>{{ category.tag }}</td>
+      <td>
+        <button (click)="add()" class='btn btn-success divChild2'>Add
+        </button>
+        <button (click)="view(category.id)" class='btn btn-info divChild2'>View
+        </button>
+        <button (click)="edit(category.id)" class='btn btn-warning divChild2'>Edit
+        </button>
+        <button (click)="delete(category.id)" class='btn btn-danger divChild2'>Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container-fluid" *ngIf="secondDiv">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <button class="btn btn-link" (click)="toAdmin()">Admin panel</button>
+      </li>
+      <li class="breadcrumb-item">
+        <button class="btn btn-link" (click)="toView()">All Categories</button>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <button class="btn btn-link" disabled>Add Category</button>
+      </li>
+    </ol>
+  </nav>
+  <div class="col-md-6 login-container" style="max-width: 70%">
+    <h2 style="margin: auto">Add Category</h2>
+    <br/>
+    <div class="form-group">
+      <h6 for="name">Name:</h6>
+      <input type="text" [(ngModel)]="category.name" class="form-control" id="name"
+             autocomplete="off" #name="ngModel" required>
+      <div *ngIf="name.invalid" style="color: red">Required</div>
+      <h6 for="name">Description:</h6>
+      <input type="text" [(ngModel)]="category.description" class="form-control" id="description"
+             autocomplete="off" #description="ngModel" required>
+      <div *ngIf="description.invalid" style="color: red">Required</div>
+      <h6 for="name">Tag:</h6>
+      <input type="text" [(ngModel)]="category.tag" class="form-control" id="tag"
+             autocomplete="off" #tag="ngModel" required>
+      <div *ngIf="tag.invalid" style="color: red">Required</div>
     </div>
+    <h6 for="name">Photo:</h6>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+      </div>
+      <div class="custom-file">
+        <input type="file" (change)="handleFileInput($event)" class="custom-file-input"
+               id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+      </div>
+    </div>
+    <div>
+      <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
+    </div>
+    <form (ngSubmit)="addCategory()">
+      <button style="width: 300px" type="submit" class="btn btn-success">Add category</button>
+    </form>
   </div>
-  <div class="container-fluid" *ngIf="thirdDiv">
-    <div class="col-md-6 login-container">
-      <h2 style="margin: auto">Edit Category</h2>
-      <br/>
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" [(ngModel)]="category.name" class="form-control" id="name2"
-               autocomplete="off" #name="ngModel" value="{{category.name}}" required>
-        <div *ngIf="name.invalid" style="color: red">Required</div>
-        <label for="name">Description:</label>
-        <input type="text" [(ngModel)]="category.description" class="form-control" id="description2"
-               autocomplete="off" #description="ngModel" value="{{category.description}}" required>
-        <div *ngIf="description.invalid" style="color: red">Required</div>
-        <label for="name">Tag:</label>
-        <input type="text" [(ngModel)]="category.tag" value="{{category.tag}}" class="form-control" id="tag2"
-               autocomplete="off" #tag="ngModel" required>
-        <div *ngIf="tag.invalid" style="color: red">Required</div>
-        <img id="img" [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource !=''">
+</div>
+<div class="container-fluid" *ngIf="thirdDiv">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <button class="btn btn-link" (click)="toAdmin()">Admin panel</button>
+      </li>
+      <li class="breadcrumb-item">
+        <button class="btn btn-link" (click)="toView()">All Categories</button>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <button class="btn btn-link" disabled>Edit Category</button>
+      </li>
+    </ol>
+  </nav>
+  <div class="col-md-6 login-container" style="max-width: 70%">
+    <h2 style="margin: auto">Edit Category</h2>
+    <br/>
+    <div class="form-group">
+      <h6 for="name">Name:</h6>
+      <input type="text" [(ngModel)]="category.name" class="form-control" id="name2"
+             autocomplete="off" #name="ngModel" value="{{category.name}}" required>
+      <div *ngIf="name.invalid" style="color: red">Required</div>
+      <h6 for="name">Description:</h6>
+      <input type="text" [(ngModel)]="category.description" class="form-control" id="description2"
+             autocomplete="off" #description="ngModel" value="{{category.description}}" required>
+      <div *ngIf="description.invalid" style="color: red">Required</div>
+      <h6 for="name">Tag:</h6>
+      <input type="text" [(ngModel)]="category.tag" value="{{category.tag}}" class="form-control" id="tag2"
+             autocomplete="off" #tag="ngModel" required>
+      <div *ngIf="tag.invalid" style="color: red">Required</div>
+      <h6>Photo:</h6>
+      <img id="img" [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource !=''">
+    </div>
+    <h6>New Photo:</h6>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
       </div>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
-        </div>
-        <div class="custom-file">
-          <input type="file" (change)="handleFileInput2($event)" class="custom-file-input"
-                 id="inputGroupFile02" aria-describedby="inputGroupFileAddon01">
-          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-        </div>
+      <div class="custom-file">
+        <input type="file" (change)="handleFileInput2($event)" class="custom-file-input"
+               id="inputGroupFile02" aria-describedby="inputGroupFileAddon01">
+        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
       </div>
-      <div>
-        <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
-      </div>
-      <div>
-        <button class="btn btn-success" (click)="editCategory()">Edit category</button>
-      </div>
+    </div>
+    <div>
+      <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
+    </div>
+    <div>
+      <button style="width: 300px" class="btn btn-success" (click)="editCategory()">Edit category</button>
     </div>
   </div>
 </div>

@@ -29,6 +29,16 @@ export class AddIngredientComponent implements OnInit {
     this.keys = Object.values(type);
   }
 
+  toAdmin() {
+    this.router.navigate(['admin']);
+  }
+
+  toView() {
+    this.firstDiv = true;
+    this.secondDiv = false;
+    this.thirdDiv = false;
+  }
+
   view(id: string) {
     window.alert("ID:" + id);
   }

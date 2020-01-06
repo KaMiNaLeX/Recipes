@@ -1,40 +1,42 @@
-<div class="container-fluid">
-  <div class="card mb-3 card-columns" style="max-width: 600px;" *ngFor="let recipe of recipes">
-    <div class="row no-gutters" *ngIf="recipe.name != null">
-      <div class="col-md-4">
-        <img height="200" weight="200" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null" class="card-img">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ recipe.name }}</h5>
-          <p class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</p>
-          <p class="card-text">Time:{{ recipe.cookingTime }} minutes</p>
-          <label class="card-text">Like:{{ recipe.positiveVotes }}</label>
-          <label class="card-text">Dislike:{{ recipe.negativeVotes }}</label>
-          <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
-            <button type="submit" class="btn btn-primary">View</button>
-          </form>
-          <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+<div class="resultDiv">
+  <div class="container-fluid">
+    <div class="card mb-3 card-columns recipe" *ngFor="let recipe of recipes">
+      <div class="row no-gutters" *ngIf="recipe.name != null">
+        <div class="col-md-4">
+          <img height="250" weight="300" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null" class="card-img">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.name }}</h5>
+            <p class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</p>
+            <p class="card-text">Time:{{ recipe.cookingTime }} minutes</p>
+            <label class="card-text">Like:{{ recipe.positiveVotes }}</label>
+            <label class="card-text">Dislike:{{ recipe.negativeVotes }}</label>
+            <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
+              <button type="submit" class="btn btn-primary">View</button>
+            </form>
+            <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+          </div>
         </div>
       </div>
-    </div>
-    <div *ngIf="recipe.name == null">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="error-template">
-              <h1>
-                Oops!</h1>
-              <h2>
-                Recipes in this category Not Found</h2>
-              <div class="error-details">
-                No one has added recipes for this category yet.You can add recipe right here right now!
-              </div>
-              <div class="error-actions">
-                <button (click)="addRecipe()" class="btn btn-primary btn-lg"><span
-                  class="glyphicon glyphicon-home"></span>
-                  Add recipe +
-                </button>
+      <div *ngIf="recipe.name == null">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="error-template">
+                <h1>
+                  Oops!</h1>
+                <h2>
+                  Recipes in this category Not Found</h2>
+                <div class="error-details">
+                  No one has added recipes for this category yet.You can add recipe right here right now!
+                </div>
+                <div class="error-actions">
+                  <button (click)="addRecipe()" class="btn btn-primary btn-lg"><span
+                    class="glyphicon glyphicon-home"></span>
+                    Add recipe +
+                  </button>
+                </div>
               </div>
             </div>
           </div>

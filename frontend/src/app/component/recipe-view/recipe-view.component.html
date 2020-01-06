@@ -1,5 +1,5 @@
 <div id="first" class="container-fluid">
-  <div class="col-md-6 login-container">
+  <div class="col-md-6 login-container" style="max-width: 100%">
     <div class="form-group">
       <h2>Name:{{createRecipeDTO.name}}</h2>
     </div>
@@ -14,10 +14,14 @@
         <div class="col">
           <h5>Minutes:{{createRecipeDTO.cookingTime}}</h5>
         </div>
+        <div class="col">
+          <div class="form-check form-check-inline">
+            <h5>Categories:</h5>
+            <h5 *ngFor="let category of createRecipeDTO.categoryRecipeDTOList">{{category.name}};</h5>
+          </div>
+        </div>
       </div>
-      <br/>
-      <h5>Categories:</h5>
-          <label *ngFor="let category of createRecipeDTO.categoryRecipeDTOList">{{category.name}};</label>
+
       <h2 style="margin: auto">Ingredients</h2>
       <table class="table table-bordered table-striped">
         <thead class="thead-dark">
@@ -59,3 +63,4 @@
       </table>
     </div>
   </div>
+</div>

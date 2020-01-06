@@ -12,23 +12,21 @@
       <button class="btn btn-link">Cooking</button>
     </li>
   </ul>
-  <div class="col-md-6 login-container">
+  <div class="col-md-6 login-container" style="max-width: 100%">
     <h2 style="margin: auto">Description</h2>
     <br/>
     <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" [(ngModel)]="createRecipeDTO.name" class="form-control" id="name"
+      <h6 for="name">Name:</h6>
+      <input style="max-width: 50%" type="text" [(ngModel)]="createRecipeDTO.name" class="form-control" id="name"
              autocomplete="off" #name="ngModel" placeholder="{{createRecipeDTO.name}}" required>
       <div *ngIf="name.invalid" style="color: red">Required</div>
     </div>
-    <br/>
     <h2 style="margin: auto">Selection of characteristics</h2>
     <br/>
     <div class="form-group">
       <div class="row">
         <div class="col">
-          <label for="minute">Difficulty:</label>
-          <br/>
+          <h6 for="minute">Difficulty:</h6>
           <div class="form-check form-check-inline">
             <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
                    name="exampleRadios" id="exampleRadios1" value="EASY" #difficulty="ngModel" required>
@@ -47,7 +45,7 @@
           <div *ngIf="difficulty.invalid" style="color: red">Required</div>
         </div>
         <div class="col">
-          <label for="minute">Minutes:</label>
+          <h6 for="minute">Minutes:</h6>
           <input style="width: 100px" type="text" name="minute" [(ngModel)]="createRecipeDTO.cookingTime"
                  class="form-control"
                  id="minute"
@@ -60,8 +58,7 @@
     <div class="form-group">
       <div class="row">
         <div class="col">
-          <label for="minute">Category:</label>
-          <br/>
+          <h6 for="minute">Category:</h6>
           <div class="form-check form-check-inline" *ngFor="let category of categories">
             <input (change)="checkArray(category)" class="form-check-input" type="checkbox"
                    id="inlineCheckbox1" value="{{category.name}}" name="check">
@@ -71,10 +68,8 @@
       </div>
     </div>
     <h5>Photo:</h5>
-    <br/>
     <img height="100" weight="100" [src]="createRecipeDTO.imgSource" *ngIf="createRecipeDTO.imgSource !=null">
     <h5>New Photo:</h5>
-    <br/>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
@@ -88,7 +83,7 @@
     <div>
       <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
     </div>
-    <button class="btn btn-success"
+    <button style="width: 300px" class="btn btn-success"
             (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
               createRecipeDTO.cookingTime)">
       Continue
@@ -136,13 +131,13 @@
   <div class="form-group">
     <div class="row">
       <div class="col">
-        <label for="name">Ingredient name:</label>
+        <h6 for="name">Ingredient name:</h6>
         <select class="custom-select" id="ingredientName" [(ngModel)]="ingredient.name">
           <option *ngFor="let ingredient of allIngredients" value="{{ingredient.name}}">{{ingredient.name}}</option>
         </select>
       </div>
       <div class="col">
-        <label for="name">Amount:</label>
+        <h6 for="name">Amount:</h6>
         <input type="text" name="amount"
                class="form-control"
                id="amount"
@@ -150,13 +145,13 @@
                [(ngModel)]="ingredient.amount">
       </div>
       <div class="col">
-        <label for="name">Unit:</label>
+        <h6 for="name">Unit:</h6>
         <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit">
           <option *ngFor="let u of unit" value="{{u}}">{{u}}</option>
         </select>
       </div>
       <div class="col">
-        <label for="name">Note:</label>
+        <h6 for="name">Note:</h6>
         <input type="text" name="note"
                class="form-control"
                id="note"
@@ -172,10 +167,7 @@
       </div>
     </div>
   </div>
-
-  <div class="col-md-6 login-container">
-    <button type="submit" (click)="toCooking()" class="btn btn-success ">Continue</button>
-  </div>
+  <button style="width: 300px" type="submit" (click)="toCooking()" class="btn btn-success ">Continue</button>
 </div>
 
 <div [hidden]="!third" id="third" class="container-fluid">
@@ -192,7 +184,7 @@
       <button class="btn btn-primary btn-lg btn-block">Cooking</button>
     </li>
   </ul>
-  <div class="col-md-6 login-container">
+  <div class="col-md-6 login-container" style="max-width: 100%">
     <h2 style="margin: auto">Cooking</h2>
     <br/>
     <table class="table table-bordered table-striped">
@@ -219,14 +211,15 @@
     </table>
 
     <div class="form-group">
-      <label>Name of cooking step:</label>
+      <h6>Name of cooking step:</h6>
       <input type="text" name="s.name" [(ngModel)]="cookingStep.name" class="form-control" autocomplete="off">
     </div>
     <div class="form-group">
-      <label>Description:</label>
+      <h6>Description:</h6>
       <textarea name="s.description" class="form-control" [(ngModel)]="cookingStep.description"
                 autocomplete="off"></textarea>
     </div>
+    <h6>Photo:</h6>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
@@ -240,13 +233,16 @@
     <div>
       <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
     </div>
-    <button type="submit" class="btn btn-success"
-            (click)="addCookingStep(cookingStep.name,cookingStep.description,cookingSteps.length)">Add
-      cooking step +
-    </button>
+    <div>
+      <button type="submit" class="btn btn-success"
+              (click)="addCookingStep(cookingStep.name,cookingStep.description,cookingSteps.length)">Add
+        cooking step +
+      </button>
+    </div>
+
     <br/>
     <form (ngSubmit)="onSubmit()">
-      <button type="submit" class="btn btn-success">Edit recipe</button>
+      <button style="width: 300px" type="submit" class="btn btn-success">Edit recipe</button>
     </form>
   </div>
 </div>

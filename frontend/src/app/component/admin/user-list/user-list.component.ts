@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../../../model/user";
 import {UserService} from "../../../service/user.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -17,13 +18,23 @@ export class UserListComponent implements OnInit {
   secondDiv = false;
   thirdDiv = false;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
     this.userService.findAll().subscribe(data => {
       this.users = data;
     });
+  }
+
+  toAdmin() {
+    this.router.navigate(['admin']);
+  }
+
+  toView() {
+    this.firstDiv = true;
+    this.secondDiv = false;
+    this.thirdDiv = false;
   }
 
   add() {

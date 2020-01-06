@@ -1,185 +1,188 @@
-<div [hidden]="!first" id="first" class="container-fluid">
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <button class="btn btn-primary btn-lg btn-block">Search by name</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="byIngredients()">Search by ingredients</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="byRecipes()">Search by recipes</button>
-    </li>
-  </ul>
-  <div class="input-group mb-6 div">
-    <input type="text" class="form-control" placeholder="Search by recipe name" aria-label="Recipient's username"
-           aria-describedby="button-addon2" [(ngModel)]="recipe.name">
-    <div class="input-group-append divChild">
-      <button class="btn btn-outline-primary" type="button" id="button-addon1" (click)="searchByName(recipe.name)">
-        Search
-      </button>
-    </div>
-    <input type="text" class="form-control divChild" placeholder="Search by author name"
-           aria-label="Recipient's username"
-           aria-describedby="button-addon2"
-           id="authorName" [(ngModel)]="author.login">
-    <div class="input-group-append divChild">
-      <button class="btn btn-outline-primary" type="button" id="button-addon2"
-              (click)="searchByAuthorName(author.login)">Search
-      </button>
+<div class="resultDiv">
+  <div [hidden]="!first" id="first" class="container-fluid">
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <button class="btn btn-primary btn-lg btn-block">Search by name</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="byIngredients()">Search by ingredients</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="byRecipes()">Search by recipes</button>
+      </li>
+    </ul>
+    <div class="input-group mb-6 div">
+      <input type="text" class="form-control divChild" placeholder="Search by recipe name"
+             aria-label="Recipient's username"
+             aria-describedby="button-addon2" [(ngModel)]="recipe.name">
+      <div class="input-group-append divChild">
+        <button class="btn btn-outline-primary" type="button" id="button-addon1" (click)="searchByName(recipe.name)">
+          Search
+        </button>
+      </div>
+      <input type="text" class="form-control divChild" placeholder="Search by author name"
+             aria-label="Recipient's username"
+             aria-describedby="button-addon2"
+             id="authorName" [(ngModel)]="author.login">
+      <div class="input-group-append divChild">
+        <button class="btn btn-outline-primary" type="button" id="button-addon2"
+                (click)="searchByAuthorName(author.login)">Search
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
-<div [hidden]="!second" id="second" class="container-fluid">
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="byName()">Search by name</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-primary btn-lg btn-block">Search by ingredients</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="byRecipes()">Search by recipes</button>
-    </li>
-  </ul>
-  <div class="card border-primary mb-3" style="width: 100%">
-    <div class="card-header">Selected ingredients:</div>
-    <div class="card-body text-primary">
-      <div class="div">
-        <ul *ngFor="let i of ingredientNameDTOS" class="divChild">
-          <li>
-            <button class="btn btn-light border">{{i.name}}</button>
-            <button class="btn btn-outline-danger border" (click)="deleteFromCart(i.name)">x</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div>
-    <label>You can select ingredient from this droplist:</label>
-    <select (change)="addToCart(ingredient.name)" class="selectpicker" data-live-search="true"
-            [(ngModel)]="ingredient.name" id="select">
-      <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
-              value="{{ingredient.name}}">{{ingredient.name}}</option>
-    </select>
-    <button class="divChild btn btn-danger" (click)="clearAll()">Clear all ingredients from card</button>
-  </div>
-  <div class="div">
-    <div id="outer" class="divChild" *ngFor="let type of keys">
-      <button type="button" (click)="findIngredientByType(type)" class="btn btn-info">{{type}}</button>
-    </div>
-  </div>
-  <div [hidden]="!typeDiv" class="div">
-    <div class="divChild" *ngFor="let ingredient of typeIngredients">
-      <div>
-        <input (change)="addSelectIngredient(ingredient)" type="checkbox"
-               id="inlineCheckbox1" value="{{ingredient.name}}" name="check" [(ngModel)]="ingredient.checked">
-        <label for="inlineCheckbox1">{{ingredient.name}}</label>
-      </div>
-    </div>
-  </div>
-  <div>
-    <button class="btn btn-success divChild" type="button" id="button-addon3"
-            (click)="searchByIngredients()">Search
-    </button>
-  </div>
-</div>
-
-<div [hidden]="!third" id="third" class="container-fluid">
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="byName()">Search by name</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="byIngredients()">Search by ingredients</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-primary btn-lg btn-block">Search by recipes</button>
-    </li>
-  </ul>
-  <div class="card bg-light mb-3" style="max-width: 100%;">
-    <div class="card-header">Parameters</div>
-    <div class="card-body">
-      <label>Cooking Time:</label>
-      <br/>
-      <div class="form-check form-check-inline">
-        <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
-               name="exampleRadios" id="exampleRadios1" value="10">
-        <label class="form-check-label" for="exampleRadios1">less than 10 minutes</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
-               name="exampleRadios" id="exampleRadios2" value="30">
-        <label class="form-check-label" for="exampleRadios2">less than 30 minutes</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
-               name="exampleRadios" id="exampleRadios3" value="60">
-        <label class="form-check-label" for="exampleRadios3">less than 1 hour</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
-               name="exampleRadios" id="exampleRadios4" value="1440">
-        <label class="form-check-label" for="exampleRadios3">more than 1 hour</label>
-      </div>
-      <br/>
-      <label>Cooking Difficulty:</label>
-      <br/>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox"
-               id="Checkbox1" value="EASY" name="check">
-        <label class="form-check-label" for="inlineCheckbox1">EASY</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox"
-               id="Checkbox2" value="MEDIUM" name="check">
-        <label class="form-check-label" for="inlineCheckbox1">MEDIUM</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox"
-               id="Checkbox3" value="HARD" name="check">
-        <label class="form-check-label" for="inlineCheckbox1">HARD</label>
-      </div>
-    </div>
-  </div>
-  <div>
-    <button class="btn btn-success divChild" type="button"
-            (click)="searchByData(recipeData.cookingTime)">Search
-    </button>
-  </div>
-</div>
-
-<div [hidden]="!recipeDiv" id="recipeDiv" class="container">
-  <div class="card mb-3 card-columns" style="max-width: 600px;" *ngFor="let recipe of recipes">
-    <div class="row no-gutters" *ngIf="recipe.name != null">
-      <div class="col-md-4">
-        <img height="200" weight="200" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null" class="card-img">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ recipe.name }}</h5>
-          <p class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</p>
-          <p class="card-text">Time:{{ recipe.cookingTime }} minutes</p>
-          <label class="card-text">Like:{{ recipe.positiveVotes }}</label>
-          <label class="card-text">Dislike:{{ recipe.negativeVotes }}</label>
-          <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
-            <button type="submit" class="btn btn-primary">View</button>
-          </form>
-          <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+  <div [hidden]="!second" id="second" class="container-fluid">
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="byName()">Search by name</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary btn-lg btn-block">Search by ingredients</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="byRecipes()">Search by recipes</button>
+      </li>
+    </ul>
+    <div class="card border-primary mb-3" style="width: 100%">
+      <div class="card-header">Selected ingredients:</div>
+      <div class="card-body text-primary">
+        <div class="div">
+          <ul *ngFor="let i of ingredientNameDTOS" class="divChild">
+            <li>
+              <button class="btn btn-light border">{{i.name}}</button>
+              <button class="btn btn-outline-danger border" (click)="deleteFromCart(i.name)">x</button>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-    <div *ngIf="recipe.name == null">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="error-template">
-              <h1>
-                Oops!</h1>
-              <h2>
-                Recipes Not Found</h2>
-              <div class="error-details">
-                There are no results for the given parameters, check the parameters and try again
+    <div>
+      <label>You can select ingredient from this droplist:</label>
+      <select (change)="addToCart(ingredient.name)" class="selectpicker" data-live-search="true"
+              [(ngModel)]="ingredient.name" id="select">
+        <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
+                value="{{ingredient.name}}">{{ingredient.name}}</option>
+      </select>
+      <button class="divChild btn btn-danger" (click)="clearAll()">Clear all ingredients from card</button>
+    </div>
+    <div class="div">
+      <div id="outer" class="divChild" *ngFor="let type of keys">
+        <button type="button" (click)="findIngredientByType(type)" class="btn btn-info">{{type}}</button>
+      </div>
+    </div>
+    <div [hidden]="!typeDiv" class="div">
+      <div class="divChild" *ngFor="let ingredient of typeIngredients">
+        <div>
+          <input (change)="addSelectIngredient(ingredient)" type="checkbox"
+                 id="inlineCheckbox1" value="{{ingredient.name}}" name="check" [(ngModel)]="ingredient.checked">
+          <label for="inlineCheckbox1">{{ingredient.name}}</label>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-success divChild" type="button" id="button-addon3"
+              (click)="searchByIngredients()">Search
+      </button>
+    </div>
+  </div>
+
+  <div [hidden]="!third" id="third" class="container-fluid">
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="byName()">Search by name</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="byIngredients()">Search by ingredients</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary btn-lg btn-block">Search by recipes</button>
+      </li>
+    </ul>
+    <div class="card bg-light mb-3" style="max-width: 100%;">
+      <div class="card-header">Parameters</div>
+      <div class="card-body">
+        <label>Cooking Time:</label>
+        <br/>
+        <div class="form-check form-check-inline">
+          <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
+                 name="exampleRadios" id="exampleRadios1" value="10">
+          <label class="form-check-label" for="exampleRadios1">less than 10 minutes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
+                 name="exampleRadios" id="exampleRadios2" value="30">
+          <label class="form-check-label" for="exampleRadios2">less than 30 minutes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
+                 name="exampleRadios" id="exampleRadios3" value="60">
+          <label class="form-check-label" for="exampleRadios3">less than 1 hour</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
+                 name="exampleRadios" id="exampleRadios4" value="1440">
+          <label class="form-check-label" for="exampleRadios3">more than 1 hour</label>
+        </div>
+        <br/>
+        <label>Cooking Difficulty:</label>
+        <br/>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox"
+                 id="Checkbox1" value="EASY" name="check">
+          <label class="form-check-label" for="inlineCheckbox1">EASY</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox"
+                 id="Checkbox2" value="MEDIUM" name="check">
+          <label class="form-check-label" for="inlineCheckbox1">MEDIUM</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox"
+                 id="Checkbox3" value="HARD" name="check">
+          <label class="form-check-label" for="inlineCheckbox1">HARD</label>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-success divChild" type="button"
+              (click)="searchByData(recipeData.cookingTime)">Search
+      </button>
+    </div>
+  </div>
+
+  <div [hidden]="!recipeDiv" id="recipeDiv" class="container-fluid">
+    <div class="card mb-3 card-columns recipe" *ngFor="let recipe of recipes">
+      <div class="row no-gutters" *ngIf="recipe.name != null">
+        <div class="col-md-4">
+          <img height="250" weight="300" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null" class="card-img">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.name }}</h5>
+            <p class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</p>
+            <p class="card-text">Time:{{ recipe.cookingTime }} minutes</p>
+            <label class="card-text">Like:{{ recipe.positiveVotes }}</label>
+            <label class="card-text">Dislike:{{ recipe.negativeVotes }}</label>
+            <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
+              <button type="submit" class="btn btn-primary">View</button>
+            </form>
+            <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="recipe.name == null">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="error-template">
+                <h1>
+                  Oops!</h1>
+                <h2>
+                  Recipes Not Found</h2>
+                <div class="error-details">
+                  There are no results for the given parameters, check the parameters and try again
+                </div>
               </div>
             </div>
           </div>
@@ -188,4 +191,3 @@
     </div>
   </div>
 </div>
-
