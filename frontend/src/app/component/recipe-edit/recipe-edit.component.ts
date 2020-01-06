@@ -31,6 +31,12 @@ export class RecipeEditComponent implements OnInit {
   unit: String[] = [];
   allIngredients: Ingredient[];
 
+  selectedFile2: File[] = [];
+  imgURL2: any;
+
+  selectedFile: File = null;
+  imgURL: any;
+
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService) {
   }
@@ -135,10 +141,34 @@ export class RecipeEditComponent implements OnInit {
     step.description = description;
     step.number = number + 1;
     step.active = true;
+    step.imgSource = this.imgURL2;
     this.cookingSteps.push(step);
   }
 
+  handleFileInput2(event) {
+    console.log(event);
+    this.selectedFile2.push(event.target.files[0]);
+    // Below part is used to display the selected image
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event2) => {
+      this.imgURL2 = reader.result;
+    }
+  }
+
+  handleFileInput(event) {
+    console.log(event);
+    this.selectedFile = event.target.files[0];
+    // Below part is used to display the selected image
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event2) => {
+      this.imgURL = reader.result;
+    }
+  }
+
   onSubmit() {
+    let y = -1;
     let date: Date = new Date();
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
@@ -151,19 +181,43 @@ export class RecipeEditComponent implements OnInit {
       this.createRecipeDTO.cookingTime != null &&
       this.createRecipeDTO.name != null &&
       this.createRecipeDTO.cookingDifficulty != null) {
+      if (this.imgURL2 != undefined) {
+        for (let i = 0; i < this.cookingSteps.length; i++) {
+          if (this.cookingSteps[i].imgSource != null) {
+            if (this.cookingSteps[i].imgSource.length > 1000) {
+              this.cookingSteps[i].imgSource = "pic";
+            }
+          }
+        }
+        this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
+      }
       this.recipeService.update(this.createRecipeDTO.id, this.createRecipeDTO).subscribe(data => {
-        this.recipeService.getById(sessionStorage.getItem('recipe')).subscribe(data => {
           this.createRecipeDTO = data;
+          if (this.imgURL != undefined) {
+            this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile);
+          }
+          if (this.imgURL2 != undefined) {
+            for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
+              if (this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource != null &&
+                this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource == "pic") {
+                this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id,
+                  this.selectedFile2[y += 1]);
+              }
+            }
+          }
           this.first = true;
           this.second = false;
           this.third = false;
-        })
-      });
+        }
+      );
+
       //this.router.navigate(['recipe']);
-      window.alert("Recipe is updated!")
+      window.alert(
+        "Recipe is updated!"
+      );
+      window.location.reload();
     } else {
-      window.alert("Please fill in all fields!")
+      window.alert("Please fill in all fields!");
     }
   }
-
 }

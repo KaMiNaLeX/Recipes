@@ -37,8 +37,8 @@ export class RecipeService {
     return this.http.delete(`${this.baseUrl}/delete/${id}`, {responseType: 'text'});
   }
 
-  public update(id: string, recipeData: any): Observable<Object> {
-    return this.http.put(`${this.baseUrl}/updateRecipe/${id}`, recipeData);
+  public update(id: string, recipeData: any): Observable<CreateRecipeDTO> {
+    return this.http.put<CreateRecipeDTO>(`${this.baseUrl}/updateRecipe/${id}`, recipeData);
   }
 
   public getByName(name: string): Observable<Recipe[]> {
