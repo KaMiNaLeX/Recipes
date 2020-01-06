@@ -9,7 +9,6 @@ import {CookingStepRecipeDTO} from "../../model/createRecipe/cooking-step-recipe
 import {IngredientService} from "../../service/ingredient.service";
 import {Ingredient} from "../../model/ingredient";
 import {Unit} from "../../model/unit.enum";
-import {Recipe} from "../../model/recipe";
 
 @Component({
   selector: 'app-recipe-add',
@@ -145,6 +144,14 @@ export class RecipeAddComponent implements OnInit {
   }
 
   onSubmit() {
+    let stepTable = (<HTMLTableElement>document.getElementById('stepTable')).rows.length;
+    if (stepTable == 1) {
+      window.alert('Add at least one step');
+    }
+    let ingTable = (<HTMLTableElement>document.getElementById('ingredientTable')).rows.length;
+    if (ingTable == 1) {
+      window.alert('Add at least one ingredient');
+    }
     this.createRecipeDTO.imgSource = null;
     let date: Date = new Date();
     for (let i = 0; i < this.cookingSteps.length; i++) {
