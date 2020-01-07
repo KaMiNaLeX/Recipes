@@ -74,4 +74,14 @@ public class UserRestController {
         return userService.updateUser(uuid, userDTO);
     }
 
+    @PutMapping("/checkPass/{id}")
+    public Boolean checkPass(@PathVariable("id") UUID uuid, @RequestBody String pass) {
+        return userService.checkPassword(uuid, pass);
+    }
+
+    @PutMapping("/savePass/{id}")
+    public void savePass(@PathVariable("id") UUID uuid, @RequestBody String pass) {
+        userService.savePassword(uuid, pass);
+    }
+
 }

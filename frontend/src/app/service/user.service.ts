@@ -41,4 +41,12 @@ export class UserService {
   update(id: string, userData: any): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/${id}`, userData);
   }
+
+  checkPass(id: string, userData: string): Observable<Boolean> {
+    return this.http.put<Boolean>(`${this.baseUrl}/checkPass/${id}`, userData);
+  }
+
+  savePass(id: string, userData: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/savePass/${id}`, userData);
+  }
 }

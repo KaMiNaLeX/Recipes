@@ -123,7 +123,6 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         try {
             UserEntity newUserEntity = userRepository.getById(uuid);
             map(userDTO, newUserEntity);
-            newUserEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             map(userRepository.save(newUserEntity), userDTO);
             return userDTO;
         } catch (Exception e) {
@@ -139,6 +138,20 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         UserDTO userDTO = new UserDTO();
         map(userEntity, userDTO);
         return userDTO;
+    }
+
+    @Override
+    public Boolean checkPassword(UUID uuid, String pass) {
+        UserEntity userEntity = userRepository.getById(uuid);
+        return passwordEncoder.matches(pass, userEntity.getPassword());
+    }
+
+    @Override
+    @Transactional
+    public void savePassword(UUID uuid, String pass) {
+        UserEntity userEntity = userRepository.getById(uuid);
+        userEntity.setPassword(passwordEncoder.encode(pass));
+        userRepository.save(userEntity);
     }
 
     @Override

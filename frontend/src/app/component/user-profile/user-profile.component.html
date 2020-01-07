@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <h2>Edit User</h2>
   <br/>
-  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()" style="max-width: 70%">
     <div hidden="hidden" class="form-group">
       <input type="text" formControlName="id" placeholder="id" name="id" class="form-control" id="id"
              readonly="true">
@@ -39,8 +39,39 @@
     <div hidden="hidden" class="form-group">
       <h6 for="password">Password:</h6>
       <input type="password" formControlName="password" placeholder="" name="password" class="form-control"
-             id="password" >
+             id="password" readonly>
     </div>
     <button [disabled]="!editForm.valid" style="width: 300px" type="submit" class="btn btn-success">Update</button>
   </form>
+  <div *ngIf="checkDiv">
+    <div class="form-group" style="max-width: 70%">
+      <h6 for="lastName">Old password:</h6>
+      <input type="password" class="form-control" id="oldPass" [(ngModel)]="oldPass" #old="ngModel" required>
+      <div *ngIf="old.invalid" style="color: red">Required</div>
+      <button [disabled]="old.invalid" type="button" class="btn btn-success" (click)="checkPass()">Check Password
+      </button>
+    </div>
+  </div>
+  <div *ngIf="passDiv">
+    <div class="form-group" style="max-width: 70%">
+      <h6 for="lastName">New password:</h6>
+      <input type="password" class="form-control" id="newPass" [(ngModel)]="newPass" #newPass2="ngModel" required
+             pattern="[a-z]{5,}">
+      <div *ngIf="newPass2.invalid" style="color: red">Required</div>
+    </div>
+    <div class="form-group" style="max-width: 70%">
+      <h6 for="lastName">Confirm new password:</h6>
+      <input type="password" class="form-control" id="confirmPass" (change)="comparison()" [(ngModel)]="confPass"
+             #conf="ngModel" required pattern="[a-z]{5,}">
+      <div *ngIf="conf.invalid" style="color: red">Required</div>
+    </div>
+    <button [disabled]="newPass2.invalid || conf.invalid" id="save" type="button" class="btn btn-success"
+            (click)="savePass()">Save
+      Password
+    </button>
+  </div>
+  <button *ngIf="button" type="button" class="btn btn-primary" (click)="changePass()">Change
+    Password
+  </button>
+  <br/>
 </div>

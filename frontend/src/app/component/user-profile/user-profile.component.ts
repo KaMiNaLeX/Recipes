@@ -14,6 +14,14 @@ export class UserProfileComponent implements OnInit {
 
   user: User;
   editForm: FormGroup;
+  passDiv = false;
+  checkDiv = false;
+  oldPass = null;
+  newPass = null;
+  confPass = null;
+  invalid = false;
+  check: Boolean = false;
+  button = true;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
   }
@@ -38,6 +46,50 @@ export class UserProfileComponent implements OnInit {
         this.editForm.setValue(data);
       });
   }
+
+  comparison() {
+    if (this.newPass != this.confPass) {
+      window.alert('Passwords dont match');
+      (<HTMLButtonElement>document.getElementById('save')).disabled = true;
+    }
+  }
+
+  changePass() {
+    this.checkDiv = true;
+    this.button = false;
+  }
+
+  checkPass() {
+    this.userService.checkPass(localStorage.getItem('id'), this.oldPass).subscribe(data => {
+      this.check = data;
+      if (this.check != true) {
+        window.alert("Wrong password");
+      } else {
+        this.passDiv = true;
+        this.checkDiv = false;
+      }
+    })
+  }
+
+  savePass() {
+    let email = window.localStorage.getItem("email");
+    this.userService.savePass(localStorage.getItem('id'), this.confPass).subscribe(data => {
+      this.userService.getByEmail(email)
+        .subscribe(data => {
+          this.editForm.setValue(data);
+        });
+    });
+    window.alert('Password is updated!');
+    this.passDiv = false;
+    this.checkDiv = false;
+    this.oldPass = null;
+    this.newPass = null;
+    this.confPass = null;
+    this.invalid = false;
+    this.check = false;
+    this.button = true;
+  }
+
 
   onSubmit() {
     let id = window.localStorage.getItem("id");

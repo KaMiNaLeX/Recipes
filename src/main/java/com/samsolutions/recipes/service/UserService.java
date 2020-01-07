@@ -53,4 +53,8 @@ public interface UserService {
     UserDTO updateUser(UUID uuid, UserDTO userDTO);
 
     UserDTO getByEmail(String email);
+
+    Boolean checkPassword(UUID uuid, String pass);
+
+    void savePassword(UUID uuid, String pass);
 }
