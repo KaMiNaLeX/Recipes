@@ -250,7 +250,7 @@
     </div>
 
     <br/>
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
       <button [disabled]="name.invalid || difficulty.invalid || minutes.invalid"
               style="width: 300px" type="submit" class="btn btn-success">Edit recipe
       </button>

@@ -28,7 +28,13 @@ public class FavoritesRestController {
 
     @PostMapping("/create")
     public FavoriteDTO create(@RequestBody CreateFavoriteDTO favoriteDTO) {
-        return favoriteService.createDTO(favoriteDTO);
+        try {
+            return favoriteService.createDTO(favoriteDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
 
     @DeleteMapping("/delete/{id}")

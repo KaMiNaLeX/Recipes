@@ -201,11 +201,13 @@ export class RecipeEditComponent implements OnInit {
       }
       this.recipeService.update(this.createRecipeDTO.id, this.createRecipeDTO).subscribe(data => {
           this.createRecipeDTO = data;
+          console.log(this.createRecipeDTO.cookingStepRecipeDTOList[0].id);
           if (this.imgURL != undefined) {
             this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile);
           }
           if (this.imgURL2 != undefined) {
             for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
+              console.log(this.createRecipeDTO.cookingStepRecipeDTOList[i].id);
               if (this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource != null &&
                 this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource == "pic") {
                 this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id,

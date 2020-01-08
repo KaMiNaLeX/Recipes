@@ -84,21 +84,16 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     @Transactional
     public UserDTO createUser(UserDTO userDTO) {
-        try {
-            UserEntity saveUser = new UserEntity();
-            map(userDTO, saveUser);
-            saveUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            map(userRepository.save(saveUser), userDTO);
+        UserEntity saveUser = new UserEntity();
+        map(userDTO, saveUser);
+        saveUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        map(userRepository.save(saveUser), userDTO);
 
-            UserRoleEntity userRoleEntity = new UserRoleEntity();
-            userRoleEntity.setUserId(saveUser.getId());
-            userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
-            userRoleRepository.save(userRoleEntity);
-            return userDTO;
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return null;
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        userRoleEntity.setUserId(saveUser.getId());
+        userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
+        userRoleRepository.save(userRoleEntity);
+        return userDTO;
     }
 
     @Override
@@ -120,16 +115,10 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     @Transactional
     public UserDTO updateUser(UUID uuid, UserDTO userDTO) {
-        try {
-            UserEntity newUserEntity = userRepository.getById(uuid);
-            map(userDTO, newUserEntity);
-            map(userRepository.save(newUserEntity), userDTO);
-            return userDTO;
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return null;
-
+        UserEntity newUserEntity = userRepository.getById(uuid);
+        map(userDTO, newUserEntity);
+        map(userRepository.save(newUserEntity), userDTO);
+        return userDTO;
     }
 
     @Override

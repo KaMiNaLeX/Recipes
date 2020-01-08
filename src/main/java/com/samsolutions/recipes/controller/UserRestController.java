@@ -66,12 +66,22 @@ public class UserRestController {
 
     @PostMapping("/create")
     public UserDTO createUser(@RequestBody UserDTO userDTO) {
-        return userService.createUser(userDTO);
+        try {
+            return userService.createUser(userDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @PutMapping("/{id}")
     public UserDTO updateUser(@PathVariable("id") UUID uuid, @RequestBody UserDTO userDTO) {
-        return userService.updateUser(uuid, userDTO);
+        try {
+            return userService.updateUser(uuid, userDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @PutMapping("/checkPass/{id}")

@@ -60,13 +60,14 @@ export class RecipeService {
   public addPhoto4Step(stepId: string, file: File) {
     const data = new FormData();
     data.append('file', file);
+    console.log(data);
     fetch(`${this.baseUrl}/addPhoto4Step/${stepId}`, {
       method: 'POST',
       body: data
     }).then(r => {
 
     }).catch(r => {
-      alert(r);
+
     });
   }
 
@@ -78,8 +79,6 @@ export class RecipeService {
       body: data
     }).then(r => {
 
-    }).catch(r => {
-      alert(r);
-    });
+    })
   }
 }

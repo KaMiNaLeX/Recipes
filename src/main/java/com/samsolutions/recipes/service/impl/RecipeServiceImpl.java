@@ -228,7 +228,7 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
 
     @Override
     @Transactional
-    public CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) throws IOException {
+    public CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) {
         createRecipeDTO.setNegativeVotes(0);
         createRecipeDTO.setPositiveVotes(0);
         //save RecipeEntity

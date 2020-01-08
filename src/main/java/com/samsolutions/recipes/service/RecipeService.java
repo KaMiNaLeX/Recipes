@@ -34,7 +34,7 @@ public interface RecipeService {
 
     List<RecipeDTO> getByCategoryName(String categoryName);
 
-    CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) throws IOException;
+    CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO);
 
     CreateRecipeDTO getByRecipeId(UUID uuid);
 

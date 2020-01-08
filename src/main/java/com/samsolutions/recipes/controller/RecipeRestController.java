@@ -6,7 +6,6 @@ import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.service.CookingStepsService;
-import com.samsolutions.recipes.service.FileStorageService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -82,8 +81,13 @@ public class RecipeRestController {
 
     //@PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PostMapping("/createRecipe")
-    public CreateRecipeDTO createRecipeDTO(@RequestBody CreateRecipeDTO createRecipeDTO) throws IOException {
-        return recipeService.createRecipeDTO(createRecipeDTO);
+    public CreateRecipeDTO createRecipeDTO(@RequestBody CreateRecipeDTO createRecipeDTO) {
+        try {
+            return recipeService.createRecipeDTO(createRecipeDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @GetMapping("/id/{id}")
@@ -120,6 +124,7 @@ public class RecipeRestController {
     public CookingStepRecipeDTO createPhoto4Step(@PathVariable("id") UUID id, @RequestParam MultipartFile file) throws IOException {
         return cookingStepsService.savePhoto(id, file);
     }
+
     @PostMapping(value = "/addPhoto4Recipe/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public RecipeDTO createPhoto4Recipe(@PathVariable("id") UUID id, @RequestParam MultipartFile file) throws IOException {
         return recipeService.savePhoto(id, file);

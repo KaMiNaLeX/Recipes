@@ -44,12 +44,22 @@ public class IngredientRestController {
 
     @PostMapping("/create")
     public IngredientDTO createIngredient(@RequestBody IngredientDTO ingredient) {
-        return ingredientService.createIngredient(ingredient);
+        try {
+            return ingredientService.createIngredient(ingredient);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @PutMapping("/update/{id}")
     public IngredientDTO updateIngredient(@PathVariable("id") UUID uuid, @RequestBody IngredientDTO ingredient) {
-        return ingredientService.updateIngredient(uuid, ingredient);
+        try {
+            return ingredientService.updateIngredient(uuid, ingredient);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @DeleteMapping("/delete/{id}")

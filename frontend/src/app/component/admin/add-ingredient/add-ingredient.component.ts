@@ -13,6 +13,7 @@ export class AddIngredientComponent implements OnInit {
 
   ingredients: Ingredient[] = [];
   ingredient: Ingredient = new Ingredient();
+  returnIngredient: Ingredient = new Ingredient();
   firstDiv = true;
   secondDiv = false;
   thirdDiv = false;
@@ -51,14 +52,19 @@ export class AddIngredientComponent implements OnInit {
   addIngredient() {
     if (this.ingredient.name != null && this.ingredient.calories != null && this.ingredient.type != null) {
       this.ingredientService.create(this.ingredient).subscribe(data => {
-          this.ingredientService.findAll().subscribe(data => {
-            this.ingredients = data;
-          })
+          this.returnIngredient = data;
+          if (this.returnIngredient != null) {
+            this.ingredientService.findAll().subscribe(data => {
+              this.ingredients = data;
+            });
+            window.alert("Ingredient is created!");
+            this.firstDiv = true;
+            this.secondDiv = false;
+          } else {
+            window.alert("A ingredient with this name already exists!");
+          }
         }
       );
-      this.firstDiv = true;
-      this.secondDiv = false;
-      window.alert("Ingredient is created!");
     } else window.alert("Please, fill in all fields!");
   }
 
@@ -73,15 +79,19 @@ export class AddIngredientComponent implements OnInit {
   editIngredient() {
     if (this.ingredient.name != null && this.ingredient.calories != null && this.ingredient.type != null) {
       this.ingredientService.update(this.ingredient.id, this.ingredient).subscribe(data => {
-          this.ingredient = data;
-          this.ingredientService.findAll().subscribe(data => {
-            this.ingredients = data;
-          })
+          this.returnIngredient = data;
+          if (this.returnIngredient != null) {
+            this.ingredientService.findAll().subscribe(data => {
+              this.ingredients = data;
+            });
+            window.alert("Ingredient is updated!");
+            this.firstDiv = true;
+            this.thirdDiv = false;
+          } else {
+            window.alert("A ingredient with this name already exists!");
+          }
         }
       );
-      this.firstDiv = true;
-      this.thirdDiv = false;
-      window.alert("Category is updated!");
     } else window.alert("Please, fill in all fields!");
   }
 

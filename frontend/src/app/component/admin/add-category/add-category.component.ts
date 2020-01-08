@@ -12,6 +12,7 @@ export class AddCategoryComponent implements OnInit {
 
   categories: Category[] = [];
   category: Category = new Category();
+  returnCategory: Category = new Category();
   firstDiv = true;
   secondDiv = false;
   thirdDiv = false;
@@ -51,19 +52,26 @@ export class AddCategoryComponent implements OnInit {
   }
 
   addCategory() {
-    this.category.imgSource = " ";
     if (this.category.name != null && this.category.description != null && this.category.tag != null) {
       this.categoryService.create(this.category).subscribe(data => {
-          this.category = data;
-          this.categoryService.addPhoto4Category(this.category.id, this.selectedFile);
-          this.categoryService.findAll().subscribe(data => {
-            this.categories = data;
-          })
+          this.returnCategory = data;
+          if (this.returnCategory != null) {
+            if (this.selectedFile != null) {
+              this.returnCategory.imgSource = " ";
+              this.categoryService.addPhoto4Category(this.returnCategory.id, this.selectedFile);
+            }
+            window.alert("Category is created!");
+            this.categoryService.findAll().subscribe(data => {
+              this.categories = data;
+              this.firstDiv = true;
+              this.secondDiv = false;
+              window.location.reload();
+            })
+          } else {
+            window.alert("A category with this name already exists!");
+          }
         }
       );
-      this.firstDiv = true;
-      this.secondDiv = false;
-      window.alert("Category is created!");
     } else window.alert("Please, fill in all fields!");
   }
 
@@ -78,18 +86,23 @@ export class AddCategoryComponent implements OnInit {
   editCategory() {
     if (this.category.name != null && this.category.description != null && this.category.tag != null) {
       this.categoryService.update(this.category.id, this.category).subscribe(data => {
-          this.category = data;
-          if (this.imgURL2 != null) {
-            this.categoryService.addPhoto4Category(this.category.id, this.selectedFile2);
+          this.returnCategory = data;
+          if (this.returnCategory != null) {
+            if (this.imgURL2 != null) {
+              this.categoryService.addPhoto4Category(this.returnCategory.id, this.selectedFile2);
+            }
+            window.alert("Category is updated!");
+            this.categoryService.findAll().subscribe(data => {
+              this.categories = data;
+              this.firstDiv = true;
+              this.thirdDiv = false;
+              window.location.reload();
+            })
+          } else {
+            window.alert("A category with this name already exists!");
           }
-          this.categoryService.findAll().subscribe(data => {
-            this.categories = data;
-          })
         }
       );
-      this.firstDiv = true;
-      this.thirdDiv = false;
-      window.alert("Category is updated!");
     } else window.alert("Please, fill in all fields!");
   }
 

@@ -2,7 +2,6 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
-import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -51,12 +50,23 @@ public class CategoryRestController {
 
     @PostMapping("/create")
     public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO) {
-        return categoryService.createCategory(categoryDTO);
+        try {
+            return categoryService.createCategory(categoryDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @PutMapping("/update/{id}")
     public CategoryDTO updateCategory(@PathVariable("id") UUID uuid, @RequestBody CategoryDTO categoryDTO) {
-        return categoryService.updateCategory(uuid, categoryDTO);
+        try {
+            return categoryService.updateCategory(uuid, categoryDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
 
     @GetMapping("/findAll")

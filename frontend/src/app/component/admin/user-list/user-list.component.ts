@@ -13,6 +13,7 @@ export class UserListComponent implements OnInit {
 
   users: User[];
   user: User = new User();
+  returnUser: User = new User();
   showDeleteMessage = false;
   firstDiv = true;
   secondDiv = false;
@@ -46,14 +47,19 @@ export class UserListComponent implements OnInit {
     if (this.user.firstName != null && this.user.lastName != null && this.user.login != null &&
       this.user.email != null && this.user.password != null) {
       this.userService.create(this.user).subscribe(data => {
-          this.userService.findAll().subscribe(data => {
-            this.users = data;
-          })
+          this.returnUser = data;
+          if (this.returnUser != null) {
+            this.userService.findAll().subscribe(data => {
+              this.users = data;
+            });
+            window.alert("User is created!");
+            this.firstDiv = true;
+            this.secondDiv = false;
+          } else {
+            window.alert("User with this login or email already exists!");
+          }
         }
       );
-      this.firstDiv = true;
-      this.secondDiv = false;
-      window.alert("User is created!");
     } else window.alert("Please, fill in all fields!");
   }
 
@@ -86,15 +92,19 @@ export class UserListComponent implements OnInit {
     if (this.user.firstName != null && this.user.lastName != null && this.user.login != null &&
       this.user.email != null && this.user.password != null) {
       this.userService.update(this.user.id, this.user).subscribe(data => {
-          this.user = data;
-          this.userService.findAll().subscribe(data => {
-            this.users = data;
-          })
+          this.returnUser = data;
+          if (this.returnUser != null) {
+            this.userService.findAll().subscribe(data => {
+              this.users = data;
+            });
+            window.alert("User is updated!");
+            this.firstDiv = true;
+            this.thirdDiv = false;
+          } else {
+            window.alert("User with this login or email already exists!");
+          }
         }
       );
-      this.firstDiv = true;
-      this.thirdDiv = false;
-      window.alert("User is updated!");
     } else window.alert("Please, fill in all fields!");
   }
 
