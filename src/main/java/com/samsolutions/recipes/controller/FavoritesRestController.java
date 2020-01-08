@@ -1,7 +1,7 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.dto.RecipeDTO;
-import com.samsolutions.recipes.model.FavoriteEntity;
+import com.samsolutions.recipes.dto.FavoriteDTO;
+import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
 import com.samsolutions.recipes.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +27,8 @@ public class FavoritesRestController {
     private FavoriteService favoriteService;
 
     @PostMapping("/create")
-    public FavoriteEntity createStep(@RequestBody FavoriteEntity favoriteEntity) throws IOException {
-        return favoriteService.create(favoriteEntity);
+    public FavoriteDTO create(@RequestBody CreateFavoriteDTO favoriteDTO) {
+        return favoriteService.createDTO(favoriteDTO);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -38,7 +37,7 @@ public class FavoritesRestController {
     }
 
     @GetMapping("/{id}")
-    public List<RecipeDTO> getById(@PathVariable("id") UUID uuid) {
-        return favoriteService.getFavoritesById(uuid);
+    public List<FavoriteDTO> findAllByUserId(@PathVariable("id") UUID uuid) {
+        return favoriteService.findAllByUserId(uuid);
     }
 }

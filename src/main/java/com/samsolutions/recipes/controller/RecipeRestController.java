@@ -37,9 +37,6 @@ public class RecipeRestController {
     private RecipeService recipeService;
 
     @Autowired
-    private FileStorageService fileStorageService;
-
-    @Autowired
     private CookingStepsService cookingStepsService;
 
     @GetMapping("/")

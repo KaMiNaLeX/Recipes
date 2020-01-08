@@ -17,6 +17,8 @@ import java.util.UUID;
 @Repository
 public interface FavoriteRepository extends BaseRepository<FavoriteEntity> {
 
+    List<FavoriteEntity> findAllByUserId(UUID uuid);
+
     @Query(value = "SELECT r.name as " + RecipeDTO.NAME + ","
             + " r.cooking_difficulty as " + RecipeDTO.COOKINGDIFFICULTY + ","
             + " r.cooking_time as " + RecipeDTO.COOKINGTIME + ","
