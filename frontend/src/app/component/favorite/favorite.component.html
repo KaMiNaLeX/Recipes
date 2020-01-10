@@ -1,0 +1,53 @@
+<div class="resultDiv">
+  <div class="container-fluid">
+    <div class="card mb-3 card-columns recipe" *ngFor="let favorite of favorites">
+      <div class="row no-gutters" *ngIf="favorite.uuid != null">
+        <div class="col-md-4">
+          <img height="250" weight="300" [src]="favorite.recipeDTO.imgSource" *ngIf="favorite.recipeDTO.imgSource !=null" class="card-img">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ favorite.recipeDTO.name }}</h5>
+            <p class="card-text">Difficulty:{{ favorite.recipeDTO.cookingDifficulty }}</p>
+            <p class="card-text">Time:{{ favorite.recipeDTO.cookingTime }} minutes</p>
+            <label class="card-text">Like:{{ favorite.recipeDTO.positiveVotes }}</label>
+            <label class="card-text">Dislike:{{ favorite.recipeDTO.negativeVotes }}</label>
+            <div class="div">
+              <form class="divChild2" (ngSubmit)="view(favorite.recipeDTO.id)" #addToCartForm="ngForm">
+                <button type="submit" class="btn btn-primary">View</button>
+              </form>
+              <form class="divChild2" (ngSubmit)="deleteFromFavorite(favorite.uuid)">
+                <button type="submit" class="btn btn-danger">Delete from Favorites</button>
+              </form>
+            </div>
+            <p class="card-text"><small class="text-muted">Last updated {{ favorite.recipeDTO.lastModified }}</small></p>
+            <p class="card-text"><small class="text-muted">Added at {{ favorite.addedAt }}</small></p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="favorite.uuid == null">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="error-template">
+                <h1>
+                  Oops!</h1>
+                <h2>
+                  Recipes in favorites Not Found</h2>
+                <div class="error-details">
+                  No one has added recipes in favorites yet.You can add recipe right here right now!
+                </div>
+                <div class="error-actions">
+                  <button (click)="categories()" class="btn btn-primary btn-lg"><span
+                    class="glyphicon glyphicon-home"></span>
+                    Go to categories
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,9 +12,14 @@
             <p class="card-text">Time:{{ recipe.cookingTime }} minutes</p>
             <label class="card-text">Like:{{ recipe.positiveVotes }}</label>
             <label class="card-text">Dislike:{{ recipe.negativeVotes }}</label>
-            <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
-              <button type="submit" class="btn btn-primary">View</button>
-            </form>
+            <div class="div">
+              <form class="divChild2" (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
+                <button type="submit" class="btn btn-primary">View</button>
+              </form>
+              <form class="divChild2" (ngSubmit)="addToFavorite(recipe.id)">
+                <button type="submit" class="btn btn-warning">Add to Favorites</button>
+              </form>
+            </div>
             <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
           </div>
         </div>

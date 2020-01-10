@@ -48,6 +48,10 @@ export class AppComponent {
     this.router.navigate(['login']);
   }
 
+  favorite() {
+    this.router.navigate(['favorite']);
+  }
+
   recipes() {
     this.router.navigate(['recipe-author']);
   }

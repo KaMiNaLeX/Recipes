@@ -32,7 +32,7 @@ public class FavoriteServiceImpl implements FavoriteService, ModelMapperService 
     @Transactional
     public void removeById(UUID uuid) {
         FavoriteEntity favoriteEntity = favoriteRepository.getById(uuid);
-        favoriteRepository.removeById(favoriteEntity.getId());
+        favoriteRepository.delete(favoriteEntity);
     }
 
     @Override
@@ -57,6 +57,7 @@ public class FavoriteServiceImpl implements FavoriteService, ModelMapperService 
             RecipeDTO recipeDTO = recipeService.findByRecipeId(favoriteEntityList.get(i).getRecipeId());
             FavoriteDTO favoriteDTO = new FavoriteDTO();
             favoriteDTO.setRecipeDTO(recipeDTO);
+            favoriteDTO.setUuid(favoriteEntityList.get(i).getId());
             favoriteDTO.setAddedAt(favoriteEntityList.get(i).getAddedAt());
             favoriteDTOList.add(favoriteDTO);
         }

@@ -1,13 +1,12 @@
 package com.samsolutions.recipes.dto;
 
-import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
-import com.samsolutions.recipes.service.RecipeService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author kaminskiy.alexey
@@ -18,6 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FavoriteDTO {
+    private UUID uuid;
     private RecipeDTO recipeDTO;
     private Date addedAt = new Date();
 }

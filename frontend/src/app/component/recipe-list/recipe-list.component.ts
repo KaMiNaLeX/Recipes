@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {RecipeService} from "../../service/recipe.service";
 import {Recipe} from "../../model/recipe";
+import {FavoriteService} from "../../service/favorite.service";
+import {CreateFavorite} from "../../model/create-favorite";
+import {Favorite} from "../../model/favorite";
 
 @Component({
   selector: 'app-recipe-list',
@@ -14,8 +17,14 @@ export class RecipeListComponent implements OnInit {
   recipes: Recipe[];
   admin = false;
   author = false;
+  createFavorite: CreateFavorite = new CreateFavorite();
+  favorite: Favorite = new Favorite();
+  authenticated = false;
 
-  constructor(private router: Router, private recipeService: RecipeService) {
+  constructor(private router: Router, private recipeService: RecipeService, private favoriteService: FavoriteService) {
+    if (localStorage.getItem('token') != undefined) {
+      this.authenticated = true;
+    }
   }
 
   ngOnInit() {
@@ -33,15 +42,27 @@ export class RecipeListComponent implements OnInit {
   view(id: string) {
     sessionStorage.setItem('recipe', id);
     this.router.navigate(['recipe-view']);
-    window.alert(id);
+  }
+
+  addToFavorite(id: string) {
+    if (this.authenticated != false) {
+      this.createFavorite.recipeId = id;
+      this.createFavorite.userId = localStorage.getItem('id');
+      this.favoriteService.create(this.createFavorite).subscribe(data => {
+        this.favorite = data;
+        if (this.favorite == null) {
+          window.alert("This recipe is already in favorites!");
+        } else {
+          window.alert("Recipe add to favorites");
+        }
+      })
+    } else window.alert("You need to authenticated!")
+
   }
 
   addRecipe() {
     if (this.author != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
     } else window.alert("You need have AUTHOR or ADMIN role");
-
   }
-
-
 }

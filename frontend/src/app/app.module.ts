@@ -34,6 +34,7 @@ import { SearchComponent } from './component/search/search.component';
 import { AdminPanelComponent } from './component/admin/admin-panel/admin-panel.component';
 import { AddCategoryComponent } from './component/admin/add-category/add-category.component';
 import { AddIngredientComponent } from './component/admin/add-ingredient/add-ingredient.component';
+import { FavoriteComponent } from './component/favorite/favorite.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { AddIngredientComponent } from './component/admin/add-ingredient/add-ing
     SearchComponent,
     AdminPanelComponent,
     AddCategoryComponent,
-    AddIngredientComponent
+    AddIngredientComponent,
+    FavoriteComponent
   ],
   imports: [
     BrowserModule,

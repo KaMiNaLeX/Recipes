@@ -20,6 +20,11 @@
           <button class="btn btn-link" (click)="recipes()">My recipes</button>
         </li>
       </div>
+      <div *ngIf="authenticated">
+        <li class="nav-item">
+          <button class="btn btn-link" (click)="favorite()">Favorites</button>
+        </li>
+      </div>
       <li>
         <button type="button" class="btn btn-primary" (click)="addRecipe()">+ Add recipe</button>
       </li>

@@ -15,6 +15,7 @@ import {SearchComponent} from "./component/search/search.component";
 import {AdminPanelComponent} from "./component/admin/admin-panel/admin-panel.component";
 import {AddCategoryComponent} from "./component/admin/add-category/add-category.component";
 import {AddIngredientComponent} from "./component/admin/add-ingredient/add-ingredient.component";
+import {FavoriteComponent} from "./component/favorite/favorite.component";
 
 
 const routes: Routes = [
@@ -32,7 +33,8 @@ const routes: Routes = [
   {path: 'search', component: SearchComponent},
   {path: 'admin', component: AdminPanelComponent},
   {path: 'addCategory', component: AddCategoryComponent},
-  {path: 'addIngredient', component: AddIngredientComponent}
+  {path: 'addIngredient', component: AddIngredientComponent},
+  {path: 'favorite', component: FavoriteComponent}
 ];
 
 @NgModule({
