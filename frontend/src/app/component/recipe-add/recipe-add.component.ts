@@ -9,6 +9,7 @@ import {CookingStepRecipeDTO} from "../../model/createRecipe/cooking-step-recipe
 import {IngredientService} from "../../service/ingredient.service";
 import {Ingredient} from "../../model/ingredient";
 import {Unit} from "../../model/unit.enum";
+import {Recipe} from "../../model/recipe";
 
 @Component({
   selector: 'app-recipe-add',
@@ -29,6 +30,7 @@ export class RecipeAddComponent implements OnInit {
   cookingSteps: CookingStepRecipeDTO[] = [];
   unit = [];
   allIngredients: Ingredient[];
+  recipe: Recipe;
 
   selectedFile: File[] = [];
   imgURL: any;
@@ -57,6 +59,20 @@ export class RecipeAddComponent implements OnInit {
     this.first = true;
     this.second = false;
     this.third = false;
+  }
+
+  checkRecipe() {
+    let name = (<HTMLInputElement>document.getElementById('name')).value;
+    if (name != null) {
+      this.recipeService.getByNameAndAuthor(name, localStorage.getItem('id')).subscribe(data => {
+        this.recipe = data;
+        if (this.recipe != null) {
+          (<HTMLInputElement>document.getElementById('name')).value = null;
+          this.createRecipeDTO.name = null;
+          window.alert('You already have recipe with this name!');
+        }
+      })
+    }
   }
 
   toIngredient(name: string, difficulty: string, time: number) {

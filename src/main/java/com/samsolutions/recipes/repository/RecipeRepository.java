@@ -18,6 +18,8 @@ public interface RecipeRepository extends BaseRepository<RecipeEntity> {
 
     List<RecipeEntity> findAllByName(String name);
 
+    RecipeEntity getByNameAndAuthorId(String name, UUID uuid);
+
     List<RecipeEntity> findAllByCookingTimeBetween(int start, int end);
 
     List<RecipeEntity> findAllByCookingDifficulty(CookingDifficulty dif);

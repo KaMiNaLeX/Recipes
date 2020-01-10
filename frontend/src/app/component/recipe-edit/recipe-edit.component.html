@@ -17,7 +17,7 @@
     <br/>
     <div class="form-group">
       <h6 for="name">Name:</h6>
-      <input style="max-width: 50%" type="text" [(ngModel)]="createRecipeDTO.name" class="form-control" id="name"
+      <input (change)="checkRecipe()" style="max-width: 50%" type="text" [(ngModel)]="createRecipeDTO.name" class="form-control" id="name"
              autocomplete="off" #name="ngModel" placeholder="{{createRecipeDTO.name}}" required>
       <div *ngIf="name.invalid" style="color: red">Required</div>
     </div>

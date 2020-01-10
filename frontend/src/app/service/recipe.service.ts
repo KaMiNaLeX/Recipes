@@ -45,6 +45,10 @@ export class RecipeService {
     return this.http.get<Recipe[]>(`${this.baseUrl}/name/${name}`);
   }
 
+  public getByNameAndAuthor(name: string, id: string): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.baseUrl}/nameAndAuthor/${name}/${id}`);
+  }
+
   public getByAuthorName(name: string): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.baseUrl}/authorName/${name}`);
   }

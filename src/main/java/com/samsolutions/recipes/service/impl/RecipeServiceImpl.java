@@ -397,6 +397,14 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     }
 
     @Override
+    public RecipeDTO getByNameAuthorId(String name, UUID uuid) {
+        RecipeEntity recipeEntity = recipeRepository.getByNameAndAuthorId(name, uuid);
+        RecipeDTO recipeDTO = new RecipeDTO();
+        map(recipeEntity, recipeDTO);
+        return recipeDTO;
+    }
+
+    @Override
     public List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO) {
         List<RecipeEntity> recipeEntityList = new ArrayList<>();
         List<IngredientEntity> ingredientEntityList = new ArrayList<>();

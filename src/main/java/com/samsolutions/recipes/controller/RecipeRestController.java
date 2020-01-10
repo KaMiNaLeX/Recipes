@@ -110,6 +110,16 @@ public class RecipeRestController {
         return recipeService.findAllByName(name);
     }
 
+    @GetMapping("/nameAndAuthor/{name}/{authorId}")
+    public RecipeDTO getByNameAuthorId(@PathVariable("name") String name, @PathVariable("authorId") UUID uuid) {
+        try {
+            return recipeService.getByNameAuthorId(name, uuid);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     @PostMapping("/ingredientName")
     public List<RecipeDTO> findAllByIngredientName(@RequestBody IngredientNameListDTO ingredientNameList) throws IOException {
         return recipeService.findAllByIngredient(ingredientNameList);

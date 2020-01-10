@@ -44,6 +44,8 @@ public interface RecipeService {
 
     List<RecipeDTO> findAllByName(String name);
 
+    RecipeDTO getByNameAuthorId(String name, UUID uuid);
+
     List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO);
 
     List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO);

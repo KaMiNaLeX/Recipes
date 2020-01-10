@@ -8,6 +8,8 @@ import {Ingredient} from "../../model/ingredient";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CategoryService} from "../../service/category.service";
 import {IngredientService} from "../../service/ingredient.service";
+import {Recipe} from "../../model/recipe";
+import {Unit} from "../../model/unit.enum";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -28,8 +30,10 @@ export class RecipeEditComponent implements OnInit {
   checkedArray: CategoryRecipeDTO[] = [];
   cookingStep: CookingStepRecipeDTO = new CookingStepRecipeDTO();
   cookingSteps: CookingStepRecipeDTO[] = [];
-  unit: String[] = [];
+  unit = [];
   allIngredients: Ingredient[];
+  recipe: Recipe;
+  primaryName: String;
 
   selectedFile2: File[] = [];
   imgURL2: any;
@@ -43,9 +47,13 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit() {
     this.recipeService.getById(sessionStorage.getItem('recipe')).subscribe(
-      data => this.createRecipeDTO = data);
-
-    this.unit.push("PIECE", "GRAM", "MML", "KG", "L", "TEASPOON", "TABLESPOON", "CUP", "LEAF", "BY_TASTE");
+      data => {
+        this.createRecipeDTO = data;
+        this.primaryName = this.createRecipeDTO.name;
+      }
+    );
+    let u = Unit;
+    this.unit = Object.values(u);
     this.first = true;
     this.second = false;
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
@@ -72,6 +80,20 @@ export class RecipeEditComponent implements OnInit {
     this.first = true;
     this.second = false;
     this.third = false;
+  }
+
+  checkRecipe() {
+    let name = (<HTMLInputElement>document.getElementById('name')).value;
+    if (name != null && name != this.primaryName) {
+      this.recipeService.getByNameAndAuthor(name, localStorage.getItem('id')).subscribe(data => {
+        this.recipe = data;
+        if (this.recipe != null) {
+          (<HTMLInputElement>document.getElementById('name')).value = null;
+          this.createRecipeDTO.name = null;
+          window.alert('You already have recipe with this name!');
+        }
+      })
+    }
   }
 
   toIngredient(name: string, difficulty: string, time: number) {
