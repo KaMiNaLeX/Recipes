@@ -21,14 +21,16 @@
         </div>
         <div class="form-group">
           <h6 for="login">Login:</h6>
-          <input type="text" class="form-control" formControlName="login" id="login" autocomplete="off">
+          <input (change)="checkLogin()" type="text" class="form-control" formControlName="login" id="login"
+                 autocomplete="off">
           <div class="alert alert-danger" *ngIf="!registerForm.get('login').valid && registerForm.get('login').touched">
             Login is exists or required!
           </div>
         </div>
         <div class="form-group">
           <h6 for="email">Email:</h6>
-          <input type="email" class="form-control" formControlName="email" id="email" autocomplete="off">
+          <input (change)="checkEmail()" type="email" class="form-control" formControlName="email" id="email"
+                 autocomplete="off">
           <div class="alert alert-danger" *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">
             Email
             is not correct!
@@ -52,7 +54,8 @@
           <button style="width: 300px" type="submit" class="btn btn-success divChild2" [disabled]="!registerForm.valid">
             Registration
           </button>
-          <button style="width: 300px" type="button" class="btn btn-primary divChild2" (click)="loginPage()">Log in</button>
+          <button style="width: 300px" type="button" class="btn btn-primary divChild2" (click)="loginPage()">Log in
+          </button>
         </div>
       </div>
     </form>

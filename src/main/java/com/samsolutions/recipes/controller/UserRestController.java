@@ -36,7 +36,12 @@ public class UserRestController {
 
     @GetMapping("/email/{email}")
     public UserDTO getByEmail(@PathVariable("email") String email) {
-        return userService.getByEmail(email);
+        try {
+            return userService.getByEmail(email);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @GetMapping("/")
@@ -51,7 +56,12 @@ public class UserRestController {
 
     @GetMapping("/login/{login}")
     public UserDTO getByLogin(@PathVariable("login") String login) {
-        return userService.getByLogin(login);
+        try {
+            return userService.getByLogin(login);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @DeleteMapping("/delete/{login}")
