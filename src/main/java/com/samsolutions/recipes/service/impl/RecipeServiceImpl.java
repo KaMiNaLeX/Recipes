@@ -107,7 +107,6 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     }
 
     @Override
-    @Transactional
     public CreateRecipeDTO updateRecipe(UUID uuid, CreateRecipeDTO createRecipeDTO) throws IOException {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);
         createRecipeDTO.setId(updateEntity.getId());

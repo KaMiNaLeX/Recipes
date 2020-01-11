@@ -169,7 +169,6 @@ export class RecipeAddComponent implements OnInit {
       window.alert('Add at least one ingredient');
     }
     this.createRecipeDTO.imgSource = null;
-    let date: Date = new Date();
     for (let i = 0; i < this.cookingSteps.length; i++) {
       this.cookingSteps[i].imgSource = null;
     }
@@ -177,7 +176,6 @@ export class RecipeAddComponent implements OnInit {
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
     this.createRecipeDTO.categoryRecipeDTOList = this.checkedArray;
-    this.createRecipeDTO.lastModified = date;
     if (this.createRecipeDTO.cookingStepRecipeDTOList.length != 0 &&
       this.createRecipeDTO.ingredientRecipeDTOList.length != 0 &&
       this.createRecipeDTO.categoryRecipeDTOList.length != 0 &&

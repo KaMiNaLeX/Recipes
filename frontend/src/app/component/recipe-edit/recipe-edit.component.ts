@@ -199,12 +199,10 @@ export class RecipeEditComponent implements OnInit {
       window.alert('Add at least one ingredient');
     }
     let y = -1;
-    let date: Date = new Date();
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
     this.createRecipeDTO.categoryRecipeDTOList = this.checkedArray;
-    this.createRecipeDTO.lastModified = date;
     if (this.createRecipeDTO.cookingStepRecipeDTOList.length != 0 &&
       this.createRecipeDTO.ingredientRecipeDTOList.length != 0 &&
       this.createRecipeDTO.categoryRecipeDTOList.length != 0 &&
@@ -222,24 +220,29 @@ export class RecipeEditComponent implements OnInit {
         this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
       }
       this.recipeService.update(this.createRecipeDTO.id, this.createRecipeDTO).subscribe(data => {
-          this.createRecipeDTO = data;
-          console.log(this.createRecipeDTO.cookingStepRecipeDTOList[0].id);
-          if (this.imgURL != undefined) {
-            this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile);
-          }
-          if (this.imgURL2 != undefined) {
-            for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
-              console.log(this.createRecipeDTO.cookingStepRecipeDTOList[i].id);
-              if (this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource != null &&
-                this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource == "pic") {
-                this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id,
-                  this.selectedFile2[y += 1]);
+          this.recipeService.getById(this.createRecipeDTO.id).subscribe(data => {
+              this.createRecipeDTO = data;
+            console.log(this.createRecipeDTO.cookingStepRecipeDTOList[0].id);
+              if (this.imgURL != undefined) {
+                this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile);
               }
+              if (this.imgURL2 != undefined) {
+                for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
+                  console.log(this.createRecipeDTO.cookingStepRecipeDTOList[i].id);
+                  if (this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource != null &&
+                    this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource == "pic") {
+                    this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id,
+                      this.selectedFile2[y += 1]);
+                  }
+                }
+              }
+              this.first = true;
+              this.second = false;
+              this.third = false;
+              window.location.reload();
             }
-          }
-          this.first = true;
-          this.second = false;
-          this.third = false;
+          );
+
         }
       );
 
@@ -247,7 +250,6 @@ export class RecipeEditComponent implements OnInit {
       window.alert(
         "Recipe is updated!"
       );
-      window.location.reload();
     } else {
       window.alert("Please fill in all fields!");
     }

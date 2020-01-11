@@ -9,7 +9,7 @@ export class CreateRecipeDTO {
   cookingTime: number;
   positiveVotes: number;
   negativeVotes: number;
-  lastModified: Date = new Date();
+  lastModified: Date;
   authorId: string;
   imgSource: string;
   categoryRecipeDTOList: Array<CategoryRecipeDTO>;

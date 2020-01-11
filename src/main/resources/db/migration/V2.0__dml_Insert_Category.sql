@@ -1,7 +1,7 @@
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Asia kitchen', 'Dishes from Asia', 'Asia', null);
+values (unhex(replace(uuid(), '-', '')), 'Asian kitchen', 'Dishes from Asia', 'Asia', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
-values (unhex(replace(uuid(), '-', '')), 'Russia kitchen', 'Dishes from Russia', 'Russia', null);
+values (unhex(replace(uuid(), '-', '')), 'Russian kitchen', 'Dishes from Russia', 'Russia', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
 values (unhex(replace(uuid(), '-', '')), 'Salads', 'Salads', 'Vegetables', null);
 INSERT INTO CATEGORY (id, name, description, tag, img_source)
