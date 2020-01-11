@@ -20,6 +20,7 @@ export class RecipeListComponent implements OnInit {
   createFavorite: CreateFavorite = new CreateFavorite();
   favorite: Favorite = new Favorite();
   authenticated = false;
+  categoryName: string;
 
   constructor(private router: Router, private recipeService: RecipeService, private favoriteService: FavoriteService) {
     if (localStorage.getItem('token') != undefined) {
@@ -31,6 +32,7 @@ export class RecipeListComponent implements OnInit {
     this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName')).subscribe(data => {
       this.recipes = data;
     });
+    this.categoryName = sessionStorage.getItem('categoryName');
     let admin = localStorage.getItem('adminRole');
     this.admin = (admin == 'true');
 

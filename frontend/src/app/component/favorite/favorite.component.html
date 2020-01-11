@@ -1,5 +1,6 @@
 <div class="resultDiv">
   <div class="container-fluid">
+    <h3 style="margin: 20px auto;max-width: 800px;">Favorites recipes</h3>
     <div class="card mb-3 card-columns recipe" *ngFor="let favorite of favorites">
       <div class="row no-gutters" *ngIf="favorite.uuid != null">
         <div class="col-md-4">
@@ -8,12 +9,10 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{ favorite.recipeDTO.name }}</h5>
-            <p class="card-text">Difficulty:{{ favorite.recipeDTO.cookingDifficulty }}</p>
-            <p class="card-text">Time:{{ favorite.recipeDTO.cookingTime }} minutes</p>
-            <label class="card-text">Like:{{ favorite.recipeDTO.positiveVotes }}</label>
-            <label class="card-text">Dislike:{{ favorite.recipeDTO.negativeVotes }}</label>
+            <h6 class="card-text">Difficulty:{{ favorite.recipeDTO.cookingDifficulty }}</h6>
+            <h6 class="card-text">Time:{{ favorite.recipeDTO.cookingTime }} minutes</h6>
             <div class="div">
-              <form class="divChild2" (ngSubmit)="view(favorite.recipeDTO.id)" #addToCartForm="ngForm">
+              <form (ngSubmit)="view(favorite.recipeDTO.id)" #addToCartForm="ngForm">
                 <button type="submit" class="btn btn-primary">View</button>
               </form>
               <form class="divChild2" (ngSubmit)="deleteFromFavorite(favorite.uuid)">

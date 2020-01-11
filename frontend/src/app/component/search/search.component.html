@@ -59,12 +59,12 @@
     </div>
     <div>
       <label>You can select ingredient from this droplist:</label>
-      <select (change)="addToCart(ingredient.name)" class="selectpicker" data-live-search="true"
+      <select style="max-width: 300px" (change)="addToCart(ingredient.name)" class="custom-select" data-live-search="true"
               [(ngModel)]="ingredient.name" id="select">
         <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
                 value="{{ingredient.name}}">{{ingredient.name}}</option>
       </select>
-      <button class="divChild btn btn-danger" (click)="clearAll()">Clear all ingredients from card</button>
+      <button class="divChild2 btn btn-danger" (click)="clearAll()">Clear all ingredients from card</button>
     </div>
     <div class="div">
       <div id="outer" class="divChild" *ngFor="let type of keys">
@@ -81,7 +81,7 @@
       </div>
     </div>
     <div>
-      <button class="btn btn-success divChild" type="button" id="button-addon3"
+      <button style="width: 300px" class="btn btn-success divChild" type="button" id="button-addon3"
               (click)="searchByIngredients()">Search
       </button>
     </div>
@@ -102,53 +102,49 @@
     <div class="card bg-light mb-3" style="max-width: 100%;">
       <div class="card-header">Parameters</div>
       <div class="card-body">
-        <label>Cooking Time:</label>
-        <br/>
+        <h5>Cooking Time:</h5>
         <div class="form-check form-check-inline">
           <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
                  name="exampleRadios" id="exampleRadios1" value="10">
-          <label class="form-check-label" for="exampleRadios1">less than 10 minutes</label>
+          <h6 class="form-check-label" for="exampleRadios1">less than 10 minutes</h6>
         </div>
         <div class="form-check form-check-inline">
           <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
                  name="exampleRadios" id="exampleRadios2" value="30">
-          <label class="form-check-label" for="exampleRadios2">less than 30 minutes</label>
+          <h6 class="form-check-label" for="exampleRadios2">less than 30 minutes</h6>
         </div>
         <div class="form-check form-check-inline">
           <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
                  name="exampleRadios" id="exampleRadios3" value="60">
-          <label class="form-check-label" for="exampleRadios3">less than 1 hour</label>
+          <h6 class="form-check-label" for="exampleRadios3">less than 1 hour</h6>
         </div>
         <div class="form-check form-check-inline">
           <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
                  name="exampleRadios" id="exampleRadios4" value="1440">
-          <label class="form-check-label" for="exampleRadios3">more than 1 hour</label>
+          <h6 class="form-check-label" for="exampleRadios3">more than 1 hour</h6>
         </div>
         <br/>
-        <label>Cooking Difficulty:</label>
-        <br/>
+        <h5>Cooking Difficulty:</h5>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="checkbox"
                  id="Checkbox1" value="EASY" name="check">
-          <label class="form-check-label" for="inlineCheckbox1">EASY</label>
+          <h6 class="form-check-label" for="inlineCheckbox1">EASY</h6>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="checkbox"
                  id="Checkbox2" value="MEDIUM" name="check">
-          <label class="form-check-label" for="inlineCheckbox1">MEDIUM</label>
+          <h6 class="form-check-label" for="inlineCheckbox1">MEDIUM</h6>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="checkbox"
                  id="Checkbox3" value="HARD" name="check">
-          <label class="form-check-label" for="inlineCheckbox1">HARD</label>
+          <h6 class="form-check-label" for="inlineCheckbox1">HARD</h6>
         </div>
       </div>
     </div>
-    <div>
-      <button class="btn btn-success divChild" type="button"
+      <button style="width: 300px" class="btn btn-success" type="button"
               (click)="searchByData(recipeData.cookingTime)">Search
       </button>
-    </div>
   </div>
 
   <div [hidden]="!recipeDiv" id="recipeDiv" class="container-fluid">
@@ -160,12 +156,10 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{ recipe.name }}</h5>
-            <p class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</p>
-            <p class="card-text">Time:{{ recipe.cookingTime }} minutes</p>
-            <label class="card-text">Like:{{ recipe.positiveVotes }}</label>
-            <label class="card-text">Dislike:{{ recipe.negativeVotes }}</label>
+            <h6 class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</h6>
+            <h6 class="card-text">Time:{{ recipe.cookingTime }} minutes</h6>
             <div class="div">
-              <form class="divChild2" (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
+              <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
                 <button type="submit" class="btn btn-primary">View</button>
               </form>
               <form class="divChild2" (ngSubmit)="addToFavorite(recipe.id)">
