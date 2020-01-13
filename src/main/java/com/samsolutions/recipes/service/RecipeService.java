@@ -1,9 +1,11 @@
 package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
+import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -51,4 +53,6 @@ public interface RecipeService {
     List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO);
 
     RecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException;
+
+    UserDTO getAuthorName(String authorId);
 }

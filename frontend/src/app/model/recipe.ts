@@ -5,7 +5,8 @@ export class Recipe {
   cookingTime: number;
   positiveVotes: number;
   negativeVotes: number;
-  author_id: string;
+  authorId: string;
+  authorName:string;
   lastModified: Date = new Date();
   imgSource: string;
 }

@@ -12,6 +12,7 @@ export class CreateRecipeDTO {
   lastModified: Date;
   authorId: string;
   imgSource: string;
+  authorName:string;
   categoryRecipeDTOList: Array<CategoryRecipeDTO>;
   ingredientRecipeDTOList: Array<IngredientRecipeDTO>;
   cookingStepRecipeDTOList: Array<CookingStepRecipeDTO>;

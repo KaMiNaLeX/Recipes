@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FavoriteService} from "../../service/favorite.service";
 import {Favorite} from "../../model/favorite";
+import {User} from "../../model/user";
+import {RecipeService} from "../../service/recipe.service";
 
 @Component({
   selector: 'app-favorite',
@@ -13,12 +15,17 @@ export class FavoriteComponent implements OnInit {
   favorite: Favorite = new Favorite();
   favorites: Favorite[];
 
-  constructor(private router: Router, private favoriteService: FavoriteService) {
+  constructor(private router: Router, private favoriteService: FavoriteService, private recipeService: RecipeService) {
   }
 
   ngOnInit() {
     this.favoriteService.findAll(localStorage.getItem('id')).subscribe((data: Favorite[]) => {
       this.favorites = data;
+      for (let i = 0; i < this.favorites.length; i++) {
+        this.recipeService.getAuthorName(this.favorites[i].recipeDTO.authorId).subscribe((data: User) => {
+          this.favorites[i].recipeDTO.authorName = data.login;
+        })
+      }
     })
   }
 

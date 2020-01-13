@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
+import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
@@ -9,6 +10,7 @@ import com.samsolutions.recipes.service.CookingStepsService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -138,6 +140,11 @@ public class RecipeRestController {
     @PostMapping(value = "/addPhoto4Recipe/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public RecipeDTO createPhoto4Recipe(@PathVariable("id") UUID id, @RequestParam MultipartFile file) throws IOException {
         return recipeService.savePhoto(id, file);
+    }
+
+    @GetMapping("/authorName/id/{id}")
+    public UserDTO getAuthorName(@PathVariable("id") String authorId) {
+        return recipeService.getAuthorName(authorId);
     }
 
 }

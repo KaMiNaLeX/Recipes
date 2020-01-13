@@ -11,6 +11,7 @@
             <h5 class="card-title">{{ favorite.recipeDTO.name }}</h5>
             <h6 class="card-text">Difficulty:{{ favorite.recipeDTO.cookingDifficulty }}</h6>
             <h6 class="card-text">Time:{{ favorite.recipeDTO.cookingTime }} minutes</h6>
+            <h6 class="card-text">Author:{{ favorite.recipeDTO.authorName }}</h6>
             <div class="div">
               <form (ngSubmit)="view(favorite.recipeDTO.id)" #addToCartForm="ngForm">
                 <button type="submit" class="btn btn-primary">View</button>

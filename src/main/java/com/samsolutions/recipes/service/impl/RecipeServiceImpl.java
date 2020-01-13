@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
+import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
@@ -17,6 +18,7 @@ import com.samsolutions.recipes.model.Enum.CookingDifficulty;
 import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.model.RecipeEntity;
 import com.samsolutions.recipes.model.RecipeIngredientEntity;
+import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.repository.CategoryRecipeRepository;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.repository.CookingStepsRepository;
@@ -486,6 +488,14 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         RecipeDTO recipeDTO = new RecipeDTO();
         map(recipeRepository.save(recipeEntity), recipeDTO);
         return recipeDTO;
+    }
+
+    @Override
+    public UserDTO getAuthorName(String authorId) {
+        UserEntity userEntity = userRepository.getById(UUID.fromString(authorId));
+        UserDTO userDTO = new UserDTO();
+        map(userEntity, userDTO);
+        return userDTO;
     }
 
 

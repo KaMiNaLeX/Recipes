@@ -158,6 +158,7 @@
             <h5 class="card-title">{{ recipe.name }}</h5>
             <h6 class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</h6>
             <h6 class="card-text">Time:{{ recipe.cookingTime }} minutes</h6>
+            <h6 class="card-text">Author:{{ recipe.authorName }}</h6>
             <div class="div">
               <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
                 <button type="submit" class="btn btn-primary">View</button>

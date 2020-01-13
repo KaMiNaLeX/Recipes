@@ -76,12 +76,26 @@ export class SearchComponent implements OnInit {
   }
 
   searchByName(name: string) {
-    this.recipeService.getByName(name).subscribe(data => this.recipes = data);
+    this.recipeService.getByName(name).subscribe(data => {
+      this.recipes = data;
+      for (let i = 0; i < this.recipes.length; i++) {
+        this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+          this.recipes[i].authorName = data.login;
+        })
+      }
+    });
     this.recipeDiv = true;
   }
 
   searchByAuthorName(name: string) {
-    this.recipeService.getByAuthorName(name).subscribe(data => this.recipes = data);
+    this.recipeService.getByAuthorName(name).subscribe(data => {
+      this.recipes = data;
+      for (let i = 0; i < this.recipes.length; i++) {
+        this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+          this.recipes[i].authorName = data.login;
+        })
+      }
+    });
     this.recipeDiv = true;
   }
 
@@ -194,14 +208,28 @@ export class SearchComponent implements OnInit {
     this.recipeData.includeMeat = true;
     this.recipeData.cookingDifficultyDTOList = cookingDifficultyDTOList;
 
-    this.recipeService.findAllByData(this.recipeData).subscribe(data => this.recipes = data);
+    this.recipeService.findAllByData(this.recipeData).subscribe(data => {
+      this.recipes = data;
+      for (let i = 0; i < this.recipes.length; i++) {
+        this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+          this.recipes[i].authorName = data.login;
+        })
+      }
+    });
     this.recipeDiv = true;
   }
 
 
   searchByIngredients() {
     this.ingredientNameDTOList.ingredientNameDTOList = this.ingredientNameDTOS;
-    this.recipeService.findAllByIngredients(this.ingredientNameDTOList).subscribe(data => this.recipes = data);
+    this.recipeService.findAllByIngredients(this.ingredientNameDTOList).subscribe(data => {
+      this.recipes = data;
+      for (let i = 0; i < this.recipes.length; i++) {
+        this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+          this.recipes[i].authorName = data.login;
+        })
+      }
+    });
     this.recipeDiv = true;
   }
 }
