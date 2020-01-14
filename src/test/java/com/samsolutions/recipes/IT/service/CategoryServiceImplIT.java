@@ -1,19 +1,15 @@
-package com.samsolutions.recipes.service;
+package com.samsolutions.recipes.IT.service;
 
 import com.samsolutions.recipes.BaseTest;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.repository.CategoryRepository;
+import com.samsolutions.recipes.service.CategoryService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -29,11 +25,7 @@ public class CategoryServiceImplIT extends BaseTest {
 
     @Before
     public void setUp() {
-        CategoryEntity breakfast = new CategoryEntity();
-        breakfast.setName("Breakfast");
-        breakfast.setDescription("Dishes for breakfast");
-        breakfast.setTag("Healthy food,breakfast");
-        breakfast.setImgSource(null);
+        CategoryEntity breakfast = createCategory();
 
         Mockito.when(categoryRepository.getByName(breakfast.getName()))
                 .thenReturn(breakfast);
@@ -50,11 +42,7 @@ public class CategoryServiceImplIT extends BaseTest {
 
     @Test
     public void shouldAddOneCategory() {
-        CategoryEntity breakfast = new CategoryEntity();
-        breakfast.setName("Breakfast");
-        breakfast.setDescription("Dishes for breakfast");
-        breakfast.setTag("Healthy food,breakfast");
-        breakfast.setImgSource(null);
+        CategoryEntity breakfast = createCategory();
         categoryRepository.save(breakfast);
         when(categoryRepository.getByName(breakfast.getName())).thenReturn(breakfast);
         CategoryEntity found = categoryRepository.getByName(breakfast.getName());
@@ -65,11 +53,7 @@ public class CategoryServiceImplIT extends BaseTest {
 
     @Test
     public void shouldUpdateCategory() {
-        CategoryEntity breakfast = new CategoryEntity();
-        breakfast.setName("Breakfast");
-        breakfast.setDescription("Dishes for breakfast");
-        breakfast.setTag("Healthy food,breakfast");
-        breakfast.setImgSource(null);
+        CategoryEntity breakfast = createCategory();
         categoryRepository.save(breakfast);
 
         CategoryEntity updateCategory = categoryRepository.getByName("Breakfast");
@@ -102,6 +86,14 @@ public class CategoryServiceImplIT extends BaseTest {
     
      */
 
+    public CategoryEntity createCategory() {
+        CategoryEntity breakfast = new CategoryEntity();
+        breakfast.setName("Breakfast");
+        breakfast.setDescription("Dishes for breakfast");
+        breakfast.setTag("Healthy food,breakfast");
+        breakfast.setImgSource(null);
+        return breakfast;
+    }
 
     @TestConfiguration
     static class CategoryServiceImplTestContextConfiguration {
