@@ -6,18 +6,16 @@ import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.service.CategoryService;
 import org.junit.Test;
-import org.mockito.Mock;
-
-import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CategoryServiceTest extends BaseTest {
 
-    @Mock
+    @Autowired
     CategoryRepository categoryRepository;
 
-    @Mock
+    @Autowired
     CategoryService categoryService;
 
     @Test
@@ -28,7 +26,34 @@ public class CategoryServiceTest extends BaseTest {
         CategoryEntity found = categoryRepository.getByName(name);
         CategoryDTO categoryDTO2 = categoryService.getByName(name);
         assertThat(categoryDTO2.getName()).isEqualTo(found.getName());
+    }
 
+    @Test
+    public void addCategory() {
+        CategoryEntity breakfast = createCategory();
+        categoryRepository.save(breakfast);
+        CategoryDTO found = categoryService.getByName(breakfast.getName());
+
+        assertThat(found.getName())
+                .isEqualTo(breakfast.getName());
+    }
+
+    @Test
+    public void shouldUpdateCategory() {
+        CategoryEntity breakfast = createCategory();
+        categoryRepository.save(breakfast);
+        CategoryDTO categoryDTO = createCategoryDTO();
+        categoryService.updateCategory(breakfast.getId(), categoryDTO);
+        assertThat(categoryService.getById(breakfast.getId()).getName()).isEqualTo("test");
+    }
+
+    @Test
+    public void shouldDeleteCategory() {
+        CategoryEntity breakfast = createCategory();
+        categoryRepository.save(breakfast);
+        assertThat(categoryService.getById(breakfast.getId()).getName()).isEqualTo("Breakfast");
+        categoryRepository.delete(breakfast);
+        assertThat(categoryService.findAll().isEmpty());
     }
 
     private CategoryDTO createCategoryDTO() {
@@ -39,5 +64,14 @@ public class CategoryServiceTest extends BaseTest {
         categoryDTO.setName("test");
         //categoryDTO.setId(UUID.randomUUID());
         return categoryDTO;
+    }
+
+    public CategoryEntity createCategory() {
+        CategoryEntity breakfast = new CategoryEntity();
+        breakfast.setName("Breakfast");
+        breakfast.setDescription("Dishes for breakfast");
+        breakfast.setTag("Healthy food,breakfast");
+        breakfast.setImgSource(null);
+        return breakfast;
     }
 }

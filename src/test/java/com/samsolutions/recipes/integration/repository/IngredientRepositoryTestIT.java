@@ -1,4 +1,4 @@
-package com.samsolutions.recipes.IT.repository;
+package com.samsolutions.recipes.integration.repository;
 
 import com.samsolutions.recipes.BaseTest;
 import com.samsolutions.recipes.model.Enum.Type;

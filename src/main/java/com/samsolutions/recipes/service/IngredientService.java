@@ -22,5 +22,7 @@ public interface IngredientService {
 
     IngredientDTO getById(UUID uuid);
 
+    IngredientDTO getByName(String name);
+
     List<IngredientDTO> findByType(Type type);
 }

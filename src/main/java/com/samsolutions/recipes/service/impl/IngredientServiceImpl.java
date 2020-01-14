@@ -74,6 +74,13 @@ public class IngredientServiceImpl implements IngredientService, ModelMapperServ
     }
 
     @Override
+    public IngredientDTO getByName(String name) {
+        IngredientDTO ingredientDTO = new IngredientDTO();
+        map(ingredientRepository.getByName(name), ingredientDTO);
+        return ingredientDTO;
+    }
+
+    @Override
     public List<IngredientDTO> findByType(Type type) {
         List<IngredientEntity> sortedList = ingredientRepository.findAllByType(type);
         sortedList.sort(new Comparator<IngredientEntity>() {

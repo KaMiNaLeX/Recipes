@@ -1,4 +1,4 @@
-package com.samsolutions.recipes.IT.service;
+package com.samsolutions.recipes.integration.service;
 
 import com.samsolutions.recipes.BaseTest;
 import com.samsolutions.recipes.model.Enum.Type;
