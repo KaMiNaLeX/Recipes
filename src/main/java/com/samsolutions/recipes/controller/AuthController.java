@@ -105,8 +105,7 @@ public class AuthController {
             UserEntity userEntity = userService.findUserByEmail(username);
             List<UserRoleEntity> userRoleList = userEntity.getUserRoles();
             List<RoleName> roleNameList = new ArrayList<>();
-            for (int i = 0; i < userRoleList.size(); i++) {
-                UserRoleEntity userRoleEntity = userRoleList.get(i);
+            for (UserRoleEntity userRoleEntity : userRoleList) {
                 RoleName roleName = userRoleEntity.getRole().getName();
                 roleNameList.add(roleName);
             }

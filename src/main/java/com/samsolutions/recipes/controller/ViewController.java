@@ -71,7 +71,7 @@ public class ViewController {
     }
 
     @GetMapping("/registration")
-    public String showRegistrationForm(UserEntity userEntity) {
+    public String showRegistrationForm() {
         return "registration";
     }
 

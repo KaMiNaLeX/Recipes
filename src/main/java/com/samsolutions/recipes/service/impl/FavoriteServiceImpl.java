@@ -53,12 +53,12 @@ public class FavoriteServiceImpl implements FavoriteService, ModelMapperService 
     public List<FavoriteDTO> findAllByUserId(UUID uuid) {
         List<FavoriteEntity> favoriteEntityList = favoriteRepository.findAllByUserId(uuid);
         List<FavoriteDTO> favoriteDTOList = new ArrayList<>();
-        for (int i = 0; i < favoriteEntityList.size(); i++) {
-            RecipeDTO recipeDTO = recipeService.findByRecipeId(favoriteEntityList.get(i).getRecipeId());
+        for (FavoriteEntity favoriteEntity : favoriteEntityList) {
+            RecipeDTO recipeDTO = recipeService.findByRecipeId(favoriteEntity.getRecipeId());
             FavoriteDTO favoriteDTO = new FavoriteDTO();
             favoriteDTO.setRecipeDTO(recipeDTO);
-            favoriteDTO.setUuid(favoriteEntityList.get(i).getId());
-            favoriteDTO.setAddedAt(favoriteEntityList.get(i).getAddedAt());
+            favoriteDTO.setUuid(favoriteEntity.getId());
+            favoriteDTO.setAddedAt(favoriteEntity.getAddedAt());
             favoriteDTOList.add(favoriteDTO);
         }
 

@@ -81,7 +81,8 @@ public class CategoryRestController {
     }
 
     @PostMapping(value = "/addPhoto4Category/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public CategoryDTO createPhoto4Category(@PathVariable("id") UUID id, @RequestParam MultipartFile file) throws IOException {
+    public CategoryDTO createPhoto4Category(@PathVariable("id") UUID id, @RequestParam MultipartFile file)
+            throws IOException {
         return categoryService.savePhoto(id, file);
     }
 

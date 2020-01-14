@@ -14,5 +14,4 @@ public interface FileStorageService {
 
     Resource loadFileAsResource(String fileName) throws Exception;
 
-    String updateFilePath(String avatarPath, String newEmail);
 }

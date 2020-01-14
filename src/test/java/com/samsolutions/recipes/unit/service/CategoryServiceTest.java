@@ -20,11 +20,10 @@ public class CategoryServiceTest extends BaseTest {
 
     @Test
     public void getByCategoryName() {
-        String name = "test";
         CategoryDTO categoryDTO = createCategoryDTO();
         categoryService.createCategory(categoryDTO);
-        CategoryEntity found = categoryRepository.getByName(name);
-        CategoryDTO categoryDTO2 = categoryService.getByName(name);
+        CategoryEntity found = categoryRepository.getById(categoryDTO.getId());
+        CategoryDTO categoryDTO2 = categoryService.getById(categoryDTO.getId());
         assertThat(categoryDTO2.getName()).isEqualTo(found.getName());
     }
 

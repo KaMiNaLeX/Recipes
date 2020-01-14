@@ -1,9 +1,7 @@
 package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.FavoriteDTO;
-import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
-import com.samsolutions.recipes.model.FavoriteEntity;
 
 import java.util.List;
 import java.util.UUID;

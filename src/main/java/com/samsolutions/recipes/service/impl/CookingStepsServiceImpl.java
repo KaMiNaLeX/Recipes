@@ -37,17 +37,16 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
 
     @Override
     @Transactional
-    public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) throws IOException {
+    public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) {
         cookingStepsEntity.setActive(true);
         cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepsEntity.getRecipeId()));
         cookingStepsRepository.save(cookingStepsEntity);
         return cookingStepsEntity;
     }
 
-    //todo: need to fix
     @Override
     @Transactional
-    public CookingStepDTO createStepDTO(CookingStepDTO cookingStepDTO) throws IOException {
+    public CookingStepDTO createStepDTO(CookingStepDTO cookingStepDTO) {
         CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
         map(cookingStepDTO, cookingStepsEntity);
         cookingStepsEntity.setImgSource("/static/img/test.png");
@@ -60,7 +59,7 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
 
     @Override
     @Transactional
-    public CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) throws IOException {
+    public CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) {
         CookingStepsEntity updateStep = cookingStepsRepository.getById(id);
         updateStep.setName(cookingStepsEntity.getName());
         updateStep.setDescription(cookingStepsEntity.getDescription());

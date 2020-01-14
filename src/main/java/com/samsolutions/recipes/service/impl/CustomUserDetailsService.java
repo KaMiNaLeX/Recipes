@@ -64,12 +64,9 @@ public class CustomUserDetailsService implements UserDetailsService, ModelMapper
 
     private List<GrantedAuthority> getUserAuthority(List<UserRoleEntity> userRoles) {
         Set<GrantedAuthority> roles = new HashSet<>();
-        userRoles.forEach((role) -> {
-            roles.add(new SimpleGrantedAuthority(role.getRole().toString()));
-        });
+        userRoles.forEach((role) -> roles.add(new SimpleGrantedAuthority(role.getRole().toString())));
 
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
-        return grantedAuthorities;
+        return new ArrayList<>(roles);
     }
 
     private UserDetails buildUserForAuthentication(UserEntity user, List<GrantedAuthority> authorities) {

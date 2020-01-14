@@ -52,11 +52,4 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new Exception("File not found " + fileName, ex);
         }
     }
-
-    @Override
-    public String updateFilePath(String avatarPath, String newEmail) {
-        String newAvatarPath = avatarPath.substring(0, avatarPath.lastIndexOf('=') + 1);
-        newAvatarPath = newAvatarPath + newEmail;
-        return newAvatarPath;
-    }
 }

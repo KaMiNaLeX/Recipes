@@ -10,7 +10,6 @@ import com.samsolutions.recipes.service.CookingStepsService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -123,7 +122,7 @@ public class RecipeRestController {
     }
 
     @PostMapping("/ingredientName")
-    public List<RecipeDTO> findAllByIngredientName(@RequestBody IngredientNameListDTO ingredientNameList) throws IOException {
+    public List<RecipeDTO> findAllByIngredientName(@RequestBody IngredientNameListDTO ingredientNameList) {
         return recipeService.findAllByIngredient(ingredientNameList);
     }
 
@@ -133,12 +132,14 @@ public class RecipeRestController {
     }
 
     @PostMapping(value = "/addPhoto4Step/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public CookingStepRecipeDTO createPhoto4Step(@PathVariable("id") UUID id, @RequestParam MultipartFile file) throws IOException {
+    public CookingStepRecipeDTO createPhoto4Step(@PathVariable("id") UUID id, @RequestParam MultipartFile file)
+            throws IOException {
         return cookingStepsService.savePhoto(id, file);
     }
 
     @PostMapping(value = "/addPhoto4Recipe/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public RecipeDTO createPhoto4Recipe(@PathVariable("id") UUID id, @RequestParam MultipartFile file) throws IOException {
+    public RecipeDTO createPhoto4Recipe(@PathVariable("id") UUID id, @RequestParam MultipartFile file)
+            throws IOException {
         return recipeService.savePhoto(id, file);
     }
 

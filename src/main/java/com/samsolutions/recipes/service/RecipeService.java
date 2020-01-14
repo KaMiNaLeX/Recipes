@@ -5,7 +5,6 @@ import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
