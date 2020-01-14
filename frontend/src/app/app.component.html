@@ -5,28 +5,28 @@
         <a class="nav-link" href="/">{{ 'home' | translate }}</a>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="search()">Search</button>
+        <button class="btn btn-link" (click)="search()">{{ 'search' | translate }}</button>
       </li>
       <div *ngIf="admin">
         <li class="nav-item">
-          <button class="btn btn-link" (click)="adminPanel()">Admin Panel</button>
+          <button class="btn btn-link" (click)="adminPanel()">{{ 'admin panel' | translate }}</button>
         </li>
       </div>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="categories()">Categories</button>
+        <button class="btn btn-link" (click)="categories()">{{ 'categories' | translate }}</button>
       </li>
       <div *ngIf="author || admin">
         <li class="nav-item">
-          <button class="btn btn-link" (click)="recipes()">My recipes</button>
+          <button class="btn btn-link" (click)="recipes()">{{ 'my recipes' | translate }}</button>
         </li>
       </div>
       <div *ngIf="authenticated">
         <li class="nav-item">
-          <button class="btn btn-link" (click)="favorite()">Favorites</button>
+          <button class="btn btn-link" (click)="favorite()">{{ 'favorites' | translate }}</button>
         </li>
       </div>
       <li>
-        <button type="button" class="btn btn-primary" (click)="addRecipe()">+ Add recipe</button>
+        <button type="button" class="btn btn-primary" (click)="addRecipe()">+{{ 'add recipe' | translate }}</button>
       </li>
     </ul>
   </div>
@@ -35,7 +35,7 @@
       <button class="btn btn-secondary dropdown-toggle" type="button"
               id="dropdownMenuButton3" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-        Change language
+        {{ 'change lang' | translate }}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <button class="btn dropdown-item" (click)="useLanguage('en')">en</button>
@@ -53,13 +53,15 @@
       <button *ngIf="username == 'unauthorized' " class="btn btn-secondary dropdown-toggle" type="button"
               id="dropdownMenuButton2" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-        You can login or registration here!
+        {{ 'login and registration' | translate }}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <button class="btn dropdown-item" (click)="login()">Login</button>
-        <button class="btn dropdown-item" (click)="register()">Registration</button>
-        <button [hidden]="!authenticated" class="btn dropdown-item" (click)="profile()">Profile</button>
-        <button [hidden]="!authenticated" type="button" class="btn dropdown-item" (click)="logout()">Log out</button>
+        <button class="btn dropdown-item" (click)="login()">{{ 'login' | translate }}</button>
+        <button class="btn dropdown-item" (click)="register()">{{ 'registration' | translate }}</button>
+        <button [hidden]="!authenticated" class="btn dropdown-item"
+                (click)="profile()">{{ 'profile' | translate }}</button>
+        <button [hidden]="!authenticated" type="button" class="btn dropdown-item"
+                (click)="logout()">{{ 'log out' | translate }}</button>
       </div>
     </div>
   </div>

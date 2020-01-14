@@ -1,19 +1,19 @@
 <div *ngIf="firstDiv" class="container-fluid">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#/admin">Admin panel</a></li>
-      <li class="breadcrumb-item active" aria-current="page">All categories</li>
+      <li class="breadcrumb-item"><a href="#/admin">{{'admin panel' | translate}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{'all categories' | translate}}</li>
     </ol>
   </nav>
-  <h2>Categories</h2>
+  <h2>{{'categories' | translate}}</h2>
   <table class="table table-bordered table-striped">
     <thead class="thead-dark">
     <tr>
-      <th scope="col">Photo</th>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Tag</th>
-      <th scope="col">Actions</th>
+      <th scope="col">{{'photo' | translate}}</th>
+      <th scope="col">{{'name' | translate}}</th>
+      <th scope="col">{{'description' | translate}}</th>
+      <th scope="col">{{'tag' | translate}}</th>
+      <th scope="col">{{'actions' | translate}}</th>
     </tr>
     </thead>
     <tbody>
@@ -23,13 +23,13 @@
       <td>{{ category.description }}</td>
       <td>{{ category.tag }}</td>
       <td>
-        <button (click)="add()" class='btn btn-success divChild2'>Add
+        <button (click)="add()" class='btn btn-success divChild2'>{{'add' | translate}}
         </button>
-        <button (click)="view(category.id)" class='btn btn-info divChild2'>View
+        <button (click)="view(category.id)" class='btn btn-info divChild2'>{{'view' | translate}}
         </button>
-        <button (click)="edit(category.id)" class='btn btn-warning divChild2'>Edit
+        <button (click)="edit(category.id)" class='btn btn-warning divChild2'>{{'edit' | translate}}
         </button>
-        <button (click)="delete(category.id)" class='btn btn-danger divChild2'>Delete
+        <button (click)="delete(category.id)" class='btn btn-danger divChild2'>{{'delete' | translate}}
         </button>
       </td>
     </tr>
@@ -40,50 +40,51 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toAdmin()">Admin panel</button>
+        <button class="btn btn-link" (click)="toAdmin()">{{'admin panel' | translate}}</button>
       </li>
       <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toView()">All Categories</button>
+        <button class="btn btn-link" (click)="toView()">{{'all categories' | translate}}</button>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
-        <button class="btn btn-link" disabled>Add Category</button>
+        <button class="btn btn-link" disabled>{{'add category' | translate}}</button>
       </li>
     </ol>
   </nav>
   <div class="col-md-6 login-container" style="max-width: 70%">
-    <h2 style="margin: auto">Add Category</h2>
+    <h2 style="margin: auto">{{'add category' | translate}}</h2>
     <br/>
     <div class="form-group">
-      <h6 for="name">Name:</h6>
+      <h6 for="name">{{'name' | translate}}:</h6>
       <input type="text" [(ngModel)]="category.name" class="form-control" id="name"
              autocomplete="off" #name="ngModel" required>
-      <div *ngIf="name.invalid" style="color: red">Required</div>
-      <h6 for="name">Description:</h6>
+      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
+      <h6 for="name">{{'description' | translate}}:</h6>
       <input type="text" [(ngModel)]="category.description" class="form-control" id="description"
              autocomplete="off" #description="ngModel" required>
-      <div *ngIf="description.invalid" style="color: red">Required</div>
-      <h6 for="name">Tag:</h6>
+      <div *ngIf="description.invalid" style="color: red">{{'required' | translate}}</div>
+      <h6 for="name">{{'tag' | translate}}:</h6>
       <input type="text" [(ngModel)]="category.tag" class="form-control" id="tag"
              autocomplete="off" #tag="ngModel" required>
-      <div *ngIf="tag.invalid" style="color: red">Required</div>
+      <div *ngIf="tag.invalid" style="color: red">{{'required' | translate}}</div>
     </div>
-    <h6 for="name">Photo:</h6>
+    <h6 for="name">{{'photo' | translate}}:</h6>
     <div>
       <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
     </div>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+        <span class="input-group-text" id="inputGroupFileAddon01">{{'upload' | translate}}</span>
       </div>
       <div class="custom-file">
         <input type="file" (change)="handleFileInput($event)" class="custom-file-input"
                id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
       </div>
     </div>
     <form (ngSubmit)="addCategory()">
       <button style="width: 300px" type="submit" class="btn btn-success" [disabled]="name.invalid || description.invalid
-       || tag.invalid">Add category</button>
+       || tag.invalid">{{'add category' | translate}}
+      </button>
     </form>
   </div>
 </div>
@@ -91,44 +92,44 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toAdmin()">Admin panel</button>
+        <button class="btn btn-link" (click)="toAdmin()">{{'admin panel' | translate}}</button>
       </li>
       <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toView()">All Categories</button>
+        <button class="btn btn-link" (click)="toView()">{{'all categories' | translate}}</button>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
-        <button class="btn btn-link" disabled>Edit Category</button>
+        <button class="btn btn-link" disabled>{{'edit category' | translate}}</button>
       </li>
     </ol>
   </nav>
   <div class="col-md-6 login-container" style="max-width: 70%">
-    <h2 style="margin: auto">Edit Category</h2>
+    <h2 style="margin: auto">{{'edit category' | translate}}</h2>
     <br/>
     <div class="form-group">
-      <h6 for="name">Name:</h6>
+      <h6 for="name">{{'name' | translate}}:</h6>
       <input type="text" [(ngModel)]="category.name" class="form-control" id="name2"
              autocomplete="off" #name="ngModel" value="{{category.name}}" required>
-      <div *ngIf="name.invalid" style="color: red">Required</div>
-      <h6 for="name">Description:</h6>
+      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
+      <h6 for="name">{{'description' | translate}}:</h6>
       <input type="text" [(ngModel)]="category.description" class="form-control" id="description2"
              autocomplete="off" #description="ngModel" value="{{category.description}}" required>
-      <div *ngIf="description.invalid" style="color: red">Required</div>
-      <h6 for="name">Tag:</h6>
+      <div *ngIf="description.invalid" style="color: red">{{'required' | translate}}</div>
+      <h6 for="name">{{'tag' | translate}}:</h6>
       <input type="text" [(ngModel)]="category.tag" value="{{category.tag}}" class="form-control" id="tag2"
              autocomplete="off" #tag="ngModel" required>
-      <div *ngIf="tag.invalid" style="color: red">Required</div>
-      <h6>Photo:</h6>
+      <div *ngIf="tag.invalid" style="color: red">{{'required' | translate}}</div>
+      <h6>{{'photo' | translate}}:</h6>
       <img id="img" [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource !=null">
     </div>
-    <h6>New Photo:</h6>
+    <h6>{{'new photo' | translate}}:</h6>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+        <span class="input-group-text" id="inputGroupFileAddon02">{{'upload' | translate}}</span>
       </div>
       <div class="custom-file">
         <input type="file" (change)="handleFileInput2($event)" class="custom-file-input"
                id="inputGroupFile02" aria-describedby="inputGroupFileAddon01">
-        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
       </div>
     </div>
     <div>
@@ -137,7 +138,8 @@
     <div>
       <button style="width: 300px" class="btn btn-success" (click)="editCategory()"
               [disabled]="name.invalid || description.invalid
-       || tag.invalid">Edit category</button>
+       || tag.invalid">{{'edit category' | translate}}
+      </button>
     </div>
   </div>
 </div>
