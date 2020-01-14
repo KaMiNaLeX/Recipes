@@ -3,6 +3,7 @@ import {FormBuilder} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "./service/auth.service";
 import {HttpClient} from "@angular/common/http";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -18,12 +19,17 @@ export class AppComponent {
   username = "unauthorized";
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
-              private http: HttpClient) {
+              private http: HttpClient,private translate: TranslateService) {
+    translate.setDefaultLang('en');
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
       this.role();
       this.username = localStorage.getItem('email');
     }
+  }
+
+  useLanguage(language: string) {
+    this.translate.use(language);
   }
 
   logout() {
@@ -40,7 +46,7 @@ export class AppComponent {
     if (this.author != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
     } else {
-      window.alert("You need have AUTHOR or ADMIN role")
+      window.alert("You need have AUTHOR or ADMIN role");
     }
   }
 

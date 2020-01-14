@@ -2,7 +2,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="nav nav-pills nav-fill">
       <li class="nav-item active">
-        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/">{{ 'home' | translate }}</a>
       </li>
       <li class="nav-item">
         <button class="btn btn-link" (click)="search()">Search</button>
@@ -29,6 +29,19 @@
         <button type="button" class="btn btn-primary" (click)="addRecipe()">+ Add recipe</button>
       </li>
     </ul>
+  </div>
+  <div class="button-row">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button"
+              id="dropdownMenuButton3" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+        Change language
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="btn dropdown-item" (click)="useLanguage('en')">en</button>
+        <button class="btn dropdown-item" (click)="useLanguage('ru')">ru</button>
+      </div>
+    </div>
   </div>
   <div class="button-row">
     <div class="dropdown">
