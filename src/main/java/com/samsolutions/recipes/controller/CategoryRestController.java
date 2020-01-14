@@ -2,6 +2,7 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
+import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -32,6 +33,11 @@ public class CategoryRestController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @GetMapping("/findAllEntities")
+    public List<CategoryEntity> findAllEntities() {
+        return categoryService.findAllEntities();
+    }
 
     @GetMapping("/")
     public List<CategoryDTO> findAll() {

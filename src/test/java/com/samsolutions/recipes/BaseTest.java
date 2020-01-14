@@ -1,7 +1,19 @@
 package com.samsolutions.recipes;
 
 import com.samsolutions.recipes.config.JwtTokenProvider;
+import com.samsolutions.recipes.controller.CategoryRestController;
+import com.samsolutions.recipes.controller.CookingStepsRestController;
+import com.samsolutions.recipes.controller.FavoritesRestController;
+import com.samsolutions.recipes.controller.GetFileController;
+import com.samsolutions.recipes.controller.IngredientRestController;
+import com.samsolutions.recipes.controller.RecipeRestController;
+import com.samsolutions.recipes.controller.UserRestController;
+import com.samsolutions.recipes.service.CategoryService;
+import com.samsolutions.recipes.service.FavoriteService;
+import com.samsolutions.recipes.service.FileStorageService;
+import com.samsolutions.recipes.service.RecipeService;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,5 +33,29 @@ public abstract class BaseTest {
 
     @MockBean
     JwtTokenProvider jwtTokenProvider;
+
+    @MockBean
+    private CookingStepsRestController cookingStepsRestController;
+
+    @MockBean
+    private FavoritesRestController favoritesRestController;
+
+    @MockBean
+    private RecipeRestController recipeRestController;
+
+    @MockBean
+    private UserRestController userRestController;
+
+    @MockBean
+    private GetFileController getFileController;
+
+    @MockBean
+    private FileStorageService fileStorageService;
+
+    @MockBean
+    private FavoriteService favoriteService;
+
+    @MockBean
+    private RecipeService recipeService;
 
 }

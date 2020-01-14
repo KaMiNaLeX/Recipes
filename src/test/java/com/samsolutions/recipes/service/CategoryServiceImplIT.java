@@ -27,13 +27,13 @@ public class CategoryServiceImplIT extends BaseTest {
     @MockBean
     private CategoryRepository categoryRepository;
 
-
     @Before
     public void setUp() {
         CategoryEntity breakfast = new CategoryEntity();
         breakfast.setName("Breakfast");
         breakfast.setDescription("Dishes for breakfast");
         breakfast.setTag("Healthy food,breakfast");
+        breakfast.setImgSource(null);
 
         Mockito.when(categoryRepository.getByName(breakfast.getName()))
                 .thenReturn(breakfast);
@@ -54,6 +54,7 @@ public class CategoryServiceImplIT extends BaseTest {
         breakfast.setName("Breakfast");
         breakfast.setDescription("Dishes for breakfast");
         breakfast.setTag("Healthy food,breakfast");
+        breakfast.setImgSource(null);
         categoryRepository.save(breakfast);
         when(categoryRepository.getByName(breakfast.getName())).thenReturn(breakfast);
         CategoryEntity found = categoryRepository.getByName(breakfast.getName());
@@ -68,12 +69,14 @@ public class CategoryServiceImplIT extends BaseTest {
         breakfast.setName("Breakfast");
         breakfast.setDescription("Dishes for breakfast");
         breakfast.setTag("Healthy food,breakfast");
+        breakfast.setImgSource(null);
         categoryRepository.save(breakfast);
 
         CategoryEntity updateCategory = categoryRepository.getByName("Breakfast");
         updateCategory.setName(" Update Breakfast");
         updateCategory.setDescription("Update");
         updateCategory.setTag("Update");
+        breakfast.setImgSource(null);
         categoryRepository.save(updateCategory);
 
         assertThat(updateCategory).isNotEqualTo(breakfast);

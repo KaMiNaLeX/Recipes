@@ -2,6 +2,7 @@ package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
+import com.samsolutions.recipes.model.CategoryEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,4 +31,6 @@ public interface CategoryService {
     CategoryDTO getByName(String name);
 
     CategoryDTO savePhoto(UUID id, MultipartFile file) throws IOException;
+
+    List<CategoryEntity> findAllEntities();
 }

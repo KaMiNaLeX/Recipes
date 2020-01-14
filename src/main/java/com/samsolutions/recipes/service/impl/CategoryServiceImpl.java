@@ -107,4 +107,9 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
         return categoryDTO;
     }
 
+    @Override
+    public List<CategoryEntity> findAllEntities() {
+        return categoryRepository.findAll();
+    }
+
 }
