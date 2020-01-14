@@ -21,7 +21,6 @@ public class IngredientServiceTest extends BaseTest {
 
     @Test
     public void getByIngredientId() {
-        String name = "test";
         IngredientDTO ingredientDTO = createIngredientDTO();
         ingredientService.createIngredient(ingredientDTO);
         IngredientEntity found = ingredientRepository.getById(ingredientDTO.getId());

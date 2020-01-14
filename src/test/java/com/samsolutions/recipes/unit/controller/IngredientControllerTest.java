@@ -85,7 +85,7 @@ public class IngredientControllerTest extends BaseTest {
     @Test
     public void deleteIngredient() throws Exception {
         IngredientDTO ingredientDTO = createIngredientDTO();
-        ;
+
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/ingredient/delete/" + ingredientDTO.getId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());

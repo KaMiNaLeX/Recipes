@@ -44,9 +44,6 @@ public abstract class BaseTest {
     private RecipeRestController recipeRestController;
 
     @MockBean
-    private UserRestController userRestController;
-
-    @MockBean
     private GetFileController getFileController;
 
     @MockBean
