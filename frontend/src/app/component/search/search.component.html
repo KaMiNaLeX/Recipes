@@ -2,31 +2,31 @@
   <div [hidden]="!first" id="first" class="container-fluid">
     <ul class="nav nav-pills nav-fill">
       <li class="nav-item">
-        <button class="btn btn-primary btn-lg btn-block">Search by name</button>
+        <button class="btn btn-primary btn-lg btn-block">{{'search by name' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byIngredients()">Search by ingredients</button>
+        <button class="btn btn-link" (click)="byIngredients()">{{'search by ingredients' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byRecipes()">Search by recipes</button>
+        <button class="btn btn-link" (click)="byRecipes()">{{'search by parameters' | translate}}</button>
       </li>
     </ul>
     <div class="input-group mb-6 div">
-      <input type="text" class="form-control divChild" placeholder="Search by recipe name"
+      <input type="text" class="form-control divChild" placeholder="{{'search by recipe name' | translate}}"
              aria-label="Recipient's username"
              aria-describedby="button-addon2" [(ngModel)]="recipe.name">
       <div class="input-group-append divChild">
         <button class="btn btn-outline-primary" type="button" id="button-addon1" (click)="searchByName(recipe.name)">
-          Search
+          {{'search' | translate}}
         </button>
       </div>
-      <input type="text" class="form-control divChild" placeholder="Search by author name"
+      <input type="text" class="form-control divChild" placeholder="{{'search by author name' | translate}}"
              aria-label="Recipient's username"
              aria-describedby="button-addon2"
              id="authorName" [(ngModel)]="author.login">
       <div class="input-group-append divChild">
         <button class="btn btn-outline-primary" type="button" id="button-addon2"
-                (click)="searchByAuthorName(author.login)">Search
+                (click)="searchByAuthorName(author.login)">{{'search' | translate}}
         </button>
       </div>
     </div>
@@ -35,17 +35,17 @@
   <div [hidden]="!second" id="second" class="container-fluid">
     <ul class="nav nav-pills nav-fill">
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byName()">Search by name</button>
+        <button class="btn btn-link" (click)="byName()">{{'search by name' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary btn-lg btn-block">Search by ingredients</button>
+        <button class="btn btn-primary btn-lg btn-block">{{'search by ingredients' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byRecipes()">Search by recipes</button>
+        <button class="btn btn-link" (click)="byRecipes()">{{'search by parameters' | translate}}</button>
       </li>
     </ul>
     <div class="card border-primary mb-3" style="width: 100%">
-      <div class="card-header">Selected ingredients:</div>
+      <div class="card-header">{{'selected ingredients' | translate}}:</div>
       <div class="card-body text-primary">
         <div class="div">
           <ul *ngFor="let i of ingredientNameDTOS" class="divChild">
@@ -58,13 +58,15 @@
       </div>
     </div>
     <div>
-      <label>You can select ingredient from this droplist:</label>
-      <select style="max-width: 300px" (change)="addToCart(ingredient.name)" class="custom-select" data-live-search="true"
+      <label>{{'droplist' | translate}}:</label>
+      <select style="max-width: 300px" (change)="addToCart(ingredient.name)" class="custom-select"
+              data-live-search="true"
               [(ngModel)]="ingredient.name" id="select">
         <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
                 value="{{ingredient.name}}">{{ingredient.name}}</option>
       </select>
-      <button class="divChild2 btn btn-danger" (click)="clearAll()">Clear all ingredients from card</button>
+      <button class="divChild2 btn btn-danger" (click)="clearAll()">{{'clear' | translate}}
+      </button>
     </div>
     <div class="div">
       <div id="outer" class="divChild" *ngFor="let type of keys">
@@ -82,7 +84,7 @@
     </div>
     <div>
       <button style="width: 300px" class="btn btn-success divChild" type="button" id="button-addon3"
-              (click)="searchByIngredients()">Search
+              (click)="searchByIngredients()">{{'search' | translate}}
       </button>
     </div>
   </div>
@@ -90,61 +92,61 @@
   <div [hidden]="!third" id="third" class="container-fluid">
     <ul class="nav nav-pills nav-fill">
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byName()">Search by name</button>
+        <button class="btn btn-link" (click)="byName()">{{'search by name' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byIngredients()">Search by ingredients</button>
+        <button class="btn btn-link" (click)="byIngredients()">{{'search by ingredients' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary btn-lg btn-block">Search by recipes</button>
+        <button class="btn btn-primary btn-lg btn-block">{{'search by parameters' | translate}}</button>
       </li>
     </ul>
     <div class="card bg-light mb-3" style="max-width: 100%;">
-      <div class="card-header">Parameters</div>
+      <div class="card-header">{{'parameters' | translate}}</div>
       <div class="card-body">
-        <h5>Cooking Time:</h5>
+        <h5>{{'cooking time' | translate}}:</h5>
         <div class="form-check form-check-inline">
           <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
                  name="exampleRadios" id="exampleRadios1" value="10">
-          <h6 class="form-check-label" for="exampleRadios1">less than 10 minutes</h6>
+          <h6 class="form-check-label" for="exampleRadios1">{{'less than 10 min' | translate}}</h6>
         </div>
         <div class="form-check form-check-inline">
           <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
                  name="exampleRadios" id="exampleRadios2" value="30">
-          <h6 class="form-check-label" for="exampleRadios2">less than 30 minutes</h6>
+          <h6 class="form-check-label" for="exampleRadios2">{{'less than 30 min' | translate}}</h6>
         </div>
         <div class="form-check form-check-inline">
           <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
                  name="exampleRadios" id="exampleRadios3" value="60">
-          <h6 class="form-check-label" for="exampleRadios3">less than 1 hour</h6>
+          <h6 class="form-check-label" for="exampleRadios3">{{'less than 1 hour' | translate}}</h6>
         </div>
         <div class="form-check form-check-inline">
           <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
                  name="exampleRadios" id="exampleRadios4" value="1440">
-          <h6 class="form-check-label" for="exampleRadios3">more than 1 hour</h6>
+          <h6 class="form-check-label" for="exampleRadios3">{{'more than 1 hour' | translate}}</h6>
         </div>
         <br/>
-        <h5>Cooking Difficulty:</h5>
+        <h5>{{'cooking difficulty' | translate}}:</h5>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="checkbox"
                  id="Checkbox1" value="EASY" name="check">
-          <h6 class="form-check-label" for="inlineCheckbox1">EASY</h6>
+          <h6 class="form-check-label" for="inlineCheckbox1">{{'easy' | translate}}</h6>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="checkbox"
                  id="Checkbox2" value="MEDIUM" name="check">
-          <h6 class="form-check-label" for="inlineCheckbox1">MEDIUM</h6>
+          <h6 class="form-check-label" for="inlineCheckbox1">{{'medium' | translate}}</h6>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="checkbox"
                  id="Checkbox3" value="HARD" name="check">
-          <h6 class="form-check-label" for="inlineCheckbox1">HARD</h6>
+          <h6 class="form-check-label" for="inlineCheckbox1">{{'hard' | translate}}</h6>
         </div>
       </div>
     </div>
-      <button style="width: 300px" class="btn btn-success" type="button"
-              (click)="searchByData(recipeData.cookingTime)">Search
-      </button>
+    <button style="width: 300px" class="btn btn-success" type="button"
+            (click)="searchByData(recipeData.cookingTime)">{{'search' | translate}}
+    </button>
   </div>
 
   <div [hidden]="!recipeDiv" id="recipeDiv" class="container-fluid">
@@ -156,18 +158,19 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{ recipe.name }}</h5>
-            <h6 class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</h6>
-            <h6 class="card-text">Time:{{ recipe.cookingTime }} minutes</h6>
-            <h6 class="card-text">Author:{{ recipe.authorName }}</h6>
+            <h6 class="card-text">{{'difficulty' | translate}}:{{ recipe.cookingDifficulty }}</h6>
+            <h6 class="card-text">{{'time' | translate}}:{{ recipe.cookingTime }} {{'minutes' | translate}}</h6>
+            <h6 class="card-text">{{'author' | translate}}:{{ recipe.authorName }}</h6>
             <div class="div">
               <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
-                <button type="submit" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-primary">{{'view' | translate}}</button>
               </form>
               <form class="divChild2" (ngSubmit)="addToFavorite(recipe.id)">
-                <button type="submit" class="btn btn-warning">Add to Favorites</button>
+                <button type="submit" class="btn btn-warning">{{'add to favorite' | translate}}</button>
               </form>
             </div>
-            <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+            <p class="card-text"><small
+              class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
           </div>
         </div>
       </div>
@@ -177,11 +180,11 @@
             <div class="col-md-12">
               <div class="error-template">
                 <h1>
-                  Oops!</h1>
+                  {{'oops' | translate}}!</h1>
                 <h2>
-                  Recipes Not Found</h2>
+                  {{'recipes not found' | translate}}</h2>
                 <div class="error-details">
-                  There are no results for the given parameters, check the parameters and try again
+                  {{'no result' | translate}}
                 </div>
               </div>
             </div>

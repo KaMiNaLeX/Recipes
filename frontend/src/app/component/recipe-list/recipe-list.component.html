@@ -9,18 +9,18 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{ recipe.name }}</h5>
-            <h6 class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</h6>
-            <h6 class="card-text">Time:{{ recipe.cookingTime }} minutes</h6>
-            <h6 class="card-text">Author:{{ recipe.authorName }}</h6>
+            <h6 class="card-text">{{'difficulty' | translate}}:{{ recipe.cookingDifficulty }}</h6>
+            <h6 class="card-text">{{'time' | translate}}:{{ recipe.cookingTime }} {{'minutes' | translate}}</h6>
+            <h6 class="card-text">{{'author' | translate}}:{{ recipe.authorName }}</h6>
             <div class="div">
               <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
-                <button type="submit" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-primary">{{'view' | translate}}</button>
               </form>
               <form class="divChild2" (ngSubmit)="addToFavorite(recipe.id)">
-                <button type="submit" class="btn btn-warning">Add to Favorites</button>
+                <button type="submit" class="btn btn-warning">{{'add to favorite' | translate}}</button>
               </form>
             </div>
-            <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+            <p class="card-text"><small class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
           </div>
         </div>
       </div>
@@ -30,16 +30,16 @@
             <div class="col-md-12">
               <div class="error-template">
                 <h1>
-                  Oops!</h1>
+                  {{'oops' | translate}}!</h1>
                 <h2>
-                  Recipes in this category Not Found</h2>
+                  {{'recipes not found' | translate}}</h2>
                 <div class="error-details">
-                  No one has added recipes for this category yet.You can add recipe right here right now!
+                  {{'no one' | translate}}
                 </div>
                 <div class="error-actions">
                   <button (click)="addRecipe()" class="btn btn-primary btn-lg"><span
                     class="glyphicon glyphicon-home"></span>
-                    Add recipe +
+                    {{'add recipe' | translate}} +
                   </button>
                 </div>
               </div>

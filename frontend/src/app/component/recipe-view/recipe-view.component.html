@@ -1,35 +1,35 @@
 <div id="first" class="container-fluid">
   <div class="col-md-6 login-container" style="max-width: 100%">
     <div class="form-group">
-      <h2>Name:{{createRecipeDTO.name}}</h2>
+      <h2>{{'name' | translate}}:{{createRecipeDTO.name}}</h2>
     </div>
     <br/>
     <div class="form-group">
       <div class="row">
         <div class="col">
           <div class="form-check form-check-inline">
-            <h5 class="form-check-label">Difficulty: {{createRecipeDTO.cookingDifficulty}}</h5>
+            <h5 class="form-check-label">{{'difficulty' | translate}}: {{createRecipeDTO.cookingDifficulty}}</h5>
           </div>
         </div>
         <div class="col">
-          <h5>Minutes:{{createRecipeDTO.cookingTime}}</h5>
+          <h5>{{'minutes' | translate}}:{{createRecipeDTO.cookingTime}}</h5>
         </div>
         <div class="col">
           <div class="form-check form-check-inline">
-            <h5>Categories:</h5>
+            <h5>{{'categories' | translate}}:</h5>
             <h5 *ngFor="let category of createRecipeDTO.categoryRecipeDTOList">{{category.name}};</h5>
           </div>
         </div>
       </div>
 
-      <h2 style="margin: auto">Ingredients</h2>
+      <h2 style="margin: auto">{{'ingredients' | translate}}</h2>
       <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
-          <th scope="col">Ingredient</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Unit</th>
-          <th scope="col">Note</th>
+          <th scope="col">{{'ingredient' | translate}}</th>
+          <th scope="col">{{'amount' | translate}}</th>
+          <th scope="col">{{'unit' | translate}}</th>
+          <th scope="col">{{'note' | translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -41,15 +41,15 @@
         </tr>
         </tbody>
       </table>
-      <h2 style="margin: auto">Cooking</h2>
+      <h2 style="margin: auto">{{'cooking' | translate}}</h2>
       <br/>
       <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
-          <th scope="col">Number</th>
-          <th scope="col">Photo</th>
-          <th scope="col">Name</th>
-          <th scope="col">Description</th>
+          <th scope="col">{{'number' | translate}}</th>
+          <th scope="col">{{'photo' | translate}}</th>
+          <th scope="col">{{'name' | translate}}</th>
+          <th scope="col">{{'description' | translate}}</th>
         </tr>
         </thead>
         <tbody>

@@ -1,6 +1,6 @@
 <div class="resultDiv">
   <div class="container-fluid">
-    <h3 style="margin: 20px auto;max-width: 800px;">My recipes</h3>
+    <h3 style="margin: 20px auto;max-width: 800px;">{{'my recipes' | translate}}</h3>
     <div class="card mb-3 card-columns recipe" *ngFor="let recipe of recipes">
       <div class="row no-gutters" *ngIf="recipe.name != null">
         <div class="col-md-4">
@@ -9,20 +9,20 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{ recipe.name }}</h5>
-            <h6 class="card-text">Difficulty:{{ recipe.cookingDifficulty }}</h6>
-            <h6 class="card-text">Time:{{ recipe.cookingTime }} minutes</h6>
+            <h6 class="card-text">{{'difficulty' | translate}}:{{ recipe.cookingDifficulty }}</h6>
+            <h6 class="card-text">{{'time' | translate}}:{{ recipe.cookingTime }} {{'minutes' | translate}}</h6>
             <div class="div">
               <form (ngSubmit)="view(recipe.id)">
-                <button type="submit" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-primary">{{'view' | translate}}</button>
               </form>
               <form class="divChild2" (ngSubmit)="edit(recipe.id)">
-                <button type="submit" class="btn btn-success">Edit</button>
+                <button type="submit" class="btn btn-success">{{'edit' | translate}}</button>
               </form>
               <form class="divChild2" (ngSubmit)="delete(recipe.id)">
-                <button type="submit" class="btn btn-danger">Delete</button>
+                <button type="submit" class="btn btn-danger">{{'delete' | translate}}</button>
               </form>
             </div>
-            <p class="card-text"><small class="text-muted">Last updated {{ recipe.lastModified }}</small></p>
+            <p class="card-text"><small class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
           </div>
         </div>
       </div>
@@ -31,16 +31,16 @@
           <div class="col-md-12">
             <div class="error-template">
               <h1>
-                Oops!</h1>
+                {{'oops' | translate}}!</h1>
               <h2>
-                Recipes Not Found</h2>
+                {{'recipes not found' | translate}}</h2>
               <div class="error-details">
-                You can add recipe right here right now!
+                {{'you can add' | translate}}
               </div>
               <div class="error-actions">
                 <button (click)="addRecipe()" class="btn btn-primary btn-lg"><span
                   class="glyphicon glyphicon-home"></span>
-                  Add recipe +
+                  {{'add recipe' | translate}} +
                 </button>
               </div>
             </div>

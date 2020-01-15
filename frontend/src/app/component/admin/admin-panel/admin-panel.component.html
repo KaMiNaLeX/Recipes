@@ -1,26 +1,28 @@
 <div class="container-fluid">
-  <h2>Welcome to Admin Panel</h2>
+  <h2>{{'welcome' | translate}}</h2>
   <div class="row">
     <div class="card bg-light mb-3 divChild" style="max-width: 18rem;">
-      <div class="card-header">Users</div>
+      <div class="card-header">{{'users' | translate}}</div>
       <div class="card-body">
-        <h5 class="card-title">Here you can view, edit, add, delete users</h5>
-        <button class="btn btn-primary" (click)="users()">Go to users</button>
+        <h5 class="card-title">{{'here users' | translate}}</h5>
+        <button class="btn btn-primary" (click)="users()">{{'go to users' | translate}}</button>
       </div>
     </div>
     <div class="card bg-light mb-3 divChild" style="max-width: 18rem;">
-      <div class="card-header">Categories</div>
+      <div class="card-header">{{'categories' | translate}}</div>
       <div class="card-body">
-        <h5 class="card-title">Here you can view, edit, add, delete categories</h5>
-        <button class="btn btn-primary" (click)="categories()">Go to categories</button>
+        <h5 class="card-title">{{'here categories' | translate}}</h5>
+        <button class="btn btn-primary" (click)="categories()">{{'go to categories' | translate}}</button>
       </div>
     </div>
     <div class="card bg-light mb-3 divChild" style="max-width: 18rem;">
-      <div class="card-header">Ingredients</div>
+      <div class="card-header">{{'ingredients' | translate}}</div>
       <div class="card-body">
-        <h5 class="card-title">Here you can view, edit, add, delete ingredients</h5>
-        <button class="btn btn-primary" (click)="ingredients()">Go to ingredients</button>
+        <h5 class="card-title">{{'here ingredients' | translate}}</h5>
+        <button class="btn btn-primary" (click)="ingredients()">{{'go to ingredients' | translate}}</button>
       </div>
     </div>
   </div>
 </div>
+
+

@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <h2>Edit User</h2>
+  <h2>{{'edit user' | translate}}</h2>
   <br/>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()" style="max-width: 70%">
     <div hidden="hidden" class="form-group">
@@ -8,70 +8,70 @@
     </div>
 
     <div class="form-group">
-      <h6 for="login">Login:</h6>
+      <h6 for="login">{{'login' | translate}}:</h6>
       <input type="text" formControlName="login" placeholder="login" name="login" class="form-control" id="login"
              readonly="true">
     </div>
 
     <div class="form-group">
-      <h6 for="email">Email:</h6>
+      <h6 for="email">{{'email' | translate}}:</h6>
       <input type="text" formControlName="email" placeholder="email" name="email" class="form-control" id="email"
              readonly="true">
     </div>
 
     <div class="form-group">
-      <h6 for="firstName">First Name:</h6>
+      <h6 for="firstName">{{'first name' | translate}}:</h6>
       <input formControlName="firstName" placeholder="First Name" name="firstName" class="form-control" id="firstName">
     </div>
     <div class="alert alert-danger"
          *ngIf="!editForm.get('firstName').valid && editForm.get('firstName').touched">
-      Required
+      {{'required' | translate}}
     </div>
 
     <div class="form-group">
-      <h6 for="lastName">Last Name:</h6>
+      <h6 for="lastName">{{'last name' | translate}}:</h6>
       <input formControlName="lastName" placeholder="Last name" name="lastName" class="form-control" id="lastName">
     </div>
     <div class="alert alert-danger"
          *ngIf="!editForm.get('lastName').valid && editForm.get('lastName').touched">
-      Required
+      {{'required' | translate}}
     </div>
     <div hidden="hidden" class="form-group">
-      <h6 for="password">Password:</h6>
+      <h6 for="password">{{'password' | translate}}:</h6>
       <input type="password" formControlName="password" placeholder="" name="password" class="form-control"
              id="password" readonly>
     </div>
-    <button [disabled]="!editForm.valid" style="width: 300px" type="submit" class="btn btn-success">Update</button>
+    <button [disabled]="!editForm.valid" style="width: 300px" type="submit" class="btn btn-success">{{'update' | translate}}</button>
   </form>
   <div *ngIf="checkDiv">
     <div class="form-group" style="max-width: 70%">
-      <h6 for="lastName">Old password:</h6>
+      <h6 for="lastName">{{'old password' | translate}}:</h6>
       <input type="password" class="form-control" id="oldPass" [(ngModel)]="oldPass" #old="ngModel" required>
-      <div *ngIf="old.invalid" style="color: red">Required</div>
-      <button [disabled]="old.invalid" type="button" class="btn btn-success" (click)="checkPass()">Check Password
+      <div *ngIf="old.invalid" style="color: red">{{'required' | translate}}</div>
+      <button [disabled]="old.invalid" type="button" class="btn btn-success" (click)="checkPass()">
+        {{'check password' | translate}}
       </button>
     </div>
   </div>
   <div *ngIf="passDiv">
     <div class="form-group" style="max-width: 70%">
-      <h6 for="lastName">New password:</h6>
+      <h6 for="lastName">{{'new password' | translate}}:</h6>
       <input type="password" class="form-control" id="newPass" [(ngModel)]="newPass" #newPass2="ngModel" required
              pattern="[a-z]{5,}">
-      <div *ngIf="newPass2.invalid" style="color: red">Required</div>
+      <div *ngIf="newPass2.invalid" style="color: red">{{'required' | translate}}</div>
     </div>
     <div class="form-group" style="max-width: 70%">
-      <h6 for="lastName">Confirm new password:</h6>
+      <h6 for="lastName">{{'confirm password' | translate}}:</h6>
       <input type="password" class="form-control" id="confirmPass" (change)="comparison()" [(ngModel)]="confPass"
              #conf="ngModel" required pattern="[a-z]{5,}">
-      <div *ngIf="conf.invalid" style="color: red">Required</div>
+      <div *ngIf="conf.invalid" style="color: red">{{'required' | translate}}</div>
     </div>
     <button [disabled]="newPass2.invalid || conf.invalid" id="save" type="button" class="btn btn-success"
-            (click)="savePass()">Save
-      Password
+            (click)="savePass()">{{'save password' | translate}}
     </button>
   </div>
-  <button *ngIf="button" type="button" class="btn btn-primary" (click)="changePass()">Change
-    Password
+  <button *ngIf="button" type="button" class="btn btn-primary" (click)="changePass()">
+    {{'change password' | translate}}
   </button>
   <br/>
 </div>

@@ -1,6 +1,6 @@
 <div class="resultDiv">
   <div class="container-fluid">
-    <h3 style="margin: 20px auto;max-width: 800px;">Favorites recipes</h3>
+    <h3 style="margin: 20px auto;max-width: 800px;">{{'favorite recipes' | translate}}</h3>
     <div class="card mb-3 card-columns recipe" *ngFor="let favorite of favorites">
       <div class="row no-gutters" *ngIf="favorite.uuid != null">
         <div class="col-md-4">
@@ -9,19 +9,19 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{ favorite.recipeDTO.name }}</h5>
-            <h6 class="card-text">Difficulty:{{ favorite.recipeDTO.cookingDifficulty }}</h6>
-            <h6 class="card-text">Time:{{ favorite.recipeDTO.cookingTime }} minutes</h6>
-            <h6 class="card-text">Author:{{ favorite.recipeDTO.authorName }}</h6>
+            <h6 class="card-text">{{'difficulty' | translate}}:{{ favorite.recipeDTO.cookingDifficulty }}</h6>
+            <h6 class="card-text">{{'time' | translate}}:{{ favorite.recipeDTO.cookingTime }} {{'minutes' | translate}}</h6>
+            <h6 class="card-text">{{'author' | translate}}:{{ favorite.recipeDTO.authorName }}</h6>
             <div class="div">
               <form (ngSubmit)="view(favorite.recipeDTO.id)" #addToCartForm="ngForm">
-                <button type="submit" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-primary">{{'view' | translate}}</button>
               </form>
               <form class="divChild2" (ngSubmit)="deleteFromFavorite(favorite.uuid)">
-                <button type="submit" class="btn btn-danger">Delete from Favorites</button>
+                <button type="submit" class="btn btn-danger">{{'delete fav' | translate}}</button>
               </form>
             </div>
-            <p class="card-text"><small class="text-muted">Last updated {{ favorite.recipeDTO.lastModified }}</small></p>
-            <p class="card-text"><small class="text-muted">Added at {{ favorite.addedAt }}</small></p>
+            <p class="card-text"><small class="text-muted">{{'last updated' | translate}} {{ favorite.recipeDTO.lastModified }}</small></p>
+            <p class="card-text"><small class="text-muted">{{'added at' | translate}} {{ favorite.addedAt }}</small></p>
           </div>
         </div>
       </div>
@@ -31,16 +31,16 @@
             <div class="col-md-12">
               <div class="error-template">
                 <h1>
-                  Oops!</h1>
+                  {{'Oops' | translate}}!</h1>
                 <h2>
-                  Recipes in favorites Not Found</h2>
+                  {{'recipes in fav not found' | translate}}</h2>
                 <div class="error-details">
-                  No one has added recipes in favorites yet.You can add recipe right here right now!
+                  {{'no one in fav' | translate}}
                 </div>
                 <div class="error-actions">
                   <button (click)="categories()" class="btn btn-primary btn-lg"><span
                     class="glyphicon glyphicon-home"></span>
-                    Go to categories
+                    {{'go to categories' | translate}}
                   </button>
                 </div>
               </div>

@@ -1,19 +1,19 @@
 <div *ngIf="firstDiv" class="container-fluid">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#/admin">Admin panel</a></li>
-      <li class="breadcrumb-item active" aria-current="page">All ingredients</li>
+      <li class="breadcrumb-item"><a href="#/admin">{{'admin panel' | translate}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{'all ingredients' | translate}}</li>
     </ol>
   </nav>
-  <h2>Ingredients</h2>
+  <h2>{{'ingredients' | translate}}</h2>
   <table class="table table-bordered table-striped">
     <thead class="thead-dark">
     <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Calories</th>
-      <th scope="col">Type</th>
-      <th scope="col">Actions</th>
+      <th scope="col">{{'name' | translate}}</th>
+      <th scope="col">{{'description' | translate}}</th>
+      <th scope="col">{{'calories' | translate}}</th>
+      <th scope="col">{{'type' | translate}}</th>
+      <th scope="col">{{'actions' | translate}}</th>
     </tr>
     </thead>
     <tbody>
@@ -23,11 +23,11 @@
       <td>{{ ingredient.calories }}</td>
       <td>{{ ingredient.type }}</td>
       <td>
-        <button class='btn btn-success divChild2' (click)="add()">Add
+        <button class='btn btn-success divChild2' (click)="add()">{{'add' | translate}}
         </button>
-        <button class='btn btn-info divChild2' (click)="view(ingredient.id)">View
+        <button class='btn btn-info divChild2' (click)="view(ingredient.id)">{{'view' | translate}}
         </button>
-        <button class='btn btn-warning divChild2' (click)="edit(ingredient.id)">Edit
+        <button class='btn btn-warning divChild2' (click)="edit(ingredient.id)">{{'delete' | translate}}
         </button>
       </td>
     </tr>
@@ -38,42 +38,42 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toAdmin()">Admin panel</button>
+        <button class="btn btn-link" (click)="toAdmin()">{{'admin panel' | translate}}</button>
       </li>
       <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toView()">All Ingredients</button>
+        <button class="btn btn-link" (click)="toView()">{{'all ingredients' | translate}}</button>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
-        <button class="btn btn-link" disabled>Add Ingredient</button>
+        <button class="btn btn-link" disabled>{{'add ingredient' | translate}}</button>
       </li>
     </ol>
   </nav>
   <div class="col-md-6 login-container" style="max-width: 70%">
-    <h2 style="margin: auto">Add Ingredient</h2>
+    <h2 style="margin: auto">{{'add ingredient' | translate}}</h2>
     <br/>
     <div class="form-group">
-      <h6 for="name">Name:</h6>
+      <h6 for="name">{{'name' | translate}}:</h6>
       <input type="text" [(ngModel)]="ingredient.name" class="form-control" id="name"
              autocomplete="off" #name="ngModel" required>
-      <div *ngIf="name.invalid" style="color: red">Required</div>
-      <h6 for="name">Description:</h6>
+      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
+      <h6 for="name">{{'description' | translate}}:</h6>
       <input type="text" [(ngModel)]="ingredient.description" class="form-control" id="description"
              autocomplete="off">
-      <h6 for="name">Calories:</h6>
+      <h6 for="name">{{'calories' | translate}}:</h6>
       <input type="text" [(ngModel)]="ingredient.calories" class="form-control" id="cal"
              autocomplete="off" #cal="ngModel" required pattern="[+-]?([0-9]*[.])?[0-9]+">
-      <div *ngIf="cal.invalid" style="color: red">Required or invalid value</div>
-      <h6 for="name">Type:</h6>
+      <div *ngIf="cal.invalid" style="color: red">{{'required or invalid' | translate}}</div>
+      <h6 for="name">{{'type' | translate}}:</h6>
       <select [(ngModel)]="ingredient.type" class="custom-select" id="type"
               autocomplete="off" #type="ngModel" required>
         <option *ngFor="let key of keys" value="{{key}}">{{key}}</option>
       </select>
-      <div *ngIf="type.invalid" style="color: red">Required</div>
+      <div *ngIf="type.invalid" style="color: red">{{'required' | translate}}</div>
     </div>
     <div>
       <button [disabled]="name.invalid || cal.invalid
        || type.invalid"
-              style="width: 300px" class="btn btn-success" (click)="addIngredient()">Add category
+              style="width: 300px" class="btn btn-success" (click)="addIngredient()">{{'add ingredient' | translate}}
       </button>
     </div>
   </div>
@@ -82,42 +82,42 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toAdmin()">Admin panel</button>
+        <button class="btn btn-link" (click)="toAdmin()">{{'admin panel' | translate}}</button>
       </li>
       <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toView()">All Ingredients</button>
+        <button class="btn btn-link" (click)="toView()">{{'all ingredients' | translate}}</button>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
-        <button class="btn btn-link" disabled>Edit Ingredient</button>
+        <button class="btn btn-link" disabled>{{'edit ingredient' | translate}}</button>
       </li>
     </ol>
   </nav>
   <div class="col-md-6 login-container" style="max-width: 70%">
-    <h2 style="margin: auto">Edit Ingredient</h2>
+    <h2 style="margin: auto">{{'edit ingredient' | translate}}</h2>
     <br/>
     <div class="form-group">
-      <h6 for="name">Name:</h6>
+      <h6 for="name">{{'name' | translate}}:</h6>
       <input type="text" [(ngModel)]="ingredient.name" class="form-control" id="name2"
              autocomplete="off" #name="ngModel" required>
-      <div *ngIf="name.invalid" style="color: red">Required</div>
-      <h6 for="name">Description:</h6>
+      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
+      <h6 for="name">{{'description' | translate}}:</h6>
       <input type="text" [(ngModel)]="ingredient.description" class="form-control" id="description2"
              autocomplete="off">
-      <h6 for="name">Calories:</h6>
+      <h6 for="name">{{'calories' | translate}}:</h6>
       <input type="text" [(ngModel)]="ingredient.calories" class="form-control" id="cal2"
              autocomplete="off" #cal="ngModel" required pattern="[+-]?([0-9]*[.])?[0-9]+">
-      <div *ngIf="cal.invalid" style="color: red">Required or invalid value</div>
-      <h6 for="name">Type:</h6>
+      <div *ngIf="cal.invalid" style="color: red">{{'required or invalid' | translate}}</div>
+      <h6 for="name">{{'type' | translate}}:</h6>
       <select [(ngModel)]="ingredient.type" class="custom-select" id="type2"
               autocomplete="off" #type="ngModel" required>
         <option *ngFor="let key of keys" value="{{key}}">{{key}}</option>
       </select>
-      <div *ngIf="type.invalid" style="color: red">Required</div>
+      <div *ngIf="type.invalid" style="color: red">{{'required' | translate}}</div>
     </div>
     <div>
       <button [disabled]="name.invalid || cal.invalid
        || type.invalid" style=" width: 300px"
-              class="btn btn-success" (click)="editIngredient()">Edit Ingredient
+              class="btn btn-success" (click)="editIngredient()">{{'edit ingredient' | translate}}
       </button>
     </div>
   </div>
