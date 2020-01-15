@@ -10,6 +10,7 @@ import com.samsolutions.recipes.service.CookingStepsService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,6 +55,7 @@ public class RecipeRestController {
         return recipeService.update(uuid, recipeDTO);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PutMapping("/updateRecipe/{id}")
     public CreateRecipeDTO updateRecipe(@PathVariable("id") UUID uuid, @RequestBody CreateRecipeDTO recipeDTO)
             throws IOException {
@@ -80,7 +82,7 @@ public class RecipeRestController {
         return recipeService.getByCategoryName(categoryName);
     }
 
-    //@PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
+    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PostMapping("/createRecipe")
     public CreateRecipeDTO createRecipeDTO(@RequestBody CreateRecipeDTO createRecipeDTO) {
         try {
@@ -96,6 +98,7 @@ public class RecipeRestController {
         return recipeService.getByRecipeId(uuid);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @GetMapping("/authorId/{id}")
     public List<CreateRecipeDTO> getByAuthorId(@PathVariable("id") UUID uuid) {
         return recipeService.getByAuthorId(uuid);

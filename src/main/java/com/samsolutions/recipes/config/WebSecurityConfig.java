@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.config;
 
+import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +49,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/email/**").permitAll()
                 .antMatchers("/api/category/**").permitAll()
                 .antMatchers("/api/recipe/**").permitAll()
-                .antMatchers("/api/favorite/**").permitAll()
                 .antMatchers("/api/ingredient/**").permitAll()
                 .anyRequest()
                 .authenticated().and().csrf()
