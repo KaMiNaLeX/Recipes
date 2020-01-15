@@ -1,72 +1,72 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="nav nav-pills nav-fill">
-      <li class="nav-item">
-        <button class="btn btn-link" (click)="search()">{{ 'search' | translate }}</button>
-      </li>
-      <div *ngIf="admin">
-        <li class="nav-item">
-          <button class="btn btn-link" (click)="adminPanel()">{{ 'admin panel' | translate }}</button>
-        </li>
-      </div>
-      <li class="nav-item">
-        <button class="btn btn-link" (click)="categories()">{{ 'categories' | translate }}</button>
-      </li>
-      <div *ngIf="author || admin">
-        <li class="nav-item">
-          <button class="btn btn-link" (click)="recipes()">{{ 'my recipes' | translate }}</button>
-        </li>
-      </div>
-      <div *ngIf="authenticated">
-        <li class="nav-item">
-          <button class="btn btn-link" (click)="favorite()">{{ 'favorites' | translate }}</button>
-        </li>
-      </div>
-      <li>
-        <button type="button" class="btn btn-primary" (click)="addRecipe()">+{{ 'add recipe' | translate }}</button>
-      </li>
-    </ul>
-  </div>
-  <div class="button-row">
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button"
-              id="dropdownMenuButton3" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-        {{ 'change lang' | translate }}
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <button class="btn dropdown-item" (click)="useLanguage('en')">en</button>
-        <button class="btn dropdown-item" (click)="useLanguage('ru')">ru</button>
-      </div>
-    </div>
-  </div>
-  <div class="button-row">
-    <div class="dropdown">
-      <button *ngIf="username != 'unauthorized' " class="btn btn-secondary dropdown-toggle" type="button"
-              id="dropdownMenuButton" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-        {{username}}
-      </button>
-      <button *ngIf="username == 'unauthorized' " class="btn btn-secondary dropdown-toggle" type="button"
-              id="dropdownMenuButton2" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-        {{ 'login and registration' | translate }}
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <button class="btn dropdown-item" (click)="login()">{{ 'login' | translate }}</button>
-        <button class="btn dropdown-item" (click)="register()">{{ 'registration' | translate }}</button>
-        <button [hidden]="!authenticated" class="btn dropdown-item"
-                (click)="profile()">{{ 'profile' | translate }}</button>
-        <button [hidden]="!authenticated" type="button" class="btn dropdown-item"
-                (click)="logout()">{{ 'log out' | translate }}</button>
-      </div>
-    </div>
-  </div>
-  <div class="button-row">
-  </div>
-</nav>
 <div class="resultDiv">
   <div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav nav-pills nav-fill">
+          <li class="nav-item">
+            <button class="btn btn-link" (click)="search()">{{ 'search' | translate }}</button>
+          </li>
+          <div *ngIf="admin">
+            <li class="nav-item">
+              <button class="btn btn-link" (click)="adminPanel()">{{ 'admin panel' | translate }}</button>
+            </li>
+          </div>
+          <li class="nav-item">
+            <button class="btn btn-link" (click)="categories()">{{ 'categories' | translate }}</button>
+          </li>
+          <div *ngIf="author || admin">
+            <li class="nav-item">
+              <button class="btn btn-link" (click)="recipes()">{{ 'my recipes' | translate }}</button>
+            </li>
+          </div>
+          <div *ngIf="authenticated">
+            <li class="nav-item">
+              <button class="btn btn-link" (click)="favorite()">{{ 'favorites' | translate }}</button>
+            </li>
+          </div>
+          <li>
+            <button type="button" class="btn btn-primary" (click)="addRecipe()">+{{ 'add recipe' | translate }}</button>
+          </li>
+        </ul>
+      </div>
+      <div class="button-row">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button"
+                  id="dropdownMenuButton3" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            {{ 'change lang' | translate }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <button class="btn dropdown-item" (click)="useLanguage('en')">en</button>
+            <button class="btn dropdown-item" (click)="useLanguage('ru')">ru</button>
+          </div>
+        </div>
+      </div>
+      <div class="button-row divChild2">
+        <div class="dropdown">
+          <button *ngIf="username != 'unauthorized' " class="btn btn-secondary dropdown-toggle" type="button"
+                  id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            {{username}}
+          </button>
+          <button *ngIf="username == 'unauthorized' " class="btn btn-secondary dropdown-toggle" type="button"
+                  id="dropdownMenuButton2" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            {{ 'login and registration' | translate }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <button class="btn dropdown-item" (click)="login()">{{ 'login' | translate }}</button>
+            <button class="btn dropdown-item" (click)="register()">{{ 'registration' | translate }}</button>
+            <button [hidden]="!authenticated" class="btn dropdown-item"
+                    (click)="profile()">{{ 'profile' | translate }}</button>
+            <button [hidden]="!authenticated" type="button" class="btn dropdown-item"
+                    (click)="logout()">{{ 'log out' | translate }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="button-row">
+      </div>
+    </nav>
     <router-outlet></router-outlet>
   </div>
 </div>

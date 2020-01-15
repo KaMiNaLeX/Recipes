@@ -1,5 +1,13 @@
 .back {
-  background-color: #efd556;
+  background-color: #fdd835;
+}
+
+.text{
+  color: black;
+}
+
+.primary{
+  background-color: #304ffe;
 }
 
 .top {
@@ -24,6 +32,7 @@
   max-width: 1200px;
   margin: 10px auto;
   padding-top: 10px;
+  padding-bottom: 10px;
   background-color: #fff0b4;
 }
 

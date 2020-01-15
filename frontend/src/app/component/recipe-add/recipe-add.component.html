@@ -1,260 +1,262 @@
-<div [hidden]="!first" id="first" class="container-fluid">
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <button class="btn btn-primary btn-lg btn-block">{{'dish description' | translate}}</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
+<div class="resultDiv">
+  <div [hidden]="!first" id="first" class="container-fluid">
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <button class="btn btn-primary btn-lg btn-block">{{'dish description' | translate}}</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
               createRecipeDTO.cookingTime)">{{'ingredients' | translate}}
-      </button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link">{{'cooking' | translate}}</button>
-    </li>
-  </ul>
-  <div class="col-md-6 login-container" style="max-width: 100%">
-    <h2 style="margin: auto">{{'description' | translate}}</h2>
-    <br/>
-    <div class="form-group">
-      <h6 for="name">{{'name' | translate}}:</h6>
-      <input (change)="checkRecipe()" style="max-width: 50%" type="text" [(ngModel)]="createRecipeDTO.name"
-             class="form-control" id="name"
-             autocomplete="off" #name="ngModel" required>
-      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
-    </div>
-    <br/>
-    <h2 style="margin: auto">{{'selection characters' | translate}}</h2>
-    <br/>
-    <div class="form-group">
-      <div class="row">
-        <div class="col">
-          <h6 for="minute">{{'difficulty' | translate}}:</h6>
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
-                   name="exampleRadios" id="exampleRadios1" value="EASY" #difficulty="ngModel" required>
-            <label class="form-check-label" for="exampleRadios1">{{'easy' | translate}}</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
-                   name="exampleRadios" id="exampleRadios2" value="MEDIUM" #difficulty="ngModel" required>
-            <label class="form-check-label" for="exampleRadios2">{{'medium' | translate}}</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
-                   name="exampleRadios" id="exampleRadios3" value="HARD" #difficulty="ngModel" required>
-            <label class="form-check-label" for="exampleRadios3">{{'hard' | translate}}</label>
-          </div>
-          <div *ngIf="difficulty.invalid" style="color: red">{{'required' | translate}}</div>
-        </div>
-        <div class="col">
-          <h6 for="minute">{{'minutes' | translate}}:</h6>
-          <input style="width: 100px" type="text" name="minute" [(ngModel)]="createRecipeDTO.cookingTime"
-                 class="form-control"
-                 id="minute"
-                 autocomplete="off" #minutes="ngModel" required pattern="[0-9]{1,7}">
-          <div *ngIf="minutes.invalid" style="color: red">{{'required or invalid' | translate}}</div>
-        </div>
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-link">{{'cooking' | translate}}</button>
+      </li>
+    </ul>
+    <div class="col-md-6 login-container" style="max-width: 100%">
+      <h2 style="margin: auto">{{'description' | translate}}</h2>
+      <br/>
+      <div class="form-group">
+        <h6 for="name">{{'name' | translate}}:</h6>
+        <input (change)="checkRecipe()" style="max-width: 50%" type="text" [(ngModel)]="createRecipeDTO.name"
+               class="form-control" id="name"
+               autocomplete="off" #name="ngModel" required>
+        <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="row">
-        <div class="col">
-          <h6 for="minute">{{'category' | translate}}:</h6>
-          <div class="form-check form-check-inline" *ngFor="let category of categories">
-            <input (change)="checkArray(category)" class="form-check-input" type="checkbox"
-                   id="inlineCheckbox1" value="{{category.name}}" name="check">
-            <label class="form-check-label" for="inlineCheckbox1">{{category.name}}</label>
+      <br/>
+      <h2 style="margin: auto">{{'selection characters' | translate}}</h2>
+      <br/>
+      <div class="form-group">
+        <div class="row">
+          <div class="col">
+            <h6 for="minute">{{'difficulty' | translate}}:</h6>
+            <div class="form-check form-check-inline">
+              <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
+                     name="exampleRadios" id="exampleRadios1" value="EASY" #difficulty="ngModel" required>
+              <label class="form-check-label" for="exampleRadios1">{{'easy' | translate}}</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
+                     name="exampleRadios" id="exampleRadios2" value="MEDIUM" #difficulty="ngModel" required>
+              <label class="form-check-label" for="exampleRadios2">{{'medium' | translate}}</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
+                     name="exampleRadios" id="exampleRadios3" value="HARD" #difficulty="ngModel" required>
+              <label class="form-check-label" for="exampleRadios3">{{'hard' | translate}}</label>
+            </div>
+            <div *ngIf="difficulty.invalid" style="color: red">{{'required' | translate}}</div>
+          </div>
+          <div class="col">
+            <h6 for="minute">{{'minutes' | translate}}:</h6>
+            <input style="width: 100px" type="text" name="minute" [(ngModel)]="createRecipeDTO.cookingTime"
+                   class="form-control"
+                   id="minute"
+                   autocomplete="off" #minutes="ngModel" required pattern="[0-9]{1,7}">
+            <div *ngIf="minutes.invalid" style="color: red">{{'required or invalid' | translate}}</div>
           </div>
         </div>
       </div>
-    </div>
-    <h6>{{'photo' | translate}}:</h6>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroupFileAddon02">{{'upload' | translate}}</span>
+      <div class="form-group">
+        <div class="row">
+          <div class="col">
+            <h6 for="minute">{{'category' | translate}}:</h6>
+            <div class="form-check form-check-inline" *ngFor="let category of categories">
+              <input (change)="checkArray(category)" class="form-check-input" type="checkbox"
+                     id="inlineCheckbox1" value="{{category.name}}" name="check">
+              <label class="form-check-label" for="inlineCheckbox1">{{category.name}}</label>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="custom-file">
-        <input type="file" (change)="handleFileInput2($event)" class="custom-file-input"
-               id="inputGroupFile02" aria-describedby="inputGroupFileAddon01">
-        <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
+      <h6>{{'photo' | translate}}:</h6>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupFileAddon02">{{'upload' | translate}}</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" (change)="handleFileInput2($event)" class="custom-file-input"
+                 id="inputGroupFile02" aria-describedby="inputGroupFileAddon01">
+          <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
+        </div>
       </div>
-    </div>
-    <div>
-      <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
-    </div>
-    <button style="width: 300px" class="btn btn-success"
-            (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
+      <div>
+        <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
+      </div>
+      <button style="width: 300px" class="btn btn-success"
+              (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
               createRecipeDTO.cookingTime)">
-      {{'continue' | translate}}
-    </button>
-  </div>
-</div>
-
-
-<div [hidden]="!second" id="second" class="container-fluid">
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toDescription()">{{'dish description' | translate}}</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-primary btn-lg btn-block">{{'ingredients' | translate}}</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toCooking()">{{'cooking' | translate}}</button>
-    </li>
-  </ul>
-  <h2 style="margin: auto">{{'add ingredient' | translate}}</h2>
-  <table id="ingredientTable" class="table table-bordered table-striped">
-    <thead class="thead-dark">
-    <tr>
-      <th scope="col">{{'ingredient' | translate}}</th>
-      <th scope="col">{{'amount' | translate}}</th>
-      <th scope="col">{{'unit' | translate}}</th>
-      <th scope="col">{{'note' | translate}}</th>
-      <th scope="col">{{'delete' | translate}}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr id="ingredient" name="ingredient" *ngFor="let ingredient of ingredients">
-      <td name="i.name">{{ingredient.name}}</td>
-      <td name="i.amount">{{ingredient.amount}}</td>
-      <td name="i.unit">{{ingredient.unit}}</td>
-      <td name="i.note">{{ingredient.note}}</td>
-      <td>
-        <button name="delete" (click)="deleteIngredient(ingredient.name)"
-                class='btn btn-danger'>{{'delete' | translate}}
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  <div class="form-group">
-    <div class="row">
-      <div class="col">
-        <h6 for="name">{{'ingredient name' | translate}}:</h6>
-        <select class="custom-select" data-live-search="true" id="ingredientName" [(ngModel)]="ingredient.name"
-                #ingName="ngModel" required>
-          <option style="width: 500px" *ngFor="let ingredient of allIngredients"
-                  value="{{ingredient.name}}">{{ingredient.name}}</option>
-        </select>
-        <div *ngIf="ingName.invalid" style="color: red">{{'required' | translate}}</div>
-      </div>
-      <div class="col">
-        <h6 for="name">{{'amount' | translate}}:</h6>
-        <input type="text" name="amount"
-               class="form-control"
-               id="amount"
-               autocomplete="off"
-               [(ngModel)]="ingredient.amount"
-               #amount="ngModel" required pattern="[0-9]{1,7}">
-        <div *ngIf="amount.invalid" style="color: red">{{'required or invalid' | translate}}</div>
-      </div>
-      <div class="col">
-        <h6 for="name">{{'unit' | translate}}:</h6>
-        <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit"
-                #unit1="ngModel" required>
-          <option *ngFor="let u of unit" value="{{u}}">{{u}}</option>
-        </select>
-        <div *ngIf="unit1.invalid" style="color: red">{{'required' | translate}}</div>
-      </div>
-      <div class="col">
-        <h6 for="name">{{'note' | translate}}:</h6>
-        <input type="text" name="note"
-               class="form-control"
-               id="note"
-               autocomplete="off"
-               [(ngModel)]="ingredient.note">
-      </div>
-      <div class="col">
-        <br/>
-        <button type="submit" [disabled]="ingName.invalid || unit1.invalid || amount.invalid"
-                (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit,ingredient.note)"
-                class="btn btn-success">{{'add ingredient' | translate}} +
-        </button>
-      </div>
+        {{'continue' | translate}}
+      </button>
     </div>
   </div>
-  <button style="width: 300px" type="submit" (click)="toCooking()"
-          class="btn btn-success ">{{'continue' | translate}}</button>
-</div>
 
-<div [hidden]="!third" id="third" class="container-fluid">
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toDescription()">{{'dish description' | translate}}</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
-              createRecipeDTO.cookingTime)">{{'ingredients' | translate}}
-      </button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-primary btn-lg btn-block">{{'cooking' | translate}}</button>
-    </li>
-  </ul>
-  <div class="col-md-6 login-container" style="max-width: 100%">
-    <h2 style="margin: auto">{{'cooking' | translate}}</h2>
-    <br/>
-    <table id="stepTable" class="table table-bordered table-striped">
+
+  <div [hidden]="!second" id="second" class="container-fluid">
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="toDescription()">{{'dish description' | translate}}</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary btn-lg btn-block">{{'ingredients' | translate}}</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="toCooking()">{{'cooking' | translate}}</button>
+      </li>
+    </ul>
+    <h2 style="margin: auto">{{'add ingredient' | translate}}</h2>
+    <table id="ingredientTable" class="table table-bordered table-striped">
       <thead class="thead-dark">
       <tr>
-        <th scope="col">{{'number' | translate}}</th>
-        <th scope="col">{{'photo' | translate}}</th>
-        <th scope="col">{{'name' | translate}}</th>
-        <th scope="col">{{'description' | translate}}</th>
+        <th scope="col">{{'ingredient' | translate}}</th>
+        <th scope="col">{{'amount' | translate}}</th>
+        <th scope="col">{{'unit' | translate}}</th>
+        <th scope="col">{{'note' | translate}}</th>
         <th scope="col">{{'delete' | translate}}</th>
       </tr>
       </thead>
       <tbody>
-      <tr id="cookingStep" *ngFor="let step of cookingSteps">
-        <td name="c.number">{{step.number}}</td>
-        <td name="c.photo"><img [src]="step.imgSource" height="100" weight="100" *ngIf="step.imgSource != null"></td>
-        <td name="c.name">{{step.name}}</td>
-        <td name="c.description">{{step.description}}</td>
+      <tr id="ingredient" name="ingredient" *ngFor="let ingredient of ingredients">
+        <td name="i.name">{{ingredient.name}}</td>
+        <td name="i.amount">{{ingredient.amount}}</td>
+        <td name="i.unit">{{ingredient.unit}}</td>
+        <td name="i.note">{{ingredient.note}}</td>
         <td>
-          <button class='btn btn-danger' (click)="deleteStep(step.name)">{{'delete' | translate}}</button>
+          <button name="delete" (click)="deleteIngredient(ingredient.name)"
+                  class='btn btn-danger'>{{'delete' | translate}}
+          </button>
         </td>
       </tr>
       </tbody>
     </table>
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <h6 for="name">{{'ingredient name' | translate}}:</h6>
+          <select class="custom-select" data-live-search="true" id="ingredientName" [(ngModel)]="ingredient.name"
+                  #ingName="ngModel" required>
+            <option style="width: 500px" *ngFor="let ingredient of allIngredients"
+                    value="{{ingredient.name}}">{{ingredient.name}}</option>
+          </select>
+          <div *ngIf="ingName.invalid" style="color: red">{{'required' | translate}}</div>
+        </div>
+        <div class="col">
+          <h6 for="name">{{'amount' | translate}}:</h6>
+          <input type="text" name="amount"
+                 class="form-control"
+                 id="amount"
+                 autocomplete="off"
+                 [(ngModel)]="ingredient.amount"
+                 #amount="ngModel" required pattern="[0-9]{1,7}">
+          <div *ngIf="amount.invalid" style="color: red">{{'required or invalid' | translate}}</div>
+        </div>
+        <div class="col">
+          <h6 for="name">{{'unit' | translate}}:</h6>
+          <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit"
+                  #unit1="ngModel" required>
+            <option *ngFor="let u of unit" value="{{u}}">{{u}}</option>
+          </select>
+          <div *ngIf="unit1.invalid" style="color: red">{{'required' | translate}}</div>
+        </div>
+        <div class="col">
+          <h6 for="name">{{'note' | translate}}:</h6>
+          <input type="text" name="note"
+                 class="form-control"
+                 id="note"
+                 autocomplete="off"
+                 [(ngModel)]="ingredient.note">
+        </div>
+        <div class="col">
+          <br/>
+          <button type="submit" [disabled]="ingName.invalid || unit1.invalid || amount.invalid"
+                  (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit,ingredient.note)"
+                  class="btn btn-success">{{'add ingredient' | translate}} +
+          </button>
+        </div>
+      </div>
+    </div>
+    <button style="width: 300px" type="submit" (click)="toCooking()"
+            class="btn btn-success ">{{'continue' | translate}}</button>
+  </div>
 
-    <div class="form-group">
-      <h6>{{'cooking step name' | translate}}:</h6>
-      <input #cookName="ngModel" type="text" name="s.name" [(ngModel)]="cookingStep.name" class="form-control"
-             autocomplete="off" required>
-      <div *ngIf="cookName.invalid" style="color: red">{{'required' | translate}}</div>
-    </div>
-    <div class="form-group">
-      <h6>{{'description' | translate}}:</h6>
-      <textarea name="s.description" class="form-control" [(ngModel)]="cookingStep.description"
-                #cookDescription="ngModel" autocomplete="off" required></textarea>
-      <div *ngIf="cookDescription.invalid" style="color: red">{{'required' | translate}}</div>
-    </div>
-    <h6>{{'photo' | translate}}:</h6>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroupFileAddon01">{{'upload' | translate}}</span>
+  <div [hidden]="!third" id="third" class="container-fluid">
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="toDescription()">{{'dish description' | translate}}</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
+              createRecipeDTO.cookingTime)">{{'ingredients' | translate}}
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary btn-lg btn-block">{{'cooking' | translate}}</button>
+      </li>
+    </ul>
+    <div class="col-md-6 login-container" style="max-width: 100%">
+      <h2 style="margin: auto">{{'cooking' | translate}}</h2>
+      <br/>
+      <table id="stepTable" class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">{{'number' | translate}}</th>
+          <th scope="col">{{'photo' | translate}}</th>
+          <th scope="col">{{'name' | translate}}</th>
+          <th scope="col">{{'description' | translate}}</th>
+          <th scope="col">{{'delete' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="cookingStep" *ngFor="let step of cookingSteps">
+          <td name="c.number">{{step.number}}</td>
+          <td name="c.photo"><img [src]="step.imgSource" height="100" weight="100" *ngIf="step.imgSource != null"></td>
+          <td name="c.name">{{step.name}}</td>
+          <td name="c.description">{{step.description}}</td>
+          <td>
+            <button class='btn btn-danger' (click)="deleteStep(step.name)">{{'delete' | translate}}</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="form-group">
+        <h6>{{'cooking step name' | translate}}:</h6>
+        <input #cookName="ngModel" type="text" name="s.name" [(ngModel)]="cookingStep.name" class="form-control"
+               autocomplete="off" required>
+        <div *ngIf="cookName.invalid" style="color: red">{{'required' | translate}}</div>
       </div>
-      <div class="custom-file">
-        <input type="file" (change)="handleFileInput($event)" class="custom-file-input"
-               id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-        <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
+      <div class="form-group">
+        <h6>{{'description' | translate}}:</h6>
+        <textarea name="s.description" class="form-control" [(ngModel)]="cookingStep.description"
+                  #cookDescription="ngModel" autocomplete="off" required></textarea>
+        <div *ngIf="cookDescription.invalid" style="color: red">{{'required' | translate}}</div>
       </div>
+      <h6>{{'photo' | translate}}:</h6>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupFileAddon01">{{'upload' | translate}}</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" (change)="handleFileInput($event)" class="custom-file-input"
+                 id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+          <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
+        </div>
+      </div>
+      <div>
+        <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
+      </div>
+      <div>
+        <button type="submit" class="btn btn-success" [disabled]="cookDescription.invalid || cookName.invalid"
+                (click)="addCookingStep(cookingStep.name,cookingStep.description,cookingSteps.length)">
+          {{'add step' | translate}}+
+        </button>
+      </div>
+      <br/>
+      <form (ngSubmit)="onSubmit()">
+        <button [disabled]="name.invalid || difficulty.invalid || minutes.invalid" style="width: 300px" type="submit"
+                class="btn btn-success">{{'create recipe' | translate}}
+        </button>
+      </form>
     </div>
-    <div>
-      <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
-    </div>
-    <div>
-      <button type="submit" class="btn btn-success" [disabled]="cookDescription.invalid || cookName.invalid"
-              (click)="addCookingStep(cookingStep.name,cookingStep.description,cookingSteps.length)">
-        {{'add step' | translate}}+
-      </button>
-    </div>
-    <br/>
-    <form (ngSubmit)="onSubmit()">
-      <button [disabled]="name.invalid || difficulty.invalid || minutes.invalid" style="width: 300px" type="submit"
-              class="btn btn-success">{{'create recipe' | translate}}
-      </button>
-    </form>
   </div>
 </div>

@@ -2,21 +2,21 @@
   <div [hidden]="!first" id="first" class="container-fluid">
     <ul class="nav nav-pills nav-fill">
       <li class="nav-item">
-        <button class="btn btn-primary btn-lg btn-block">{{'search by name' | translate}}</button>
+        <button class="btn btn-info btn-lg btn-block">{{'search by name' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byIngredients()">{{'search by ingredients' | translate}}</button>
+        <button class="btn btn-outline-info btn-lg btn-block" (click)="byIngredients()">{{'search by ingredients' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byRecipes()">{{'search by parameters' | translate}}</button>
+        <button class="btn btn-outline-info btn-lg btn-block" (click)="byRecipes()">{{'search by parameters' | translate}}</button>
       </li>
     </ul>
-    <div class="input-group mb-6 div">
+    <div class="input-group mb-6 div bg-info" style="padding-bottom: 10px">
       <input type="text" class="form-control divChild" placeholder="{{'search by recipe name' | translate}}"
              aria-label="Recipient's username"
              aria-describedby="button-addon2" [(ngModel)]="recipe.name">
       <div class="input-group-append divChild">
-        <button class="btn btn-outline-primary" type="button" id="button-addon1" (click)="searchByName(recipe.name)">
+        <button class="btn btn-success" type="button" id="button-addon1" (click)="searchByName(recipe.name)">
           {{'search' | translate}}
         </button>
       </div>
@@ -25,7 +25,7 @@
              aria-describedby="button-addon2"
              id="authorName" [(ngModel)]="author.login">
       <div class="input-group-append divChild">
-        <button class="btn btn-outline-primary" type="button" id="button-addon2"
+        <button class="btn btn-success" type="button" id="button-addon2"
                 (click)="searchByAuthorName(author.login)">{{'search' | translate}}
         </button>
       </div>
@@ -35,50 +35,52 @@
   <div [hidden]="!second" id="second" class="container-fluid">
     <ul class="nav nav-pills nav-fill">
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byName()">{{'search by name' | translate}}</button>
+        <button class="btn btn-outline-info btn-lg btn-block" (click)="byName()">{{'search by name' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary btn-lg btn-block">{{'search by ingredients' | translate}}</button>
+        <button class="btn btn-info btn-lg btn-block">{{'search by ingredients' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byRecipes()">{{'search by parameters' | translate}}</button>
+        <button class="btn btn-outline-info btn-lg btn-block" (click)="byRecipes()">{{'search by parameters' | translate}}</button>
       </li>
     </ul>
-    <div class="card border-primary mb-3" style="width: 100%">
-      <div class="card-header">{{'selected ingredients' | translate}}:</div>
-      <div class="card-body text-primary">
-        <div class="div">
-          <ul *ngFor="let i of ingredientNameDTOS" class="divChild">
-            <li>
-              <button class="btn btn-light border">{{i.name}}</button>
-              <button class="btn btn-outline-danger border" (click)="deleteFromCart(i.name)">x</button>
-            </li>
-          </ul>
+    <div class="bg-info" style="padding-bottom: 10px">
+      <div class="card text-white bg-info mb-3" style="width: 100%">
+        <div class="card-header">{{'selected ingredients' | translate}}:</div>
+        <div class="card-body text-dark">
+          <div class="div">
+            <ul *ngFor="let i of ingredientNameDTOS" class="divChild">
+              <li>
+                <button class="btn btn-light">{{i.name}}</button>
+                <button class="btn btn-danger" (click)="deleteFromCart(i.name)">x</button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <div>
-      <label>{{'droplist' | translate}}:</label>
-      <select style="max-width: 300px" (change)="addToCart(ingredient.name)" class="custom-select"
-              data-live-search="true"
-              [(ngModel)]="ingredient.name" id="select">
-        <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
-                value="{{ingredient.name}}">{{ingredient.name}}</option>
-      </select>
-      <button class="divChild2 btn btn-danger" (click)="clearAll()">{{'clear' | translate}}
-      </button>
-    </div>
-    <div class="div">
-      <div id="outer" class="divChild" *ngFor="let type of keys">
-        <button type="button" (click)="findIngredientByType(type)" class="btn btn-info">{{type}}</button>
+      <div>
+        <label>{{'droplist' | translate}}:</label>
+        <select style="max-width: 300px" (change)="addToCart(ingredient.name)" class="custom-select"
+                data-live-search="true"
+                [(ngModel)]="ingredient.name" id="select">
+          <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
+                  value="{{ingredient.name}}">{{ingredient.name}}</option>
+        </select>
+        <button class="divChild2 btn btn-danger" (click)="clearAll()">{{'clear' | translate}}
+        </button>
       </div>
-    </div>
-    <div [hidden]="!typeDiv" class="div">
-      <div class="divChild" *ngFor="let ingredient of typeIngredients">
-        <div>
-          <input (change)="addSelectIngredient(ingredient)" type="checkbox"
-                 id="inlineCheckbox1" value="{{ingredient.name}}" name="check" [(ngModel)]="ingredient.checked">
-          <label for="inlineCheckbox1">{{ingredient.name}}</label>
+      <div class="div">
+        <div id="outer" class="divChild" *ngFor="let type of keys">
+          <button type="button" (click)="findIngredientByType(type)" class="btn btn-info">{{type}}</button>
+        </div>
+      </div>
+      <div [hidden]="!typeDiv" class="div">
+        <div class="divChild" *ngFor="let ingredient of typeIngredients">
+          <div>
+            <input (change)="addSelectIngredient(ingredient)" type="checkbox"
+                   id="inlineCheckbox1" value="{{ingredient.name}}" name="check" [(ngModel)]="ingredient.checked">
+            <label for="inlineCheckbox1">{{ingredient.name}}</label>
+          </div>
         </div>
       </div>
     </div>
@@ -92,16 +94,16 @@
   <div [hidden]="!third" id="third" class="container-fluid">
     <ul class="nav nav-pills nav-fill">
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byName()">{{'search by name' | translate}}</button>
+        <button class="btn btn-outline-info btn-lg btn-block" (click)="byName()">{{'search by name' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-link" (click)="byIngredients()">{{'search by ingredients' | translate}}</button>
+        <button class="btn btn-outline-info btn-lg btn-block" (click)="byIngredients()">{{'search by ingredients' | translate}}</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary btn-lg btn-block">{{'search by parameters' | translate}}</button>
+        <button class="btn btn-info btn-lg btn-block">{{'search by parameters' | translate}}</button>
       </li>
     </ul>
-    <div class="card bg-light mb-3" style="max-width: 100%;">
+    <div class="card text-white bg-info mb-3" style="max-width: 100%;padding-bottom: 10px">
       <div class="card-header">{{'parameters' | translate}}</div>
       <div class="card-body">
         <h5>{{'cooking time' | translate}}:</h5>
