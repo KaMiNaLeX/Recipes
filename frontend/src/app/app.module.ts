@@ -10,18 +10,6 @@ import {CategoryListComponent} from './component/category-list/category-list.com
 import {LoginComponent} from "./component/auth/login/login.component";
 import {TokenInterceptor} from "./interceptors/token.interceptor";
 import {UserProfileComponent} from './component/user-profile/user-profile.component';
-
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatSortModule,
-  MatTableModule
-} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RegisterComponent} from './component/auth/register/register.component';
@@ -64,15 +52,6 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
     FormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
