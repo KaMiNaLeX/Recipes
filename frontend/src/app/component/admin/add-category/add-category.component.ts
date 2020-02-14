@@ -96,7 +96,7 @@ export class AddCategoryComponent implements OnInit {
               this.categories = data;
               this.firstDiv = true;
               this.thirdDiv = false;
-              window.location.reload();
+             // window.location.reload();
             })
           } else {
             window.alert("A category with this name already exists!");
