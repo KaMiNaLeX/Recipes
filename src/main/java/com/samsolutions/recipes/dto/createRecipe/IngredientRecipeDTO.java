@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author kaminskiy.alexey
@@ -17,7 +17,7 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IngredientRecipeDTO {
-    @NotEmpty
+    @NotBlank
     private String name;
     private float amount;
     private String note;

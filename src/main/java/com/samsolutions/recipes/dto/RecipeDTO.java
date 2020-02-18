@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.UUID;
@@ -21,7 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class RecipeDTO {
     private UUID id;
-    @NotEmpty
+    @NotBlank
     private String name;
     private CookingDifficulty cookingDifficulty;
     @NotNull
