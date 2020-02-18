@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 
 /**
@@ -25,7 +26,7 @@ public class GetFileController {
     private FileStorageService fileStorageService;
 
     @GetMapping("/getFile/{fileName}")
-    public ResponseEntity<Resource> getFile(@PathVariable String fileName, HttpServletRequest request) throws Exception {
+    public ResponseEntity<Resource> getFile(@PathVariable @NotBlank String fileName, HttpServletRequest request) throws Exception {
         // Load file as Resource
         Resource resource = fileStorageService.loadFileAsResource(fileName);
         // Try to determine file's content type

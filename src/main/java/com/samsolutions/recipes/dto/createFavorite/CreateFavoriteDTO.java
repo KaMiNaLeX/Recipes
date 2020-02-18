@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.dto.createFavorite;
 
+import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateFavoriteDTO {
-    @NotNull
+    @ValidUUID
     private UUID userId;
-    @NotNull
+    @ValidUUID
     private UUID recipeId;
 }

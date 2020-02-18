@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.dto;
 
+import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,6 @@ public class CookingStepDTO {
     private String description;
     private boolean active;
     private String imgSource;
-    @NotNull
+    @ValidUUID
     private UUID recipeId;
 }

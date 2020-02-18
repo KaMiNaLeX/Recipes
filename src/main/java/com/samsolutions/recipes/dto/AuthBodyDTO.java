@@ -1,11 +1,11 @@
 package com.samsolutions.recipes.dto;
 
+import com.samsolutions.recipes.service.validation.ValidEmail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -21,6 +21,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class AuthBodyDTO {
     @NotBlank
+    @ValidEmail
     private String email;
     @NotBlank
     private String password;

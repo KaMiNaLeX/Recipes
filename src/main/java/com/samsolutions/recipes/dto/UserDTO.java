@@ -1,5 +1,6 @@
 package com.samsolutions.recipes.dto;
 
+import com.samsolutions.recipes.service.validation.ValidEmail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class UserDTO {
     @NotBlank
     private String lastName;
     @NotBlank
+    @ValidEmail
     private String email;
     @NotBlank
     private String login;

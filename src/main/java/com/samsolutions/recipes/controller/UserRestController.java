@@ -4,6 +4,7 @@ import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.service.impl.UserServiceImpl;
+import com.samsolutions.recipes.service.validation.ValidEmail;
 import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class UserRestController extends CustomGlobalExceptionHandler {
     }
 
     @GetMapping("/email/{email}")
-    public UserDTO getByEmail(@PathVariable("email") @NotBlank String email) {
+    public UserDTO getByEmail(@PathVariable("email") @ValidEmail String email) {
         return userService.getByEmail(email);
     }
 

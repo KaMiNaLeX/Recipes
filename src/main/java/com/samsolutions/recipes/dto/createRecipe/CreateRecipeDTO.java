@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.dto.createRecipe;
 
 import com.samsolutions.recipes.model.Enum.CookingDifficulty;
+import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ public class CreateRecipeDTO {
     private int negativeVotes;
     private Date lastModified = new Date();
     private String imgSource;
-    @NotNull
+    @ValidUUID
     private UUID authorId;
     private List<CategoryRecipeDTO> categoryRecipeDTOList;
     private List<IngredientRecipeDTO> ingredientRecipeDTOList;

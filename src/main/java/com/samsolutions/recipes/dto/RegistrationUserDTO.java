@@ -1,10 +1,12 @@
 package com.samsolutions.recipes.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.samsolutions.recipes.service.validation.ValidEmail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 
 
 import javax.validation.constraints.NotBlank;
@@ -17,12 +19,13 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Validated
 public class RegistrationUserDTO {
     @NotBlank
     private String firstName;
     @NotBlank
     private String lastName;
-    @NotBlank
+    @ValidEmail
     private String email;
     @NotBlank
     private String login;
