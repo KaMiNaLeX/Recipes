@@ -50,6 +50,10 @@ export class TokenInterceptor implements HttpInterceptor {
           this.router.navigate(['login']);
           window.alert('Wrong email or password');
         }
+        if (error.status === 404) {
+          this.router.navigate(['login']);
+          window.alert('Wrong email or password');
+        }
         if (error.status === 400) {
           alert(error.error);
         }

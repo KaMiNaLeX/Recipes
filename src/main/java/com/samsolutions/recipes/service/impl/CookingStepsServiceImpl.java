@@ -8,6 +8,7 @@ import com.samsolutions.recipes.repository.RecipeRepository;
 import com.samsolutions.recipes.service.CookingStepsService;
 import com.samsolutions.recipes.service.FileStorageService;
 import com.samsolutions.recipes.service.ModelMapperService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.UUID;
  * @author kaminskiy.alexey
  * @since 2019.11
  */
+@Log4j2
 @Service
 public class CookingStepsServiceImpl implements CookingStepsService, ModelMapperService {
 
@@ -38,10 +40,14 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
     @Override
     @Transactional
     public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) {
-        cookingStepsEntity.setActive(true);
-        cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepsEntity.getRecipeId()));
-        cookingStepsRepository.save(cookingStepsEntity);
-        return cookingStepsEntity;
+        if (cookingStepsEntity.getRecipeId() != null) {
+            cookingStepsEntity.setActive(true);
+            cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepsEntity.getRecipeId()));
+            cookingStepsRepository.save(cookingStepsEntity);
+            return cookingStepsEntity;
+        } else
+            log.error("Create step is failed");
+        return null;
     }
 
     @Override

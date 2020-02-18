@@ -28,6 +28,7 @@ import com.samsolutions.recipes.repository.RecipeRepository;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,7 @@ import java.util.UUID;
  * @author kaminskiy.alexey
  * @since 2019.12
  */
+@Log4j2
 @Service
 public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     @Autowired
@@ -109,7 +111,7 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     }
 
     @Override
-    public CreateRecipeDTO updateRecipe(UUID uuid, CreateRecipeDTO createRecipeDTO) throws IOException {
+    public CreateRecipeDTO updateRecipe(UUID uuid, CreateRecipeDTO createRecipeDTO) {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);
         createRecipeDTO.setId(updateEntity.getId());
         map(createRecipeDTO, updateEntity);
@@ -225,9 +227,9 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             map(recipeEntityList, recipeDTOList);
             return recipeDTOList;
         } catch (NotFoundException | NullPointerException ex) {
-            throw new NotFoundException("NOT_FOUND");
+            log.error(new NotFoundException("NOT_FOUND"));
+            return null;
         }
-
     }
 
     @Override
@@ -390,7 +392,8 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
 
         UUID uuid = userRepository.getByLogin(name).getId();
         if (uuid == null) {
-            throw new UserNotFoundException("User not found");
+            log.error(new UserNotFoundException("User not found"));
+            return null;
         }
         map(recipeRepository.getByAuthorId(uuid), recipeDTOList);
         return recipeDTOList;
@@ -505,6 +508,4 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         map(userEntity, userDTO);
         return userDTO;
     }
-
-
 }

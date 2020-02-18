@@ -8,6 +8,7 @@ import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.service.CookingStepsService;
 import com.samsolutions.recipes.service.RecipeService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,6 +31,7 @@ import java.util.UUID;
  * @author kaminskiy.alexey
  * @since 2019.12
  */
+@Log4j2
 @RestController
 @RequestMapping("/api/recipe")
 public class RecipeRestController {
@@ -57,8 +59,7 @@ public class RecipeRestController {
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PutMapping("/updateRecipe/{id}")
-    public CreateRecipeDTO updateRecipe(@PathVariable("id") UUID uuid, @RequestBody CreateRecipeDTO recipeDTO)
-            throws IOException {
+    public CreateRecipeDTO updateRecipe(@PathVariable("id") UUID uuid, @RequestBody CreateRecipeDTO recipeDTO) {
         return recipeService.updateRecipe(uuid, recipeDTO);
     }
 
@@ -86,9 +87,10 @@ public class RecipeRestController {
     @PostMapping("/createRecipe")
     public CreateRecipeDTO createRecipeDTO(@RequestBody CreateRecipeDTO createRecipeDTO) {
         try {
+            log.info("Create recipe " + createRecipeDTO.getName() + " is successful");
             return recipeService.createRecipeDTO(createRecipeDTO);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Create recipe " + createRecipeDTO.getName() + " is failed", e.getCause());
             return null;
         }
     }
@@ -119,7 +121,7 @@ public class RecipeRestController {
         try {
             return recipeService.getByNameAuthorId(name, uuid);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("getByNameAuthorId is failed", e.getCause());
             return null;
         }
     }

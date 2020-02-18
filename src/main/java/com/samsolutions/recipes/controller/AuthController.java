@@ -9,6 +9,7 @@ import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.impl.CustomUserDetailsService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.http.ResponseEntity.badRequest;
+import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
 /**
@@ -35,6 +38,7 @@ import static org.springframework.http.ResponseEntity.ok;
  * @author kaminskiy.alexey
  * @since 2019.12
  */
+@Log4j2
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -64,7 +68,8 @@ public class AuthController {
             model.put("token", token);
             return ok(model);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid email/password supplied");
+            log.error(new BadCredentialsException("Invalid email/password supplied"));
+            return notFound().build();
         }
     }
 
@@ -73,21 +78,23 @@ public class AuthController {
         UserEntity userExists = userService.findUserByEmail(user.getEmail());
         UserEntity userExists2 = userService.getByLogin(user.getLogin());
         if (userExists != null) {
-            throw new BadCredentialsException("User with email: " + user.getEmail() + " already exists");
+            log.error(new IllegalArgumentException("User with email: " + user.getEmail() + " already exists"));
         }
         if (userExists2 != null) {
-            throw new BadCredentialsException("User with login: " + user.getLogin() + " already exists");
+            log.error(new IllegalArgumentException("User with login: " + user.getLogin() + " already exists"));
         }
         userService.saveUser(user);
         Map<Object, Object> model = new HashMap<>();
         model.put("message", "User registered successfully");
+        log.info("User registered successfully");
         return ok(model);
     }
 
     @GetMapping("/user")
     public ResponseEntity user(Principal user) {
         if (user == null) {
-            throw new BadCredentialsException("User does not login");
+            log.error(new BadCredentialsException("User does not login"));
+            return null;
         } else {
             Map<Object, Object> model = new HashMap<>();
             model.put("principal", "true");
@@ -99,7 +106,7 @@ public class AuthController {
     public ResponseEntity userRole(Principal user) {
         try {
             if (user == null) {
-                throw new BadCredentialsException("User does not login");
+                log.error(new BadCredentialsException("User does not login"));
             }
             String username = user.getName();
             UserEntity userEntity = userService.findUserByEmail(username);
@@ -114,8 +121,8 @@ public class AuthController {
             model.put("roles", roleNameList);
             return ok(model);
         } catch (NotFoundException ex) {
-            throw new NotFoundException("NOT_FOUND!");
+            log.error(new NotFoundException("NOT_FOUND!"));
+            return null;
         }
-
     }
 }

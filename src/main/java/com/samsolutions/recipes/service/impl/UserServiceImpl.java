@@ -1,9 +1,7 @@
 package com.samsolutions.recipes.service.impl;
 
-import com.samsolutions.recipes.dto.RoleDTO;
 import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.model.Enum.RoleName;
-import com.samsolutions.recipes.model.RoleEntity;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.RoleRepository;
@@ -20,15 +18,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 /**
@@ -53,17 +46,28 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public UserDTO getById(UUID uuid) {
         UserEntity userEntity = userRepository.getById(uuid);
-        UserDTO userDTO = new UserDTO();
-        map(userEntity, userDTO);
-        return userDTO;
+        if (userEntity != null) {
+            UserDTO userDTO = new UserDTO();
+            map(userEntity, userDTO);
+            return userDTO;
+        } else {
+            log.error("User by id is not found");
+            return null;
+        }
+
     }
 
     @Override
     public UserDTO getByLogin(String login) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        UserDTO userDTO = new UserDTO();
-        map(userEntity, userDTO);
-        return userDTO;
+        if (userEntity != null) {
+            UserDTO userDTO = new UserDTO();
+            map(userEntity, userDTO);
+            return userDTO;
+        } else {
+            log.error("User by login is not found");
+            return null;
+        }
     }
 
 
@@ -71,14 +75,20 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Transactional
     public void removeByLogin(String login) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        userRepository.delete(userEntity);
+        if (userEntity != null) {
+            userRepository.delete(userEntity);
+            log.info("User " + userEntity.getLogin() + " is deleted");
+        } else log.error("User by login is not found");
     }
 
     @Override
     @Transactional
     public void removeById(UUID uuid) {
         UserEntity userEntity = userRepository.getById(uuid);
-        userRepository.delete(userEntity);
+        if (userEntity != null) {
+            userRepository.delete(userEntity);
+            log.info("User " + userEntity.getLogin() + " is deleted");
+        } else log.error("User by id is not found");
     }
 
     @Override
@@ -124,9 +134,15 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public UserDTO getByEmail(String email) {
         UserEntity userEntity = userRepository.getByEmail(email);
-        UserDTO userDTO = new UserDTO();
-        map(userEntity, userDTO);
-        return userDTO;
+        if (userEntity != null) {
+            UserDTO userDTO = new UserDTO();
+            map(userEntity, userDTO);
+            return userDTO;
+        } else {
+            log.error("User by email is not found");
+            return null;
+        }
+
     }
 
     @Override

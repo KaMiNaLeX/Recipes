@@ -4,6 +4,7 @@ import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.service.CategoryService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +28,7 @@ import java.util.UUID;
  * @author kaminskiy.alexey
  * @since 2019.11
  */
+@Log4j2
 @RestController
 @RequestMapping("/api/category")
 public class CategoryRestController {
@@ -52,14 +54,16 @@ public class CategoryRestController {
     @DeleteMapping("/delete/{id}")
     public void removeById(@PathVariable("id") UUID uuid) {
         categoryService.removeById(uuid);
+        log.info("Remove " + uuid + " category is successful");
     }
 
     @PostMapping("/create")
     public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO) {
         try {
+            log.info("Create category " + categoryDTO.getName() + " is successful");
             return categoryService.createCategory(categoryDTO);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Create category " + categoryDTO.getName() + " is failed", e.getCause());
             return null;
         }
     }
@@ -67,12 +71,12 @@ public class CategoryRestController {
     @PutMapping("/update/{id}")
     public CategoryDTO updateCategory(@PathVariable("id") UUID uuid, @RequestBody CategoryDTO categoryDTO) {
         try {
+            log.info("Update category " + uuid + "  is successful");
             return categoryService.updateCategory(uuid, categoryDTO);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Update category " + uuid + " is failed", e.getCause());
             return null;
         }
-
     }
 
     @GetMapping("/findAll")
@@ -85,5 +89,4 @@ public class CategoryRestController {
             throws IOException {
         return categoryService.savePhoto(id, file);
     }
-
 }

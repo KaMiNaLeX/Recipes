@@ -1,8 +1,10 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.UserDTO;
+import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.service.impl.UserServiceImpl;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import java.util.UUID;
  * @author kaminskiy.alexey
  * @since 2019.10
  */
+@Log4j2
 @RestController
 @RequestMapping("/api/user")
 public class UserRestController {
@@ -36,12 +39,7 @@ public class UserRestController {
 
     @GetMapping("/email/{email}")
     public UserDTO getByEmail(@PathVariable("email") String email) {
-        try {
-            return userService.getByEmail(email);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return userService.getByEmail(email);
     }
 
     @GetMapping("/")
@@ -56,12 +54,7 @@ public class UserRestController {
 
     @GetMapping("/login/{login}")
     public UserDTO getByLogin(@PathVariable("login") String login) {
-        try {
-            return userService.getByLogin(login);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return userService.getByLogin(login);
     }
 
     @DeleteMapping("/delete/{login}")
@@ -77,9 +70,10 @@ public class UserRestController {
     @PostMapping("/create")
     public UserDTO createUser(@RequestBody UserDTO userDTO) {
         try {
+            log.info("User " + userDTO.getLogin() + " is created");
             return userService.createUser(userDTO);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Create user " + userDTO.getLogin() + " is failed", e.getCause());
             return null;
         }
     }
@@ -87,9 +81,10 @@ public class UserRestController {
     @PutMapping("/{id}")
     public UserDTO updateUser(@PathVariable("id") UUID uuid, @RequestBody UserDTO userDTO) {
         try {
+            log.info("User " + userDTO.getLogin() + " is updated");
             return userService.updateUser(uuid, userDTO);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Update user " + userDTO.getLogin() + " is failed", e.getCause());
             return null;
         }
     }
@@ -101,6 +96,7 @@ public class UserRestController {
 
     @PutMapping("/savePass/{id}")
     public void savePass(@PathVariable("id") UUID uuid, @RequestBody String pass) {
+        log.info("Password is updated");
         userService.savePassword(uuid, pass);
     }
 

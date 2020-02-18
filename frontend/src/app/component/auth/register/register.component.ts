@@ -27,7 +27,6 @@ export class RegisterComponent implements OnInit {
               private userService: UserService) {
   }
 
-  //todo: need to fix
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       'firstName': new FormControl(null, Validators.required),

@@ -8,6 +8,7 @@ import com.samsolutions.recipes.repository.RoleRepository;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.repository.UserRoleRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +28,7 @@ import java.util.Set;
  * @author kaminskiy.alexey
  * @since 2019.12
  */
-
+@Log4j2
 @Service
 public class CustomUserDetailsService implements UserDetailsService, ModelMapperService {
 
@@ -58,14 +59,14 @@ public class CustomUserDetailsService implements UserDetailsService, ModelMapper
             List<GrantedAuthority> authorities = getUserAuthority(user.getUserRoles());
             return buildUserForAuthentication(user, authorities);
         } else {
-            throw new UsernameNotFoundException("username not found");
+            log.error(new UsernameNotFoundException("username not found"));
+            return null;
         }
     }
 
     private List<GrantedAuthority> getUserAuthority(List<UserRoleEntity> userRoles) {
         Set<GrantedAuthority> roles = new HashSet<>();
         userRoles.forEach((role) -> roles.add(new SimpleGrantedAuthority(role.getRole().toString())));
-
         return new ArrayList<>(roles);
     }
 

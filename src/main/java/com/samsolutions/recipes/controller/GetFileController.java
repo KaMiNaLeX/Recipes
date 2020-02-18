@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.service.FileStorageService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +18,7 @@ import java.io.IOException;
  * @author kaminskiy.alexey
  * @since 2019.12
  */
+@Log4j2
 @RestController
 public class GetFileController {
     @Autowired
@@ -31,7 +33,7 @@ public class GetFileController {
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
-            System.out.println("Could not determine file type.");
+            log.error("Could not determine file type", ex.getCause());
         }
         // Fallback to the default content type if type could not be determined
         if (contentType == null) {

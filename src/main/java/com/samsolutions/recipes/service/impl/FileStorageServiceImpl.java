@@ -2,6 +2,7 @@ package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.config.property.FileStorageProperty;
 import com.samsolutions.recipes.service.FileStorageService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -19,6 +20,7 @@ import java.nio.file.StandardCopyOption;
  * @author kaminskiy.alexey
  * @since 2019.12
  */
+@Log4j2
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
     private Path fileStorageLocation;
@@ -46,10 +48,12 @@ public class FileStorageServiceImpl implements FileStorageService {
             if (resource.exists()) {
                 return resource;
             } else {
-                throw new Exception("File not found " + fileName);
+                log.error(new Exception("File not found " + fileName));
+                return null;
             }
         } catch (Exception ex) {
-            throw new Exception("File not found " + fileName, ex);
+            log.error(new Exception("File not found " + fileName, ex));
+            return null;
         }
     }
 }
