@@ -2,11 +2,12 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
-import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.service.impl.UserServiceImpl;
+import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +30,7 @@ import java.util.UUID;
  * @since 2019.10
  */
 @Log4j2
+@Validated
 @RestController
 @RequestMapping("/api/user")
 public class UserRestController extends CustomGlobalExceptionHandler {
@@ -40,7 +43,7 @@ public class UserRestController extends CustomGlobalExceptionHandler {
     }
 
     @GetMapping("/email/{email}")
-    public UserDTO getByEmail(@PathVariable("email") String email) {
+    public UserDTO getByEmail(@PathVariable("email") @NotBlank String email) {
         return userService.getByEmail(email);
     }
 
@@ -50,22 +53,22 @@ public class UserRestController extends CustomGlobalExceptionHandler {
     }
 
     @GetMapping("/id/{id}")
-    public UserDTO getById(@PathVariable("id") UUID uuid) {
+    public UserDTO getById(@PathVariable("id") @ValidUUID UUID uuid) {
         return userService.getById(uuid);
     }
 
     @GetMapping("/login/{login}")
-    public UserDTO getByLogin(@PathVariable("login") String login) {
+    public UserDTO getByLogin(@PathVariable("login") @NotBlank String login) {
         return userService.getByLogin(login);
     }
 
     @DeleteMapping("/delete/{login}")
-    public void removeByLogin(@PathVariable("login") String login) {
+    public void removeByLogin(@PathVariable("login") @NotBlank String login) {
         userService.removeByLogin(login);
     }
 
     @DeleteMapping("/delete/id/{id}")
-    public void removeById(@PathVariable("id") UUID uuid) {
+    public void removeById(@PathVariable("id") @ValidUUID UUID uuid) {
         userService.removeById(uuid);
     }
 
@@ -81,7 +84,7 @@ public class UserRestController extends CustomGlobalExceptionHandler {
     }
 
     @PutMapping("/{id}")
-    public UserDTO updateUser(@PathVariable("id") UUID uuid, @RequestBody UserDTO userDTO) {
+    public UserDTO updateUser(@PathVariable("id") @ValidUUID UUID uuid,@Valid @RequestBody UserDTO userDTO) {
         try {
             log.info("User " + userDTO.getLogin() + " is updated");
             return userService.updateUser(uuid, userDTO);
@@ -92,12 +95,12 @@ public class UserRestController extends CustomGlobalExceptionHandler {
     }
 
     @PutMapping("/checkPass/{id}")
-    public Boolean checkPass(@PathVariable("id") UUID uuid, @RequestBody String pass) {
+    public Boolean checkPass(@PathVariable("id") @ValidUUID UUID uuid, @RequestBody @NotBlank String pass) {
         return userService.checkPassword(uuid, pass);
     }
 
     @PutMapping("/savePass/{id}")
-    public void savePass(@PathVariable("id") UUID uuid, @RequestBody String pass) {
+    public void savePass(@PathVariable("id") @ValidUUID UUID uuid, @RequestBody @NotBlank String pass) {
         log.info("Password is updated");
         userService.savePassword(uuid, pass);
     }

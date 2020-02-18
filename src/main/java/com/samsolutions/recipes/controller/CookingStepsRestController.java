@@ -4,8 +4,10 @@ import com.samsolutions.recipes.dto.CookingStepDTO;
 import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.model.CookingStepsEntity;
 import com.samsolutions.recipes.service.CookingStepsService;
+import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import java.util.UUID;
  * @since 2019.11
  */
 @Log4j2
+@Validated
 @RestController
 @RequestMapping("/api/step")
 public class CookingStepsRestController extends CustomGlobalExceptionHandler {
@@ -52,18 +55,18 @@ public class CookingStepsRestController extends CustomGlobalExceptionHandler {
     }
 
     @GetMapping("/{id}")
-    public CookingStepsEntity getById(@PathVariable("id") UUID uuid) {
+    public CookingStepsEntity getById(@PathVariable("id") @ValidUUID UUID uuid) {
         return cookingStepsService.getById(uuid);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void removeById(@PathVariable("id") UUID uuid) {
+    public void removeById(@PathVariable("id") @ValidUUID UUID uuid) {
         cookingStepsService.removeStepById(uuid);
         log.info("Remove step " + uuid + " is successful");
     }
 
     @PutMapping("update/{id}")
-    public CookingStepsEntity updateStep(@PathVariable("id") UUID uuid,@Valid @RequestBody CookingStepsEntity step)
+    public CookingStepsEntity updateStep(@PathVariable("id") @ValidUUID UUID uuid, @Valid @RequestBody CookingStepsEntity step)
             throws IOException {
         log.info("Update step " + step.getName() + " is successful");
         return cookingStepsService.updateStep(uuid, step);

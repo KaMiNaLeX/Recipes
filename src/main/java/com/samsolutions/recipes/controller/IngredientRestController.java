@@ -4,8 +4,10 @@ import com.samsolutions.recipes.dto.IngredientDTO;
 import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.model.Enum.Type;
 import com.samsolutions.recipes.service.IngredientService;
+import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ import java.util.UUID;
  * @since 2019.11
  */
 @Log4j2
+@Validated
 @RestController
 @RequestMapping("/api/ingredient")
 public class IngredientRestController extends CustomGlobalExceptionHandler {
@@ -37,7 +40,7 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
     }
 
     @GetMapping("/{id}")
-    public IngredientDTO getById(@PathVariable("id") UUID uuid) {
+    public IngredientDTO getById(@PathVariable("id") @ValidUUID UUID uuid) {
         return ingredientService.getById(uuid);
     }
 
@@ -58,7 +61,7 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
     }
 
     @PutMapping("/update/{id}")
-    public IngredientDTO updateIngredient(@PathVariable("id") UUID uuid,@Valid @RequestBody IngredientDTO ingredient) {
+    public IngredientDTO updateIngredient(@PathVariable("id") @ValidUUID UUID uuid, @Valid @RequestBody IngredientDTO ingredient) {
         try {
             log.info("Update ingredient " + uuid + " is successful");
             return ingredientService.updateIngredient(uuid, ingredient);
@@ -69,7 +72,7 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void removeById(@PathVariable("id") UUID uuid) {
+    public void removeById(@PathVariable("id") @ValidUUID UUID uuid) {
         ingredientService.removeById(uuid);
         log.info("Remove ingredient " + uuid + " is successful");
     }

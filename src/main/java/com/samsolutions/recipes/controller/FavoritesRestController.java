@@ -4,9 +4,11 @@ import com.samsolutions.recipes.dto.FavoriteDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
 import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.service.FavoriteService;
+import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ import java.util.UUID;
  * @since 2019.12
  */
 @Log4j2
+@Validated
 @RestController
 @RequestMapping("/api/favorite")
 public class FavoritesRestController extends CustomGlobalExceptionHandler {
@@ -43,13 +46,13 @@ public class FavoritesRestController extends CustomGlobalExceptionHandler {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void removeById(@PathVariable("id") UUID uuid) {
+    public void removeById(@PathVariable("id") @ValidUUID UUID uuid) {
         favoriteService.removeById(uuid);
         log.info("Remove favorite " + uuid + " is successful");
     }
 
     @GetMapping("/{id}")
-    public List<FavoriteDTO> findAllByUserId(@PathVariable("id") UUID uuid) {
+    public List<FavoriteDTO> findAllByUserId(@PathVariable("id") @ValidUUID UUID uuid) {
         return favoriteService.findAllByUserId(uuid);
     }
 }

@@ -23,6 +23,5 @@ public class AuthBodyDTO {
     @NotBlank
     private String email;
     @NotBlank
-    @Min(5)
     private String password;
 }

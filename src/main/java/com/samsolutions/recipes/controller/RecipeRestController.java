@@ -9,10 +9,12 @@ import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.service.CookingStepsService;
 import com.samsolutions.recipes.service.RecipeService;
+import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -34,6 +37,7 @@ import java.util.UUID;
  * @since 2019.12
  */
 @Log4j2
+@Validated
 @RestController
 @RequestMapping("/api/recipe")
 public class RecipeRestController extends CustomGlobalExceptionHandler {
@@ -55,33 +59,33 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     }
 
     @PutMapping("/update/{id}")
-    public RecipeDTO update(@PathVariable("id") UUID uuid,@Valid @RequestBody RecipeDTO recipeDTO) {
+    public RecipeDTO update(@PathVariable("id") @ValidUUID UUID uuid, @Valid @RequestBody RecipeDTO recipeDTO) {
         return recipeService.update(uuid, recipeDTO);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PutMapping("/updateRecipe/{id}")
-    public CreateRecipeDTO updateRecipe(@PathVariable("id") UUID uuid,@Valid @RequestBody CreateRecipeDTO recipeDTO) {
+    public CreateRecipeDTO updateRecipe(@PathVariable("id") @ValidUUID UUID uuid, @Valid @RequestBody CreateRecipeDTO recipeDTO) {
         return recipeService.updateRecipe(uuid, recipeDTO);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void removeById(@PathVariable("id") UUID uuid) {
+    public void removeById(@PathVariable("id") @ValidUUID UUID uuid) {
         recipeService.removeById(uuid);
     }
 
     @PutMapping("/positive/{id}")
-    public void positiveVote(@PathVariable("id") UUID uuid) {
+    public void positiveVote(@PathVariable("id") @ValidUUID UUID uuid) {
         recipeService.positiveVote(uuid);
     }
 
     @PutMapping("/negative/{id}")
-    public void negativeVote(@PathVariable("id") UUID uuid) {
+    public void negativeVote(@PathVariable("id") @ValidUUID UUID uuid) {
         recipeService.negativeVote(uuid);
     }
 
     @GetMapping("/categoryName/{name}")
-    public List<RecipeDTO> findAllByCategoryName(@PathVariable("name") String categoryName) {
+    public List<RecipeDTO> findAllByCategoryName(@PathVariable("name") @NotBlank String categoryName) {
         return recipeService.getByCategoryName(categoryName);
     }
 
@@ -98,28 +102,28 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     }
 
     @GetMapping("/id/{id}")
-    public CreateRecipeDTO getByRecipeId(@PathVariable("id") UUID uuid) {
+    public CreateRecipeDTO getByRecipeId(@PathVariable("id") @ValidUUID UUID uuid) {
         return recipeService.getByRecipeId(uuid);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @GetMapping("/authorId/{id}")
-    public List<CreateRecipeDTO> getByAuthorId(@PathVariable("id") UUID uuid) {
+    public List<CreateRecipeDTO> getByAuthorId(@PathVariable("id") @ValidUUID UUID uuid) {
         return recipeService.getByAuthorId(uuid);
     }
 
     @GetMapping("/authorName/{name}")
-    public List<RecipeDTO> getByAuthorName(@PathVariable("name") String name) {
+    public List<RecipeDTO> getByAuthorName(@PathVariable("name") @NotBlank String name) {
         return recipeService.getByAuthorName(name);
     }
 
     @GetMapping("/name/{name}")
-    public List<RecipeDTO> findAllByName(@PathVariable("name") String name) {
+    public List<RecipeDTO> findAllByName(@PathVariable("name") @NotBlank String name) {
         return recipeService.findAllByName(name);
     }
 
     @GetMapping("/nameAndAuthor/{name}/{authorId}")
-    public RecipeDTO getByNameAuthorId(@PathVariable("name") String name, @PathVariable("authorId") UUID uuid) {
+    public RecipeDTO getByNameAuthorId(@PathVariable("name") @NotBlank String name, @PathVariable("authorId") @ValidUUID UUID uuid) {
         try {
             return recipeService.getByNameAuthorId(name, uuid);
         } catch (Exception e) {
@@ -139,19 +143,19 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     }
 
     @PostMapping(value = "/addPhoto4Step/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public CookingStepRecipeDTO createPhoto4Step(@PathVariable("id") UUID id, @RequestParam MultipartFile file)
+    public CookingStepRecipeDTO createPhoto4Step(@PathVariable("id") @ValidUUID UUID id, @RequestParam MultipartFile file)
             throws IOException {
         return cookingStepsService.savePhoto(id, file);
     }
 
     @PostMapping(value = "/addPhoto4Recipe/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public RecipeDTO createPhoto4Recipe(@PathVariable("id") UUID id, @RequestParam MultipartFile file)
+    public RecipeDTO createPhoto4Recipe(@PathVariable("id") @ValidUUID UUID id, @RequestParam MultipartFile file)
             throws IOException {
         return recipeService.savePhoto(id, file);
     }
 
     @GetMapping("/authorName/id/{id}")
-    public UserDTO getAuthorName(@PathVariable("id") String authorId) {
+    public UserDTO getAuthorName(@PathVariable("id") @NotBlank String authorId) {
         return recipeService.getAuthorName(authorId);
     }
 
