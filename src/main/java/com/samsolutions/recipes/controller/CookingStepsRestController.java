@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.CookingStepDTO;
+import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.model.CookingStepsEntity;
 import com.samsolutions.recipes.service.CookingStepsService;
 import lombok.extern.log4j.Log4j2;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +27,7 @@ import java.util.UUID;
 @Log4j2
 @RestController
 @RequestMapping("/api/step")
-public class CookingStepsRestController {
+public class CookingStepsRestController extends CustomGlobalExceptionHandler {
     @Autowired
     private CookingStepsService cookingStepsService;
 
@@ -61,7 +63,7 @@ public class CookingStepsRestController {
     }
 
     @PutMapping("update/{id}")
-    public CookingStepsEntity updateStep(@PathVariable("id") UUID uuid, @RequestBody CookingStepsEntity step)
+    public CookingStepsEntity updateStep(@PathVariable("id") UUID uuid,@Valid @RequestBody CookingStepsEntity step)
             throws IOException {
         log.info("Update step " + step.getName() + " is successful");
         return cookingStepsService.updateStep(uuid, step);

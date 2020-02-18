@@ -2,6 +2,7 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
+import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.service.CategoryService;
 import lombok.extern.log4j.Log4j2;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +33,7 @@ import java.util.UUID;
 @Log4j2
 @RestController
 @RequestMapping("/api/category")
-public class CategoryRestController {
+public class CategoryRestController extends CustomGlobalExceptionHandler {
 
     @Autowired
     private CategoryService categoryService;
@@ -52,13 +54,13 @@ public class CategoryRestController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void removeById(@PathVariable("id") UUID uuid) {
+    public void removeById(@Valid @PathVariable("id") UUID uuid) {
         categoryService.removeById(uuid);
         log.info("Remove " + uuid + " category is successful");
     }
 
     @PostMapping("/create")
-    public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO) {
+    public CategoryDTO createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         try {
             log.info("Create category " + categoryDTO.getName() + " is successful");
             return categoryService.createCategory(categoryDTO);
@@ -69,7 +71,7 @@ public class CategoryRestController {
     }
 
     @PutMapping("/update/{id}")
-    public CategoryDTO updateCategory(@PathVariable("id") UUID uuid, @RequestBody CategoryDTO categoryDTO) {
+    public CategoryDTO updateCategory(@PathVariable("id") UUID uuid,@Valid @RequestBody CategoryDTO categoryDTO) {
         try {
             log.info("Update category " + uuid + "  is successful");
             return categoryService.updateCategory(uuid, categoryDTO);

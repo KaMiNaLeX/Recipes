@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.UserDTO;
+import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.service.impl.UserServiceImpl;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +30,7 @@ import java.util.UUID;
 @Log4j2
 @RestController
 @RequestMapping("/api/user")
-public class UserRestController {
+public class UserRestController extends CustomGlobalExceptionHandler {
     @Autowired
     private UserServiceImpl userService;
 
@@ -68,7 +70,7 @@ public class UserRestController {
     }
 
     @PostMapping("/create")
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
+    public UserDTO createUser(@Valid @RequestBody UserDTO userDTO) {
         try {
             log.info("User " + userDTO.getLogin() + " is created");
             return userService.createUser(userDTO);

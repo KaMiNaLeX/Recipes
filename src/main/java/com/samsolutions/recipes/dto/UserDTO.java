@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 /**
@@ -20,9 +21,14 @@ import java.util.UUID;
 public class UserDTO {
 
     private UUID id;
+    @NotEmpty
     private String firstName;
+    @NotEmpty
     private String lastName;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String login;
+    @NotEmpty
     private String password;
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 /**
@@ -19,8 +21,10 @@ import java.util.UUID;
 public class IngredientDTO {
 
     private UUID id;
+    @NotEmpty
     private String name;
     private String description;
+    @NotNull
     private double calories;
     private Type type;
 }

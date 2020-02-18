@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * @author kaminskiy.alexey
  * @since 2019.12
@@ -14,5 +16,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IngredientNameDTO {
+    @NotEmpty
     private String name;
 }

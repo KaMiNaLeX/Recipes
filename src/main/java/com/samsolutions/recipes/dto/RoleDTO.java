@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Map;
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ public class RoleDTO {
     public static final String DESCRIPTION = "description";
 
     private UUID id;
+    @NotEmpty
     private String name;
     private String description;
 

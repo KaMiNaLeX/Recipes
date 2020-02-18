@@ -3,6 +3,7 @@ package com.samsolutions.recipes.controller;
 import com.samsolutions.recipes.config.JwtTokenProvider;
 import com.samsolutions.recipes.dto.AuthBodyDTO;
 import com.samsolutions.recipes.dto.RegistrationUserDTO;
+import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.model.UserEntity;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +43,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @Log4j2
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthController extends CustomGlobalExceptionHandler {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -56,7 +58,7 @@ public class AuthController {
     private CustomUserDetailsService userService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthBodyDTO data) {
+    public ResponseEntity login(@Valid @RequestBody AuthBodyDTO data) {
         try {
             String username = data.getEmail();
             UserEntity user = userService.findUserByEmail(username);
@@ -74,7 +76,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegistrationUserDTO user) {
+    public ResponseEntity register(@Valid @RequestBody RegistrationUserDTO user) {
         UserEntity userExists = userService.findUserByEmail(user.getEmail());
         UserEntity userExists2 = userService.getByLogin(user.getLogin());
         if (userExists != null) {

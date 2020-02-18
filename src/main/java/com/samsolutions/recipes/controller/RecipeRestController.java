@@ -6,6 +6,7 @@ import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
+import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.service.CookingStepsService;
 import com.samsolutions.recipes.service.RecipeService;
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -34,7 +36,7 @@ import java.util.UUID;
 @Log4j2
 @RestController
 @RequestMapping("/api/recipe")
-public class RecipeRestController {
+public class RecipeRestController extends CustomGlobalExceptionHandler {
 
     @Autowired
     private RecipeService recipeService;
@@ -48,18 +50,18 @@ public class RecipeRestController {
     }
 
     @PostMapping("/create")
-    public RecipeDTO create(@RequestBody RecipeDTO recipeDTO) {
+    public RecipeDTO create(@Valid @RequestBody RecipeDTO recipeDTO) {
         return recipeService.create(recipeDTO);
     }
 
     @PutMapping("/update/{id}")
-    public RecipeDTO update(@PathVariable("id") UUID uuid, @RequestBody RecipeDTO recipeDTO) {
+    public RecipeDTO update(@PathVariable("id") UUID uuid,@Valid @RequestBody RecipeDTO recipeDTO) {
         return recipeService.update(uuid, recipeDTO);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PutMapping("/updateRecipe/{id}")
-    public CreateRecipeDTO updateRecipe(@PathVariable("id") UUID uuid, @RequestBody CreateRecipeDTO recipeDTO) {
+    public CreateRecipeDTO updateRecipe(@PathVariable("id") UUID uuid,@Valid @RequestBody CreateRecipeDTO recipeDTO) {
         return recipeService.updateRecipe(uuid, recipeDTO);
     }
 
@@ -85,7 +87,7 @@ public class RecipeRestController {
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PostMapping("/createRecipe")
-    public CreateRecipeDTO createRecipeDTO(@RequestBody CreateRecipeDTO createRecipeDTO) {
+    public CreateRecipeDTO createRecipeDTO(@Valid @RequestBody CreateRecipeDTO createRecipeDTO) {
         try {
             log.info("Create recipe " + createRecipeDTO.getName() + " is successful");
             return recipeService.createRecipeDTO(createRecipeDTO);
@@ -127,12 +129,12 @@ public class RecipeRestController {
     }
 
     @PostMapping("/ingredientName")
-    public List<RecipeDTO> findAllByIngredientName(@RequestBody IngredientNameListDTO ingredientNameList) {
+    public List<RecipeDTO> findAllByIngredientName(@Valid @RequestBody IngredientNameListDTO ingredientNameList) {
         return recipeService.findAllByIngredient(ingredientNameList);
     }
 
     @PostMapping("/data")
-    public List<RecipeDTO> findAllByData(@RequestBody RecipeDataDTO recipeDataDTO) {
+    public List<RecipeDTO> findAllByData(@Valid @RequestBody RecipeDataDTO recipeDataDTO) {
         return recipeService.findAllByData(recipeDataDTO);
     }
 

@@ -2,6 +2,7 @@ package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.FavoriteDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
+import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.service.FavoriteService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,13 +26,13 @@ import java.util.UUID;
 @Log4j2
 @RestController
 @RequestMapping("/api/favorite")
-public class FavoritesRestController {
+public class FavoritesRestController extends CustomGlobalExceptionHandler {
 
     @Autowired
     private FavoriteService favoriteService;
 
     @PostMapping("/create")
-    public FavoriteDTO create(@RequestBody CreateFavoriteDTO favoriteDTO) {
+    public FavoriteDTO create(@Valid @RequestBody CreateFavoriteDTO favoriteDTO) {
         try {
             log.info("Create favorite is successful");
             return favoriteService.createDTO(favoriteDTO);

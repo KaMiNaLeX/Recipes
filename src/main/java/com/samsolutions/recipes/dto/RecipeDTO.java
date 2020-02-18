@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,13 +21,18 @@ import java.util.UUID;
 @AllArgsConstructor
 public class RecipeDTO {
     private UUID id;
+    @NotEmpty
     private String name;
     private CookingDifficulty cookingDifficulty;
+    @NotNull
     private int cookingTime;
+    @NotNull
     private int positiveVotes;
+    @NotNull
     private int negativeVotes;
     private Date lastModified;
     private String imgSource;
+    @NotNull
     private UUID authorId;
 
 }

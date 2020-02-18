@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.IngredientDTO;
+import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.model.Enum.Type;
 import com.samsolutions.recipes.service.IngredientService;
 import lombok.extern.log4j.Log4j2;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +26,7 @@ import java.util.UUID;
 @Log4j2
 @RestController
 @RequestMapping("/api/ingredient")
-public class IngredientRestController {
+public class IngredientRestController extends CustomGlobalExceptionHandler {
 
     @Autowired
     private IngredientService ingredientService;
@@ -45,7 +47,7 @@ public class IngredientRestController {
     }
 
     @PostMapping("/create")
-    public IngredientDTO createIngredient(@RequestBody IngredientDTO ingredient) {
+    public IngredientDTO createIngredient(@Valid @RequestBody IngredientDTO ingredient) {
         try {
             log.info("Create ingredient " + ingredient.getName() + " is successful");
             return ingredientService.createIngredient(ingredient);
@@ -56,7 +58,7 @@ public class IngredientRestController {
     }
 
     @PutMapping("/update/{id}")
-    public IngredientDTO updateIngredient(@PathVariable("id") UUID uuid, @RequestBody IngredientDTO ingredient) {
+    public IngredientDTO updateIngredient(@PathVariable("id") UUID uuid,@Valid @RequestBody IngredientDTO ingredient) {
         try {
             log.info("Update ingredient " + uuid + " is successful");
             return ingredientService.updateIngredient(uuid, ingredient);
