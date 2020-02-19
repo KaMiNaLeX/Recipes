@@ -34,4 +34,8 @@ export class IngredientService {
   public update(id: string, userData: Ingredient): Observable<Ingredient> {
     return this.http.put<Ingredient>(`${this.baseUrl}/update/${id}`, userData);
   }
+
+  public delete(id: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}/delete/${id}`);
+  }
 }

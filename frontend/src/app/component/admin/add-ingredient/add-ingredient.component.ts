@@ -95,4 +95,17 @@ export class AddIngredientComponent implements OnInit {
     } else window.alert("Please, fill in all fields!");
   }
 
+  delete(id: string) {
+    this.ingredientService.delete(id)
+      .subscribe(
+        data => {
+          this.ingredientService.findAll().subscribe(data => {
+            this.ingredients = data;
+          });
+          if (data == false) {
+            window.alert("Category is not deleted, because it's used!");
+          } else window.alert("Category is deleted!");
+        },
+        error => console.log(error));
+  }
 }

@@ -27,7 +27,9 @@
         </button>
         <button class='btn btn-info divChild2' (click)="view(ingredient.id)">{{'view' | translate}}
         </button>
-        <button class='btn btn-warning divChild2' (click)="edit(ingredient.id)">{{'delete' | translate}}
+        <button class='btn btn-warning divChild2' (click)="edit(ingredient.id)">{{'edit' | translate}}
+        </button>
+        <button class='btn btn-danger divChild2' (click)="delete(ingredient.id)">{{'delete' | translate}}
         </button>
       </td>
     </tr>

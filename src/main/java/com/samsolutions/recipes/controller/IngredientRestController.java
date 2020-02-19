@@ -72,8 +72,7 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void removeById(@PathVariable("id") @ValidUUID UUID uuid) {
-        ingredientService.removeById(uuid);
-        log.info("Remove ingredient " + uuid + " is successful");
+    public boolean removeById(@PathVariable("id") @ValidUUID UUID uuid) {
+        return ingredientService.removeById(uuid);
     }
 }

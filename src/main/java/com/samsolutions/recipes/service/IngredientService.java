@@ -18,7 +18,7 @@ public interface IngredientService {
 
     IngredientDTO updateIngredient(UUID uuid, IngredientDTO ingredient);
 
-    void removeById(UUID uuid);
+    boolean removeById(UUID uuid);
 
     IngredientDTO getById(UUID uuid);
 

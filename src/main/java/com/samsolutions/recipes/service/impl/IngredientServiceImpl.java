@@ -3,9 +3,12 @@ package com.samsolutions.recipes.service.impl;
 import com.samsolutions.recipes.dto.IngredientDTO;
 import com.samsolutions.recipes.model.Enum.Type;
 import com.samsolutions.recipes.model.IngredientEntity;
+import com.samsolutions.recipes.model.RecipeIngredientEntity;
 import com.samsolutions.recipes.repository.IngredientRepository;
+import com.samsolutions.recipes.repository.RecipeIngredientRepository;
 import com.samsolutions.recipes.service.IngredientService;
 import com.samsolutions.recipes.service.ModelMapperService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +22,15 @@ import java.util.UUID;
  * @author kaminskiy.alexey
  * @since 2019.11
  */
+@Log4j2
 @Service
 public class IngredientServiceImpl implements IngredientService, ModelMapperService {
 
     @Autowired
     private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private RecipeIngredientRepository recipeIngredientRepository;
 
     @Override
     public IngredientDTO createIngredient(IngredientDTO ingredient) {
@@ -61,9 +68,17 @@ public class IngredientServiceImpl implements IngredientService, ModelMapperServ
 
     @Override
     @Transactional
-    public void removeById(UUID uuid) {
-        IngredientEntity removeIngredient = ingredientRepository.getById(uuid);
-        ingredientRepository.delete(removeIngredient);
+    public boolean removeById(UUID uuid) {
+        List<RecipeIngredientEntity> recipeIngredientEntityList = recipeIngredientRepository.findAllByIngredientId(uuid);
+        if (recipeIngredientEntityList.size() == 0) {
+            IngredientEntity removeIngredient = ingredientRepository.getById(uuid);
+            ingredientRepository.delete(removeIngredient);
+            log.info("Remove ingredient " + uuid + " is successful");
+            return true;
+        } else {
+            log.info("Remove ingredient is failed, because it's used");
+            return false;
+        }
     }
 
     @Override
