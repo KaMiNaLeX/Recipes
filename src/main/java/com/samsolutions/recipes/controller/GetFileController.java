@@ -26,7 +26,8 @@ public class GetFileController {
     private FileStorageService fileStorageService;
 
     @GetMapping("/getFile/{fileName}")
-    public ResponseEntity<Resource> getFile(@PathVariable @NotBlank String fileName, HttpServletRequest request) throws Exception {
+    public ResponseEntity<Resource> getFile(@PathVariable @NotBlank String fileName, HttpServletRequest request)
+            throws Exception {
         // Load file as Resource
         Resource resource = fileStorageService.loadFileAsResource(fileName);
         // Try to determine file's content type

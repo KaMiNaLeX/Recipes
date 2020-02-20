@@ -85,7 +85,7 @@ public class UserRestController extends CustomGlobalExceptionHandler {
     }
 
     @PutMapping("/{id}")
-    public UserDTO updateUser(@PathVariable("id") @ValidUUID UUID uuid,@Valid @RequestBody UserDTO userDTO) {
+    public UserDTO updateUser(@PathVariable("id") @ValidUUID UUID uuid, @Valid @RequestBody UserDTO userDTO) {
         try {
             log.info("User " + userDTO.getLogin() + " is updated");
             return userService.updateUser(uuid, userDTO);

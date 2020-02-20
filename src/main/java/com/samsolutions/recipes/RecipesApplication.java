@@ -31,9 +31,7 @@ public class RecipesApplication implements WebMvcConfigurer {
 
     public static void main(String[] args) {
         SpringApplication.run(RecipesApplication.class, args);
-
     }
-
 
     @Bean
     public LocaleResolver localeResolver() {

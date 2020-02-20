@@ -15,11 +15,8 @@ import java.util.UUID;
  */
 
 public interface CookingStepsService {
-    CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) throws IOException;
 
     CookingStepDTO createStepDTO(CookingStepDTO cookingStepDTO) throws IOException;
-
-    CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) throws IOException;
 
     void removeStepById(UUID uuid);
 

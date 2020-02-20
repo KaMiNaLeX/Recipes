@@ -30,7 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -110,7 +109,10 @@ public class AuthController extends CustomGlobalExceptionHandler {
             if (user == null) {
                 log.error(new BadCredentialsException("User does not login"));
             }
-            String username = user.getName();
+            String username = null;
+            if (user != null) {
+                username = user.getName();
+            }
             UserEntity userEntity = userService.findUserByEmail(username);
             List<UserRoleEntity> userRoleList = userEntity.getUserRoles();
             List<RoleName> roleNameList = new ArrayList<>();

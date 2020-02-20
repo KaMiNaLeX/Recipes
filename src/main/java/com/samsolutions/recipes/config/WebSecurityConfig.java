@@ -1,6 +1,5 @@
 package com.samsolutions.recipes.config;
 
-import com.samsolutions.recipes.model.Enum.RoleName;
 import com.samsolutions.recipes.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

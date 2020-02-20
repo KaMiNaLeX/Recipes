@@ -47,15 +47,10 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     @Transactional
     public CategoryDTO updateCategory(UUID uuid, CategoryDTO categoryDTO) {
         CategoryEntity updateCategory = categoryRepository.getById(uuid);
-        CategoryDTO updateCategoryDTO = new CategoryDTO();
-        updateCategoryDTO.setName(categoryDTO.getName());
-        updateCategoryDTO.setDescription(categoryDTO.getDescription());
-        updateCategoryDTO.setTag(categoryDTO.getTag());
-        updateCategoryDTO.setId(updateCategory.getId());
-        updateCategoryDTO.setImgSource(categoryDTO.getImgSource());
-        map(updateCategoryDTO, updateCategory);
-        map(categoryRepository.save(updateCategory), updateCategoryDTO);
-        return updateCategoryDTO;
+        categoryDTO.setId(uuid);
+        map(categoryDTO, updateCategory);
+        map(categoryRepository.save(updateCategory), categoryDTO);
+        return categoryDTO;
     }
 
     @Override

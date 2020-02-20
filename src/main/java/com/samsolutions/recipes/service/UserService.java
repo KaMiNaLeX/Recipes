@@ -2,10 +2,7 @@ package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.model.UserEntity;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 

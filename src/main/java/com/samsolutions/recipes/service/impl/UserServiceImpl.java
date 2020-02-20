@@ -46,28 +46,17 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public UserDTO getById(UUID uuid) {
         UserEntity userEntity = userRepository.getById(uuid);
-        if (userEntity != null) {
-            UserDTO userDTO = new UserDTO();
-            map(userEntity, userDTO);
-            return userDTO;
-        } else {
-            log.error("User by id is not found");
-            return null;
-        }
-
+        UserDTO userDTO = new UserDTO();
+        map(userEntity, userDTO);
+        return userDTO;
     }
 
     @Override
     public UserDTO getByLogin(String login) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        if (userEntity != null) {
-            UserDTO userDTO = new UserDTO();
-            map(userEntity, userDTO);
-            return userDTO;
-        } else {
-            log.error("User by login is not found");
-            return null;
-        }
+        UserDTO userDTO = new UserDTO();
+        map(userEntity, userDTO);
+        return userDTO;
     }
 
 
@@ -75,20 +64,16 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Transactional
     public void removeByLogin(String login) {
         UserEntity userEntity = userRepository.getByLogin(login);
-        if (userEntity != null) {
-            userRepository.delete(userEntity);
-            log.info("User " + userEntity.getLogin() + " is deleted");
-        } else log.error("User by login is not found");
+        userRepository.delete(userEntity);
+        log.info("User " + userEntity.getLogin() + " is deleted");
     }
 
     @Override
     @Transactional
     public void removeById(UUID uuid) {
         UserEntity userEntity = userRepository.getById(uuid);
-        if (userEntity != null) {
-            userRepository.delete(userEntity);
-            log.info("User " + userEntity.getLogin() + " is deleted");
-        } else log.error("User by id is not found");
+        userRepository.delete(userEntity);
+        log.info("User " + userEntity.getLogin() + " is deleted");
     }
 
     @Override
@@ -134,15 +119,9 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     @Override
     public UserDTO getByEmail(String email) {
         UserEntity userEntity = userRepository.getByEmail(email);
-        if (userEntity != null) {
-            UserDTO userDTO = new UserDTO();
-            map(userEntity, userDTO);
-            return userDTO;
-        } else {
-            log.error("User by email is not found");
-            return null;
-        }
-
+        UserDTO userDTO = new UserDTO();
+        map(userEntity, userDTO);
+        return userDTO;
     }
 
     @Override

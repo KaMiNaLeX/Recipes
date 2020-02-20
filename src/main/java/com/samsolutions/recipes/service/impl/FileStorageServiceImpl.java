@@ -41,7 +41,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public Resource loadFileAsResource(String fileName) throws Exception {
+    public Resource loadFileAsResource(String fileName) {
         try {
             Path filePath = Paths.get(this.fileStorageLocation + "/" + fileName).toAbsolutePath().normalize();
             Resource resource = new UrlResource(filePath.toUri());

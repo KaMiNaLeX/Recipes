@@ -65,8 +65,14 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PutMapping("/updateRecipe/{id}")
-    public CreateRecipeDTO updateRecipe(@PathVariable("id") @ValidUUID UUID uuid, @Valid @RequestBody CreateRecipeDTO recipeDTO) {
-        return recipeService.updateRecipe(uuid, recipeDTO);
+    public CreateRecipeDTO updateRecipe(@PathVariable("id") @ValidUUID UUID uuid,
+                                        @Valid @RequestBody CreateRecipeDTO recipeDTO) {
+        try {
+            return recipeService.updateRecipe(uuid, recipeDTO);
+        } catch (Exception e) {
+            log.error("Update recipe " + uuid + " is failed", e.fillInStackTrace());
+            return null;
+        }
     }
 
     @DeleteMapping("/delete/{id}")
@@ -93,10 +99,9 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     @PostMapping("/createRecipe")
     public CreateRecipeDTO createRecipeDTO(@Valid @RequestBody CreateRecipeDTO createRecipeDTO) {
         try {
-            log.info("Create recipe " + createRecipeDTO.getName() + " is successful");
             return recipeService.createRecipeDTO(createRecipeDTO);
-        } catch (Exception e) {
-            log.error("Create recipe " + createRecipeDTO.getName() + " is failed", e.getCause());
+        } catch (NullPointerException e) {
+            log.error("Create recipe " + createRecipeDTO.getName() + " is failed", e.fillInStackTrace());
             return null;
         }
     }
@@ -123,7 +128,8 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     }
 
     @GetMapping("/nameAndAuthor/{name}/{authorId}")
-    public RecipeDTO getByNameAuthorId(@PathVariable("name") @NotBlank String name, @PathVariable("authorId") @ValidUUID UUID uuid) {
+    public RecipeDTO getByNameAuthorId(@PathVariable("name") @NotBlank String name,
+                                       @PathVariable("authorId") @ValidUUID UUID uuid) {
         try {
             return recipeService.getByNameAuthorId(name, uuid);
         } catch (Exception e) {

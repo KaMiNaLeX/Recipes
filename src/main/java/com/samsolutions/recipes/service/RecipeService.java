@@ -5,6 +5,7 @@ import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
+import com.samsolutions.recipes.model.RecipeEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -54,4 +55,26 @@ public interface RecipeService {
     RecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException;
 
     UserDTO getAuthorName(String authorId);
+
+    //for createRecipe
+    void saveCategoryRecipeEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+
+    void saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+
+    void saveRecipeIngredientList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+
+    //for UpdateRecipe
+    void updateCategory(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+
+    void updateCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+
+    void updateRecipeIngredientList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+
+    //for getByRecipeId and getByAuthorId
+    CreateRecipeDTO mapCategoryRecipeEntityListToDTO(UUID uuid, CreateRecipeDTO createRecipeDTO);
+
+    CreateRecipeDTO mapCookingStepRecipeEntityListToDTO(RecipeEntity recipeEntity, CreateRecipeDTO createRecipeDTO);
+
+    CreateRecipeDTO mapRecipeIngredientEntityListToDTO(RecipeEntity recipeEntity, CreateRecipeDTO createRecipeDTO);
+
 }

@@ -55,11 +55,10 @@ public class FakeDataGeneratorController {
         final double range = (double) trueMax - (double) trueMin;
 
         final double chunkCount = Math.sqrt(Math.abs(range));
-        final double chunkSize = chunkCount;
         final long randomChunk = faker.random().nextLong((long) chunkCount);
 
-        final double chunkStart = trueMin + randomChunk * chunkSize;
-        final double adj = chunkSize * faker.random().nextDouble();
+        final double chunkStart = trueMin + randomChunk * chunkCount;
+        final double adj = chunkCount * faker.random().nextDouble();
         return new BigDecimal(chunkStart + adj);
     }
 

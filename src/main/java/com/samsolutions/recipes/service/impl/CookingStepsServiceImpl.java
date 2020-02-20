@@ -39,45 +39,14 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
 
     @Override
     @Transactional
-    public CookingStepsEntity createStep(CookingStepsEntity cookingStepsEntity) {
-        if (cookingStepsEntity.getRecipeId() != null) {
-            cookingStepsEntity.setActive(true);
-            cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepsEntity.getRecipeId()));
-            cookingStepsRepository.save(cookingStepsEntity);
-            return cookingStepsEntity;
-        } else
-            log.error("Create step is failed");
-        return null;
-    }
-
-    @Override
-    @Transactional
     public CookingStepDTO createStepDTO(CookingStepDTO cookingStepDTO) {
         CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
         map(cookingStepDTO, cookingStepsEntity);
-        cookingStepsEntity.setImgSource("/static/img/test.png");
         cookingStepsEntity.setActive(true);
         cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepDTO.getRecipeId()));
-        map((cookingStepsRepository.save(cookingStepsEntity)), cookingStepDTO);
+        map(cookingStepsRepository.save(cookingStepsEntity), cookingStepDTO);
         return cookingStepDTO;
     }
-
-
-    @Override
-    @Transactional
-    public CookingStepsEntity updateStep(UUID id, CookingStepsEntity cookingStepsEntity) {
-        CookingStepsEntity updateStep = cookingStepsRepository.getById(id);
-        updateStep.setName(cookingStepsEntity.getName());
-        updateStep.setDescription(cookingStepsEntity.getDescription());
-        updateStep.setNumber(cookingStepsEntity.getNumber());
-        updateStep.setActive(cookingStepsEntity.isActive());
-        updateStep.setRecipeId(cookingStepsEntity.getRecipeId());
-        cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepsEntity.getRecipeId()));
-        cookingStepsEntity.setImgSource(cookingStepsEntity.getImgSource());
-        cookingStepsRepository.save(updateStep);
-        return updateStep;
-    }
-
 
     @Override
     @Transactional

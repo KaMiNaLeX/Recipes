@@ -35,11 +35,6 @@ public class CookingStepsRestController extends CustomGlobalExceptionHandler {
     private CookingStepsService cookingStepsService;
 
     @PostMapping("/create")
-    public CookingStepsEntity createStep(@RequestBody CookingStepsEntity step) throws IOException {
-        return cookingStepsService.createStep(step);
-    }
-
-    @PostMapping("/DTO/create")
     public CookingStepDTO createStepDTO(@RequestBody CookingStepDTO step) throws IOException {
         return cookingStepsService.createStepDTO(step);
     }
@@ -63,12 +58,5 @@ public class CookingStepsRestController extends CustomGlobalExceptionHandler {
     public void removeById(@PathVariable("id") @ValidUUID UUID uuid) {
         cookingStepsService.removeStepById(uuid);
         log.info("Remove step " + uuid + " is successful");
-    }
-
-    @PutMapping("update/{id}")
-    public CookingStepsEntity updateStep(@PathVariable("id") @ValidUUID UUID uuid, @Valid @RequestBody CookingStepsEntity step)
-            throws IOException {
-        log.info("Update step " + step.getName() + " is successful");
-        return cookingStepsService.updateStep(uuid, step);
     }
 }

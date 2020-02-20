@@ -74,7 +74,8 @@ public class CategoryRestController extends CustomGlobalExceptionHandler {
     }
 
     @PutMapping("/update/{id}")
-    public CategoryDTO updateCategory(@PathVariable("id") @ValidUUID UUID uuid, @Valid @RequestBody CategoryDTO categoryDTO) {
+    public CategoryDTO updateCategory(@PathVariable("id") @ValidUUID UUID uuid,
+                                      @Valid @RequestBody CategoryDTO categoryDTO) {
         try {
             log.info("Update category " + uuid + "  is successful");
             return categoryService.updateCategory(uuid, categoryDTO);

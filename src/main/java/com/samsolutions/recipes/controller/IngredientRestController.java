@@ -61,7 +61,8 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
     }
 
     @PutMapping("/update/{id}")
-    public IngredientDTO updateIngredient(@PathVariable("id") @ValidUUID UUID uuid, @Valid @RequestBody IngredientDTO ingredient) {
+    public IngredientDTO updateIngredient(@PathVariable("id") @ValidUUID UUID uuid,
+                                          @Valid @RequestBody IngredientDTO ingredient) {
         try {
             log.info("Update ingredient " + uuid + " is successful");
             return ingredientService.updateIngredient(uuid, ingredient);

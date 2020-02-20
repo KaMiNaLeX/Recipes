@@ -111,15 +111,10 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     }
 
     @Override
-    public CreateRecipeDTO updateRecipe(UUID uuid, CreateRecipeDTO createRecipeDTO) {
-        RecipeEntity updateEntity = recipeRepository.getById(uuid);
-        createRecipeDTO.setId(updateEntity.getId());
-        map(createRecipeDTO, updateEntity);
-        map(recipeRepository.save(updateEntity), createRecipeDTO);
-        //update category
+    public void updateCategory(CreateRecipeDTO createRecipeDTO, RecipeEntity updateEntity) {
         List<CategoryEntity> categoryEntityList = new ArrayList<>();
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntityList.add(categoryEntity);
+        CategoryEntity categoryEntityForMap = new CategoryEntity();
+        categoryEntityList.add(categoryEntityForMap);
         map(createRecipeDTO.getCategoryRecipeDTOList(), categoryEntityList);
 
         List<CategoryRecipeEntity> updateCategoryRecipeList =
@@ -128,25 +123,28 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             categoryRecipeRepository.delete(recipeEntity);
         }
         for (int i = 0; i < categoryEntityList.size(); i++) {
-            CategoryEntity categoryEntity1 = categoryRepository.getByName(categoryEntityList.get(i).getName());
+            CategoryEntity categoryEntity = categoryRepository.getByName(categoryEntityList.get(i).getName());
             if (updateCategoryRecipeList.size() < categoryEntityList.size()) {
                 CategoryRecipeEntity categoryRecipeEntity = new CategoryRecipeEntity();
                 categoryRecipeEntity.setRecipeId(updateEntity.getId());
-                categoryRecipeEntity.setCategoryId(categoryEntity1.getId());
+                categoryRecipeEntity.setCategoryId(categoryEntity.getId());
                 updateCategoryRecipeList.add(categoryRecipeEntity);
                 int lastIndex = updateCategoryRecipeList.size() - 1;
                 categoryRecipeRepository.save(updateCategoryRecipeList.get(lastIndex));
             }
 
-            updateCategoryRecipeList.get(i).setCategoryId(categoryEntity1.getId());
+            updateCategoryRecipeList.get(i).setCategoryId(categoryEntity.getId());
             updateCategoryRecipeList.get(i).setRecipeId(updateEntity.getId());
             map(categoryRecipeRepository.save(updateCategoryRecipeList.get(i)),
                     createRecipeDTO.getCategoryRecipeDTOList());
         }
-        //update CookingStepsEntityList
+    }
+
+    @Override
+    public void updateCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity updateEntity) {
         List<CookingStepsEntity> cookingStepsEntityList = new ArrayList<>();
-        CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
-        cookingStepsEntityList.add(cookingStepsEntity);
+        CookingStepsEntity cookingStepsEntityForMap = new CookingStepsEntity();
+        cookingStepsEntityList.add(cookingStepsEntityForMap);
         map(createRecipeDTO.getCookingStepRecipeDTOList(), cookingStepsEntityList);
 
         List<CookingStepsEntity> updateCookingStepsList =
@@ -160,10 +158,13 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             map(cookingStepsRepository.save(stepsEntity),
                     createRecipeDTO.getCookingStepRecipeDTOList());
         }
-        //update RecipeIngredientList
+    }
+
+    @Override
+    public void updateRecipeIngredientList(CreateRecipeDTO createRecipeDTO, RecipeEntity updateEntity) {
         List<RecipeIngredientEntity> recipeIngredientEntityList = new ArrayList<>();
-        RecipeIngredientEntity recipeIngredientEntity = new RecipeIngredientEntity();
-        recipeIngredientEntityList.add(recipeIngredientEntity);
+        RecipeIngredientEntity recipeIngredientEntityForMap = new RecipeIngredientEntity();
+        recipeIngredientEntityList.add(recipeIngredientEntityForMap);
         map(createRecipeDTO.getIngredientRecipeDTOList(), recipeIngredientEntityList);
 
         List<RecipeIngredientEntity> updateRecipeIngredientList =
@@ -179,7 +180,21 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             map(recipeIngredientRepository.save(recipeIngredientEntityList.get(i)),
                     createRecipeDTO.getIngredientRecipeDTOList());
         }
+    }
 
+    @Override
+    public CreateRecipeDTO updateRecipe(UUID uuid, CreateRecipeDTO createRecipeDTO) {
+        RecipeEntity updateEntity = recipeRepository.getById(uuid);
+        createRecipeDTO.setId(updateEntity.getId());
+        map(createRecipeDTO, updateEntity);
+        map(recipeRepository.save(updateEntity), createRecipeDTO);
+        //update category
+        updateCategory(createRecipeDTO, updateEntity);
+        //update CookingStepsEntityList
+        updateCookingStepsEntityList(createRecipeDTO, updateEntity);
+        //update RecipeIngredientList
+        updateRecipeIngredientList(createRecipeDTO, updateEntity);
+        log.info("Update recipe " + uuid + " is successful");
         return createRecipeDTO;
     }
 
@@ -234,33 +249,30 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
 
     @Override
     @Transactional
-    public CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) {
-        createRecipeDTO.setNegativeVotes(0);
-        createRecipeDTO.setPositiveVotes(0);
-        //save RecipeEntity
-        RecipeEntity recipeEntity = new RecipeEntity();
-        map(createRecipeDTO, recipeEntity);
-        map(recipeRepository.save(recipeEntity), createRecipeDTO);
-        //save CategoryRecipeEntityList
+    public void saveCategoryRecipeEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity) {
         List<CategoryEntity> categoryEntityList = new ArrayList<>();
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntityList.add(categoryEntity);
+        CategoryEntity categoryEntityForMap = new CategoryEntity();
+        categoryEntityList.add(categoryEntityForMap);
         map(createRecipeDTO.getCategoryRecipeDTOList(), categoryEntityList);
 
         List<CategoryRecipeEntity> categoryRecipeEntityList = new ArrayList<>();
         for (int i = 0; i < categoryEntityList.size(); i++) {
             CategoryRecipeEntity categoryRecipeEntity = new CategoryRecipeEntity();
             categoryRecipeEntityList.add(categoryRecipeEntity);
-            CategoryEntity categoryEntity1 = categoryRepository.getByName(categoryEntityList.get(i).getName());
-            categoryRecipeEntityList.get(i).setCategoryId(categoryEntity1.getId());
+            CategoryEntity categoryEntity = categoryRepository.getByName(categoryEntityList.get(i).getName());
+            categoryRecipeEntityList.get(i).setCategoryId(categoryEntity.getId());
             categoryRecipeEntityList.get(i).setRecipeId(recipeEntity.getId());
             map(categoryRecipeRepository.save(categoryRecipeEntityList.get(i)),
                     createRecipeDTO.getCategoryRecipeDTOList().get(i));
         }
-        //save CookingStepsEntityList
+    }
+
+    @Override
+    @Transactional
+    public void saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity) {
         List<CookingStepsEntity> cookingStepsEntityList = new ArrayList<>();
-        CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
-        cookingStepsEntityList.add(cookingStepsEntity);
+        CookingStepsEntity cookingStepsEntityForMap = new CookingStepsEntity();
+        cookingStepsEntityList.add(cookingStepsEntityForMap);
         map(createRecipeDTO.getCookingStepRecipeDTOList(), cookingStepsEntityList);
         for (int i = 0; i < cookingStepsEntityList.size(); i++) {
             cookingStepsEntityList.get(i).setActive(true);
@@ -268,10 +280,14 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             map(cookingStepsRepository.save(cookingStepsEntityList.get(i)),
                     createRecipeDTO.getCookingStepRecipeDTOList().get(i));
         }
-        //save RecipeIngredientList
+    }
+
+    @Override
+    @Transactional
+    public void saveRecipeIngredientList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity) {
         List<RecipeIngredientEntity> recipeIngredientEntityList = new ArrayList<>();
-        RecipeIngredientEntity recipeIngredientEntity = new RecipeIngredientEntity();
-        recipeIngredientEntityList.add(recipeIngredientEntity);
+        RecipeIngredientEntity recipeIngredientEntityForMap = new RecipeIngredientEntity();
+        recipeIngredientEntityList.add(recipeIngredientEntityForMap);
         map(createRecipeDTO.getIngredientRecipeDTOList(), recipeIngredientEntityList);
         for (int i = 0; i < recipeIngredientEntityList.size(); i++) {
             IngredientEntity ingredientEntity =
@@ -281,17 +297,29 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             map(recipeIngredientRepository.save(recipeIngredientEntityList.get(i)),
                     createRecipeDTO.getIngredientRecipeDTOList().get(i));
         }
+    }
 
+    @Override
+    @Transactional
+    public CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) {
+        createRecipeDTO.setNegativeVotes(0);
+        createRecipeDTO.setPositiveVotes(0);
+        //save RecipeEntity
+        RecipeEntity recipeEntity = new RecipeEntity();
+        map(createRecipeDTO, recipeEntity);
+        map(recipeRepository.save(recipeEntity), createRecipeDTO);
+        //save CategoryRecipeEntityList
+        saveCategoryRecipeEntityList(createRecipeDTO, recipeEntity);
+        //save CookingStepsEntityList
+        saveCookingStepsEntityList(createRecipeDTO, recipeEntity);
+        //save RecipeIngredientList
+        saveRecipeIngredientList(createRecipeDTO, recipeEntity);
+        log.info("Create recipe " + createRecipeDTO.getName() + " is successful");
         return createRecipeDTO;
     }
 
     @Override
-    public CreateRecipeDTO getByRecipeId(UUID uuid) {
-        //map recipeEntity to DTO
-        RecipeEntity recipeEntity = recipeRepository.getById(uuid);
-        CreateRecipeDTO createRecipeDTO = new CreateRecipeDTO();
-        map(recipeEntity, createRecipeDTO);
-        //map categoryRecipeEntityList to DTO
+    public CreateRecipeDTO mapCategoryRecipeEntityListToDTO(UUID uuid, CreateRecipeDTO createRecipeDTO) {
         List<CategoryRecipeDTO> categoryRecipeDTOList = new ArrayList<>();
         List<CategoryRecipeEntity> categoryRecipeEntityList = categoryRecipeRepository.findAllByRecipeId(uuid);
         for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeEntityList) {
@@ -301,14 +329,21 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             categoryRecipeDTOList.add(categoryRecipeDTO);
             createRecipeDTO.setCategoryRecipeDTOList(categoryRecipeDTOList);
         }
+        return createRecipeDTO;
+    }
 
-        //map cookingStepRecipeEntityList to DTO
+    @Override
+    public CreateRecipeDTO mapCookingStepRecipeEntityListToDTO(RecipeEntity recipeEntity, CreateRecipeDTO createRecipeDTO) {
         CookingStepRecipeDTO cookingStepRecipeDTO = new CookingStepRecipeDTO();
         List<CookingStepRecipeDTO> cookingStepRecipeDTOList = new ArrayList<>();
         cookingStepRecipeDTOList.add(cookingStepRecipeDTO);
         createRecipeDTO.setCookingStepRecipeDTOList(cookingStepRecipeDTOList);
         map(recipeEntity.getCookingStepsEntityList(), createRecipeDTO.getCookingStepRecipeDTOList());
-        //map recipeIngredientEntityList to DTO
+        return createRecipeDTO;
+    }
+
+    @Override
+    public CreateRecipeDTO mapRecipeIngredientEntityListToDTO(RecipeEntity recipeEntity, CreateRecipeDTO createRecipeDTO) {
         IngredientRecipeDTO ingredientRecipeDTO = new IngredientRecipeDTO();
         List<IngredientRecipeDTO> ingredientRecipeDTOList = new ArrayList<>();
         ingredientRecipeDTOList.add(ingredientRecipeDTO);
@@ -331,6 +366,21 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
     }
 
     @Override
+    public CreateRecipeDTO getByRecipeId(UUID uuid) {
+        //map recipeEntity to DTO
+        RecipeEntity recipeEntity = recipeRepository.getById(uuid);
+        CreateRecipeDTO createRecipeDTO = new CreateRecipeDTO();
+        map(recipeEntity, createRecipeDTO);
+        //map categoryRecipeEntityList to DTO
+        map(mapCategoryRecipeEntityListToDTO(uuid, createRecipeDTO), createRecipeDTO);
+        //map cookingStepRecipeEntityList to DTO
+        map(mapCookingStepRecipeEntityListToDTO(recipeEntity, createRecipeDTO), createRecipeDTO);
+        //map recipeIngredientEntityList to DTO
+        map(mapRecipeIngredientEntityListToDTO(recipeEntity, createRecipeDTO), createRecipeDTO);
+        return createRecipeDTO;
+    }
+
+    @Override
     public List<CreateRecipeDTO> getByAuthorId(UUID authorId) {
         List<CreateRecipeDTO> createRecipeDTOList = new ArrayList<>();
         List<RecipeEntity> recipeEntityList = recipeRepository.getByAuthorId(authorId);
@@ -341,46 +391,16 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
                 map(recipeEntity, createRecipeDTO);
                 createRecipeDTOList.add(createRecipeDTO);
                 //map categoryRecipeEntityList to DTO
-                List<CategoryRecipeDTO> categoryRecipeDTOList = new ArrayList<>();
-                List<CategoryRecipeEntity> categoryRecipeEntityList =
-                        categoryRecipeRepository.findAllByRecipeId(recipeEntity.getId());
-                for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeEntityList) {
-                    CategoryEntity categoryEntity = categoryRecipeEntity.getCategory();
-                    CategoryRecipeDTO categoryRecipeDTO = new CategoryRecipeDTO();
-                    map(categoryEntity, categoryRecipeDTO);
-                    categoryRecipeDTOList.add(categoryRecipeDTO);
-                    createRecipeDTO.setCategoryRecipeDTOList(categoryRecipeDTOList);
-                }
+                map(mapCategoryRecipeEntityListToDTO(recipeEntity.getId(), createRecipeDTO), createRecipeDTO);
                 //map cookingStepRecipeEntityList to DTO
-                CookingStepRecipeDTO cookingStepRecipeDTO = new CookingStepRecipeDTO();
-                List<CookingStepRecipeDTO> cookingStepRecipeDTOList = new ArrayList<>();
-                cookingStepRecipeDTOList.add(cookingStepRecipeDTO);
-                createRecipeDTO.setCookingStepRecipeDTOList(cookingStepRecipeDTOList);
-                map(recipeEntity.getCookingStepsEntityList(), createRecipeDTO.getCookingStepRecipeDTOList());
+                map(mapCookingStepRecipeEntityListToDTO(recipeEntity, createRecipeDTO), createRecipeDTO);
                 //map recipeIngredientEntityList to DTO
-                IngredientRecipeDTO ingredientRecipeDTO = new IngredientRecipeDTO();
-                List<IngredientRecipeDTO> ingredientRecipeDTOList = new ArrayList<>();
-                ingredientRecipeDTOList.add(ingredientRecipeDTO);
-                createRecipeDTO.setIngredientRecipeDTOList(ingredientRecipeDTOList);
-
-                List<RecipeIngredientEntity> recipeIngredientEntityList =
-                        recipeEntity.getRecipeIngredientEntityList();
-                List<IngredientEntity> ingredientEntityList = new ArrayList<>();
-                for (RecipeIngredientEntity recipeIngredientEntity : recipeIngredientEntityList) {
-                    IngredientEntity ingredientEntity = recipeIngredientEntity.getIngredient();
-                    ingredientEntityList.add(ingredientEntity);
-                }
-                map(ingredientEntityList, createRecipeDTO.getIngredientRecipeDTOList());
-                int size = createRecipeDTO.getIngredientRecipeDTOList().size();
-                int countNull = size - 1;
-                map(recipeEntity.getRecipeIngredientEntityList(),
-                        createRecipeDTO.getIngredientRecipeDTOList());
-                for (int x = 0; x < countNull; x++) {
-                    createRecipeDTO.getIngredientRecipeDTOList().remove(size);
-                }
+                map(mapRecipeIngredientEntityListToDTO(recipeEntity, createRecipeDTO), createRecipeDTO);
             }
             return createRecipeDTOList;
-        } else return createRecipeDTOList;
+        } else {
+            return createRecipeDTOList;
+        }
     }
 
     @Override
@@ -446,7 +466,6 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
             if (!resultList.contains(item)) {
                 resultList.add(item);
             }
-
         }
 
         List<RecipeDTO> recipeDTOList = new ArrayList<>();
