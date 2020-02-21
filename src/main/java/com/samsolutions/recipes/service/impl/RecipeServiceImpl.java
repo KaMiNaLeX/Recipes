@@ -15,6 +15,7 @@ import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.CategoryRecipeEntity;
 import com.samsolutions.recipes.model.CookingStepsEntity;
 import com.samsolutions.recipes.model.Enum.CookingDifficulty;
+import com.samsolutions.recipes.model.FavoriteEntity;
 import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.model.RecipeEntity;
 import com.samsolutions.recipes.model.RecipeIngredientEntity;
@@ -30,6 +31,10 @@ import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,29 +54,38 @@ import java.util.UUID;
 @Log4j2
 @Service
 public class RecipeServiceImpl implements RecipeService, ModelMapperService {
-    @Autowired
-    private RecipeRepository recipeRepository;
+    private final RecipeRepository recipeRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private CategoryRecipeRepository categoryRecipeRepository;
+    private final CategoryRecipeRepository categoryRecipeRepository;
 
-    @Autowired
-    private CookingStepsRepository cookingStepsRepository;
+    private final CookingStepsRepository cookingStepsRepository;
 
-    @Autowired
-    private IngredientRepository ingredientRepository;
+    private final IngredientRepository ingredientRepository;
 
-    @Autowired
-    private RecipeIngredientRepository recipeIngredientRepository;
+    private final RecipeIngredientRepository recipeIngredientRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private FileStorageServiceImpl fileStorageService;
+    private final FileStorageServiceImpl fileStorageService;
+
+    public RecipeServiceImpl(RecipeRepository recipeRepository,
+                             CategoryRepository categoryRepository,
+                             CategoryRecipeRepository categoryRecipeRepository,
+                             CookingStepsRepository cookingStepsRepository,
+                             IngredientRepository ingredientRepository,
+                             RecipeIngredientRepository recipeIngredientRepository,
+                             UserRepository userRepository, FileStorageServiceImpl fileStorageService) {
+        this.recipeRepository = recipeRepository;
+        this.categoryRepository = categoryRepository;
+        this.categoryRecipeRepository = categoryRecipeRepository;
+        this.cookingStepsRepository = cookingStepsRepository;
+        this.ingredientRepository = ingredientRepository;
+        this.recipeIngredientRepository = recipeIngredientRepository;
+        this.userRepository = userRepository;
+        this.fileStorageService = fileStorageService;
+    }
 
     @Override
     public List<RecipeDTO> findAll() {
@@ -249,22 +263,55 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
 
     @Override
     @Transactional
-    public void saveCategoryRecipeEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity) {
+    public List<RecipeDTO> getByCategory(UUID categoryId) {
+        try {
+            List<RecipeDTO> recipeDTOList = new ArrayList<>();
+            RecipeDTO recipeDTO = new RecipeDTO();
+            recipeDTOList.add(recipeDTO);
+
+            List<CategoryRecipeEntity> categoryRecipeEntityList =
+                    categoryRecipeRepository.findAllByCategoryId(categoryId);
+            List<RecipeEntity> recipeEntityList = new ArrayList<>();
+            for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeEntityList) {
+                RecipeEntity recipeEntity = recipeRepository.getById(categoryRecipeEntity.getRecipeId());
+                recipeEntityList.add(recipeEntity);
+            }
+            map(recipeEntityList, recipeDTOList);
+            return recipeDTOList;
+        } catch (NotFoundException | NullPointerException ex) {
+            log.error(new NotFoundException("NOT_FOUND"));
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void saveCategoryRecipeEntityList(CreateRecipeDTO createRecipeDTO) {
         List<CategoryEntity> categoryEntityList = new ArrayList<>();
         CategoryEntity categoryEntityForMap = new CategoryEntity();
         categoryEntityList.add(categoryEntityForMap);
         map(createRecipeDTO.getCategoryRecipeDTOList(), categoryEntityList);
 
         List<CategoryRecipeEntity> categoryRecipeEntityList = new ArrayList<>();
+        /*
+        for (CategoryRecipeDTO categoryRecipeDTO : createRecipeDTO.getCategoryRecipeDTOList()) {
+            CategoryRecipeEntity categoryRecipeEntity = new CategoryRecipeEntity();
+            map(categoryRecipeDTO, categoryRecipeEntity);
+            categoryRecipeRepository.save(categoryRecipeEntity);
+        }
+    */
         for (int i = 0; i < categoryEntityList.size(); i++) {
+
             CategoryRecipeEntity categoryRecipeEntity = new CategoryRecipeEntity();
             categoryRecipeEntityList.add(categoryRecipeEntity);
             CategoryEntity categoryEntity = categoryRepository.getByName(categoryEntityList.get(i).getName());
             categoryRecipeEntityList.get(i).setCategoryId(categoryEntity.getId());
-            categoryRecipeEntityList.get(i).setRecipeId(recipeEntity.getId());
+            categoryRecipeEntityList.get(i).setRecipeId(createRecipeDTO.getId());
             map(categoryRecipeRepository.save(categoryRecipeEntityList.get(i)),
                     createRecipeDTO.getCategoryRecipeDTOList().get(i));
         }
+
+
     }
 
     @Override
@@ -309,7 +356,7 @@ public class RecipeServiceImpl implements RecipeService, ModelMapperService {
         map(createRecipeDTO, recipeEntity);
         map(recipeRepository.save(recipeEntity), createRecipeDTO);
         //save CategoryRecipeEntityList
-        saveCategoryRecipeEntityList(createRecipeDTO, recipeEntity);
+        saveCategoryRecipeEntityList(createRecipeDTO);
         //save CookingStepsEntityList
         saveCookingStepsEntityList(createRecipeDTO, recipeEntity);
         //save RecipeIngredientList

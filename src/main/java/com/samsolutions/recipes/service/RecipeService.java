@@ -36,6 +36,8 @@ public interface RecipeService {
 
     List<RecipeDTO> getByCategoryName(String categoryName);
 
+    List<RecipeDTO> getByCategory(UUID categoryId);
+
     CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO);
 
     CreateRecipeDTO getByRecipeId(UUID uuid);
@@ -57,7 +59,7 @@ public interface RecipeService {
     UserDTO getAuthorName(String authorId);
 
     //for createRecipe
-    void saveCategoryRecipeEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+    void saveCategoryRecipeEntityList(CreateRecipeDTO createRecipeDTO);
 
     void saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
 

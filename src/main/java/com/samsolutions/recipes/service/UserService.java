@@ -23,6 +23,8 @@ public interface UserService {
 
     UserDTO createUser(UserDTO userDTO);
 
+    List<UserDTO> findAll(int page, int size, String sort);
+
     List<UserDTO> findAll();
 
     List<UserEntity> getAll(int page, int size);

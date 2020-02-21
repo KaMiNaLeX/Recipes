@@ -2,6 +2,7 @@ package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.model.Enum.RoleName;
+import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.RoleRepository;
@@ -89,6 +90,17 @@ public class UserServiceImpl implements UserService, ModelMapperService {
         userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
         userRoleRepository.save(userRoleEntity);
         return userDTO;
+    }
+
+    @Override
+    public List<UserDTO> findAll(int page, int size, String sort) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        Page<UserEntity> entityPage = userRepository.findAll(pageable);
+        List<UserDTO> userDTOList = new ArrayList<>();
+        UserDTO userDTO = new UserDTO();
+        userDTOList.add(userDTO);
+        map(entityPage.getContent(), userDTOList);
+        return userDTOList;
     }
 
     @Override

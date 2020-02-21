@@ -33,4 +33,6 @@ public interface CategoryService {
     CategoryDTO savePhoto(UUID id, MultipartFile file) throws IOException;
 
     List<CategoryEntity> findAllEntities();
+
+    List<CategoryDTO> findAll(int page, int size, String sort);
 }

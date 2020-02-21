@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,6 +52,12 @@ public class UserRestController extends CustomGlobalExceptionHandler {
     @GetMapping("/")
     public List<UserDTO> findAll() {
         return userService.findAll();
+    }
+
+    @GetMapping("/{page}/{size}/{sort}")
+    public List<UserDTO> findAll(@PathVariable("page") @NotNull int page,
+                                 @PathVariable("size") @NotNull int size, @PathVariable("sort") String sort) {
+        return userService.findAll(page, size, sort);
     }
 
     @GetMapping("/id/{id}")

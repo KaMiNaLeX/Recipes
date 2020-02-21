@@ -10,6 +10,10 @@ import com.samsolutions.recipes.service.IngredientService;
 import com.samsolutions.recipes.service.ModelMapperService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -108,6 +112,17 @@ public class IngredientServiceImpl implements IngredientService, ModelMapperServ
         IngredientDTO ingredientDTO = new IngredientDTO();
         ingredientDTOList.add(ingredientDTO);
         map(sortedList, ingredientDTOList);
+        return ingredientDTOList;
+    }
+
+    @Override
+    public List<IngredientDTO> findAll(int page, int size, String sort) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        Page<IngredientEntity> entityPage = ingredientRepository.findAll(pageable);
+        IngredientDTO ingredientDTO = new IngredientDTO();
+        List<IngredientDTO> ingredientDTOList = new ArrayList<>();
+        ingredientDTOList.add(ingredientDTO);
+        map(entityPage.getContent(), ingredientDTOList);
         return ingredientDTOList;
     }
 }

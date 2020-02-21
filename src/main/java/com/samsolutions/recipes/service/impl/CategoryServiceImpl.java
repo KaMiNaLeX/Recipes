@@ -3,12 +3,17 @@ package com.samsolutions.recipes.service.impl;
 import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.model.CategoryEntity;
+import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.service.CategoryService;
 import com.samsolutions.recipes.service.FileStorageService;
 import com.samsolutions.recipes.service.ModelMapperService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,6 +110,17 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     @Override
     public List<CategoryEntity> findAllEntities() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public List<CategoryDTO> findAll(int page, int size, String sort) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        Page<CategoryEntity> pageEntity = categoryRepository.findAll(pageable);
+        CategoryDTO categoryDTO = new CategoryDTO();
+        List<CategoryDTO> categoryDTOList = new ArrayList<>();
+        categoryDTOList.add(categoryDTO);
+        map(pageEntity.getContent(), categoryDTOList);
+        return categoryDTOList;
     }
 
 }

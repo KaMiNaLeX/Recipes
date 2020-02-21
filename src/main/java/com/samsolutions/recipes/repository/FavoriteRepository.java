@@ -1,9 +1,10 @@
 package com.samsolutions.recipes.repository;
 
 import com.samsolutions.recipes.model.FavoriteEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -12,6 +13,5 @@ import java.util.UUID;
  */
 @Repository
 public interface FavoriteRepository extends BaseRepository<FavoriteEntity> {
-
-    List<FavoriteEntity> findAllByUserId(UUID uuid);
+    Page<FavoriteEntity> findAllByUserId(UUID uuid, Pageable pageable);
 }

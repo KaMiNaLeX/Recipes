@@ -16,6 +16,6 @@ public interface FavoriteService {
 
     FavoriteDTO createDTO(CreateFavoriteDTO favoriteDTO);
 
-    List<FavoriteDTO> findAllByUserId(UUID uuid);
+    List<FavoriteDTO> findAllByUserId(UUID uuid, int page, int size, String sort);
 
 }

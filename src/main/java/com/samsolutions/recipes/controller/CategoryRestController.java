@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -49,6 +51,12 @@ public class CategoryRestController extends CustomGlobalExceptionHandler {
     @GetMapping("/")
     public List<CategoryDTO> findAll() {
         return categoryService.findAll();
+    }
+
+    @GetMapping("/{page}/{size}/{sort}")
+    public List<CategoryDTO> findAll(@PathVariable("page") @NotNull int page, @PathVariable("size") @NotNull int size,
+                                     @PathVariable("sort") @NotBlank String sort) {
+        return categoryService.findAll(page, size, sort);
     }
 
     @GetMapping("/id/{id}")

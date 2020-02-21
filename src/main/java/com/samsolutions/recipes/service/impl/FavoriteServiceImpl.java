@@ -3,12 +3,17 @@ package com.samsolutions.recipes.service.impl;
 import com.samsolutions.recipes.dto.FavoriteDTO;
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
+import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.FavoriteEntity;
 import com.samsolutions.recipes.repository.FavoriteRepository;
 import com.samsolutions.recipes.service.FavoriteService;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,8 +55,9 @@ public class FavoriteServiceImpl implements FavoriteService, ModelMapperService 
 
     @Override
     @Transactional
-    public List<FavoriteDTO> findAllByUserId(UUID uuid) {
-        List<FavoriteEntity> favoriteEntityList = favoriteRepository.findAllByUserId(uuid);
+    public List<FavoriteDTO> findAllByUserId(UUID uuid, int page, int size, String sort) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        Page<FavoriteEntity> favoriteEntityList = favoriteRepository.findAllByUserId(uuid, pageable);
         List<FavoriteDTO> favoriteDTOList = new ArrayList<>();
         for (FavoriteEntity favoriteEntity : favoriteEntityList) {
             RecipeDTO recipeDTO = recipeService.findByRecipeId(favoriteEntity.getRecipeId());

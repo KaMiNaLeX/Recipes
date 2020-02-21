@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +39,12 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
     @GetMapping("/")
     public List<IngredientDTO> findAll() {
         return ingredientService.findAll();
+    }
+
+    @GetMapping("/{page}/{size}/{sort}")
+    public List<IngredientDTO> findAll(@PathVariable("page") @NotNull int page, @PathVariable("size") @NotNull int size,
+                                       @PathVariable("sort") @NotBlank String sort) {
+        return ingredientService.findAll(page, size, sort);
     }
 
     @GetMapping("/{id}")
