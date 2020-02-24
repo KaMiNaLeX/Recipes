@@ -43,7 +43,7 @@ public class CookingStepsEntity extends BaseEntity {
     @Column(name = "recipe_id")
     private UUID recipeId;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", insertable = false, updatable = false)
     private RecipeEntity recipe;
 }

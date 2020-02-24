@@ -26,7 +26,7 @@ import java.util.UUID;
  */
 @Log4j2
 @Service
-public class CookingStepsServiceImpl implements CookingStepsService, ModelMapperService {
+public class CookingStepsServiceImpl extends ModelMapperService implements CookingStepsService {
 
     @Autowired
     private CookingStepsRepository cookingStepsRepository;
@@ -62,11 +62,7 @@ public class CookingStepsServiceImpl implements CookingStepsService, ModelMapper
 
     @Override
     public List<CookingStepDTO> findAllDto() {
-        List<CookingStepDTO> cookingStepDTOS = new ArrayList<>();
-        CookingStepDTO cookingStepDTO = new CookingStepDTO();
-        cookingStepDTOS.add(cookingStepDTO);
-        map(cookingStepsRepository.findAll(), cookingStepDTOS);
-        return cookingStepDTOS;
+        return mapListLambda(cookingStepsRepository.findAll(), CookingStepDTO.class);
     }
 
     @Override

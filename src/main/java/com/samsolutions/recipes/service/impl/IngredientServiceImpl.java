@@ -28,7 +28,7 @@ import java.util.UUID;
  */
 @Log4j2
 @Service
-public class IngredientServiceImpl implements IngredientService, ModelMapperService {
+public class IngredientServiceImpl extends ModelMapperService implements IngredientService {
 
     @Autowired
     private IngredientRepository ingredientRepository;
@@ -53,11 +53,7 @@ public class IngredientServiceImpl implements IngredientService, ModelMapperServ
                 return o1.getName().compareTo(o2.getName());
             }
         });
-        List<IngredientDTO> ingredientDTOList = new ArrayList<>();
-        IngredientDTO ingredientDTO = new IngredientDTO();
-        ingredientDTOList.add(ingredientDTO);
-        map(sortedList, ingredientDTOList);
-        return ingredientDTOList;
+        return mapListLambda(sortedList, IngredientDTO.class);
     }
 
     @Override
@@ -108,21 +104,13 @@ public class IngredientServiceImpl implements IngredientService, ModelMapperServ
                 return o1.getName().compareTo(o2.getName());
             }
         });
-        List<IngredientDTO> ingredientDTOList = new ArrayList<>();
-        IngredientDTO ingredientDTO = new IngredientDTO();
-        ingredientDTOList.add(ingredientDTO);
-        map(sortedList, ingredientDTOList);
-        return ingredientDTOList;
+        return mapListLambda(sortedList, IngredientDTO.class);
     }
 
     @Override
     public List<IngredientDTO> findAll(int page, int size, String sort) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         Page<IngredientEntity> entityPage = ingredientRepository.findAll(pageable);
-        IngredientDTO ingredientDTO = new IngredientDTO();
-        List<IngredientDTO> ingredientDTOList = new ArrayList<>();
-        ingredientDTOList.add(ingredientDTO);
-        map(entityPage.getContent(), ingredientDTOList);
-        return ingredientDTOList;
+        return mapListLambda(entityPage.getContent(), IngredientDTO.class);
     }
 }

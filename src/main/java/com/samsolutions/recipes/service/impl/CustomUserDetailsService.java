@@ -30,7 +30,7 @@ import java.util.Set;
  */
 @Log4j2
 @Service
-public class CustomUserDetailsService implements UserDetailsService, ModelMapperService {
+public class CustomUserDetailsService extends ModelMapperService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;

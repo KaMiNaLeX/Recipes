@@ -34,7 +34,7 @@ import java.util.UUID;
  */
 @Log4j2
 @Service
-public class UserServiceImpl implements UserService, ModelMapperService {
+public class UserServiceImpl extends ModelMapperService implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -96,20 +96,12 @@ public class UserServiceImpl implements UserService, ModelMapperService {
     public List<UserDTO> findAll(int page, int size, String sort) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         Page<UserEntity> entityPage = userRepository.findAll(pageable);
-        List<UserDTO> userDTOList = new ArrayList<>();
-        UserDTO userDTO = new UserDTO();
-        userDTOList.add(userDTO);
-        map(entityPage.getContent(), userDTOList);
-        return userDTOList;
+        return mapListLambda(entityPage.getContent(), UserDTO.class);
     }
 
     @Override
     public List<UserDTO> findAll() {
-        List<UserDTO> userDTOList = new ArrayList<>();
-        UserDTO userDTO = new UserDTO();
-        userDTOList.add(userDTO);
-        map(userRepository.findAll(), userDTOList);
-        return userDTOList;
+        return mapListLambda(userRepository.findAll(), UserDTO.class);
     }
 
     @Override

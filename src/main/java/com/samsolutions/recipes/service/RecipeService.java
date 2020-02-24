@@ -2,7 +2,9 @@ package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.UserDTO;
+import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
+import com.samsolutions.recipes.dto.createRecipe.IngredientRecipeDTO;
 import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.model.RecipeEntity;
@@ -61,7 +63,7 @@ public interface RecipeService {
     //for createRecipe
     void saveCategoryRecipeEntityList(CreateRecipeDTO createRecipeDTO);
 
-    void saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+    List<CookingStepRecipeDTO> saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
 
     void saveRecipeIngredientList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
 

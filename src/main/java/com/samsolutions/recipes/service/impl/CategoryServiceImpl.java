@@ -3,7 +3,6 @@ package com.samsolutions.recipes.service.impl;
 import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.model.CategoryEntity;
-import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.service.CategoryService;
 import com.samsolutions.recipes.service.FileStorageService;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +31,7 @@ import java.util.UUID;
 
 @Log4j2
 @Service
-public class CategoryServiceImpl implements CategoryService, ModelMapperService {
+public class CategoryServiceImpl extends ModelMapperService implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
@@ -67,20 +65,12 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
 
     @Override
     public List<CategoryDTO> findAll() {
-        List<CategoryDTO> categoryDTOList = new ArrayList<>();
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTOList.add(categoryDTO);
-        map(categoryRepository.findAll(), categoryDTOList);
-        return categoryDTOList;
+        return mapListLambda(categoryRepository.findAll(), CategoryDTO.class);
     }
 
     @Override
     public List<CategoryRecipeDTO> findAllCategoriesDTO() {
-        List<CategoryRecipeDTO> categoryDTOList = new ArrayList<>();
-        CategoryRecipeDTO categoryRecipeDTO = new CategoryRecipeDTO();
-        categoryDTOList.add(categoryRecipeDTO);
-        map(categoryRepository.findAll(), categoryDTOList);
-        return categoryDTOList;
+        return mapListLambda(categoryRepository.findAll(), CategoryRecipeDTO.class);
     }
 
     @Override
@@ -116,11 +106,7 @@ public class CategoryServiceImpl implements CategoryService, ModelMapperService 
     public List<CategoryDTO> findAll(int page, int size, String sort) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         Page<CategoryEntity> pageEntity = categoryRepository.findAll(pageable);
-        CategoryDTO categoryDTO = new CategoryDTO();
-        List<CategoryDTO> categoryDTOList = new ArrayList<>();
-        categoryDTOList.add(categoryDTO);
-        map(pageEntity.getContent(), categoryDTOList);
-        return categoryDTOList;
+        return mapListLambda(pageEntity.getContent(), CategoryDTO.class);
     }
 
 }

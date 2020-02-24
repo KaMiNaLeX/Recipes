@@ -26,7 +26,7 @@ import java.util.UUID;
  * @since 2019.12
  */
 @Service
-public class FavoriteServiceImpl implements FavoriteService, ModelMapperService {
+public class FavoriteServiceImpl extends ModelMapperService implements FavoriteService{
     @Autowired
     private FavoriteRepository favoriteRepository;
 
@@ -69,9 +69,7 @@ public class FavoriteServiceImpl implements FavoriteService, ModelMapperService 
         }
 
         if (favoriteDTOList.size() == 0) {
-            FavoriteDTO favoriteDTO = new FavoriteDTO();
-            favoriteDTOList.add(favoriteDTO);
-            map(favoriteEntityList, favoriteDTOList);
+            map(favoriteEntityList, FavoriteDTO.class);
         }
         return favoriteDTOList;
     }

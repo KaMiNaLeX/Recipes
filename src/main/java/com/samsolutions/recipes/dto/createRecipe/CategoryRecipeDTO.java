@@ -16,8 +16,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryRecipeDTO {
-    // todo id
     @NotBlank
     private String name;
-    private String imgSource;
 }
