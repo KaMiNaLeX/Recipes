@@ -34,4 +34,20 @@ public class ModelMapperService {
                         }, ArrayList::addAll);
     }
 
+    public static void mapList(List src, List dest) {
+        Object dto = dest.get(0);
+        Class dtoClass = dto.getClass();
+        for (int i = 0; i < src.size(); i++) {
+            try {
+                if (i != 0) {
+                    Object newInstance = dtoClass.newInstance();
+                    dest.add(newInstance);
+                }
+                map(src.get(i), dest.get(i));
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

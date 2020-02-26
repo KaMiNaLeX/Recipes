@@ -2,7 +2,6 @@ package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.model.Enum.RoleName;
-import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.model.UserRoleEntity;
 import com.samsolutions.recipes.repository.RoleRepository;
@@ -20,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

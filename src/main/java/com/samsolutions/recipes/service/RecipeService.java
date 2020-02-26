@@ -2,9 +2,7 @@ package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.UserDTO;
-import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
-import com.samsolutions.recipes.dto.createRecipe.IngredientRecipeDTO;
 import com.samsolutions.recipes.dto.findByData.RecipeDataDTO;
 import com.samsolutions.recipes.dto.findByIngredients.IngredientNameListDTO;
 import com.samsolutions.recipes.model.RecipeEntity;
@@ -38,8 +36,6 @@ public interface RecipeService {
 
     List<RecipeDTO> getByCategoryName(String categoryName);
 
-    List<RecipeDTO> getByCategory(UUID categoryId);
-
     CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO);
 
     CreateRecipeDTO getByRecipeId(UUID uuid);
@@ -63,16 +59,16 @@ public interface RecipeService {
     //for createRecipe
     void saveCategoryRecipeEntityList(CreateRecipeDTO createRecipeDTO);
 
-    List<CookingStepRecipeDTO> saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+    List<UUID> saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO);
 
-    void saveRecipeIngredientList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+    void saveRecipeIngredientList(CreateRecipeDTO createRecipeDTO);
 
     //for UpdateRecipe
-    void updateCategory(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+    void updateCategory(CreateRecipeDTO createRecipeDTO);
 
-    void updateCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+    List<UUID> updateCookingStepsEntityList(CreateRecipeDTO createRecipeDTO);
 
-    void updateRecipeIngredientList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity);
+    void updateRecipeIngredientList(CreateRecipeDTO createRecipeDTO);
 
     //for getByRecipeId and getByAuthorId
     CreateRecipeDTO mapCategoryRecipeEntityListToDTO(UUID uuid, CreateRecipeDTO createRecipeDTO);

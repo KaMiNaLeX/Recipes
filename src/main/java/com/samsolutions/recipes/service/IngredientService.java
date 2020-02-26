@@ -1,6 +1,5 @@
 package com.samsolutions.recipes.service;
 
-import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.dto.IngredientDTO;
 import com.samsolutions.recipes.model.Enum.Type;
 

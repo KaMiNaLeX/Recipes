@@ -18,7 +18,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CookingStepRecipeDTO {
-
     private UUID id;
     @NotNull
     private int number;

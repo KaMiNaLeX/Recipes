@@ -15,7 +15,6 @@ import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.CategoryRecipeEntity;
 import com.samsolutions.recipes.model.CookingStepsEntity;
 import com.samsolutions.recipes.model.Enum.CookingDifficulty;
-import com.samsolutions.recipes.model.FavoriteEntity;
 import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.model.RecipeEntity;
 import com.samsolutions.recipes.model.RecipeIngredientEntity;
@@ -30,11 +29,6 @@ import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -88,170 +82,72 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     }
 
     @Override
-    public List<RecipeDTO> findAll() {
-        return mapListLambda(recipeRepository.findAll(), RecipeDTO.class);
-    }
-
-    @Override
-    public RecipeDTO create(RecipeDTO recipeDTO) {
-        recipeDTO.setNegativeVotes(0);
-        recipeDTO.setPositiveVotes(0);
+    @Transactional
+    public CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) {
+        createRecipeDTO.setNegativeVotes(0);
+        createRecipeDTO.setPositiveVotes(0);
+        //save RecipeEntity
         RecipeEntity recipeEntity = new RecipeEntity();
-        map(recipeDTO, recipeEntity);
-        map(recipeRepository.save(recipeEntity), recipeDTO);
-        return recipeDTO;
+        map(createRecipeDTO, recipeEntity);
+        map(recipeRepository.save(recipeEntity), createRecipeDTO);
+        //save CategoryRecipeEntityList
+        saveCategoryRecipeEntityList(createRecipeDTO);
+        //save CookingStepsEntityList
+        saveCookingStepsEntityList(createRecipeDTO);
+        //save RecipeIngredientList
+        List<UUID> updateCookingStepsEntityListUUID = updateCookingStepsEntityList(createRecipeDTO);
+        for (int i = 0; i < updateCookingStepsEntityListUUID.size(); i++) {
+            createRecipeDTO.getCookingStepRecipeDTOList().get(i).setId(updateCookingStepsEntityListUUID.get(i));
+        }
+        log.info("Create recipe " + createRecipeDTO.getName() + " is successful");
+        return createRecipeDTO;
     }
 
     @Override
     @Transactional
-    public RecipeDTO update(UUID uuid, RecipeDTO recipeDTO) {
-        RecipeEntity updateEntity = recipeRepository.getById(uuid);
-        recipeDTO.setId(updateEntity.getId());
-        recipeDTO.setAuthorId(recipeDTO.getAuthorId());
-        map(recipeDTO, updateEntity);
-        map(recipeRepository.save(updateEntity), recipeDTO);
-        return recipeDTO;
-    }
-
-    @Override
-    public RecipeDTO findByRecipeId(UUID uuid) {
-        RecipeDTO recipeDTO = new RecipeDTO();
-        map(recipeRepository.getById(uuid), recipeDTO);
-        return recipeDTO;
-    }
-
-    @Override
-    public void updateCategory(CreateRecipeDTO createRecipeDTO, RecipeEntity updateEntity) {
-        List<CategoryRecipeEntity> updateCategoryRecipeList =
-                categoryRecipeRepository.findAllByRecipeId(updateEntity.getId());
-        for (CategoryRecipeEntity recipeEntity : updateCategoryRecipeList) {
-            categoryRecipeRepository.delete(recipeEntity);
-        }
-        for (int i = 0; i < createRecipeDTO.getCategoryRecipeDTOList().size(); i++) {
-            CategoryEntity categoryEntity = categoryRepository.getByName(createRecipeDTO.getCategoryRecipeDTOList().get(i).getName());
-            if (updateCategoryRecipeList.size() < createRecipeDTO.getCategoryRecipeDTOList().size()) {
-                CategoryRecipeEntity categoryRecipeEntity = new CategoryRecipeEntity();
-                categoryRecipeEntity.setRecipeId(updateEntity.getId());
-                categoryRecipeEntity.setCategoryId(categoryEntity.getId());
-                updateCategoryRecipeList.add(categoryRecipeEntity);
-                int lastIndex = updateCategoryRecipeList.size() - 1;
-                categoryRecipeRepository.save(updateCategoryRecipeList.get(lastIndex));
-            }
-            updateCategoryRecipeList.get(i).setCategoryId(categoryEntity.getId());
-            updateCategoryRecipeList.get(i).setRecipeId(updateEntity.getId());
-            categoryRecipeRepository.save(updateCategoryRecipeList.get(i));
-        }
-    }
-
-    @Override
-    public void updateCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity updateEntity) {
-        List<CookingStepsEntity> updateCookingStepsList =
-                cookingStepsRepository.findAllByRecipeId(updateEntity.getId());
-        for (CookingStepsEntity value : updateCookingStepsList) {
-            cookingStepsRepository.delete(value);
-        }
-
-        for (CookingStepsEntity stepsEntity : mapListLambda(createRecipeDTO.getCookingStepRecipeDTOList(), CookingStepsEntity.class)) {
-            stepsEntity.setRecipeId(updateEntity.getId());
-            stepsEntity.setRecipe(updateEntity);
-            cookingStepsRepository.save(stepsEntity);
-        }
-    }
-
-    @Override
-    public void updateRecipeIngredientList(CreateRecipeDTO createRecipeDTO, RecipeEntity updateEntity) {
-        List<RecipeIngredientEntity> updateRecipeIngredientList =
-                recipeIngredientRepository.findAllByRecipeId(updateEntity.getId());
-        for (RecipeIngredientEntity entity : updateRecipeIngredientList) {
-            recipeIngredientRepository.delete(entity);
-        }
-        for (RecipeIngredientEntity recipeIngredientEntity : mapListLambda(createRecipeDTO.getIngredientRecipeDTOList(), RecipeIngredientEntity.class)) {
-            IngredientEntity ingredientEntity =
-                    ingredientRepository.getByName(recipeIngredientEntity.getIngredient().getName());
-            recipeIngredientEntity.setIngredientId(ingredientEntity.getId());
-            recipeIngredientEntity.setRecipeId(updateEntity.getId());
-            recipeIngredientEntity.setRecipe(updateEntity);
-            recipeIngredientEntity.setIngredient(ingredientEntity);
-            recipeIngredientRepository.save(recipeIngredientEntity);
-        }
-    }
-
-    @Override
     public CreateRecipeDTO updateRecipe(UUID uuid, CreateRecipeDTO createRecipeDTO) {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);
         createRecipeDTO.setId(updateEntity.getId());
         map(createRecipeDTO, updateEntity);
         map(recipeRepository.save(updateEntity), createRecipeDTO);
         //update category
-        updateCategory(createRecipeDTO, updateEntity);
-        //update CookingStepsEntityList
-        updateCookingStepsEntityList(createRecipeDTO, updateEntity);
+        updateCategory(createRecipeDTO);
         //update RecipeIngredientList
-        updateRecipeIngredientList(createRecipeDTO, updateEntity);
+        updateRecipeIngredientList(createRecipeDTO);
+        //update CookingStepsEntityList
+        List<UUID> updateCookingStepsEntityListUUID = updateCookingStepsEntityList(createRecipeDTO);
+        for (int i = 0; i < updateCookingStepsEntityListUUID.size(); i++) {
+            createRecipeDTO.getCookingStepRecipeDTOList().get(i).setId(updateCookingStepsEntityListUUID.get(i));
+        }
         log.info("Update recipe " + uuid + " is successful");
         return createRecipeDTO;
     }
 
-
     @Override
     @Transactional
-    public void positiveVote(UUID uuid) {
-        RecipeEntity updateEntity = recipeRepository.getById(uuid);
-        updateEntity.setPositiveVotes(updateEntity.getPositiveVotes() + 1);
-        recipeRepository.save(updateEntity);
-    }
-
-    @Override
-    @Transactional
-    public void negativeVote(UUID uuid) {
-        RecipeEntity updateEntity = recipeRepository.getById(uuid);
-        updateEntity.setNegativeVotes(updateEntity.getNegativeVotes() + 1);
-        recipeRepository.save(updateEntity);
-    }
-
-    @Override
-    @Transactional
-    public void removeById(UUID uuid) {
-        RecipeEntity removeEntity = recipeRepository.getById(uuid);
-        recipeRepository.delete(removeEntity);
-    }
-
-
-    @Override
-    @Transactional
-    public List<RecipeDTO> getByCategoryName(String categoryName) {
-        try {
-            CategoryEntity category = categoryRepository.getByName(categoryName);
-            List<CategoryRecipeEntity> categoryRecipeEntityList =
-                    categoryRecipeRepository.findAllByCategoryId(category.getId());
-            List<RecipeEntity> recipeEntityList = new ArrayList<>();
-            for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeEntityList) {
-                RecipeEntity recipeEntity = recipeRepository.getById(categoryRecipeEntity.getRecipeId());
-                recipeEntityList.add(recipeEntity);
-            }
-            return mapListLambda(recipeEntityList, RecipeDTO.class);
-        } catch (NotFoundException | NullPointerException ex) {
-            log.error(new NotFoundException("NOT_FOUND"));
-            return null;
+    public void updateCategory(CreateRecipeDTO createRecipeDTO) {
+        for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeRepository.findAllByRecipeId(createRecipeDTO.getId())) {
+            categoryRecipeRepository.delete(categoryRecipeEntity);
         }
+        saveCategoryRecipeEntityList(createRecipeDTO);
     }
 
     @Override
     @Transactional
-    public List<RecipeDTO> getByCategory(UUID categoryId) {
-        try {
-            List<CategoryRecipeEntity> categoryRecipeEntityList =
-                    categoryRecipeRepository.findAllByCategoryId(categoryId);
-            List<RecipeEntity> recipeEntityList = new ArrayList<>();
-            for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeEntityList) {
-                RecipeEntity recipeEntity = recipeRepository.getById(categoryRecipeEntity.getRecipeId());
-                recipeEntityList.add(recipeEntity);
-            }
-            return mapListLambda(recipeEntityList, RecipeDTO.class);
-        } catch (NotFoundException | NullPointerException ex) {
-            log.error(new NotFoundException("NOT_FOUND"));
-            return null;
+    public List<UUID> updateCookingStepsEntityList(CreateRecipeDTO createRecipeDTO) {
+        for (CookingStepsEntity value : cookingStepsRepository.findAllByRecipeId(createRecipeDTO.getId())) {
+            cookingStepsRepository.delete(value);
         }
+        return saveCookingStepsEntityList(createRecipeDTO);
+    }
+
+    @Override
+    @Transactional
+    public void updateRecipeIngredientList(CreateRecipeDTO createRecipeDTO) {
+        for (RecipeIngredientEntity entity : recipeIngredientRepository.findAllByRecipeId(createRecipeDTO.getId())) {
+            recipeIngredientRepository.delete(entity);
+        }
+        saveRecipeIngredientList(createRecipeDTO);
     }
 
     @Override
@@ -268,63 +164,55 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
 
     @Override
     @Transactional
-    public List<CookingStepRecipeDTO> saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity) {
-        List<CookingStepsEntity> cookingStepsEntityS = new ArrayList<>();
-        for (CookingStepsEntity cookingStepsEntity : mapListLambda(createRecipeDTO.getCookingStepRecipeDTOList(), CookingStepsEntity.class)) {
-            cookingStepsEntity.setActive(true);
-            cookingStepsEntity.setRecipeId(recipeEntity.getId());
-            cookingStepsEntity.setRecipe(recipeEntity);
-            cookingStepsRepository.save(cookingStepsEntity);
-            cookingStepsEntityS.add(cookingStepsEntity);
+    public List<UUID> saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO) {
+        List<UUID> cookingStepsEntitiesUUID = new ArrayList<>();
+        for (CookingStepsEntity stepsEntity : mapListLambda(createRecipeDTO.getCookingStepRecipeDTOList(), CookingStepsEntity.class)) {
+            stepsEntity.setRecipeId(createRecipeDTO.getId());
+            stepsEntity.setRecipe(recipeRepository.getById(createRecipeDTO.getId()));
+            cookingStepsRepository.save(stepsEntity);
+            cookingStepsEntitiesUUID.add(stepsEntity.getId());
         }
-        return mapListLambda(cookingStepsEntityS, CookingStepRecipeDTO.class);
+        return cookingStepsEntitiesUUID;
     }
 
     @Override
     @Transactional
-    public void saveRecipeIngredientList(CreateRecipeDTO createRecipeDTO, RecipeEntity recipeEntity) {
-        for (RecipeIngredientEntity recipeIngredientEntity : mapListLambda(createRecipeDTO.getIngredientRecipeDTOList(), RecipeIngredientEntity.class)) {
+    public void saveRecipeIngredientList(CreateRecipeDTO createRecipeDTO) {
+        for (int i = 0; i < createRecipeDTO.getIngredientRecipeDTOList().size(); i++) {
             IngredientEntity ingredientEntity =
-                    ingredientRepository.getByName(recipeIngredientEntity.getIngredient().getName());
+                    ingredientRepository.getByName(createRecipeDTO.getIngredientRecipeDTOList().get(i).getName());
+            RecipeIngredientEntity recipeIngredientEntity = new RecipeIngredientEntity();
             recipeIngredientEntity.setIngredientId(ingredientEntity.getId());
-            recipeIngredientEntity.setRecipeId(recipeEntity.getId());
-            recipeIngredientEntity.setRecipe(recipeEntity);
-            recipeIngredientEntity.setIngredient(ingredientEntity);
+            recipeIngredientEntity.setRecipeId(createRecipeDTO.getId());
+            recipeIngredientEntity.setAmount(createRecipeDTO.getIngredientRecipeDTOList().get(i).getAmount());
+            recipeIngredientEntity.setUnit(createRecipeDTO.getIngredientRecipeDTOList().get(i).getUnit());
             recipeIngredientRepository.save(recipeIngredientEntity);
         }
     }
 
     @Override
     @Transactional
-    public CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) {
-        createRecipeDTO.setNegativeVotes(0);
-        createRecipeDTO.setPositiveVotes(0);
-        CreateRecipeDTO returnCreateRecipeDTO = new CreateRecipeDTO();
-        //save RecipeEntity
-        RecipeEntity recipeEntity = new RecipeEntity();
-        map(createRecipeDTO, recipeEntity);
-        map(recipeRepository.save(recipeEntity), returnCreateRecipeDTO);
-        createRecipeDTO.setId(returnCreateRecipeDTO.getId());
-        //save CategoryRecipeEntityList
-        saveCategoryRecipeEntityList(createRecipeDTO);
-        returnCreateRecipeDTO.setCategoryRecipeDTOList(createRecipeDTO.getCategoryRecipeDTOList());
-        //save CookingStepsEntityList
-        returnCreateRecipeDTO.setCookingStepRecipeDTOList(saveCookingStepsEntityList(createRecipeDTO, recipeEntity));
-        //save RecipeIngredientList
-        saveRecipeIngredientList(createRecipeDTO, recipeEntity);
-        returnCreateRecipeDTO.setIngredientRecipeDTOList(createRecipeDTO.getIngredientRecipeDTOList());
-        log.info("Create recipe " + createRecipeDTO.getName() + " is successful");
-        return returnCreateRecipeDTO;
+    public List<RecipeDTO> getByCategoryName(String categoryName) {
+        try {
+            CategoryEntity category = categoryRepository.getByName(categoryName);
+            List<RecipeEntity> recipeEntityList = new ArrayList<>();
+            for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeRepository.findAllByCategoryId(category.getId())) {
+                RecipeEntity recipeEntity = recipeRepository.getById(categoryRecipeEntity.getRecipeId());
+                recipeEntityList.add(recipeEntity);
+            }
+            return mapListLambda(recipeEntityList, RecipeDTO.class);
+        } catch (NotFoundException | NullPointerException ex) {
+            log.error(new NotFoundException("NOT_FOUND"));
+            return null;
+        }
     }
 
     @Override
     public CreateRecipeDTO mapCategoryRecipeEntityListToDTO(UUID uuid, CreateRecipeDTO createRecipeDTO) {
         List<CategoryRecipeDTO> categoryRecipeDTOList = new ArrayList<>();
-        List<CategoryRecipeEntity> categoryRecipeEntityList = categoryRecipeRepository.findAllByRecipeId(uuid);
-        for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeEntityList) {
-            CategoryEntity categoryEntity = categoryRecipeEntity.getCategory();
+        for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeRepository.findAllByRecipeId(uuid)) {
             CategoryRecipeDTO categoryRecipeDTO = new CategoryRecipeDTO();
-            map(categoryEntity, categoryRecipeDTO);
+            categoryRecipeDTO.setName(categoryRecipeEntity.getCategory().getName());
             categoryRecipeDTOList.add(categoryRecipeDTO);
             createRecipeDTO.setCategoryRecipeDTOList(categoryRecipeDTOList);
         }
@@ -333,21 +221,13 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
 
     @Override
     public CreateRecipeDTO mapCookingStepRecipeEntityListToDTO(RecipeEntity recipeEntity, CreateRecipeDTO createRecipeDTO) {
-        CookingStepRecipeDTO cookingStepRecipeDTO = new CookingStepRecipeDTO();
-        List<CookingStepRecipeDTO> cookingStepRecipeDTOList = new ArrayList<>();
-        cookingStepRecipeDTOList.add(cookingStepRecipeDTO);
-        createRecipeDTO.setCookingStepRecipeDTOList(cookingStepRecipeDTOList);
         createRecipeDTO.setCookingStepRecipeDTOList(mapListLambda(recipeEntity.getCookingStepsEntityList(), CookingStepRecipeDTO.class));
         return createRecipeDTO;
     }
 
-    //todo : need to fix map
     @Override
     public CreateRecipeDTO mapRecipeIngredientEntityListToDTO(RecipeEntity recipeEntity, CreateRecipeDTO createRecipeDTO) {
-        IngredientRecipeDTO ingredientRecipeDTO = new IngredientRecipeDTO();
-        List<IngredientRecipeDTO> ingredientRecipeDTOList = new ArrayList<>();
-        ingredientRecipeDTOList.add(ingredientRecipeDTO);
-        createRecipeDTO.setIngredientRecipeDTOList(ingredientRecipeDTOList);
+        createRecipeDTO.setIngredientRecipeDTOList(mapListLambda(recipeEntity.getRecipeIngredientEntityList(), IngredientRecipeDTO.class));
 
         List<RecipeIngredientEntity> recipeIngredientEntityList = recipeEntity.getRecipeIngredientEntityList();
         List<IngredientEntity> ingredientEntityList = new ArrayList<>();
@@ -355,12 +235,8 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
             IngredientEntity ingredientEntity = recipeIngredientEntity.getIngredient();
             ingredientEntityList.add(ingredientEntity);
         }
-        map(ingredientEntityList, createRecipeDTO.getIngredientRecipeDTOList());
-        int size = createRecipeDTO.getIngredientRecipeDTOList().size();
-        int countNull = size - 1;
-        map(recipeEntity.getRecipeIngredientEntityList(), createRecipeDTO.getIngredientRecipeDTOList());
-        for (int x = 0; x < countNull; x++) {
-            createRecipeDTO.getIngredientRecipeDTOList().remove(size);
+        for (int i = 0; i < ingredientEntityList.size(); i++) {
+            createRecipeDTO.getIngredientRecipeDTOList().get(i).setName(ingredientEntityList.get(i).getName());
         }
         return createRecipeDTO;
     }
@@ -397,10 +273,8 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                 //map recipeIngredientEntityList to DTO
                 map(mapRecipeIngredientEntityListToDTO(recipeEntity, createRecipeDTO), createRecipeDTO);
             }
-            return createRecipeDTOList;
-        } else {
-            return createRecipeDTOList;
         }
+        return createRecipeDTOList;
     }
 
     @Override
@@ -430,11 +304,9 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     @Override
     public List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO) {
         List<RecipeEntity> recipeEntityList = new ArrayList<>();
-        List<IngredientEntity> ingredientEntityList = new ArrayList<>();
         for (int i = 0; i < ingredientNameListDTO.getIngredientNameDTOList().size(); i++) {
             IngredientEntity findIngredientEntity =
                     ingredientRepository.getByName(ingredientNameListDTO.getIngredientNameDTOList().get(i).getName());
-            ingredientEntityList.add(findIngredientEntity);
             List<RecipeIngredientEntity> recipeIngredientEntityList =
                     recipeIngredientRepository.findAllByIngredientId(findIngredientEntity.getId());
             for (RecipeIngredientEntity recipeIngredientEntity : recipeIngredientEntityList) {
@@ -463,7 +335,6 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
 
     @Override
     public List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO) {
-
         List<RecipeEntity> recipeEntityList = new ArrayList<>();
         int time = recipeDataDTO.getCookingTime();
         int zero = 0;
@@ -487,7 +358,6 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                         CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty())));
             }
         }
-
         return mapListLambda(recipeEntityList, RecipeDTO.class);
     }
 
@@ -507,5 +377,61 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         UserDTO userDTO = new UserDTO();
         map(userEntity, userDTO);
         return userDTO;
+    }
+
+    @Override
+    public List<RecipeDTO> findAll() {
+        return mapListLambda(recipeRepository.findAll(), RecipeDTO.class);
+    }
+
+    @Override
+    public RecipeDTO create(RecipeDTO recipeDTO) {
+        recipeDTO.setNegativeVotes(0);
+        recipeDTO.setPositiveVotes(0);
+        RecipeEntity recipeEntity = new RecipeEntity();
+        map(recipeDTO, recipeEntity);
+        map(recipeRepository.save(recipeEntity), recipeDTO);
+        return recipeDTO;
+    }
+
+    @Override
+    @Transactional
+    public RecipeDTO update(UUID uuid, RecipeDTO recipeDTO) {
+        RecipeEntity updateEntity = recipeRepository.getById(uuid);
+        recipeDTO.setId(updateEntity.getId());
+        recipeDTO.setAuthorId(recipeDTO.getAuthorId());
+        map(recipeDTO, updateEntity);
+        map(recipeRepository.save(updateEntity), recipeDTO);
+        return recipeDTO;
+    }
+
+    @Override
+    public RecipeDTO findByRecipeId(UUID uuid) {
+        RecipeDTO recipeDTO = new RecipeDTO();
+        map(recipeRepository.getById(uuid), recipeDTO);
+        return recipeDTO;
+    }
+
+    @Override
+    @Transactional
+    public void positiveVote(UUID uuid) {
+        RecipeEntity updateEntity = recipeRepository.getById(uuid);
+        updateEntity.setPositiveVotes(updateEntity.getPositiveVotes() + 1);
+        recipeRepository.save(updateEntity);
+    }
+
+    @Override
+    @Transactional
+    public void negativeVote(UUID uuid) {
+        RecipeEntity updateEntity = recipeRepository.getById(uuid);
+        updateEntity.setNegativeVotes(updateEntity.getNegativeVotes() + 1);
+        recipeRepository.save(updateEntity);
+    }
+
+    @Override
+    @Transactional
+    public void removeById(UUID uuid) {
+        RecipeEntity removeEntity = recipeRepository.getById(uuid);
+        recipeRepository.delete(removeEntity);
     }
 }

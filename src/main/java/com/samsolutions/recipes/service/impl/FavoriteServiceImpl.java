@@ -3,7 +3,6 @@ package com.samsolutions.recipes.service.impl;
 import com.samsolutions.recipes.dto.FavoriteDTO;
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
-import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.model.FavoriteEntity;
 import com.samsolutions.recipes.repository.FavoriteRepository;
 import com.samsolutions.recipes.service.FavoriteService;
@@ -26,7 +25,7 @@ import java.util.UUID;
  * @since 2019.12
  */
 @Service
-public class FavoriteServiceImpl extends ModelMapperService implements FavoriteService{
+public class FavoriteServiceImpl extends ModelMapperService implements FavoriteService {
     @Autowired
     private FavoriteRepository favoriteRepository;
 
