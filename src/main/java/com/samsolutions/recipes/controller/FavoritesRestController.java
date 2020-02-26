@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -51,9 +52,9 @@ public class FavoritesRestController extends CustomGlobalExceptionHandler {
         log.info("Remove favorite " + uuid + " is successful");
     }
 
-    @GetMapping("/{id}/{page}/{size}/{sort}")
-    public List<FavoriteDTO> findAllByUserId(@PathVariable("id") @ValidUUID UUID uuid, @PathVariable("page") @NotNull int page,
-                                             @PathVariable("size") @NotNull int size, @PathVariable("sort") String sort) {
+    @GetMapping("/{id}")
+    public List<FavoriteDTO> findAllByUserId(@PathVariable("id") @ValidUUID UUID uuid, @RequestParam("page") int page,
+                                             @RequestParam("size") int size, @RequestParam("sort") String sort) {
         return favoriteService.findAllByUserId(uuid, page, size, sort);
     }
 }

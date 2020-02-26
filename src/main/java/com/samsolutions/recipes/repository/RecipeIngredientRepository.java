@@ -1,6 +1,8 @@
 package com.samsolutions.recipes.repository;
 
 import com.samsolutions.recipes.model.RecipeIngredientEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +18,6 @@ public interface RecipeIngredientRepository extends BaseRepository<RecipeIngredi
     List<RecipeIngredientEntity> findAllByRecipeId(UUID recipeId);
 
     List<RecipeIngredientEntity> findAllByIngredientId(UUID uuid);
+
+    Page<RecipeIngredientEntity> findAllByIngredientId(UUID uuid, Pageable pageable);
 }

@@ -49,14 +49,14 @@ public class UserRestController extends CustomGlobalExceptionHandler {
         return userService.getByEmail(email);
     }
 
-    @GetMapping("/")
+    @GetMapping("/findAll")
     public List<UserDTO> findAll() {
         return userService.findAll();
     }
 
-    @GetMapping("/{page}/{size}/{sort}")
-    public List<UserDTO> findAll(@PathVariable("page") @NotNull int page,
-                                 @PathVariable("size") @NotNull int size, @PathVariable("sort") String sort) {
+    @GetMapping("/")
+    public List<UserDTO> findAll(@RequestParam("page") int page,
+                                 @RequestParam("size") int size, @RequestParam("sort") String sort) {
         return userService.findAll(page, size, sort);
     }
 

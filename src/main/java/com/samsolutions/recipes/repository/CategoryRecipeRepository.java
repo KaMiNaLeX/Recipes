@@ -1,6 +1,8 @@
 package com.samsolutions.recipes.repository;
 
 import com.samsolutions.recipes.model.CategoryRecipeEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +12,7 @@ import java.util.UUID;
  * @since 2019.12
  */
 public interface CategoryRecipeRepository extends BaseRepository<CategoryRecipeEntity> {
-    List<CategoryRecipeEntity> findAllByCategoryId(UUID uuid);
+    Page<CategoryRecipeEntity> findAllByCategoryId(UUID uuid, Pageable pageable);
 
     List<CategoryRecipeEntity> findAllByRecipeId(UUID recipeId);
 }

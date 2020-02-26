@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -36,14 +37,14 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
     @Autowired
     private IngredientService ingredientService;
 
-    @GetMapping("/")
+    @GetMapping("/findAll")
     public List<IngredientDTO> findAll() {
         return ingredientService.findAll();
     }
 
-    @GetMapping("/{page}/{size}/{sort}")
-    public List<IngredientDTO> findAll(@PathVariable("page") @NotNull int page, @PathVariable("size") @NotNull int size,
-                                       @PathVariable("sort") @NotBlank String sort) {
+    @GetMapping("/")
+    public List<IngredientDTO> findAll(@RequestParam("page") int page, @RequestParam("size") @NotNull int size,
+                                       @RequestParam("sort") @NotBlank String sort) {
         return ingredientService.findAll(page, size, sort);
     }
 

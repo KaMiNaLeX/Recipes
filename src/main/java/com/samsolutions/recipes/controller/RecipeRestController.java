@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -91,8 +92,11 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     }
 
     @GetMapping("/categoryName/{name}")
-    public List<RecipeDTO> findAllByCategoryName(@PathVariable("name") @NotBlank String categoryName) {
-        return recipeService.getByCategoryName(categoryName);
+    public List<RecipeDTO> findAllByCategoryName(@PathVariable("name") @NotBlank String categoryName,
+                                                 @RequestParam("page") int page,
+                                                 @RequestParam("size") int size,
+                                                 @RequestParam("sort") String sort) {
+        return recipeService.getByCategoryName(categoryName, page, size, sort);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
@@ -113,18 +117,27 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @GetMapping("/authorId/{id}")
-    public List<CreateRecipeDTO> getByAuthorId(@PathVariable("id") @ValidUUID UUID uuid) {
-        return recipeService.getByAuthorId(uuid);
+    public List<CreateRecipeDTO> getByAuthorId(@PathVariable("id") @ValidUUID UUID uuid,
+                                               @RequestParam("page") int page,
+                                               @RequestParam("size") int size,
+                                               @RequestParam("sort") String sort) {
+        return recipeService.getByAuthorId(uuid, page, size, sort);
     }
 
     @GetMapping("/authorName/{name}")
-    public List<RecipeDTO> getByAuthorName(@PathVariable("name") @NotBlank String name) {
-        return recipeService.getByAuthorName(name);
+    public List<RecipeDTO> getByAuthorName(@PathVariable("name") @NotBlank String name,
+                                           @RequestParam("page") int page,
+                                           @RequestParam("size") int size,
+                                           @RequestParam("sort") String sort) {
+        return recipeService.getByAuthorName(name, page, size, sort);
     }
 
     @GetMapping("/name/{name}")
-    public List<RecipeDTO> findAllByName(@PathVariable("name") @NotBlank String name) {
-        return recipeService.findAllByName(name);
+    public List<RecipeDTO> findAllByName(@PathVariable("name") @NotBlank String name,
+                                         @RequestParam("page") int page,
+                                         @RequestParam("size") int size,
+                                         @RequestParam("sort") String sort) {
+        return recipeService.findAllByName(name, page, size, sort);
     }
 
     @GetMapping("/nameAndAuthor/{name}/{authorId}")
@@ -139,13 +152,19 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     }
 
     @PostMapping("/ingredientName")
-    public List<RecipeDTO> findAllByIngredientName(@Valid @RequestBody IngredientNameListDTO ingredientNameList) {
-        return recipeService.findAllByIngredient(ingredientNameList);
+    public List<RecipeDTO> findAllByIngredientName(@Valid @RequestBody IngredientNameListDTO ingredientNameList,
+                                                   @RequestParam("page") int page,
+                                                   @RequestParam("size") int size,
+                                                   @RequestParam("sort") String sort) {
+        return recipeService.findAllByIngredient(ingredientNameList, page, size, sort);
     }
 
     @PostMapping("/data")
-    public List<RecipeDTO> findAllByData(@Valid @RequestBody RecipeDataDTO recipeDataDTO) {
-        return recipeService.findAllByData(recipeDataDTO);
+    public List<RecipeDTO> findAllByData(@Valid @RequestBody RecipeDataDTO recipeDataDTO,
+                                         @RequestParam("page") int page,
+                                         @RequestParam("size") int size,
+                                         @RequestParam("sort") String sort) {
+        return recipeService.findAllByData(recipeDataDTO, page, size, sort);
     }
 
     @PostMapping(value = "/addPhoto4Step/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

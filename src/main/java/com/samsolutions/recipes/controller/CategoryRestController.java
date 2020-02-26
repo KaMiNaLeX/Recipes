@@ -48,14 +48,14 @@ public class CategoryRestController extends CustomGlobalExceptionHandler {
         return categoryService.findAllEntities();
     }
 
-    @GetMapping("/")
+    @GetMapping("/categories")
     public List<CategoryDTO> findAll() {
         return categoryService.findAll();
     }
 
-    @GetMapping("/{page}/{size}/{sort}")
-    public List<CategoryDTO> findAll(@PathVariable("page") @NotNull int page, @PathVariable("size") @NotNull int size,
-                                     @PathVariable("sort") @NotBlank String sort) {
+    @GetMapping("/")
+    public List<CategoryDTO> findAll(@RequestParam("page") int page, @RequestParam("size") int size,
+                                     @RequestParam("sort") String sort) {
         return categoryService.findAll(page, size, sort);
     }
 

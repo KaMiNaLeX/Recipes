@@ -2,9 +2,10 @@ package com.samsolutions.recipes.repository;
 
 import com.samsolutions.recipes.model.Enum.CookingDifficulty;
 import com.samsolutions.recipes.model.RecipeEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -14,15 +15,15 @@ import java.util.UUID;
 @Repository
 public interface RecipeRepository extends BaseRepository<RecipeEntity> {
 
-    List<RecipeEntity> getByAuthorId(UUID authorId);
+    Page<RecipeEntity> getByAuthorId(UUID authorId, Pageable pageable);
 
-    List<RecipeEntity> findAllByName(String name);
+    Page<RecipeEntity> findAllByName(String name, Pageable pageable);
 
     RecipeEntity getByNameAndAuthorId(String name, UUID uuid);
 
-    List<RecipeEntity> findAllByCookingTimeBetween(int start, int end);
+    Page<RecipeEntity> findAllByCookingTimeBetween(int start, int end, Pageable pageable);
 
-    List<RecipeEntity> findAllByCookingDifficulty(CookingDifficulty dif);
+    Page<RecipeEntity> findAllByCookingDifficulty(CookingDifficulty dif, Pageable pageable);
 
-    List<RecipeEntity> findAllByCookingTimeBetweenAndCookingDifficulty(int start, int end, CookingDifficulty dif);
+    Page<RecipeEntity> findAllByCookingTimeBetweenAndCookingDifficulty(int start, int end, CookingDifficulty dif, Pageable pageable);
 }

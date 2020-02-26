@@ -34,23 +34,23 @@ public interface RecipeService {
 
     void removeById(UUID uuid);
 
-    List<RecipeDTO> getByCategoryName(String categoryName);
+    List<RecipeDTO> getByCategoryName(String categoryName, int page, int size, String sort);
 
     CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO);
 
     CreateRecipeDTO getByRecipeId(UUID uuid);
 
-    List<CreateRecipeDTO> getByAuthorId(UUID authorId);
+    List<CreateRecipeDTO> getByAuthorId(UUID authorId, int page, int size, String sort);
 
-    List<RecipeDTO> getByAuthorName(String name);
+    List<RecipeDTO> getByAuthorName(String name, int page, int size, String sort);
 
-    List<RecipeDTO> findAllByName(String name);
+    List<RecipeDTO> findAllByName(String name, int page, int size, String sort);
 
     RecipeDTO getByNameAuthorId(String name, UUID uuid);
 
-    List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO);
+    List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO, int page, int size, String sort);
 
-    List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO);
+    List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO, int page, int size, String sort);
 
     RecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException;
 
