@@ -5,5 +5,5 @@ package com.samsolutions.recipes.model.Enum;
  * @since 2019.11
  */
 public enum RoleName {
-    ADMIN, AUTHOR, VIEWER
+    ADMIN, AUTHOR, VIEWER, АДМИН, АВТОР, НАБЛЮДАТЕЛЬ
 }

@@ -29,7 +29,6 @@ import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -229,6 +228,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeRepository.findAllByRecipeId(uuid)) {
             CategoryRecipeDTO categoryRecipeDTO = new CategoryRecipeDTO();
             categoryRecipeDTO.setName(categoryRecipeEntity.getCategory().getName());
+            categoryRecipeDTO.setNameRu(categoryRecipeEntity.getCategory().getNameRu());
             categoryRecipeDTOList.add(categoryRecipeDTO);
             createRecipeDTO.setCategoryRecipeDTOList(categoryRecipeDTOList);
         }
@@ -253,6 +253,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         }
         for (int i = 0; i < ingredientEntityList.size(); i++) {
             createRecipeDTO.getIngredientRecipeDTOList().get(i).setName(ingredientEntityList.get(i).getName());
+            createRecipeDTO.getIngredientRecipeDTOList().get(i).setNameRu(ingredientEntityList.get(i).getNameRu());
         }
         return createRecipeDTO;
     }

@@ -1,6 +1,6 @@
-INSERT INTO ROLE (id, name, description)
-values (unhex(replace(uuid(), '-', '')), 'AUTHOR', 'can create recipes');
-INSERT INTO ROLE (id, name, description)
-values (unhex(replace(uuid(), '-', '')), 'ADMIN', 'all privileges');
-INSERT INTO ROLE (id, name, description)
-values (unhex(replace(uuid(), '-', '')), 'VIEWER', 'can only view');
+INSERT INTO ROLE (id, name,name_ru, description, description_ru)
+values (unhex(replace(uuid(), '-', '')), 'AUTHOR','АВТОР', 'can create recipes','может создавать рецепты');
+INSERT INTO ROLE (id, name,name_ru, description, description_ru)
+values (unhex(replace(uuid(), '-', '')), 'ADMIN','АДМИН', 'all privileges','все привелегии');
+INSERT INTO ROLE (id, name,name_ru, description, description_ru)
+values (unhex(replace(uuid(), '-', '')), 'VIEWER','НАБЛЮДАТЕЛЬ', 'can only view','может только просматривать рецепты');

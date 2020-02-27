@@ -4,7 +4,6 @@ import com.samsolutions.recipes.dto.CookingStepDTO;
 import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.model.CookingStepsEntity;
 import com.samsolutions.recipes.repository.CookingStepsRepository;
-import com.samsolutions.recipes.repository.RecipeRepository;
 import com.samsolutions.recipes.service.CookingStepsService;
 import com.samsolutions.recipes.service.FileStorageService;
 import com.samsolutions.recipes.service.ModelMapperService;
@@ -31,9 +30,6 @@ public class CookingStepsServiceImpl extends ModelMapperService implements Cooki
     private CookingStepsRepository cookingStepsRepository;
 
     @Autowired
-    private RecipeRepository recipeRepository;
-
-    @Autowired
     private FileStorageService fileStorageService;
 
     @Override
@@ -42,8 +38,8 @@ public class CookingStepsServiceImpl extends ModelMapperService implements Cooki
         CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
         map(cookingStepDTO, cookingStepsEntity);
         cookingStepsEntity.setActive(true);
-        cookingStepsEntity.setRecipe(recipeRepository.getById(cookingStepDTO.getRecipeId()));
-        map(cookingStepsRepository.save(cookingStepsEntity), cookingStepDTO);
+        cookingStepsRepository.save(cookingStepsEntity);
+        cookingStepDTO.setId(cookingStepsEntity.getId());
         return cookingStepDTO;
     }
 

@@ -18,4 +18,6 @@ import javax.validation.constraints.NotBlank;
 public class CategoryRecipeDTO {
     @NotBlank
     private String name;
+    @NotBlank
+    private String nameRu;
 }

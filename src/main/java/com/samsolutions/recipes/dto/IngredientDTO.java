@@ -23,8 +23,12 @@ public class IngredientDTO {
     private UUID id;
     @NotBlank
     private String name;
+    @NotBlank
+    private String nameRu;
     private String description;
+    private String descriptionRu;
     @NotNull
     private double calories;
     private Type type;
+    private Type typeRu;
 }

@@ -21,8 +21,14 @@ public class CategoryDTO {
     @NotBlank
     private String name;
     @NotBlank
+    private String nameRu;
+    @NotBlank
     private String description;
     @NotBlank
+    private String descriptionRu;
+    @NotBlank
     private String tag;
+    @NotBlank
+    private String tagRu;
     private String imgSource;
 }

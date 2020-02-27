@@ -31,8 +31,15 @@ public class RoleEntity extends BaseEntity {
     @Column(length = 6)
     private RoleName name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 6)
+    private RoleName nameRu;
+
     @Column(name = "description")
     private String description;
+
+    @Column(name = "description_ru")
+    private String descriptionRu;
 
     @OneToMany(
             mappedBy = "role",

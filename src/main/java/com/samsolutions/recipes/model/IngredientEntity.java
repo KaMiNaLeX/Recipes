@@ -30,8 +30,14 @@ public class IngredientEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "name_ru")
+    private String nameRu;
+
     @Column(name = "description")
     private String description;
+
+    @Column(name = "description_ru")
+    private String descriptionRu;
 
     @Column(name = "calories")
     private double calories;
@@ -39,6 +45,10 @@ public class IngredientEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 50)
     private Type type;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private Type typeRu;
 
     @OneToMany(mappedBy = "ingredient",
             cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},

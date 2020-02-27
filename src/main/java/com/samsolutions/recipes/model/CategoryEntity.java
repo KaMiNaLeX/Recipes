@@ -29,11 +29,20 @@ public class CategoryEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "name_ru")
+    private String nameRu;
+
     @Column(name = "description")
     private String description;
 
+    @Column(name = "description_ru")
+    private String descriptionRu;
+
     @Column(name = "tag")
     private String tag;
+
+    @Column(name = "tag_ru")
+    private String tagRu;
 
     @Column(name = "img_source")
     private String imgSource;

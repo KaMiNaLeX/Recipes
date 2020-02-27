@@ -31,8 +31,14 @@ public class CookingStepsEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "name_ru")
+    private String nameRu;
+
     @Column(name = "description")
     private String description;
+
+    @Column(name = "description_ru")
+    private String descriptionRu;
 
     @Column(name = "img_source")
     private String imgSource;
@@ -43,7 +49,7 @@ public class CookingStepsEntity extends BaseEntity {
     @Column(name = "recipe_id")
     private UUID recipeId;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", insertable = false, updatable = false)
     private RecipeEntity recipe;
 }

@@ -26,7 +26,11 @@ public class CookingStepDTO {
     @NotBlank
     private String name;
     @NotBlank
+    private String nameRu;
+    @NotBlank
     private String description;
+    @NotBlank
+    private String descriptionRu;
     private boolean active;
     private String imgSource;
     @ValidUUID

@@ -19,6 +19,8 @@ import javax.validation.constraints.NotBlank;
 public class IngredientRecipeDTO {
     @NotBlank
     private String name;
+    @NotBlank
+    private String nameRu;
     private float amount;
     private String note;
     private Unit unit;

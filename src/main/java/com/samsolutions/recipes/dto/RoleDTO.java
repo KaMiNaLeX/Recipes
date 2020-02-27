@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -21,17 +20,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleDTO {
-    public static final String NAME = "name";
-    public static final String DESCRIPTION = "description";
-
     private UUID id;
     @NotBlank
     private String name;
+    @NotBlank
+    private String nameRu;
     private String description;
-
-    public RoleDTO(Map<String, Object> values) {
-        this.name = values.get(NAME) != null ? (String) values.get(NAME) : null;
-        this.description = values.get(DESCRIPTION) != null ? (String) values.get(DESCRIPTION) : null;
-    }
+    private String descriptionRu;
 
 }
