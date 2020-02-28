@@ -202,7 +202,11 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     @Transactional
     public List<RecipeDTO> getByCategoryName(String categoryName, int page, int size, String sort) {
         try {
-            CategoryEntity category = categoryRepository.getByName(categoryName);
+            CategoryEntity category;
+            if (categoryName.matches("^[A-Za-z]+$")) {
+                category = categoryRepository.getByName(categoryName);
+            } else category = categoryRepository.getByNameRu(categoryName);
+
             Pageable pageable = PageRequest.of(page, size);
             List<RecipeEntity> recipeEntityList = new ArrayList<>();
             for (CategoryRecipeEntity categoryRecipeEntity :
@@ -314,7 +318,10 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     @Override
     public List<RecipeDTO> findAllByName(String name, int page, int size, String sort) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-        return mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
+        if (name.matches("^[A-Za-z]+$")) {
+            return mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
+        } else return mapListLambda(recipeRepository.findAllByNameRu(name, pageable).getContent(), RecipeDTO.class);
+
     }
 
     @Override
@@ -330,8 +337,12 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         List<RecipeEntity> recipeEntityList = new ArrayList<>();
         Pageable pageable = PageRequest.of(page, size);
         for (int i = 0; i < ingredientNameListDTO.getIngredientNameDTOList().size(); i++) {
-            IngredientEntity findIngredientEntity =
-                    ingredientRepository.getByName(ingredientNameListDTO.getIngredientNameDTOList().get(i).getName());
+            IngredientEntity findIngredientEntity;
+            if (ingredientNameListDTO.getIngredientNameDTOList().get(i).getName().matches("^[A-Za-z]+$")) {
+                findIngredientEntity = ingredientRepository.getByName(ingredientNameListDTO.getIngredientNameDTOList().get(i).getName());
+            } else
+                findIngredientEntity = ingredientRepository.getByNameRu(ingredientNameListDTO.getIngredientNameDTOList().get(i).getName());
+
             List<RecipeIngredientEntity> recipeIngredientEntityList =
                     recipeIngredientRepository.findAllByIngredientId(findIngredientEntity.getId(), pageable).getContent();
             for (RecipeIngredientEntity recipeIngredientEntity : recipeIngredientEntityList) {
@@ -366,6 +377,10 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
 
     @Override
     public List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO, int page, int size, String sort) {
+        boolean ru = false;
+        if (recipeDataDTO.getCookingDifficultyDTOList().get(0).getCookingDifficulty().matches("^[А-Яа-я]+$")) {
+            ru = true;
+        }
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         List<RecipeEntity> recipeEntityList = new ArrayList<>();
         int time = recipeDataDTO.getCookingTime();
@@ -378,16 +393,29 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         } else if (recipeDataDTO.getCookingDifficultyDTOList().size() != 0 && time != 0) {
             for (int i = 0; i < recipeDataDTO.getCookingDifficultyDTOList().size(); i++) {
                 CookingDifficultyDTO difficultyDTO = recipeDataDTO.getCookingDifficultyDTOList().get(i);
-                recipeEntityList.addAll(
-                        recipeRepository.findAllByCookingTimeBetweenAndCookingDifficulty(
-                                zero, time, CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty()), pageable).getContent());
+                if (ru) {
+                    recipeEntityList.addAll(
+                            recipeRepository.findAllByCookingTimeBetweenAndCookingDifficultyRu(
+                                    zero, time, CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty()), pageable).getContent());
+                } else {
+                    recipeEntityList.addAll(
+                            recipeRepository.findAllByCookingTimeBetweenAndCookingDifficulty(
+                                    zero, time, CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty()), pageable).getContent());
+                }
+
             }
 
         } else if (recipeDataDTO.getCookingDifficultyDTOList().size() != 0 && time == 0) {
             for (int i = 0; i < recipeDataDTO.getCookingDifficultyDTOList().size(); i++) {
                 CookingDifficultyDTO difficultyDTO = recipeDataDTO.getCookingDifficultyDTOList().get(i);
-                recipeEntityList.addAll(recipeRepository.findAllByCookingDifficulty(
-                        CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty()), pageable).getContent());
+                if (ru) {
+                    recipeEntityList.addAll(recipeRepository.findAllByCookingDifficultyRu(
+                            CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty()), pageable).getContent());
+                } else {
+                    recipeEntityList.addAll(recipeRepository.findAllByCookingDifficulty(
+                            CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty()), pageable).getContent());
+                }
+
             }
         }
         return mapListLambda(recipeEntityList, RecipeDTO.class);

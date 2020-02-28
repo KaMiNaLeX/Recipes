@@ -19,11 +19,17 @@ public interface RecipeRepository extends BaseRepository<RecipeEntity> {
 
     Page<RecipeEntity> findAllByName(String name, Pageable pageable);
 
+    Page<RecipeEntity> findAllByNameRu(String name, Pageable pageable);
+
     RecipeEntity getByNameAndAuthorId(String name, UUID uuid);
 
     Page<RecipeEntity> findAllByCookingTimeBetween(int start, int end, Pageable pageable);
 
     Page<RecipeEntity> findAllByCookingDifficulty(CookingDifficulty dif, Pageable pageable);
 
+    Page<RecipeEntity> findAllByCookingDifficultyRu(CookingDifficulty dif, Pageable pageable);
+
     Page<RecipeEntity> findAllByCookingTimeBetweenAndCookingDifficulty(int start, int end, CookingDifficulty dif, Pageable pageable);
+
+    Page<RecipeEntity> findAllByCookingTimeBetweenAndCookingDifficultyRu(int start, int end, CookingDifficulty dif, Pageable pageable);
 }

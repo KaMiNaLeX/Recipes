@@ -14,5 +14,7 @@ import java.util.List;
 public interface IngredientRepository extends BaseRepository<IngredientEntity> {
     IngredientEntity getByName(String name);
 
+    IngredientEntity getByNameRu(String name);
+
     List<IngredientEntity> findAllByType(Type type);
 }

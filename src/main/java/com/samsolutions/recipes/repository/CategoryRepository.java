@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryRepository extends BaseRepository<CategoryEntity> {
     CategoryEntity getByName(String name);
+
+    CategoryEntity getByNameRu(String name);
 }
