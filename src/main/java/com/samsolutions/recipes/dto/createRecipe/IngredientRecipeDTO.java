@@ -23,5 +23,7 @@ public class IngredientRecipeDTO {
     private String nameRu;
     private float amount;
     private String note;
+    private String noteRu;
     private Unit unit;
+    private Unit unitRu;
 }

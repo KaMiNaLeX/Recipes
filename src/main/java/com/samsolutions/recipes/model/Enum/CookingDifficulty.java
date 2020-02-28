@@ -5,5 +5,6 @@ package com.samsolutions.recipes.model.Enum;
  * @since 2019.12
  */
 public enum CookingDifficulty {
-    EASY, MEDIUM, HARD
+    EASY, MEDIUM, HARD,
+    ЛЕГКО, СРЕДНЕ, ТЯЖЕЛО
 }

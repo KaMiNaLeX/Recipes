@@ -25,7 +25,10 @@ public class CreateRecipeDTO {
     private UUID id;
     @NotBlank
     private String name;
+    @NotBlank
+    private String nameRu;
     private CookingDifficulty cookingDifficulty;
+    private CookingDifficulty cookingDifficultyRu;
     @NotNull
     private int cookingTime;
     @NotNull

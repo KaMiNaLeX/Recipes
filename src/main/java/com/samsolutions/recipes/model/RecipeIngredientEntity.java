@@ -40,9 +40,16 @@ public class RecipeIngredientEntity extends BaseEntity {
     @Column(name = "note")
     private String note;
 
+    @Column(name = "note_ru")
+    private String noteRu;
+
     @Enumerated(EnumType.STRING)
     @Column(length = 50)
     private Unit unit;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private Unit unitRu;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", insertable = false, updatable = false)

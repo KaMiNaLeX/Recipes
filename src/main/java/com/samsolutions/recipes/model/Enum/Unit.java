@@ -5,5 +5,6 @@ package com.samsolutions.recipes.model.Enum;
  * @since 2019.12
  */
 public enum Unit {
-    PIECE, GRAM, MML, KG, L, TEASPOON, TABLESPOON, CUP, LEAF, BY_TASTE
+    PIECE, GRAM, MML, KG, L, TEASPOON, TABLESPOON, CUP, LEAF, BY_TASTE,
+    ШТУК, ГРАММ, МЛМ, КГ, Л, ЧАЙНАЯ_ЛОЖКА, СТОЛОВАЯ_ЛОЖКА, ЧАШКА, ЛИСТ, ПО_ВКУСУ
 }

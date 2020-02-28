@@ -99,6 +99,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         //save CookingStepsEntityList
         saveCookingStepsEntityList(createRecipeDTO);
         //save RecipeIngredientList
+        saveRecipeIngredientList(createRecipeDTO);
         List<UUID> updateCookingStepsEntityListUUID = updateCookingStepsEntityList(createRecipeDTO);
         for (int i = 0; i < updateCookingStepsEntityListUUID.size(); i++) {
             createRecipeDTO.getCookingStepRecipeDTOList().get(i).setId(updateCookingStepsEntityListUUID.get(i));
@@ -190,6 +191,9 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
             recipeIngredientEntity.setRecipeId(createRecipeDTO.getId());
             recipeIngredientEntity.setAmount(createRecipeDTO.getIngredientRecipeDTOList().get(i).getAmount());
             recipeIngredientEntity.setUnit(createRecipeDTO.getIngredientRecipeDTOList().get(i).getUnit());
+            recipeIngredientEntity.setUnitRu(createRecipeDTO.getIngredientRecipeDTOList().get(i).getUnitRu());
+            recipeIngredientEntity.setNote(createRecipeDTO.getIngredientRecipeDTOList().get(i).getNote());
+            recipeIngredientEntity.setNoteRu(createRecipeDTO.getIngredientRecipeDTOList().get(i).getNoteRu());
             recipeIngredientRepository.save(recipeIngredientEntity);
         }
     }

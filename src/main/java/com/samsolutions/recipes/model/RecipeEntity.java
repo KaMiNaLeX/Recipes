@@ -34,9 +34,16 @@ public class RecipeEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "name_ru")
+    private String nameRu;
+
     @Enumerated(EnumType.STRING)
     @Column(length = 50)
     private CookingDifficulty cookingDifficulty;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private CookingDifficulty cookingDifficultyRu;
 
     @Column(name = "cooking_time")
     private int cookingTime;

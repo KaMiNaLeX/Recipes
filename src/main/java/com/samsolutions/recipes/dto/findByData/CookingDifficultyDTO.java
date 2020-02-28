@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CookingDifficultyDTO {
     private String cookingDifficulty;
+    private String cookingDifficultyRu;
 }
