@@ -15,6 +15,7 @@ import {CookingDifficultyDTO} from "../../model/findByData/cooking-difficulty-dt
 import {CreateFavorite} from "../../model/create-favorite";
 import {Favorite} from "../../model/favorite";
 import {FavoriteService} from "../../service/favorite.service";
+import {SharedService} from "../../service/shared.service";
 
 @Component({
   selector: 'app-search',
@@ -22,7 +23,7 @@ import {FavoriteService} from "../../service/favorite.service";
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
+  ru: boolean;
   first = true;
   second = false;
   third = false;
@@ -44,14 +45,16 @@ export class SearchComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService,
-              private favoriteService: FavoriteService) {
+              private favoriteService: FavoriteService, private ss: SharedService) {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
     }
   }
 
   ngOnInit() {
-
+    this.ru = (localStorage.getItem('lang') == 'ru');
+    this.ss.getEmittedValue()
+      .subscribe(item => this.ru = item);
   }
 
   byName() {

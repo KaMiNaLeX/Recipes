@@ -6,6 +6,8 @@ import {FavoriteService} from "../../service/favorite.service";
 import {CreateFavorite} from "../../model/create-favorite";
 import {Favorite} from "../../model/favorite";
 import {User} from "../../model/user";
+import {CategoryService} from "../../service/category.service";
+import {SharedService} from "../../service/shared.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -13,7 +15,7 @@ import {User} from "../../model/user";
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-
+  ru: boolean;
   recipe: Recipe = new Recipe();
   recipes: Recipe[];
   admin = false;
@@ -23,7 +25,7 @@ export class RecipeListComponent implements OnInit {
   authenticated = false;
   categoryName: string;
 
-  constructor(private router: Router, private recipeService: RecipeService, private favoriteService: FavoriteService) {
+  constructor(private router: Router, private recipeService: RecipeService, private favoriteService: FavoriteService, private ss: SharedService) {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
     }
@@ -46,6 +48,10 @@ export class RecipeListComponent implements OnInit {
 
     let author = localStorage.getItem('authorRole');
     this.author = (author == 'true');
+
+    this.ru = (localStorage.getItem('lang') == 'ru');
+    this.ss.getEmittedValue()
+      .subscribe(item => this.ru = item);
 
   }
 

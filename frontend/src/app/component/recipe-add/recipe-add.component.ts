@@ -10,6 +10,7 @@ import {IngredientService} from "../../service/ingredient.service";
 import {Ingredient} from "../../model/ingredient";
 import {Unit} from "../../model/unit.enum";
 import {Recipe} from "../../model/recipe";
+import {SharedService} from "../../service/shared.service";
 
 @Component({
   selector: 'app-recipe-add',
@@ -38,8 +39,10 @@ export class RecipeAddComponent implements OnInit {
   selectedFile2: File = null;
   imgURL2: any;
 
+  ru: boolean;
+
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
-              private categoryService: CategoryService, private ingredientService: IngredientService) {
+              private categoryService: CategoryService, private ingredientService: IngredientService, private ss: SharedService) {
     this.createRecipeDTO = new CreateRecipeDTO();
 
   }
@@ -53,6 +56,9 @@ export class RecipeAddComponent implements OnInit {
       this.categories = data;
     });
     this.ingredientService.findAll(0, 10, "name").subscribe(data => this.allIngredients = data);
+    this.ru = (localStorage.getItem('lang') == 'ru');
+    this.ss.getEmittedValue()
+      .subscribe(item => this.ru = item);
   }
 
   toDescription() {

@@ -18,10 +18,18 @@
     </thead>
     <tbody>
     <tr *ngFor="let ingredient of ingredients">
-      <td>{{ ingredient.name }}</td>
-      <td>{{ ingredient.description }}</td>
-      <td>{{ ingredient.calories }}</td>
-      <td>{{ ingredient.type }}</td>
+      <ng-container *ngIf="!ru;else lang">
+        <td>{{ ingredient.name }}</td>
+        <td>{{ ingredient.description }}</td>
+        <td>{{ ingredient.calories }}</td>
+        <td>{{ ingredient.type }}</td>
+      </ng-container>
+      <ng-template #lang>
+        <td>{{ ingredient.nameRu }}</td>
+        <td>{{ ingredient.descriptionRu }}</td>
+        <td>{{ ingredient.calories }}</td>
+        <td>{{ ingredient.typeRu }}</td>
+      </ng-template>
       <td>
         <button class='btn btn-success divChild2' (click)="add()">{{'add' | translate}}
         </button>

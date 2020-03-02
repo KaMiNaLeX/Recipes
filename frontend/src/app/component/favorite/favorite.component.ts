@@ -4,6 +4,7 @@ import {FavoriteService} from "../../service/favorite.service";
 import {Favorite} from "../../model/favorite";
 import {User} from "../../model/user";
 import {RecipeService} from "../../service/recipe.service";
+import {SharedService} from "../../service/shared.service";
 
 @Component({
   selector: 'app-favorite',
@@ -11,11 +12,11 @@ import {RecipeService} from "../../service/recipe.service";
   styleUrls: ['./favorite.component.css']
 })
 export class FavoriteComponent implements OnInit {
-
+  ru: boolean;
   favorite: Favorite = new Favorite();
   favorites: Favorite[];
 
-  constructor(private router: Router, private favoriteService: FavoriteService, private recipeService: RecipeService) {
+  constructor(private router: Router, private favoriteService: FavoriteService, private recipeService: RecipeService, private ss: SharedService) {
   }
 
   ngOnInit() {
@@ -26,7 +27,10 @@ export class FavoriteComponent implements OnInit {
           this.favorites[i].recipeDTO.authorName = data.login;
         })
       }
-    })
+    });
+    this.ru = (localStorage.getItem('lang') == 'ru');
+    this.ss.getEmittedValue()
+      .subscribe(item => this.ru = item);
   }
 
   view(id: string) {

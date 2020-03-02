@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {RecipeService} from "../../service/recipe.service";
 import {CreateRecipeDTO} from "../../model/createRecipe/create-recipe-dto";
 import {Router} from "@angular/router";
+import {CategoryService} from "../../service/category.service";
+import {SharedService} from "../../service/shared.service";
 
 @Component({
   selector: 'app-recipe-author',
@@ -11,12 +13,16 @@ import {Router} from "@angular/router";
 export class RecipeAuthorComponent implements OnInit {
   recipes: CreateRecipeDTO[] = [];
   recipe: CreateRecipeDTO = new CreateRecipeDTO();
+  ru: boolean;
 
-  constructor(private router: Router, private recipeService: RecipeService) {
+  constructor(private router: Router, private recipeService: RecipeService, private ss: SharedService) {
   }
 
   ngOnInit() {
     this.recipeService.getByAuthorId(localStorage.getItem('id'),0, 10, "name").subscribe(data => this.recipes = data);
+    this.ru = (localStorage.getItem('lang') == 'ru');
+    this.ss.getEmittedValue()
+      .subscribe(item => this.ru = item);
   }
 
   view(id: string) {

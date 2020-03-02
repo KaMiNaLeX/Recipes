@@ -3,6 +3,8 @@ import {Router} from "@angular/router";
 import {IngredientService} from "../../../service/ingredient.service";
 import {Ingredient} from "../../../model/ingredient";
 import {TypeIngredient} from "../../../model/type-ingredient.enum";
+import {CategoryService} from "../../../service/category.service";
+import {SharedService} from "../../../service/shared.service";
 
 @Component({
   selector: 'app-add-ingredient',
@@ -10,7 +12,7 @@ import {TypeIngredient} from "../../../model/type-ingredient.enum";
   styleUrls: ['./add-ingredient.component.css']
 })
 export class AddIngredientComponent implements OnInit {
-
+  ru: boolean;
   ingredients: Ingredient[] = [];
   ingredient: Ingredient = new Ingredient();
   returnIngredient: Ingredient = new Ingredient();
@@ -19,7 +21,7 @@ export class AddIngredientComponent implements OnInit {
   thirdDiv = false;
   keys = [];
 
-  constructor(private router: Router, private ingredientService: IngredientService) {
+  constructor(private router: Router, private ingredientService: IngredientService, private ss: SharedService) {
   }
 
   ngOnInit() {
@@ -28,6 +30,9 @@ export class AddIngredientComponent implements OnInit {
     });
     let type = TypeIngredient;
     this.keys = Object.values(type);
+    this.ru = (localStorage.getItem('lang') == 'ru');
+    this.ss.getEmittedValue()
+      .subscribe(item => this.ru = item);
   }
 
   toAdmin() {

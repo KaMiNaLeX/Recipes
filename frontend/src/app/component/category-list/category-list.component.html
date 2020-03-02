@@ -1,20 +1,38 @@
 <div class="resultDiv">
   <div class="card-columns">
     <div class="card border-primary" *ngFor="let category of categories" style="width: 370px;">
-      <form (ngSubmit)="getRipesByCategoryName(category.name)" #addToCartForm="ngForm">
-        <div class="card mb-3" style="max-width: 370px;">
-          <img height="250" weight="350" [src]="category.imgSource" *ngIf="category.imgSource !=null"
-               class="card-img-top" alt="">
-          <div class="card-body">
-            <h5 class="card-title">{{ category.name }}</h5>
-            <p class="card-text">{{ category.description }}</p>
-            <button type="submit" class="btn btn-primary">{{'view recipes' | translate}}</button>
+      <ng-container *ngIf="!ru;else lang">
+        <form (ngSubmit)="getRipesByCategoryName(category.name)" #addToCartForm="ngForm">
+          <div class="card mb-3" style="max-width: 370px;">
+            <img height="250" weight="350" [src]="category.imgSource" *ngIf="category.imgSource !=null"
+                 class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title">{{ category.name }}</h5>
+              <p class="card-text">{{ category.description }}</p>
+              <button type="submit" class="btn btn-primary">{{'view recipes' | translate}}</button>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">{{ category.tag }}</small>
+            </div>
           </div>
-          <div class="card-footer">
-            <small class="text-muted">{{ category.tag }}</small>
+        </form>
+      </ng-container>
+      <ng-template #lang>
+        <form (ngSubmit)="getRipesByCategoryName(category.nameRu)" #addToCartForm="ngForm">
+          <div class="card mb-3" style="max-width: 370px;">
+            <img height="250" weight="350" [src]="category.imgSource" *ngIf="category.imgSource !=null"
+                 class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title">{{ category.nameRu }}</h5>
+              <p class="card-text">{{ category.descriptionRu }}</p>
+              <button type="submit" class="btn btn-primary">{{'view recipes' | translate}}</button>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">{{ category.tagRu }}</small>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </ng-template>
     </div>
   </div>
 </div>

@@ -10,7 +10,6 @@ import {SharedService} from "../../../service/shared.service";
   styleUrls: ['./add-category.component.css']
 })
 export class AddCategoryComponent implements OnInit {
-
   ru: boolean;
   allCategories: Category[] = [];
   category: Category = new Category();
@@ -32,6 +31,7 @@ export class AddCategoryComponent implements OnInit {
     this.categoryService.findAll(0, 10, "name").subscribe(data => {
       this.allCategories = data;
     });
+    this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
       .subscribe(item => this.ru = item);
   }

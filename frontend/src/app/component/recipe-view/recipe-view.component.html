@@ -1,14 +1,22 @@
 <div id="first" class="container-fluid">
   <div class="col-md-6 login-container" style="max-width: 100%">
     <div class="form-group">
-      <h2>{{'name' | translate}}:{{createRecipeDTO.name}}</h2>
+      <h2 *ngIf="!ru;else lang">{{'name' | translate}}:{{createRecipeDTO.name}}</h2>
+      <ng-template #lang>
+        <h2>{{'name' | translate}}:{{createRecipeDTO.nameRu}}</h2>
+      </ng-template>
     </div>
     <br/>
     <div class="form-group">
       <div class="row">
         <div class="col">
           <div class="form-check form-check-inline">
-            <h5 class="form-check-label">{{'difficulty' | translate}}: {{createRecipeDTO.cookingDifficulty}}</h5>
+            <h5 *ngIf="!ru;else lang2" class="form-check-label">{{'difficulty' | translate}}
+              : {{createRecipeDTO.cookingDifficulty}}</h5>
+            <ng-template #lang2>
+              <h5 class="form-check-label">{{'difficulty' | translate}}
+                : {{createRecipeDTO.cookingDifficultyRu}}</h5>
+            </ng-template>
           </div>
         </div>
         <div class="col">
@@ -17,7 +25,12 @@
         <div class="col">
           <div class="form-check form-check-inline">
             <h5>{{'categories' | translate}}:</h5>
-            <h5 *ngFor="let category of createRecipeDTO.categoryRecipeDTOList">{{category.name}};</h5>
+            <ng-container *ngIf="!ru;else lang3">
+              <h5 *ngFor="let category of createRecipeDTO.categoryRecipeDTOList">{{category.name}};</h5>
+            </ng-container>
+            <ng-template #lang3>
+              <h5 *ngFor="let category of createRecipeDTO.categoryRecipeDTOList">{{category.nameRu}};</h5>
+            </ng-template>
           </div>
         </div>
       </div>
@@ -34,10 +47,18 @@
         </thead>
         <tbody>
         <tr id="ingredient" name="ingredient" *ngFor="let ingredient of createRecipeDTO.ingredientRecipeDTOList">
-          <td name="i.name">{{ingredient.name}}</td>
-          <td name="i.amount">{{ingredient.amount}}</td>
-          <td name="i.unit">{{ingredient.unit}}</td>
-          <td name="i.note">{{ingredient.note}}</td>
+          <ng-container *ngIf="!ru;else lang4">
+            <td name="i.name">{{ingredient.name}}</td>
+            <td name="i.amount">{{ingredient.amount}}</td>
+            <td name="i.unit">{{ingredient.unit}}</td>
+            <td name="i.note">{{ingredient.note}}</td>
+          </ng-container>
+          <ng-template #lang4>
+            <td name="i.name">{{ingredient.nameRu}}</td>
+            <td name="i.amount">{{ingredient.amount}}</td>
+            <td name="i.unit">{{ingredient.unitRu}}</td>
+            <td name="i.note">{{ingredient.noteRu}}</td>
+          </ng-template>
         </tr>
         </tbody>
       </table>
@@ -56,8 +77,14 @@
         <tr id="cookingStep" *ngFor="let step of createRecipeDTO.cookingStepRecipeDTOList">
           <td name="c.number">{{step.number}}</td>
           <td name="c.photo"><img [src]="step.imgSource" height="100" weight="100" *ngIf="step.imgSource != null"></td>
-          <td name="c.name">{{step.name}}</td>
-          <td name="c.description">{{step.description}}</td>
+          <ng-container *ngIf="!ru;else lang5">
+            <td name="c.name">{{step.name}}</td>
+            <td name="c.description">{{step.description}}</td>
+          </ng-container>
+          <ng-template #lang5>
+            <td name="c.name">{{step.nameRu}}</td>
+            <td name="c.description">{{step.descriptionRu}}</td>
+          </ng-template>
         </tr>
         </tbody>
       </table>

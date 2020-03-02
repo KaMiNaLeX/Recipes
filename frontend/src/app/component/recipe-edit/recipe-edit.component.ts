@@ -10,6 +10,7 @@ import {CategoryService} from "../../service/category.service";
 import {IngredientService} from "../../service/ingredient.service";
 import {Recipe} from "../../model/recipe";
 import {Unit} from "../../model/unit.enum";
+import {SharedService} from "../../service/shared.service";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -41,8 +42,10 @@ export class RecipeEditComponent implements OnInit {
   selectedFile: File = null;
   imgURL: any;
 
+  ru: boolean;
+
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
-              private categoryService: CategoryService, private ingredientService: IngredientService) {
+              private categoryService: CategoryService, private ingredientService: IngredientService, private ss: SharedService) {
   }
 
   ngOnInit() {
@@ -74,6 +77,10 @@ export class RecipeEditComponent implements OnInit {
       radioButton = document.getElementById('exampleRadios3');
       radioButton.checked = true;
     }
+
+    this.ru = (localStorage.getItem('lang') == 'ru');
+    this.ss.getEmittedValue()
+      .subscribe(item => this.ru = item);
   }
 
   toDescription() {
