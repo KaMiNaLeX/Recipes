@@ -13,7 +13,6 @@ export class CategoryListComponent implements OnInit {
   ru: boolean;
   categories: Category[];
   category: Category = new Category();
-  showDeleteMessage = false;
 
   constructor(private categoryService: CategoryService, private router: Router, private ss: SharedService) {
   }
@@ -31,23 +30,6 @@ export class CategoryListComponent implements OnInit {
     sessionStorage.removeItem('categoryName');
     sessionStorage.setItem('categoryName', name);
     this.router.navigate(['recipe-list']);
-  }
-
-  deleteCategory(id: number) {
-    this.categoryService.delete(id)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.showDeleteMessage = true;
-          this.categoryService.findAll(0, 10, "name").subscribe(data => {
-            this.categories = data;
-          })
-        },
-        error => console.log(error));
-  }
-
-  view(id: number) {
-    window.alert(id);
   }
 
 }

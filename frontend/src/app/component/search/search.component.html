@@ -67,14 +67,11 @@
           <div class="div">
             <ul *ngFor="let i of ingredientNameDTOS" class="divChild">
               <li>
-                <ng-container *ngIf="!ru;else lang2">
+                <ng-container>
                   <button class="btn btn-light">{{i.name}}</button>
+                  <button class="btn btn-light">{{i.nameRu}}</button>
                   <button class="btn btn-danger" (click)="deleteFromCart(i.name)">x</button>
                 </ng-container>
-                <ng-template #lang2>
-                  <button class="btn btn-light">{{i.nameRu}}</button>
-                  <button class="btn btn-danger" (click)="deleteFromCart(i.nameRu)">x</button>
-                </ng-template>
               </li>
             </ul>
           </div>
@@ -98,14 +95,20 @@
                     value="{{ingredient.nameRu}}">{{ingredient.nameRu}}</option>
           </select>
         </ng-template>
-
         <button class="divChild2 btn btn-danger" (click)="clearAll()">{{'clear' | translate}}
         </button>
       </div>
       <div class="div">
-        <div id="outer" class="divChild" *ngFor="let type of keys">
-          <button type="button" (click)="findIngredientByType(type)" class="btn btn-info">{{type}}</button>
-        </div>
+        <ng-container *ngIf="!ru;else lang6">
+          <div id="outer" class="divChild" *ngFor="let type of keys">
+            <button type="button" (click)="findIngredientByType(type)" class="btn btn-info">{{type}}</button>
+          </div>
+        </ng-container>
+        <ng-template #lang6>
+          <div class="divChild" *ngFor="let type of keysRu">
+            <button type="button" (click)="findIngredientByTypeRu(type)" class="btn btn-info">{{type}}</button>
+          </div>
+        </ng-template>
       </div>
       <div [hidden]="!typeDiv" class="div">
         <div class="divChild" *ngFor="let ingredient of typeIngredients">

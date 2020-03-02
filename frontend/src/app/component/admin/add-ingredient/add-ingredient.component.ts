@@ -3,7 +3,6 @@ import {Router} from "@angular/router";
 import {IngredientService} from "../../../service/ingredient.service";
 import {Ingredient} from "../../../model/ingredient";
 import {TypeIngredient} from "../../../model/type-ingredient.enum";
-import {CategoryService} from "../../../service/category.service";
 import {SharedService} from "../../../service/shared.service";
 
 @Component({
@@ -66,7 +65,7 @@ export class AddIngredientComponent implements OnInit {
             this.firstDiv = true;
             this.secondDiv = false;
           } else {
-            window.alert("A ingredient with this name already exists!");
+            window.alert("The ingredient with this name already exists!");
           }
         }
       );

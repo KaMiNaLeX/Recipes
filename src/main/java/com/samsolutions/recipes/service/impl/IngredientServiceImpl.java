@@ -96,7 +96,10 @@ public class IngredientServiceImpl extends ModelMapperService implements Ingredi
 
     @Override
     public List<IngredientDTO> findByType(Type type) {
-        List<IngredientEntity> sortedList = ingredientRepository.findAllByType(type);
+        List<IngredientEntity> sortedList;
+        if (type.name().matches("^[A-Za-z\\s]+$")) {
+            sortedList = ingredientRepository.findAllByType(type);
+        } else sortedList = ingredientRepository.findAllByTypeRu(type);
         sortedList.sort(new Comparator<IngredientEntity>() {
             @Override
             public int compare(IngredientEntity o1, IngredientEntity o2) {

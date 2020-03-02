@@ -17,4 +17,6 @@ public interface IngredientRepository extends BaseRepository<IngredientEntity> {
     IngredientEntity getByNameRu(String name);
 
     List<IngredientEntity> findAllByType(Type type);
+
+    List<IngredientEntity> findAllByTypeRu(Type type);
 }

@@ -20,7 +20,6 @@ import {SharedService} from "../../service/shared.service";
 export class RecipeEditComponent implements OnInit {
 
   createRecipeDTO: CreateRecipeDTO = new CreateRecipeDTO();
-  editCreateRecipeDTO: CreateRecipeDTO;
   first = true;
   second = false;
   third = false;

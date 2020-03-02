@@ -203,7 +203,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     public List<RecipeDTO> getByCategoryName(String categoryName, int page, int size, String sort) {
         try {
             CategoryEntity category;
-            if (categoryName.matches("^[A-Za-z]+$")) {
+            if (categoryName.matches("^[A-Za-z\\s]+$")) {
                 category = categoryRepository.getByName(categoryName);
             } else category = categoryRepository.getByNameRu(categoryName);
 
@@ -318,7 +318,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     @Override
     public List<RecipeDTO> findAllByName(String name, int page, int size, String sort) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-        if (name.matches("^[A-Za-z]+$")) {
+        if (name.matches("^[A-Za-z\\s]+$")) {
             return mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
         } else return mapListLambda(recipeRepository.findAllByNameRu(name, pageable).getContent(), RecipeDTO.class);
 
@@ -338,7 +338,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         Pageable pageable = PageRequest.of(page, size);
         for (int i = 0; i < ingredientNameListDTO.getIngredientNameDTOList().size(); i++) {
             IngredientEntity findIngredientEntity;
-            if (ingredientNameListDTO.getIngredientNameDTOList().get(i).getName().matches("^[A-Za-z]+$")) {
+            if (ingredientNameListDTO.getIngredientNameDTOList().get(i).getName().matches("^[A-Za-z\\s]+$")) {
                 findIngredientEntity = ingredientRepository.getByName(ingredientNameListDTO.getIngredientNameDTOList().get(i).getName());
             } else
                 findIngredientEntity = ingredientRepository.getByNameRu(ingredientNameListDTO.getIngredientNameDTOList().get(i).getName());
@@ -378,9 +378,12 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     @Override
     public List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO, int page, int size, String sort) {
         boolean ru = false;
-        if (recipeDataDTO.getCookingDifficultyDTOList().get(0).getCookingDifficulty().matches("^[А-Яа-я]+$")) {
-            ru = true;
+        if (recipeDataDTO.getCookingDifficultyDTOList().size() != 0) {
+            if (recipeDataDTO.getCookingDifficultyDTOList().get(0).getCookingDifficulty().matches("^[А-Яа-я\\s]+$")) {
+                ru = true;
+            }
         }
+
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         List<RecipeEntity> recipeEntityList = new ArrayList<>();
         int time = recipeDataDTO.getCookingTime();

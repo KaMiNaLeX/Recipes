@@ -69,10 +69,9 @@ export class AddCategoryComponent implements OnInit {
               this.allCategories = data;
               this.firstDiv = true;
               this.secondDiv = false;
-              window.location.reload();
             })
           } else {
-            window.alert("A category with this name already exists!");
+            window.alert("The category with this name is already exists!");
           }
         }
       );
@@ -100,10 +99,9 @@ export class AddCategoryComponent implements OnInit {
               this.allCategories = data;
               this.firstDiv = true;
               this.thirdDiv = false;
-              // window.location.reload();
             })
           } else {
-            window.alert("A category with this name already exists!");
+            window.alert("The category with this name is already exists!");
           }
         }
       );

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {RecipeService} from "../../service/recipe.service";
 import {CreateRecipeDTO} from "../../model/createRecipe/create-recipe-dto";
 import {Router} from "@angular/router";
-import {CategoryService} from "../../service/category.service";
 import {SharedService} from "../../service/shared.service";
 
 @Component({

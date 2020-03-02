@@ -39,6 +39,10 @@ export class CategoryService {
     return this.http.get<Category>(`${this.baseUrl}/id/${id}`);
   }
 
+  public getByName(name: string): Observable<Category> {
+    return this.http.get<Category>(`${this.baseUrl}/name/${name}`);
+  }
+
   public update(id: number, userData: Category): Observable<Category> {
     return this.http.put<Category>(`${this.baseUrl}/update/${id}`, userData);
   }

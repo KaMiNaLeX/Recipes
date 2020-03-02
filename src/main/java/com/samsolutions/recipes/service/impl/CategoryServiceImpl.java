@@ -83,7 +83,11 @@ public class CategoryServiceImpl extends ModelMapperService implements CategoryS
     @Override
     public CategoryDTO getByName(String name) {
         CategoryDTO categoryDTO = new CategoryDTO();
-        map(categoryRepository.getByName(name), categoryDTO);
+        if (name.matches("^[А-Яа-я\\s]+$")) {
+            map(categoryRepository.getByNameRu(name), categoryDTO);
+        } else {
+            map(categoryRepository.getByName(name), categoryDTO);
+        }
         return categoryDTO;
     }
 

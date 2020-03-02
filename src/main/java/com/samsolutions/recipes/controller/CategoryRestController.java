@@ -53,6 +53,11 @@ public class CategoryRestController extends CustomGlobalExceptionHandler {
         return categoryService.findAll();
     }
 
+    @GetMapping("/name/{name}")
+    public CategoryDTO getByName(@PathVariable("name") String name) {
+        return categoryService.getByName(name);
+    }
+
     @GetMapping("/")
     public List<CategoryDTO> findAll(@RequestParam("page") int page, @RequestParam("size") int size,
                                      @RequestParam("sort") String sort) {
