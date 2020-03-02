@@ -15,8 +15,12 @@ export class CategoryService {
     this.baseUrl = '/api/category';
   }
 
-  public findAll(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.baseUrl}/`);
+  public findAll(page: number, size: number, sort: string): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.baseUrl}/?page=${page}&size=${size}&sort=${sort}`);
+  }
+
+  public findAllCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.baseUrl}/categories/`);
   }
 
   public findAllCategoriesDTO(): Observable<CategoryRecipeDTO[]> {

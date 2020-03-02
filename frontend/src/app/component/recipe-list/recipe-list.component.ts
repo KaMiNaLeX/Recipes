@@ -30,7 +30,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName')).subscribe(data => {
+    this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'),0, 10, "name").subscribe(data => {
       this.recipes = data;
       if (this.recipes[0].id != null) {
         for (let i = 0; i < this.recipes.length; i++) {

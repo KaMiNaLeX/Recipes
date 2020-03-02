@@ -52,7 +52,7 @@ export class RecipeAddComponent implements OnInit {
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
       this.categories = data;
     });
-    this.ingredientService.findAll().subscribe(data => this.allIngredients = data);
+    this.ingredientService.findAll(0, 10, "name").subscribe(data => this.allIngredients = data);
   }
 
   toDescription() {

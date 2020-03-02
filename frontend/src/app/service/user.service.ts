@@ -14,8 +14,8 @@ export class UserService {
     this.baseUrl = '/api/user';
   }
 
-  public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/`);
+  public findAll(page: number, size: number, sort: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/?page=${page}&size=${size}&sort=${sort}`);
   }
 
   public create(user: User) {

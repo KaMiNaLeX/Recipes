@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.findAll().subscribe(data => {
+    this.userService.findAll(0, 10, "login").subscribe(data => {
       this.users = data;
     });
   }
@@ -49,7 +49,7 @@ export class UserListComponent implements OnInit {
       this.userService.create(this.user).subscribe(data => {
           this.returnUser = data;
           if (this.returnUser != null) {
-            this.userService.findAll().subscribe(data => {
+            this.userService.findAll(0, 10, "login").subscribe(data => {
               this.users = data;
             });
             window.alert("User is created!");
@@ -69,7 +69,7 @@ export class UserListComponent implements OnInit {
         data => {
           console.log(data);
           this.showDeleteMessage = true;
-          this.userService.findAll().subscribe(data => {
+          this.userService.findAll(0, 10, "login").subscribe(data => {
             this.users = data;
           })
         },
@@ -94,7 +94,7 @@ export class UserListComponent implements OnInit {
       this.userService.update(this.user.id, this.user).subscribe(data => {
           this.returnUser = data;
           if (this.returnUser != null) {
-            this.userService.findAll().subscribe(data => {
+            this.userService.findAll(0, 10, "login").subscribe(data => {
               this.users = data;
             });
             window.alert("User is updated!");

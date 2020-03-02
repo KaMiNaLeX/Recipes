@@ -1,3 +1,4 @@
 export class IngredientNameDTO {
-  name: String;
+  name: string;
+  nameRu: string;
 }

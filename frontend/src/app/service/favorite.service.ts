@@ -15,8 +15,8 @@ export class FavoriteService {
     this.baseUrl = '/api/favorite';
   }
 
-  public findAll(userId: string) {
-    return this.http.get<Favorite[]>(`${this.baseUrl}/${userId}`);
+  public findAll(userId: string, page: number, size: number, sort: string) {
+    return this.http.get<Favorite[]>(`${this.baseUrl}/${userId}?page=${page}&size=${size}&sort=${sort}`);
   }
 
   public create(favorite: CreateFavorite) {

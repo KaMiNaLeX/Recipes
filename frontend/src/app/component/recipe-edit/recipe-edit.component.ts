@@ -59,7 +59,7 @@ export class RecipeEditComponent implements OnInit {
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
       this.categories = data;
     });
-    this.ingredientService.findAll().subscribe(data => this.allIngredients = data);
+    this.ingredientService.findAll(0, 10, "name").subscribe(data => this.allIngredients = data);
 
     //set checked radiobutton
     let radioButton;

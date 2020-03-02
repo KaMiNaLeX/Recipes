@@ -18,7 +18,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.findAll().subscribe(data => {
+    this.categoryService.findAll(0, 10, "name").subscribe(data => {
       this.categories = data;
     });
   }
@@ -35,7 +35,7 @@ export class CategoryListComponent implements OnInit {
         data => {
           console.log(data);
           this.showDeleteMessage = true;
-          this.categoryService.findAll().subscribe(data => {
+          this.categoryService.findAll(0, 10, "name").subscribe(data => {
             this.categories = data;
           })
         },

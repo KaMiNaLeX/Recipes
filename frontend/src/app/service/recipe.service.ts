@@ -22,8 +22,8 @@ export class RecipeService {
     return this.http.get<User>(`${this.baseUrl}/authorName/id/${userId}`);
   }
 
-  public getRecipesByCategoryName(categoryName: string): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.baseUrl}/categoryName/${categoryName}`);
+  public getRecipesByCategoryName(categoryName: string, page: number, size: number, sort: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/categoryName/${categoryName}?page=${page}&size=${size}&sort=${sort}`);
   }
 
   public createRecipe(recipe: CreateRecipeDTO) {
@@ -34,8 +34,8 @@ export class RecipeService {
     return this.http.get<CreateRecipeDTO>(`${this.baseUrl}/id/${id}`);
   }
 
-  public getByAuthorId(id: string): Observable<CreateRecipeDTO[]> {
-    return this.http.get<CreateRecipeDTO[]>(`${this.baseUrl}/authorId/${id}`);
+  public getByAuthorId(id: string, page: number, size: number, sort: string): Observable<CreateRecipeDTO[]> {
+    return this.http.get<CreateRecipeDTO[]>(`${this.baseUrl}/authorId/${id}?page=${page}&size=${size}&sort=${sort}`);
   }
 
   public delete(id: string): Observable<any> {
@@ -46,24 +46,24 @@ export class RecipeService {
     return this.http.put<CreateRecipeDTO>(`${this.baseUrl}/updateRecipe/${id}`, recipeData);
   }
 
-  public getByName(name: string): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.baseUrl}/name/${name}`);
+  public getByName(name: string, page: number, size: number, sort: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/name/${name}?page=${page}&size=${size}&sort=${sort}`);
   }
 
   public getByNameAndAuthor(name: string, id: string): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.baseUrl}/nameAndAuthor/${name}/${id}`);
   }
 
-  public getByAuthorName(name: string): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.baseUrl}/authorName/${name}`);
+  public getByAuthorName(name: string, page: number, size: number, sort: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/authorName/${name}?page=${page}&size=${size}&sort=${sort}`);
   }
 
-  public findAllByIngredients(ingredientsList: IngredientNameListDTO) {
-    return this.http.post<Recipe[]>(`${this.baseUrl}/ingredientName`, ingredientsList);
+  public findAllByIngredients(ingredientsList: IngredientNameListDTO, page: number, size: number, sort: string) {
+    return this.http.post<Recipe[]>(`${this.baseUrl}/ingredientName?page=${page}&size=${size}&sort=${sort}`, ingredientsList);
   }
 
-  public findAllByData(recipeData: RecipeDataDTO) {
-    return this.http.post<Recipe[]>(`${this.baseUrl}/data`, recipeData);
+  public findAllByData(recipeData: RecipeDataDTO, page: number, size: number, sort: string) {
+    return this.http.post<Recipe[]>(`${this.baseUrl}/data?page=${page}&size=${size}&sort=${sort}`, recipeData);
   }
 
   public addPhoto4Step(stepId: string, file: File) {

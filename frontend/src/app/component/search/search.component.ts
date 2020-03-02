@@ -61,7 +61,7 @@ export class SearchComponent implements OnInit {
   }
 
   byIngredients() {
-    this.ingredientService.findAll().subscribe((data: Ingredient[]) => this.allIngredients = data);
+    this.ingredientService.findAll(0, 10, "name").subscribe((data: Ingredient[]) => this.allIngredients = data);
     this.first = false;
     this.second = true;
     this.third = false;
@@ -76,7 +76,7 @@ export class SearchComponent implements OnInit {
   }
 
   searchByName(name: string) {
-    this.recipeService.getByName(name).subscribe(data => {
+    this.recipeService.getByName(name,0, 10, "name").subscribe(data => {
       this.recipes = data;
       for (let i = 0; i < this.recipes.length; i++) {
         this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
@@ -88,7 +88,7 @@ export class SearchComponent implements OnInit {
   }
 
   searchByAuthorName(name: string) {
-    this.recipeService.getByAuthorName(name).subscribe(data => {
+    this.recipeService.getByAuthorName(name,0, 10, "name").subscribe(data => {
       this.recipes = data;
       for (let i = 0; i < this.recipes.length; i++) {
         this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
@@ -208,7 +208,7 @@ export class SearchComponent implements OnInit {
     this.recipeData.includeMeat = true;
     this.recipeData.cookingDifficultyDTOList = cookingDifficultyDTOList;
 
-    this.recipeService.findAllByData(this.recipeData).subscribe(data => {
+    this.recipeService.findAllByData(this.recipeData,0, 10, "name").subscribe(data => {
       this.recipes = data;
       for (let i = 0; i < this.recipes.length; i++) {
         this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
@@ -222,7 +222,7 @@ export class SearchComponent implements OnInit {
 
   searchByIngredients() {
     this.ingredientNameDTOList.ingredientNameDTOList = this.ingredientNameDTOS;
-    this.recipeService.findAllByIngredients(this.ingredientNameDTOList).subscribe(data => {
+    this.recipeService.findAllByIngredients(this.ingredientNameDTOList,0, 10, "name").subscribe(data => {
       this.recipes = data;
       for (let i = 0; i < this.recipes.length; i++) {
         this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {

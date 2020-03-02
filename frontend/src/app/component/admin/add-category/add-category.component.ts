@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {CategoryService} from "../../../service/category.service";
 import {Category} from "../../../model/category";
+import {SharedService} from "../../../service/shared.service";
 
 @Component({
   selector: 'app-add-category',
@@ -10,7 +11,8 @@ import {Category} from "../../../model/category";
 })
 export class AddCategoryComponent implements OnInit {
 
-  categories: Category[] = [];
+  ru: boolean;
+  allCategories: Category[] = [];
   category: Category = new Category();
   returnCategory: Category = new Category();
   firstDiv = true;
@@ -23,13 +25,15 @@ export class AddCategoryComponent implements OnInit {
   selectedFile2: File = null;
   imgURL2: any;
 
-  constructor(private router: Router, private categoryService: CategoryService) {
+  constructor(private router: Router, private categoryService: CategoryService, private ss: SharedService) {
   }
 
   ngOnInit() {
-    this.categoryService.findAll().subscribe(data => {
-      this.categories = data
+    this.categoryService.findAll(0, 10, "name").subscribe(data => {
+      this.allCategories = data;
     });
+    this.ss.getEmittedValue()
+      .subscribe(item => this.ru = item);
   }
 
   toAdmin() {
@@ -61,8 +65,8 @@ export class AddCategoryComponent implements OnInit {
               this.categoryService.addPhoto4Category(this.returnCategory.id, this.selectedFile);
             }
             window.alert("Category is created!");
-            this.categoryService.findAll().subscribe(data => {
-              this.categories = data;
+            this.categoryService.findAll(0, 10, "name").subscribe(data => {
+              this.allCategories = data;
               this.firstDiv = true;
               this.secondDiv = false;
               window.location.reload();
@@ -92,11 +96,11 @@ export class AddCategoryComponent implements OnInit {
               this.categoryService.addPhoto4Category(this.returnCategory.id, this.selectedFile2);
             }
             window.alert("Category is updated!");
-            this.categoryService.findAll().subscribe(data => {
-              this.categories = data;
+            this.categoryService.findAll(0, 10, "name").subscribe(data => {
+              this.allCategories = data;
               this.firstDiv = true;
               this.thirdDiv = false;
-             // window.location.reload();
+              // window.location.reload();
             })
           } else {
             window.alert("A category with this name already exists!");
@@ -110,8 +114,8 @@ export class AddCategoryComponent implements OnInit {
     this.categoryService.delete(id)
       .subscribe(
         data => {
-          this.categoryService.findAll().subscribe(data => {
-            this.categories = data;
+          this.categoryService.findAll(0, 10, "name").subscribe(data => {
+            this.allCategories = data;
           })
         },
         error => console.log(error));

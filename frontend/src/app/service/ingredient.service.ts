@@ -15,8 +15,8 @@ export class IngredientService {
     this.baseUrl = '/api/ingredient';
   }
 
-  public findAll(): Observable<Ingredient[]> {
-    return this.http.get<Ingredient[]>(`${this.baseUrl}/`);
+  public findAll(page: number, size: number, sort: string): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(`${this.baseUrl}/?page=${page}&size=${size}&sort=${sort}`);
   }
 
   public findAllByType(type: TypeIngredient): Observable<Ingredient[]> {

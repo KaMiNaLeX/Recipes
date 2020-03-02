@@ -23,7 +23,7 @@ export class AddIngredientComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ingredientService.findAll().subscribe(data => {
+    this.ingredientService.findAll(0, 10, "name").subscribe(data => {
       this.ingredients = data
     });
     let type = TypeIngredient;
@@ -54,7 +54,7 @@ export class AddIngredientComponent implements OnInit {
       this.ingredientService.create(this.ingredient).subscribe(data => {
           this.returnIngredient = data;
           if (this.returnIngredient != null) {
-            this.ingredientService.findAll().subscribe(data => {
+            this.ingredientService.findAll(0, 10, "name").subscribe(data => {
               this.ingredients = data;
             });
             window.alert("Ingredient is created!");
@@ -81,7 +81,7 @@ export class AddIngredientComponent implements OnInit {
       this.ingredientService.update(this.ingredient.id, this.ingredient).subscribe(data => {
           this.returnIngredient = data;
           if (this.returnIngredient != null) {
-            this.ingredientService.findAll().subscribe(data => {
+            this.ingredientService.findAll(0, 10, "name").subscribe(data => {
               this.ingredients = data;
             });
             window.alert("Ingredient is updated!");
@@ -99,7 +99,7 @@ export class AddIngredientComponent implements OnInit {
     this.ingredientService.delete(id)
       .subscribe(
         data => {
-          this.ingredientService.findAll().subscribe(data => {
+          this.ingredientService.findAll(0, 10, "name").subscribe(data => {
             this.ingredients = data;
           });
           if (data == false) {

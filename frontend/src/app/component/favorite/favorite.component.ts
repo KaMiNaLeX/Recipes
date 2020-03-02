@@ -19,7 +19,7 @@ export class FavoriteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.favoriteService.findAll(localStorage.getItem('id')).subscribe((data: Favorite[]) => {
+    this.favoriteService.findAll(localStorage.getItem('id'),0, 10, "addedAt").subscribe((data: Favorite[]) => {
       this.favorites = data;
       for (let i = 0; i < this.favorites.length; i++) {
         this.recipeService.getAuthorName(this.favorites[i].recipeDTO.authorId).subscribe((data: User) => {
@@ -40,7 +40,7 @@ export class FavoriteComponent implements OnInit {
 
   deleteFromFavorite(id: string) {
     this.favoriteService.delete(id).subscribe(data => {
-      this.favoriteService.findAll(localStorage.getItem('id')).subscribe(data => {
+      this.favoriteService.findAll(localStorage.getItem('id'),0, 10, "addedAt").subscribe(data => {
         this.favorites = data;
       });
     })

@@ -16,8 +16,8 @@
       <th scope="col">{{'actions' | translate}}</th>
     </tr>
     </thead>
-    <tbody>
-    <tr *ngFor="let category of categories">
+    <tbody *ngIf="!ru;else lang">
+    <tr *ngFor="let category of allCategories">
       <td><img [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource != null"></td>
       <td>{{ category.name }}</td>
       <td>{{ category.description }}</td>
@@ -34,6 +34,27 @@
       </td>
     </tr>
     </tbody>
+    <ng-template #lang>
+      <tbody>
+      <tr *ngFor="let category of allCategories">
+        <td><img [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource != null"></td>
+        <td>{{ category.nameRu }}</td>
+        <td>{{ category.descriptionRu }}</td>
+        <td>{{ category.tagRu }}</td>
+        <td>
+          <button (click)="add()" class='btn btn-success divChild2'>{{'add' | translate}}
+          </button>
+          <button (click)="view(category.id)" class='btn btn-info divChild2'>{{'view' | translate}}
+          </button>
+          <button (click)="edit(category.id)" class='btn btn-warning divChild2'>{{'edit' | translate}}
+          </button>
+          <button (click)="delete(category.id)" class='btn btn-danger divChild2'>{{'delete' | translate}}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </ng-template>
+
   </table>
 </div>
 <div class="container-fluid" *ngIf="secondDiv">

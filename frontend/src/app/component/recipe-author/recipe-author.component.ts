@@ -16,7 +16,7 @@ export class RecipeAuthorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recipeService.getByAuthorId(localStorage.getItem('id')).subscribe(data => this.recipes = data);
+    this.recipeService.getByAuthorId(localStorage.getItem('id'),0, 10, "name").subscribe(data => this.recipes = data);
   }
 
   view(id: string) {
@@ -39,7 +39,7 @@ export class RecipeAuthorComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.recipeService.getByAuthorId(localStorage.getItem('id')).subscribe(data => {
+          this.recipeService.getByAuthorId(localStorage.getItem('id'),0, 10, "name").subscribe(data => {
             this.recipes = data;
           })
         },
