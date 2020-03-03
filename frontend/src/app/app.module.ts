@@ -25,6 +25,7 @@ import {AddIngredientComponent} from './component/admin/add-ingredient/add-ingre
 import {FavoriteComponent} from './component/favorite/favorite.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {MatSliderModule} from "@angular/material/slider";
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
         deps: [HttpClient]
       }
     })
+    ,MatSliderModule
   ],
   providers: [
     {
