@@ -14,5 +14,9 @@
   "/register": {
     "target": "http://localhost:8080",
     "secure": false
+  },
+  "/src": {
+    "target": "http://localhost:8080",
+    "secure": false
   }
 }

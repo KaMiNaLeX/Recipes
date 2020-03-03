@@ -1,11 +1,11 @@
+<ng-container *ngIf="!ru;else lang">
+  <h1>{{category.name}}</h1>
+</ng-container>
+<ng-template #lang>
+  <h1>{{category.nameRu}}</h1>
+</ng-template>
 <div class="resultDiv">
   <div class="container-fluid">
-    <ng-container *ngIf="!ru;else lang">
-      <h3 style="margin: 20px auto;max-width: 800px;">{{category.name}}</h3>
-    </ng-container>
-    <ng-template #lang>
-      <h3 style="margin: 20px auto;max-width: 800px;">{{category.nameRu}}</h3>
-    </ng-template>
     <div class="card mb-3 card-columns recipe" *ngFor="let recipe of recipes">
       <div class="row no-gutters" *ngIf="recipe.name != null">
         <div class="col-md-4">

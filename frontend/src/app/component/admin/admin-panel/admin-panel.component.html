@@ -1,28 +1,52 @@
-<div class="container-fluid">
-  <h2>{{'welcome' | translate}}</h2>
-  <div class="row">
-    <div class="card bg-light mb-3 divChild" style="max-width: 18rem;">
-      <div class="card-header">{{'users' | translate}}</div>
-      <div class="card-body">
-        <h5 class="card-title">{{'here users' | translate}}</h5>
-        <button class="btn btn-primary" (click)="users()">{{'go to users' | translate}}</button>
-      </div>
-    </div>
-    <div class="card bg-light mb-3 divChild" style="max-width: 18rem;">
-      <div class="card-header">{{'categories' | translate}}</div>
-      <div class="card-body">
-        <h5 class="card-title">{{'here categories' | translate}}</h5>
-        <button class="btn btn-primary" (click)="categories()">{{'go to categories' | translate}}</button>
-      </div>
-    </div>
-    <div class="card bg-light mb-3 divChild" style="max-width: 18rem;">
-      <div class="card-header">{{'ingredients' | translate}}</div>
-      <div class="card-body">
-        <h5 class="card-title">{{'here ingredients' | translate}}</h5>
-        <button class="btn btn-primary" (click)="ingredients()">{{'go to ingredients' | translate}}</button>
-      </div>
-    </div>
-  </div>
+<h1>{{'welcome' | translate}}</h1>
+<div class="resultDiv card-columns">
+  <mat-card class="example-card divChild">
+    <mat-card-header>
+      <mat-card-title>{{'users' | translate}}</mat-card-title>
+    </mat-card-header>
+    <img style="max-height: 312px;" mat-card-image src="https://simpleicon.com/wp-content/uploads/users.png"
+         alt="users">
+    <mat-card-content>
+      <p>
+        {{'here users' | translate}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button (click)="users()" mat-raised-button color="primary">{{'go to users' | translate}}</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="example-card divChild">
+    <mat-card-header>
+      <mat-card-title>{{'categories' | translate}}</mat-card-title>
+    </mat-card-header>
+    <img style="max-height: 312px;" mat-card-image
+         src="https://cdn2.iconfinder.com/data/icons/ecommerce-line-vol-1/128/category-512.png"
+         alt="users">
+    <mat-card-content>
+      <p>
+        {{'here categories' | translate}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button (click)="categories()" mat-raised-button color="primary">{{'go to categories' | translate}}</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="example-card divChild">
+    <mat-card-header>
+      <mat-card-title>{{'ingredients' | translate}}</mat-card-title>
+    </mat-card-header>
+    <img style="max-height: 312px;" mat-card-image
+         src="https://i.pinimg.com/originals/e9/29/7d/e9297d9aec1fe1e3a3c549c8ceeae1c9.png"
+         alt="users">
+    <mat-card-content>
+      <p>
+        {{'here ingredients' | translate}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button (click)="ingredients()" mat-raised-button color="primary">{{'go to ingredients' | translate}}</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
 
 

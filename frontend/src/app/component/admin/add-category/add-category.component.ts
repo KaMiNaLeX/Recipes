@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {CategoryService} from "../../../service/category.service";
 import {Category} from "../../../model/category";
 import {SharedService} from "../../../service/shared.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-add-category',
@@ -24,12 +27,25 @@ export class AddCategoryComponent implements OnInit {
   selectedFile2: File = null;
   imgURL2: any;
 
+  displayedColumns: string[] = ['imgSource', 'name', 'description', 'tag', 'actions'];
+  displayedColumnsRu: string[] = ['imgSource', 'nameRu', 'descriptionRu', 'tagRu', 'actions'];
+  dataSource: any;
+
   constructor(private router: Router, private categoryService: CategoryService, private ss: SharedService) {
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
+    this.dataSource.paginator = paginator;
+  }
+
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.dataSource.sort = sort;
   }
 
   ngOnInit() {
     this.categoryService.findAll(0, 10, "name").subscribe(data => {
       this.allCategories = data;
+      this.dataSource = new MatTableDataSource<Category>(this.allCategories);
     });
     this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
@@ -140,5 +156,10 @@ export class AddCategoryComponent implements OnInit {
     reader.onload = (event2) => {
       this.imgURL2 = reader.result;
     }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

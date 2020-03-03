@@ -1,6 +1,6 @@
+<h1>{{'favorite recipes' | translate}}</h1>
 <div class="resultDiv">
   <div class="container-fluid">
-    <h3 style="margin: 20px auto;max-width: 800px;">{{'favorite recipes' | translate}}</h3>
     <div class="card mb-3 card-columns recipe" *ngFor="let favorite of favorites">
       <div class="row no-gutters" *ngIf="favorite.uuid != null">
         <div class="col-md-4">

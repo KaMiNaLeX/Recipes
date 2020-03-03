@@ -1,13 +1,23 @@
+h1 {
+  font-weight: 300;
+  font-size: 26px;
+  color: white;
+  background: #9c27b0;
+  padding: 20px 25px;
+}
+
 .back {
-  background-color: #fdd835;
+  background-color: #303030;
+  color: white;
 }
 
-.text{
-  color: black;
+nav {
+  background: #9c27b0;
+  color: white;
 }
 
-.primary{
-  background-color: #304ffe;
+body {
+  padding-top: 50px;
 }
 
 .top {
@@ -29,11 +39,10 @@
 }
 
 .resultDiv {
-  max-width: 1200px;
-  margin: 10px auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: #fff0b4;
+  max-width: 80%;
+  margin: auto auto;
+  padding: 10px;
+  background-color: #303030;
 }
 
 .recipe {
@@ -52,6 +61,60 @@ input.ng-touched.ng-valid {
 }
 
 
+html, body {
+  height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/*DROPDOWN*/
+.dropdown-menu {
+  background: #424242
+}
+
+.dropdown .btn {
+  background: #545454;
+  color: white;
+}
+
+.dropdown .btn:active {
+  background: black;
+  color: white;
+}
+
+.dropdown-menu .dropdown-item {
+  margin-top: 6px;
+  display: inline-block;
+  width: 100%;
+  padding: 10px 5px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  background: #424242;
+  color: #fff;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  background: rgba(121, 121, 121, 0.5)
+}
+
+/*CARD*/
+.example-card {
+  max-width: 400px;
+  max-height: 600px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.card-columns {
+  column-count: 3;
+}
+
+

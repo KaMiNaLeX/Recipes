@@ -112,5 +112,6 @@
   "confirm password": "Confirm Password",
   "save password": "Save Password",
   "change password": "Change Password",
-  "update": "Update"
+  "update": "Update",
+  "view recipe": "View recipe"
 }
