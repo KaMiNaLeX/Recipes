@@ -26,6 +26,7 @@ import {FavoriteComponent} from './component/favorite/favorite.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {MatSliderModule} from "@angular/material/slider";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import {MatSliderModule} from "@angular/material/slider";
         deps: [HttpClient]
       }
     })
-    ,MatSliderModule
+    , MatSliderModule, MatButtonModule
   ],
   providers: [
     {
