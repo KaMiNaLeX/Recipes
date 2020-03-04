@@ -9,6 +9,16 @@ h1 {
   padding: 20px 25px;
 }
 
+h5 {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  font-weight: 300;
+  color: white;
+  background: #9c27b0;
+  padding: 10px 15px;
+}
+
 .back {
   background-color: #303030;
   color: white;
@@ -54,6 +64,7 @@ body {
   border-color: black;
   background-color: #f1e5bc;
 }
+
 /*
 input.ng-touched.ng-invalid {
   border: solid red 2px;
@@ -149,7 +160,7 @@ body {
   width: 100%;
 }
 
-.label{
+.label {
   color: rgba(255, 255, 255, .7);
   font-size: 20px;
   font-weight: 400;

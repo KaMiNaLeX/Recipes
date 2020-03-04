@@ -39,6 +39,8 @@ import {MatSortModule} from "@angular/material/sort";
 import { BackButtonComponent } from './component/back-button/back-button.component';
 import { AddCategoryDialogComponent } from './component/admin/admin-category/add-category-dialog/add-category-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { EditCategoryDialogComponent } from './component/admin/admin-category/edit-category-dialog/edit-category-dialog.component';
+import { DeleteCategoryDialogComponent } from './component/admin/admin-category/delete-category-dialog/delete-category-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import {MatDialogModule} from "@angular/material/dialog";
     AddIngredientComponent,
     FavoriteComponent,
     BackButtonComponent,
-    AddCategoryDialogComponent
+    AddCategoryDialogComponent,
+    EditCategoryDialogComponent,
+    DeleteCategoryDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -50,11 +50,12 @@
       <th mat-header-cell *matHeaderCellDef>{{'actions' | translate}}</th>
       <td mat-cell *matCellDef="let category">
         <div class="example-button-row">
-          <button class='divChild2' mat-raised-button color="primary"
-                  (click)="openDialog()">{{'add' | translate}}</button>
-          <button (click)="edit(category.id)" class='divChild2' mat-raised-button color="primary">{{'edit' | translate}}
+          <button mat-raised-button color="primary"
+                  (click)="openAddDialog()">{{'add' | translate}}</button>
+          <button (click)="openEditDialog(category.id)" mat-raised-button
+                  color="primary">{{'edit' | translate}}
           </button>
-          <button (click)="delete(category.id)" class='divChild2' mat-raised-button
+          <button (click)="openDeleteDialog(category.id)" mat-raised-button
                   color="primary">{{'delete' | translate}}
           </button>
         </div>
@@ -62,60 +63,6 @@
     </ng-container>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</div>
-<div class="container-fluid" *ngIf="thirdDiv">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toAdmin()">{{'admin panel' | translate}}</button>
-      </li>
-      <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toView()">{{'all categories' | translate}}</button>
-      </li>
-      <li class="breadcrumb-item active" aria-current="page">
-        <button class="btn btn-link" disabled>{{'edit category' | translate}}</button>
-      </li>
-    </ol>
-  </nav>
-  <div class="col-md-6 login-container" style="max-width: 70%">
-    <h1>{{'edit category' | translate}}</h1>
-    <div class="form-group">
-      <h6 for="name">{{'name' | translate}}:</h6>
-      <input type="text" [(ngModel)]="category.name" class="form-control" id="name2"
-             autocomplete="off" #name="ngModel" value="{{category.name}}" required>
-      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
-      <h6 for="name">{{'description' | translate}}:</h6>
-      <input type="text" [(ngModel)]="category.description" class="form-control" id="description2"
-             autocomplete="off" #description="ngModel" value="{{category.description}}" required>
-      <div *ngIf="description.invalid" style="color: red">{{'required' | translate}}</div>
-      <h6 for="name">{{'tag' | translate}}:</h6>
-      <input type="text" [(ngModel)]="category.tag" value="{{category.tag}}" class="form-control" id="tag2"
-             autocomplete="off" #tag="ngModel" required>
-      <div *ngIf="tag.invalid" style="color: red">{{'required' | translate}}</div>
-      <h6>{{'photo' | translate}}:</h6>
-      <img id="img" [src]="category.imgSource" height="100" weight="100" *ngIf="category.imgSource !=null">
-    </div>
-    <h6>{{'new photo' | translate}}:</h6>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroupFileAddon02">{{'upload' | translate}}</span>
-      </div>
-      <div class="custom-file">
-        <input type="file" (change)="handleFileInput2($event)" class="custom-file-input"
-               id="inputGroupFile02" aria-describedby="inputGroupFileAddon01">
-        <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
-      </div>
-    </div>
-    <div>
-      <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
-    </div>
-    <div>
-      <button style="width: 300px" class="btn btn-success" (click)="editCategory()"
-              [disabled]="name.invalid || description.invalid
-       || tag.invalid">{{'edit category' | translate}}
-      </button>
-    </div>
-  </div>
 </div>
 
 
