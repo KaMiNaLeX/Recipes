@@ -1,4 +1,7 @@
 h1 {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: nowrap;
   font-weight: 300;
   font-size: 26px;
   color: white;
@@ -51,7 +54,7 @@ body {
   border-color: black;
   background-color: #f1e5bc;
 }
-
+/*
 input.ng-touched.ng-invalid {
   border: solid red 2px;
 }
@@ -59,6 +62,8 @@ input.ng-touched.ng-invalid {
 input.ng-touched.ng-valid {
   border: solid green 2px;
 }
+
+ */
 
 
 html, body {
@@ -116,5 +121,44 @@ body {
 .card-columns {
   column-count: 3;
 }
+
+.example-button-row button,
+.example-button-row a {
+  margin-right: 12px;
+}
+
+.breadcrumbCustom {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  border-radius: 0.25rem;
+}
+
+.qub-page-header-divider {
+  height: 24px;
+  background-color: white;
+  width: 2px;
+  margin: 0 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.label{
+  color: rgba(255, 255, 255, .7);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.125;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  width: 100%;
+}
+
+
+
 
 

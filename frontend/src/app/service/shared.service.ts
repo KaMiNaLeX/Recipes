@@ -20,7 +20,6 @@ export class SharedService {
     this.fire.emit(false);
   }
 
-
   getEmittedValue() {
     return this.fire;
   }

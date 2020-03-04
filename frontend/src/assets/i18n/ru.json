@@ -113,5 +113,8 @@
   "save password": "Сохранить пароль",
   "change password": "Поменять пароль",
   "update": "Обновить",
-  "view recipe": "Просмотр рецепта"
+  "view recipe": "Просмотр рецепта",
+  "filter": "Фильтр",
+  "back": "Назад",
+  "cancel": "Отменить"
 }

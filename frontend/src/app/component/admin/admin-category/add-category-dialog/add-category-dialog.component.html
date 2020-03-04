@@ -1,0 +1,36 @@
+<h1>{{'add category' | translate}}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>{{'name' | translate}}</mat-label>
+    <input matInput [(ngModel)]="category.name" #name="ngModel" required>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>{{'description' | translate}}</mat-label>
+    <input matInput [(ngModel)]="category.description" #description="ngModel" required>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>{{'tag' | translate}}</mat-label>
+    <input matInput [(ngModel)]="category.tag" #tag="ngModel" required>
+  </mat-form-field>
+  <mat-label class="label">{{'photo' | translate}}:</mat-label>
+  <br/>
+  <img style="margin-top: 6px;margin-bottom: 6px" [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroupFileAddon01">{{'upload' | translate}}</span>
+    </div>
+    <div class="custom-file">
+      <input type="file" (change)="handleFileInput($event)" class="custom-file-input"
+             id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+      <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{'cancel' | translate}}</button>
+  <form (ngSubmit)="addCategory()">
+    <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data" cdkFocusInitial
+            [disabled]="name.invalid || description.invalid || tag.invalid">
+      + {{'add category' | translate}}</button>
+  </form>
+</div>

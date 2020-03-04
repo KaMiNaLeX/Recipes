@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {UserListComponent} from "./component/admin/user-list/user-list.component";
+import {UserListComponent} from "./component/admin/admin-user/user-list.component";
 import {UserFormComponent} from "./component/admin/user-form/user-form.component";
 import {CategoryListComponent} from "./component/category-list/category-list.component";
 import {LoginComponent} from "./component/auth/login/login.component";
@@ -13,8 +13,8 @@ import {RecipeAuthorComponent} from "./component/recipe-author/recipe-author.com
 import {RecipeEditComponent} from "./component/recipe-edit/recipe-edit.component";
 import {SearchComponent} from "./component/search/search.component";
 import {AdminPanelComponent} from "./component/admin/admin-panel/admin-panel.component";
-import {AddCategoryComponent} from "./component/admin/add-category/add-category.component";
-import {AddIngredientComponent} from "./component/admin/add-ingredient/add-ingredient.component";
+import {AddCategoryComponent} from "./component/admin/admin-category/add-category.component";
+import {AddIngredientComponent} from "./component/admin/admin-ingredient/add-ingredient.component";
 import {FavoriteComponent} from "./component/favorite/favorite.component";
 
 

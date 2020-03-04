@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {UserListComponent} from './component/admin/user-list/user-list.component';
+import {UserListComponent} from './component/admin/admin-user/user-list.component';
 import {UserFormComponent} from './component/admin/user-form/user-form.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {CategoryListComponent} from './component/category-list/category-list.component';
@@ -20,8 +20,8 @@ import {RecipeAuthorComponent} from './component/recipe-author/recipe-author.com
 import {RecipeEditComponent} from './component/recipe-edit/recipe-edit.component';
 import {SearchComponent} from './component/search/search.component';
 import {AdminPanelComponent} from './component/admin/admin-panel/admin-panel.component';
-import {AddCategoryComponent} from './component/admin/add-category/add-category.component';
-import {AddIngredientComponent} from './component/admin/add-ingredient/add-ingredient.component';
+import {AddCategoryComponent} from './component/admin/admin-category/add-category.component';
+import {AddIngredientComponent} from './component/admin/admin-ingredient/add-ingredient.component';
 import {FavoriteComponent} from './component/favorite/favorite.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
@@ -36,6 +36,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSortModule} from "@angular/material/sort";
+import { BackButtonComponent } from './component/back-button/back-button.component';
+import { AddCategoryDialogComponent } from './component/admin/admin-category/add-category-dialog/add-category-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -55,7 +58,9 @@ import {MatSortModule} from "@angular/material/sort";
     AdminPanelComponent,
     AddCategoryComponent,
     AddIngredientComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    BackButtonComponent,
+    AddCategoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +77,7 @@ import {MatSortModule} from "@angular/material/sort";
         deps: [HttpClient]
       }
     })
-    , MatSliderModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule, MatCardModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSortModule
+    , MatSliderModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule, MatCardModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSortModule, MatDialogModule
   ],
   providers: [
     {

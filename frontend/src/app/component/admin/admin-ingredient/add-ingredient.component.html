@@ -1,0 +1,132 @@
+<h1>{{'ingredients' | translate}}</h1>
+<div *ngIf="firstDiv" class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#/admin">{{'admin panel' | translate}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{'all ingredients' | translate}}</li>
+    </ol>
+  </nav>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">{{'name' | translate}}</th>
+      <th scope="col">{{'description' | translate}}</th>
+      <th scope="col">{{'calories' | translate}}</th>
+      <th scope="col">{{'type' | translate}}</th>
+      <th scope="col">{{'actions' | translate}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ingredient of ingredients">
+      <ng-container *ngIf="!ru;else lang">
+        <td>{{ ingredient.name }}</td>
+        <td>{{ ingredient.description }}</td>
+        <td>{{ ingredient.calories }}</td>
+        <td>{{ ingredient.type }}</td>
+      </ng-container>
+      <ng-template #lang>
+        <td>{{ ingredient.nameRu }}</td>
+        <td>{{ ingredient.descriptionRu }}</td>
+        <td>{{ ingredient.calories }}</td>
+        <td>{{ ingredient.typeRu }}</td>
+      </ng-template>
+      <td>
+        <button class='btn btn-success divChild2' (click)="add()">{{'add' | translate}}
+        </button>
+        <button class='btn btn-info divChild2' (click)="view(ingredient.id)">{{'view' | translate}}
+        </button>
+        <button class='btn btn-warning divChild2' (click)="edit(ingredient.id)">{{'edit' | translate}}
+        </button>
+        <button class='btn btn-danger divChild2' (click)="delete(ingredient.id)">{{'delete' | translate}}
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container-fluid" *ngIf="secondDiv">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <button class="btn btn-link" (click)="toAdmin()">{{'admin panel' | translate}}</button>
+      </li>
+      <li class="breadcrumb-item">
+        <button class="btn btn-link" (click)="toView()">{{'all ingredients' | translate}}</button>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <button class="btn btn-link" disabled>{{'add ingredient' | translate}}</button>
+      </li>
+    </ol>
+  </nav>
+  <div class="col-md-6 login-container" style="max-width: 70%">
+    <h1>{{'add ingredient' | translate}}</h1>
+    <div class="form-group">
+      <h6 for="name">{{'name' | translate}}:</h6>
+      <input type="text" [(ngModel)]="ingredient.name" class="form-control" id="name"
+             autocomplete="off" #name="ngModel" required>
+      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
+      <h6 for="name">{{'description' | translate}}:</h6>
+      <input type="text" [(ngModel)]="ingredient.description" class="form-control" id="description"
+             autocomplete="off">
+      <h6 for="name">{{'calories' | translate}}:</h6>
+      <input type="text" [(ngModel)]="ingredient.calories" class="form-control" id="cal"
+             autocomplete="off" #cal="ngModel" required pattern="[+-]?([0-9]*[.])?[0-9]+">
+      <div *ngIf="cal.invalid" style="color: red">{{'required or invalid' | translate}}</div>
+      <h6 for="name">{{'type' | translate}}:</h6>
+      <select [(ngModel)]="ingredient.type" class="custom-select" id="type"
+              autocomplete="off" #type="ngModel" required>
+        <option *ngFor="let key of keys" value="{{key}}">{{key}}</option>
+      </select>
+      <div *ngIf="type.invalid" style="color: red">{{'required' | translate}}</div>
+    </div>
+    <div>
+      <button [disabled]="name.invalid || cal.invalid
+       || type.invalid"
+              style="width: 300px" class="btn btn-success" (click)="addIngredient()">{{'add ingredient' | translate}}
+      </button>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="thirdDiv">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <button class="btn btn-link" (click)="toAdmin()">{{'admin panel' | translate}}</button>
+      </li>
+      <li class="breadcrumb-item">
+        <button class="btn btn-link" (click)="toView()">{{'all ingredients' | translate}}</button>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <button class="btn btn-link" disabled>{{'edit ingredient' | translate}}</button>
+      </li>
+    </ol>
+  </nav>
+  <div class="col-md-6 login-container" style="max-width: 70%">
+    <h1>{{'edit ingredient' | translate}}</h1>
+    <div class="form-group">
+      <h6 for="name">{{'name' | translate}}:</h6>
+      <input type="text" [(ngModel)]="ingredient.name" class="form-control" id="name2"
+             autocomplete="off" #name="ngModel" required>
+      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
+      <h6 for="name">{{'description' | translate}}:</h6>
+      <input type="text" [(ngModel)]="ingredient.description" class="form-control" id="description2"
+             autocomplete="off">
+      <h6 for="name">{{'calories' | translate}}:</h6>
+      <input type="text" [(ngModel)]="ingredient.calories" class="form-control" id="cal2"
+             autocomplete="off" #cal="ngModel" required pattern="[+-]?([0-9]*[.])?[0-9]+">
+      <div *ngIf="cal.invalid" style="color: red">{{'required or invalid' | translate}}</div>
+      <h6 for="name">{{'type' | translate}}:</h6>
+      <select [(ngModel)]="ingredient.type" class="custom-select" id="type2"
+              autocomplete="off" #type="ngModel" required>
+        <option *ngFor="let key of keys" value="{{key}}">{{key}}</option>
+      </select>
+      <div *ngIf="type.invalid" style="color: red">{{'required' | translate}}</div>
+    </div>
+    <div>
+      <button [disabled]="name.invalid || cal.invalid
+       || type.invalid" style=" width: 300px"
+              class="btn btn-success" (click)="editIngredient()">{{'edit ingredient' | translate}}
+      </button>
+    </div>
+  </div>
+</div>
