@@ -41,6 +41,10 @@ import { AddCategoryDialogComponent } from './component/admin/admin-category/add
 import {MatDialogModule} from "@angular/material/dialog";
 import { EditCategoryDialogComponent } from './component/admin/admin-category/edit-category-dialog/edit-category-dialog.component';
 import { DeleteCategoryDialogComponent } from './component/admin/admin-category/delete-category-dialog/delete-category-dialog.component';
+import { AddIngredientDialogComponent } from './component/admin/admin-ingredient/add-ingredient-dialog/add-ingredient-dialog.component';
+import { EditIngredientDialogComponent } from './component/admin/admin-ingredient/edit-ingredient-dialog/edit-ingredient-dialog.component';
+import { DeleteIngredientDialogComponent } from './component/admin/admin-ingredient/delete-ingredient-dialog/delete-ingredient-dialog.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -64,25 +68,28 @@ import { DeleteCategoryDialogComponent } from './component/admin/admin-category/
     BackButtonComponent,
     AddCategoryDialogComponent,
     EditCategoryDialogComponent,
-    DeleteCategoryDialogComponent
+    DeleteCategoryDialogComponent,
+    AddIngredientDialogComponent,
+    EditIngredientDialogComponent,
+    DeleteIngredientDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-    , MatSliderModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule, MatCardModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSortModule, MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
+        , MatSliderModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule, MatCardModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSortModule, MatDialogModule, MatSelectModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

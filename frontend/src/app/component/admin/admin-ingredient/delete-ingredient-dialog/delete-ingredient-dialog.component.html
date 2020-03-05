@@ -1,0 +1,11 @@
+<h5>{{'delete ingredient' | translate}}</h5>
+<div mat-dialog-content>
+  <p>{{'sure2' | translate}}</p>
+</div>
+<div mat-dialog-actions class="example-button-row">
+  <button mat-button (click)="onNoClick()">{{'cancel' | translate}}</button>
+  <form (ngSubmit)="delete()">
+    <button type="submit" mat-raised-button color="warn" [mat-dialog-close]="data" cdkFocusInitial>
+      {{'delete ingredient' | translate}}</button>
+  </form>
+</div>

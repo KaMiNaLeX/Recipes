@@ -1,9 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {IngredientService} from "../../../service/ingredient.service";
 import {Ingredient} from "../../../model/ingredient";
-import {TypeIngredient} from "../../../model/type-ingredient.enum";
 import {SharedService} from "../../../service/shared.service";
+import {MatDialog} from "@angular/material/dialog";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
+import {AddIngredientDialogComponent} from "./add-ingredient-dialog/add-ingredient-dialog.component";
+import {EditIngredientDialogComponent} from "./edit-ingredient-dialog/edit-ingredient-dialog.component";
+import {DeleteIngredientDialogComponent} from "./delete-ingredient-dialog/delete-ingredient-dialog.component";
 
 @Component({
   selector: 'app-add-ingredient',
@@ -14,102 +20,64 @@ export class AddIngredientComponent implements OnInit {
   ru: boolean;
   ingredients: Ingredient[] = [];
   ingredient: Ingredient = new Ingredient();
-  returnIngredient: Ingredient = new Ingredient();
-  firstDiv = true;
-  secondDiv = false;
-  thirdDiv = false;
-  keys = [];
+  displayedColumns: string[] = ['name', 'description', 'calories', 'type', 'actions'];
+  displayedColumnsRu: string[] = ['nameRu', 'descriptionRu', 'calories', 'typeRu', 'actions'];
+  dataSource: any;
 
-  constructor(private router: Router, private ingredientService: IngredientService, private ss: SharedService) {
+  constructor(private router: Router, private ingredientService: IngredientService, private ss: SharedService,
+              private dialog: MatDialog) {
   }
+
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   ngOnInit() {
-    this.ingredientService.findAll(0, 10, "name").subscribe(data => {
-      this.ingredients = data
+    this.ingredientService.findAll(0, 100, "name").subscribe(data => {
+      this.ingredients = data;
+      this.dataSource = new MatTableDataSource<Ingredient>(this.ingredients);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
-    let type = TypeIngredient;
-    this.keys = Object.values(type);
     this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
-      .subscribe(item => this.ru = item);
+      .subscribe(item => {
+        this.ru = item;
+        this.dataSource = new MatTableDataSource<Ingredient>(this.ingredients);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
-  toAdmin() {
-    this.router.navigate(['admin']);
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  toView() {
-    this.firstDiv = true;
-    this.secondDiv = false;
-    this.thirdDiv = false;
-  }
-
-  view(id: string) {
-    window.alert("ID:" + id);
-  }
-
-  add() {
-    this.firstDiv = false;
-    this.secondDiv = true;
-  }
-
-  addIngredient() {
-    if (this.ingredient.name != null && this.ingredient.calories != null && this.ingredient.type != null) {
-      this.ingredientService.create(this.ingredient).subscribe(data => {
-          this.returnIngredient = data;
-          if (this.returnIngredient != null) {
-            this.ingredientService.findAll(0, 10, "name").subscribe(data => {
-              this.ingredients = data;
-            });
-            window.alert("Ingredient is created!");
-            this.firstDiv = true;
-            this.secondDiv = false;
-          } else {
-            window.alert("The ingredient with this name already exists!");
-          }
-        }
-      );
-    } else window.alert("Please, fill in all fields!");
-  }
-
-  edit(id: string) {
-    this.firstDiv = false;
-    this.thirdDiv = true;
-    this.ingredientService.get(id).subscribe(data => {
-      this.ingredient = data;
+  openAddDialog() {
+    const dialogRef = this.dialog.open(AddIngredientDialogComponent, {
+      maxWidth: '50%',
+      maxHeight: '50%',
+      data: {}
     });
   }
 
-  editIngredient() {
-    if (this.ingredient.name != null && this.ingredient.calories != null && this.ingredient.type != null) {
-      this.ingredientService.update(this.ingredient.id, this.ingredient).subscribe(data => {
-          this.returnIngredient = data;
-          if (this.returnIngredient != null) {
-            this.ingredientService.findAll(0, 10, "name").subscribe(data => {
-              this.ingredients = data;
-            });
-            window.alert("Ingredient is updated!");
-            this.firstDiv = true;
-            this.thirdDiv = false;
-          } else {
-            window.alert("A ingredient with this name already exists!");
-          }
-        }
-      );
-    } else window.alert("Please, fill in all fields!");
+  openEditDialog(id: string) {
+    const dialogRef = this.dialog.open(EditIngredientDialogComponent, {
+      maxWidth: '50%',
+      maxHeight: '50%',
+      data: {id: id}
+    });
   }
 
-  delete(id: string) {
-    this.ingredientService.delete(id)
-      .subscribe(
-        data => {
-          this.ingredientService.findAll(0, 10, "name").subscribe(data => {
-            this.ingredients = data;
-          });
-          if (data == false) {
-            window.alert("Category is not deleted, because it's used!");
-          } else window.alert("Category is deleted!");
-        },
-        error => console.log(error));
+  openDeleteDialog(id: string) {
+    const dialogRef = this.dialog.open(DeleteIngredientDialogComponent, {
+      maxWidth: '50%',
+      maxHeight: '50%',
+      data: {id: id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    })
   }
 }

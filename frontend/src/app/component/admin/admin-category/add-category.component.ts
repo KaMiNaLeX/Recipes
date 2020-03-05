@@ -20,8 +20,6 @@ export class AddCategoryComponent implements OnInit {
   ru: boolean;
   allCategories: Category[] = [];
   category: Category = new Category();
-  firstDiv = true;
-
   displayedColumns: string[] = ['imgSource', 'name', 'description', 'tag', 'actions'];
   displayedColumnsRu: string[] = ['imgSource', 'nameRu', 'descriptionRu', 'tagRu', 'actions'];
   dataSource: any;
@@ -31,22 +29,24 @@ export class AddCategoryComponent implements OnInit {
 
   }
 
-  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
-    this.dataSource.paginator = paginator;
-  }
-
-  @ViewChild(MatSort) set matSort(sort: MatSort) {
-    this.dataSource.sort = sort;
-  }
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   ngOnInit() {
-    this.categoryService.findAll(0, 10, "name").subscribe(data => {
+    this.categoryService.findAll(0, 100, "name").subscribe(data => {
       this.allCategories = data;
       this.dataSource = new MatTableDataSource<Category>(this.allCategories);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
     this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
-      .subscribe(item => this.ru = item);
+      .subscribe(item => {
+        this.ru = item;
+        this.dataSource = new MatTableDataSource<Category>(this.allCategories);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   delete(id: number) {
