@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {UserListComponent} from './component/admin/admin-user/user-list.component';
-import {UserFormComponent} from './component/admin/user-form/user-form.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {CategoryListComponent} from './component/category-list/category-list.component';
 import {LoginComponent} from "./component/auth/login/login.component";
@@ -45,12 +44,14 @@ import { AddIngredientDialogComponent } from './component/admin/admin-ingredient
 import { EditIngredientDialogComponent } from './component/admin/admin-ingredient/edit-ingredient-dialog/edit-ingredient-dialog.component';
 import { DeleteIngredientDialogComponent } from './component/admin/admin-ingredient/delete-ingredient-dialog/delete-ingredient-dialog.component';
 import {MatSelectModule} from "@angular/material/select";
+import { AddUserDialogComponent } from './component/admin/admin-user/add-user-dialog/add-user-dialog.component';
+import { EditUserDialogComponent } from './component/admin/admin-user/edit-user-dialog/edit-user-dialog.component';
+import { DeleteUserDialogComponent } from './component/admin/admin-user/delete-user-dialog/delete-user-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserListComponent,
-    UserFormComponent,
     LoginComponent,
     CategoryListComponent,
     UserProfileComponent,
@@ -71,7 +72,10 @@ import {MatSelectModule} from "@angular/material/select";
     DeleteCategoryDialogComponent,
     AddIngredientDialogComponent,
     EditIngredientDialogComponent,
-    DeleteIngredientDialogComponent
+    DeleteIngredientDialogComponent,
+    AddUserDialogComponent,
+    EditUserDialogComponent,
+    DeleteUserDialogComponent
   ],
     imports: [
         BrowserModule,

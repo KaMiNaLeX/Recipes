@@ -14,7 +14,6 @@ import {TypeIngredientRu} from "../../../../model/type-ingredient-ru.enum";
 })
 export class EditIngredientDialogComponent implements OnInit {
   ru: boolean;
-  ingredients: Ingredient[] = [];
   ingredient: Ingredient = new Ingredient();
   returnIngredient: Ingredient = new Ingredient();
   keys = [];
@@ -60,5 +59,4 @@ export class EditIngredientDialogComponent implements OnInit {
       );
     } else window.alert("Please, fill in all fields!");
   }
-
 }

@@ -14,7 +14,6 @@ import {SharedService} from "../../../../service/shared.service";
 })
 export class AddIngredientDialogComponent implements OnInit {
   ru: boolean;
-  ingredients: Ingredient[] = [];
   ingredient: Ingredient = new Ingredient();
   returnIngredient: Ingredient = new Ingredient();
   keys = [];

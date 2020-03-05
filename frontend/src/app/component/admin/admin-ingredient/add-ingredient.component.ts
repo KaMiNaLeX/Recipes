@@ -55,7 +55,7 @@ export class AddIngredientComponent implements OnInit {
 
   openAddDialog() {
     const dialogRef = this.dialog.open(AddIngredientDialogComponent, {
-      maxWidth: '50%',
+      maxWidth: '30%',
       maxHeight: '50%',
       data: {}
     });
@@ -63,7 +63,7 @@ export class AddIngredientComponent implements OnInit {
 
   openEditDialog(id: string) {
     const dialogRef = this.dialog.open(EditIngredientDialogComponent, {
-      maxWidth: '50%',
+      maxWidth: '30%',
       maxHeight: '50%',
       data: {id: id}
     });
@@ -71,7 +71,7 @@ export class AddIngredientComponent implements OnInit {
 
   openDeleteDialog(id: string) {
     const dialogRef = this.dialog.open(DeleteIngredientDialogComponent, {
-      maxWidth: '50%',
+      maxWidth: '30%',
       maxHeight: '50%',
       data: {id: id}
     });

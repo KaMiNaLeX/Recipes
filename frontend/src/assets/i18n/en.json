@@ -120,5 +120,9 @@
   "delete category": "Delete category",
   "sure": "Are you sure you want to delete this category?",
   "delete ingredient": "Delete ingredient",
-  "sure2": "Are you sure you want to delete this ingredient?"
+  "sure2": "Are you sure you want to delete this ingredient?",
+  "delete user" : "Delete user",
+  "sure3": "Are you sure you want to delete this user?",
+  "old photo": "Old Photo",
+  "choose photo": "Choose new photo"
 }

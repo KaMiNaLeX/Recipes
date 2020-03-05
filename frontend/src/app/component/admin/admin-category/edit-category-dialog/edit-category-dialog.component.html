@@ -12,12 +12,15 @@
     <mat-label>{{'tag' | translate}}</mat-label>
     <input matInput [(ngModel)]="category.tag" value="{{category.tag}}" #tag="ngModel" required>
   </mat-form-field>
-  <mat-label class="label">{{'photo' | translate}}:</mat-label>
+  <mat-label class="label">{{'old photo' | translate}}:</mat-label>
+  <mat-label *ngIf="imgURL" style="padding-left: 70px" class="label">{{'new photo' | translate}}:</mat-label>
   <br/>
-  <img style="margin-top: 6px;margin-bottom: 6px" [src]="category.imgSource" height="100" weight="100"
-       *ngIf="category.imgSource !=null">
-  <br/>
-  <mat-label class="label">{{'new photo' | translate}}:</mat-label>
+  <div>
+    <img style="margin-top: 6px;margin-bottom: 6px" [src]="category.imgSource" height="100" weight="100"
+         *ngIf="category.imgSource !=null">
+    <img style="padding-left: 50px" [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
+  </div>
+  <mat-label class="label">{{'choose photo' | translate}}:</mat-label>
   <br/>
   <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -28,9 +31,6 @@
              id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
       <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
     </div>
-  </div>
-  <div>
-    <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
   </div>
 </div>
 <div mat-dialog-actions class="example-button-row">

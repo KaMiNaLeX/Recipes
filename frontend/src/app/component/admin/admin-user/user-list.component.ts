@@ -1,7 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from "../../../model/user";
 import {UserService} from "../../../service/user.service";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
+import {AddUserDialogComponent} from "./add-user-dialog/add-user-dialog.component";
+import {EditUserDialogComponent} from "./edit-user-dialog/edit-user-dialog.component";
+import {DeleteUserDialogComponent} from "./delete-user-dialog/delete-user-dialog.component";
 
 
 @Component({
@@ -10,102 +17,56 @@ import {Router} from "@angular/router";
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-
   users: User[];
   user: User = new User();
-  returnUser: User = new User();
-  showDeleteMessage = false;
-  firstDiv = true;
-  secondDiv = false;
-  thirdDiv = false;
+  displayedColumns: string[] = ['login', 'first name', 'last name', 'email', 'actions'];
+  dataSource: any;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private dialog: MatDialog) {
   }
+
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   ngOnInit() {
-    this.userService.findAll(0, 10, "login").subscribe(data => {
+    this.userService.findAll(0, 100, "login").subscribe(data => {
       this.users = data;
+      this.dataSource = new MatTableDataSource<User>(this.users);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
-  toAdmin() {
-    this.router.navigate(['admin']);
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  toView() {
-    this.firstDiv = true;
-    this.secondDiv = false;
-    this.thirdDiv = false;
-  }
-
-  add() {
-    this.firstDiv = false;
-    this.secondDiv = true;
-  }
-
-  addUser() {
-    if (this.user.firstName != null && this.user.lastName != null && this.user.login != null &&
-      this.user.email != null && this.user.password != null) {
-      this.userService.create(this.user).subscribe(data => {
-          this.returnUser = data;
-          if (this.returnUser != null) {
-            this.userService.findAll(0, 10, "login").subscribe(data => {
-              this.users = data;
-            });
-            window.alert("User is created!");
-            this.firstDiv = true;
-            this.secondDiv = false;
-          } else {
-            window.alert("User with this login or email already exists!");
-          }
-        }
-      );
-    } else window.alert("Please, fill in all fields!");
-  }
-
-  deleteUser(id: string) {
-    this.userService.delete(id)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.showDeleteMessage = true;
-          this.userService.findAll(0, 10, "login").subscribe(data => {
-            this.users = data;
-          })
-        },
-        error => console.log(error));
-  }
-
-  view(id: string) {
-    window.alert(id);
-  }
-
-  edit(id: string) {
-    this.firstDiv = false;
-    this.thirdDiv = true;
-    this.userService.get(id).subscribe(data => {
-      this.user = data;
+  openAddDialog() {
+    const dialogRef = this.dialog.open(AddUserDialogComponent, {
+      maxWidth: '30%',
+      maxHeight: '50%',
+      data: {}
     });
   }
 
-  editUser() {
-    if (this.user.firstName != null && this.user.lastName != null && this.user.login != null &&
-      this.user.email != null && this.user.password != null) {
-      this.userService.update(this.user.id, this.user).subscribe(data => {
-          this.returnUser = data;
-          if (this.returnUser != null) {
-            this.userService.findAll(0, 10, "login").subscribe(data => {
-              this.users = data;
-            });
-            window.alert("User is updated!");
-            this.firstDiv = true;
-            this.thirdDiv = false;
-          } else {
-            window.alert("User with this login or email already exists!");
-          }
-        }
-      );
-    } else window.alert("Please, fill in all fields!");
+  openEditDialog(id: string) {
+    const dialogRef = this.dialog.open(EditUserDialogComponent, {
+      maxWidth: '30%',
+      maxHeight: '50%',
+      data: {id: id}
+    });
   }
 
+  openDeleteDialog(id: string) {
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
+      maxWidth: '30%',
+      maxHeight: '50%',
+      data: {id: id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    })
+  }
 }

@@ -1,136 +1,47 @@
-<div class="row" [hidden]="!showDeleteMessage">
-  <div class="col-sm-4">
-    <div class="alert alert-info alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <strong>User Data Deleted</strong>
-    </div>
-  </div>
-</div>
-<h1>{{'users' | translate}}</h1>
-<div *ngIf="firstDiv" class="container-fluid">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#/admin">{{'admin panel' | translate}}</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{'all users' | translate}}</li>
-    </ol>
-  </nav>
-  <table class="table table-bordered table-striped">
-    <thead class="thead-dark">
-    <tr>
-      <th scope="col">{{'login' | translate}}</th>
-      <th scope="col">{{'first name' | translate}}</th>
-      <th scope="col">{{'last name' | translate}}</th>
-      <th scope="col">{{'email' | translate}}</th>
-      <th scope="col">{{'actions' | translate}}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let user of users">
-      <td>{{ user.login }}</td>
-      <td>{{ user.firstName }}</td>
-      <td>{{ user.lastName }}</td>
-      <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
-      <td>
-        <button class='btn btn-success divChild2' (click)="add()">{{'add' | translate}}
-        </button>
-        <button (click)="view(user.id)" class='btn btn-info divChild2'>{{'view' | translate}}
-        </button>
-        <button class='btn btn-warning divChild2' (click)="edit(user.id)">{{'edit' | translate}}
-        </button>
-        <button (click)="deleteUser(user.id)" class='btn btn-danger divChild2'>{{'delete' | translate}}
-        </button>
+<h1>
+  <app-back-button></app-back-button>
+  <div class="qub-page-header-divider"></div>
+  {{'admin panel' | translate}}
+</h1>
+<div class="container-fluid">
+  <mat-form-field>
+    <mat-label>{{'filter' | translate}}</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="">
+  </mat-form-field>
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="login">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'login' | translate}}</th>
+      <td mat-cell *matCellDef="let user"> {{user.login}} </td>
+    </ng-container>
+    <ng-container matColumnDef="first name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'first name' | translate}}</th>
+      <td mat-cell *matCellDef="let user"> {{user.firstName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="last name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'last name' | translate}}</th>
+      <td mat-cell *matCellDef="let user"> {{user.lastName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'email' | translate}}</th>
+      <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>{{'actions' | translate}}</th>
+      <td mat-cell *matCellDef="let user">
+        <div class="example-button-row">
+          <button mat-raised-button color="primary"
+                  (click)="openAddDialog()">{{'add' | translate}}</button>
+          <button (click)="openEditDialog(user.id)" mat-raised-button
+                  color="primary">{{'edit' | translate}}
+          </button>
+          <button (click)="openDeleteDialog(user.id)" mat-raised-button
+                  color="primary">{{'delete' | translate}}
+          </button>
+        </div>
       </td>
-    </tr>
-    </tbody>
+    </ng-container>
   </table>
-</div>
-<div class="container-fluid" *ngIf="secondDiv">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toAdmin()">{{'admin panel' | translate}}</button>
-      </li>
-      <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toView()">{{'all users' | translate}}</button>
-      </li>
-      <li class="breadcrumb-item active" aria-current="page">
-        <button class="btn btn-link" disabled>{{'add user' | translate}}</button>
-      </li>
-    </ol>
-  </nav>
-  <div class="col-md-6 login-container" style="max-width: 70%">
-    <h2 style="margin: auto">{{'add user' | translate}}</h2>
-    <br/>
-    <div class="form-group">
-      <h6 for="name">{{'first name' | translate}}:</h6>
-      <input type="text" [(ngModel)]="user.firstName" class="form-control" id="name"
-             autocomplete="off" #name="ngModel" required>
-      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
-      <h6 for="name">{{'last name' | translate}}:</h6>
-      <input type="text" [(ngModel)]="user.lastName" class="form-control" id="lastName"
-             autocomplete="off" #lastName="ngModel" required>
-      <div *ngIf="lastName.invalid" style="color: red">{{'required' | translate}}</div>
-      <h6 for="name">{{'email' | translate}}:</h6>
-      <input type="text" [(ngModel)]="user.email" class="form-control" id="email"
-             autocomplete="off" #email="ngModel" required email>
-      <div *ngIf="email.invalid" style="color: red">{{'required or invalid' | translate}}</div>
-      <h6 for="name">{{'login' | translate}}:</h6>
-      <input type="text" [(ngModel)]="user.login" class="form-control" id="login"
-             autocomplete="off" #login="ngModel" required>
-      <div *ngIf="login.invalid" style="color: red">{{'required' | translate}}</div>
-      <h6 for="name">{{'password' | translate}}:</h6>
-      <input type="password" [(ngModel)]="user.password" class="form-control" id="pass"
-             autocomplete="off" #pass="ngModel" required>
-      <div *ngIf="pass.invalid" style="color: red">{{'required' | translate}}</div>
-    </div>
-    <div>
-      <button
-        [disabled]="name.invalid || lastName.invalid || email.invalid || login.invalid || pass.invalid"
-        style="width: 300px" class="btn btn-success" (click)="addUser()">{{'add user' | translate}}
-      </button>
-    </div>
-  </div>
-</div>
-<div class="container-fluid" *ngIf="thirdDiv">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toAdmin()">{{'admin panel' | translate}}</button>
-      </li>
-      <li class="breadcrumb-item">
-        <button class="btn btn-link" (click)="toView()">{{'all users' | translate}}</button>
-      </li>
-      <li class="breadcrumb-item active" aria-current="page">
-        <button class="btn btn-link" disabled>{{'edit user' | translate}}</button>
-      </li>
-    </ol>
-  </nav>
-  <div class="col-md-6 login-container" style="max-width: 70%">
-    <h2 style="margin: auto">{{'edit user' | translate}}</h2>
-    <br/>
-    <div class="form-group">
-      <h6 for="name">{{'first name' | translate}}:</h6>
-      <input type="text" [(ngModel)]="user.firstName" class="form-control" id="name2"
-             autocomplete="off" #name="ngModel" required>
-      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
-      <h6 for="name">{{'last name' | translate}}:</h6>
-      <input type="text" [(ngModel)]="user.lastName" class="form-control" id="lastName2"
-             autocomplete="off" #lastName="ngModel" required>
-      <div *ngIf="lastName.invalid" style="color: red">{{'required' | translate}}</div>
-      <h6 for="name">{{'email' | translate}}:</h6>
-      <input type="text" [(ngModel)]="user.email" class="form-control" id="email2"
-             autocomplete="off" #email="ngModel" required email>
-      <div *ngIf="email.invalid" style="color: red">{{'required or invalid' | translate}}</div>
-      <h6 for="name">{{'login' | translate}}:</h6>
-      <input type="text" [(ngModel)]="user.login" class="form-control" id="login2"
-             autocomplete="off" #login="ngModel" required>
-      <div *ngIf="login.invalid" style="color: red">{{'required' | translate}}</div>
-    </div>
-    <div>
-      <button
-        [disabled]="name.invalid || lastName.invalid || email.invalid || login.invalid"
-        style="width: 300px" class="btn btn-success" (click)="editUser()">{{'edit user' | translate}}
-      </button>
-    </div>
-  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 100]" showFirstLastButtons></mat-paginator>
 </div>
