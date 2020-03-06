@@ -1,8 +1,16 @@
 <ng-container *ngIf="!ru;else lang">
-  <h1>{{category.name}}</h1>
+  <h1>
+    <app-back-button></app-back-button>
+    <div class="qub-page-header-divider"></div>
+    {{category.name}}
+  </h1>
 </ng-container>
 <ng-template #lang>
-  <h1>{{category.nameRu}}</h1>
+  <h1>
+    <app-back-button></app-back-button>
+    <div class="qub-page-header-divider"></div>
+    {{category.nameRu}}
+  </h1>
 </ng-template>
 <div class="resultDiv">
   <div class="container-fluid">

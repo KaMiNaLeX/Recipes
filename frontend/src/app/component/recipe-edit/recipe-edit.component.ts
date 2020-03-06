@@ -11,6 +11,7 @@ import {IngredientService} from "../../service/ingredient.service";
 import {Recipe} from "../../model/recipe";
 import {Unit} from "../../model/unit.enum";
 import {SharedService} from "../../service/shared.service";
+import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -44,7 +45,8 @@ export class RecipeEditComponent implements OnInit {
   ru: boolean;
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
-              private categoryService: CategoryService, private ingredientService: IngredientService, private ss: SharedService) {
+              private categoryService: CategoryService, private ingredientService: IngredientService,
+              private ss: SharedService, private utilsService: UtilsService) {
   }
 
   ngOnInit() {
@@ -96,7 +98,7 @@ export class RecipeEditComponent implements OnInit {
         if (this.recipe != null) {
           (<HTMLInputElement>document.getElementById('name')).value = null;
           this.createRecipeDTO.name = null;
-          window.alert('You already have recipe with this name!');
+          this.utilsService.alert("have recipe with this name");
         }
       })
     }
@@ -146,7 +148,6 @@ export class RecipeEditComponent implements OnInit {
       if (ingredient.name == ingredientName) {
         this.ingredients.splice(i, 1);
         this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
-        window.alert("Delete");
       }
     }
   }
@@ -158,7 +159,6 @@ export class RecipeEditComponent implements OnInit {
       if (step.name == stepName) {
         this.cookingSteps.splice(i, 1);
         this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
-        window.alert("Delete");
       }
     }
   }
@@ -198,11 +198,11 @@ export class RecipeEditComponent implements OnInit {
   onSubmit() {
     let stepTable = (<HTMLTableElement>document.getElementById('stepTable')).rows.length;
     if (stepTable == 1) {
-      window.alert('Add at least one step');
+      this.utilsService.alert("add one step");
     }
     let ingTable = (<HTMLTableElement>document.getElementById('ingredientTable')).rows.length;
     if (ingTable == 1) {
-      window.alert('Add at least one ingredient');
+      this.utilsService.alert('add one ingredient');
     }
     let y = -1;
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
@@ -228,7 +228,7 @@ export class RecipeEditComponent implements OnInit {
       this.recipeService.update(this.createRecipeDTO.id, this.createRecipeDTO).subscribe(data => {
           this.recipeService.getById(this.createRecipeDTO.id).subscribe(data => {
               this.createRecipeDTO = data;
-            console.log(this.createRecipeDTO.cookingStepRecipeDTOList[0].id);
+              console.log(this.createRecipeDTO.cookingStepRecipeDTOList[0].id);
               if (this.imgURL != undefined) {
                 this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile);
               }
@@ -251,13 +251,9 @@ export class RecipeEditComponent implements OnInit {
 
         }
       );
-
-      //this.router.navigate(['recipe']);
-      window.alert(
-        "Recipe is updated!"
-      );
+      this.utilsService.alert("recipe is updated");
     } else {
-      window.alert("Please fill in all fields!");
+      this.utilsService.alert("fill all fields");
     }
   }
 }

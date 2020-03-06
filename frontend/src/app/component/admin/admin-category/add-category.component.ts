@@ -58,7 +58,6 @@ export class AddCategoryComponent implements OnInit {
           })
         },
         error => console.log(error));
-    window.alert("Category is deleted!");
   }
 
   applyFilter(event: Event) {

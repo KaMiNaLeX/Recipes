@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   email = '';
   password = '';
-  isLoadingResults = false;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
   }

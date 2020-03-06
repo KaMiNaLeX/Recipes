@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {UserService} from "../../service/user.service";
 import {first} from "rxjs/operators";
+import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-user-profile',
@@ -23,13 +24,13 @@ export class UserProfileComponent implements OnInit {
   check: Boolean = false;
   button = true;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService,
+              private utilsService: UtilsService) {
   }
 
   ngOnInit() {
     let email = window.localStorage.getItem("email");
     if (!email) {
-      alert("Invalid action.");
       this.router.navigate(['/']);
       return;
     }
@@ -49,7 +50,7 @@ export class UserProfileComponent implements OnInit {
 
   comparison() {
     if (this.newPass != this.confPass) {
-      window.alert('Passwords dont match');
+      this.utilsService.alert('passwords don`t match');
       (<HTMLButtonElement>document.getElementById('save')).disabled = true;
     }
   }
@@ -63,7 +64,7 @@ export class UserProfileComponent implements OnInit {
     this.userService.checkPass(localStorage.getItem('id'), this.oldPass).subscribe(data => {
       this.check = data;
       if (this.check != true) {
-        window.alert("Wrong password");
+        this.utilsService.alert("wrong password");
       } else {
         this.passDiv = true;
         this.checkDiv = false;
@@ -79,7 +80,7 @@ export class UserProfileComponent implements OnInit {
           this.editForm.setValue(data);
         });
     });
-    window.alert('Password is updated!');
+    this.utilsService.alert("password is updated");
     this.passDiv = false;
     this.checkDiv = false;
     this.oldPass = null;
@@ -98,10 +99,9 @@ export class UserProfileComponent implements OnInit {
       .subscribe(
         data => {
           if (data != null) {
-            alert('User updated successfully.');
+            this.utilsService.alert("user updated successfully");
             this.router.navigate(['profile']);
           } else {
-            alert('User does not update');
           }
         },
         error => {

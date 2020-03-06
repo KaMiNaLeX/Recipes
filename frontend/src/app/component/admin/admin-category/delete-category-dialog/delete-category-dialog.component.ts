@@ -30,7 +30,6 @@ export class DeleteCategoryDialogComponent implements OnInit {
           window.location.reload();
         },
         error => console.log(error));
-    window.alert("Category is deleted!");
   }
 
 }

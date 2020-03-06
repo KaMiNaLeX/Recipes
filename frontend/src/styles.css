@@ -43,8 +43,9 @@ body {
 }
 
 .divChild {
-  margin-left: 12px;
+  margin-left: 15px;
   margin-top: 12px;
+  margin-bottom: 15px;
 }
 
 .divChild2 {
@@ -65,20 +66,9 @@ body {
   background-color: #f1e5bc;
 }
 
-/*
-input.ng-touched.ng-invalid {
-  border: solid red 2px;
-}
-
-input.ng-touched.ng-valid {
-  border: solid green 2px;
-}
-
- */
-
-
 html, body {
   height: 100%;
+  overflow-x: hidden
 }
 
 body {
@@ -134,7 +124,7 @@ body {
 }
 
 .example-button-row button,
-.example-button-row a {
+.example-button-row a, card {
   margin-right: 12px;
 }
 
@@ -167,6 +157,20 @@ body {
   line-height: 1.125;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   width: 100%;
+}
+
+.card-deck-custom {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@media (min-width: 576px) {
+  .card-deck-custom {
+    flex-flow: row wrap;
+    margin: auto 100px;
+  }
 }
 
 

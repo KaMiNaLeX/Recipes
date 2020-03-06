@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Favorite} from "../model/favorite";
 import {CreateFavorite} from "../model/create-favorite";
+import {UtilsService} from "./utils.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class FavoriteService {
 
   private baseUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private utilsService: UtilsService) {
     this.baseUrl = '/api/favorite';
   }
 
@@ -25,5 +26,22 @@ export class FavoriteService {
 
   public delete(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/delete/${id}`, {responseType: 'text'});
+  }
+
+  addToFavorite(id: string, authenticated: boolean) {
+    let createFavorite = new CreateFavorite();
+    let favorite = new Favorite();
+    if (authenticated != false) {
+      createFavorite.recipeId = id;
+      createFavorite.userId = localStorage.getItem('id');
+      this.create(createFavorite).subscribe(data => {
+        favorite = data;
+        if (favorite == null) {
+          this.utilsService.alert("recipe in favorites");
+        } else {
+          this.utilsService.alert("recipe add to favorites");
+        }
+      })
+    } else this.utilsService.alert("you need to authenticated");
   }
 }

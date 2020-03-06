@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {SharedService} from "../../../../service/shared.service";
 import {TypeIngredient} from "../../../../model/type-ingredient.enum";
 import {TypeIngredientRu} from "../../../../model/type-ingredient-ru.enum";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'app-edit-ingredient-dialog',
@@ -20,7 +21,7 @@ export class EditIngredientDialogComponent implements OnInit {
 
   constructor(private ingredientService: IngredientService, public dialogRef: MatDialogRef<EditIngredientDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Ingredient,
-              private router: Router, private ss: SharedService) {
+              private router: Router, private ss: SharedService, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -51,12 +52,12 @@ export class EditIngredientDialogComponent implements OnInit {
           this.returnIngredient = data;
           if (this.returnIngredient != null) {
             window.location.reload();
-            window.alert("Ingredient is updated!");
+            this.utilsService.alert("ingredient is updated");
           } else {
-            window.alert("A ingredient with this name already exists!");
+            this.utilsService.alert("ingredient exists");
           }
         }
       );
-    } else window.alert("Please, fill in all fields!");
+    } else this.utilsService.alert("fill all fields");
   }
 }

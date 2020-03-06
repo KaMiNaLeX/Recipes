@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../../../service/user.service";
 import {User} from "../../../../model/user";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'app-edit-user-dialog',
@@ -13,7 +14,7 @@ export class EditUserDialogComponent implements OnInit {
   returnUser: User = new User();
 
   constructor(private userService: UserService, public dialogRef: MatDialogRef<EditUserDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: User) {
+              @Inject(MAT_DIALOG_DATA) public data: User, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -29,13 +30,14 @@ export class EditUserDialogComponent implements OnInit {
           this.returnUser = data;
           if (this.returnUser != null) {
             window.location.reload();
-            window.alert("User is updated!");
+            this.utilsService.alert("user updated successfully");
           } else {
-            window.alert("User with this login or email already exists!");
+            this.utilsService.alert("login or email exist");
           }
         }
       );
-    } else window.alert("Please, fill in all fields!");
+    } else
+      this.utilsService.alert("fill all fields");
   }
 
   onNoClick(): void {

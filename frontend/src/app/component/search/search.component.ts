@@ -12,8 +12,6 @@ import {IngredientNameDTO} from "../../model/findByIngredients/ingredient-name-d
 import {IngredientNameListDTO} from "../../model/findByIngredients/ingredient-name-list-dto";
 import {RecipeDataDTO} from "../../model/findByData/recipe-data-dto";
 import {CookingDifficultyDTO} from "../../model/findByData/cooking-difficulty-dto";
-import {CreateFavorite} from "../../model/create-favorite";
-import {Favorite} from "../../model/favorite";
 import {FavoriteService} from "../../service/favorite.service";
 import {SharedService} from "../../service/shared.service";
 import {TypeIngredientRu} from "../../model/type-ingredient-ru.enum";
@@ -41,8 +39,6 @@ export class SearchComponent implements OnInit {
   ingredientNameDTOList: IngredientNameListDTO = new IngredientNameListDTO();
   ingredientNameDTOS: IngredientNameDTO[] = [];
   recipeData: RecipeDataDTO = new RecipeDataDTO();
-  createFavorite: CreateFavorite = new CreateFavorite();
-  favorite: Favorite = new Favorite();
   authenticated = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
@@ -151,19 +147,7 @@ export class SearchComponent implements OnInit {
   }
 
   addToFavorite(id: string) {
-    if (this.authenticated != false) {
-      this.createFavorite.recipeId = id;
-      this.createFavorite.userId = localStorage.getItem('id');
-      this.favoriteService.create(this.createFavorite).subscribe(data => {
-        this.favorite = data;
-        if (this.favorite == null) {
-          window.alert("This recipe is already in favorites!");
-        } else {
-          window.alert("Recipe add to favorites");
-        }
-      })
-    } else window.alert("You need to authenticated!")
-
+    this.favoriteService.addToFavorite(id, this.authenticated);
   }
 
   addToCart(name: string) {

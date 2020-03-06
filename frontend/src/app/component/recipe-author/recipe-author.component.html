@@ -1,4 +1,8 @@
-<h1>{{'my recipes' | translate}}</h1>
+<h1>
+  <app-back-button></app-back-button>
+  <div class="qub-page-header-divider"></div>
+  {{'my recipes' | translate}}
+</h1>
 <div class="resultDiv">
   <div class="container-fluid">
     <div class="card mb-3 card-columns recipe" *ngFor="let recipe of recipes">

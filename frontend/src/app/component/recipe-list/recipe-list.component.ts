@@ -3,12 +3,12 @@ import {Router} from "@angular/router";
 import {RecipeService} from "../../service/recipe.service";
 import {Recipe} from "../../model/recipe";
 import {FavoriteService} from "../../service/favorite.service";
-import {CreateFavorite} from "../../model/create-favorite";
 import {Favorite} from "../../model/favorite";
 import {User} from "../../model/user";
 import {SharedService} from "../../service/shared.service";
 import {CategoryService} from "../../service/category.service";
 import {Category} from "../../model/category";
+import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -21,13 +21,12 @@ export class RecipeListComponent implements OnInit {
   recipes: Recipe[];
   admin = false;
   author = false;
-  createFavorite: CreateFavorite = new CreateFavorite();
   favorite: Favorite = new Favorite();
   authenticated = false;
   category: Category = new Category();
 
   constructor(private router: Router, private recipeService: RecipeService, private favoriteService: FavoriteService, private ss: SharedService,
-              private categoryService: CategoryService) {
+              private categoryService: CategoryService, private utilsService: UtilsService) {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
     }
@@ -67,24 +66,12 @@ export class RecipeListComponent implements OnInit {
   }
 
   addToFavorite(id: string) {
-    if (this.authenticated != false) {
-      this.createFavorite.recipeId = id;
-      this.createFavorite.userId = localStorage.getItem('id');
-      this.favoriteService.create(this.createFavorite).subscribe(data => {
-        this.favorite = data;
-        if (this.favorite == null) {
-          window.alert("This recipe is already in favorites!");
-        } else {
-          window.alert("Recipe add to favorites");
-        }
-      })
-    } else window.alert("You need to authenticated!")
-
+    this.favoriteService.addToFavorite(id, this.authenticated);
   }
 
   addRecipe() {
     if (this.author != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
-    } else window.alert("You need have AUTHOR or ADMIN role");
+    } else this.utilsService.alert("author or admin");
   }
 }

@@ -5,6 +5,7 @@ import {AuthService} from "./service/auth.service";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {SharedService} from "./service/shared.service";
+import {UtilsService} from "./service/utils.service";
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent {
   username = "unauthorized";
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
-              private http: HttpClient, private translate: TranslateService, private ss: SharedService) {
+              private http: HttpClient, private translate: TranslateService, private ss: SharedService,
+              private utilsService: UtilsService) {
     if (localStorage.getItem('lang') !== null) {
       translate.setDefaultLang(localStorage.getItem('lang'));
     } else {
@@ -58,7 +60,7 @@ export class AppComponent {
     if (this.author != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
     } else {
-      window.alert("You need have AUTHOR or ADMIN role");
+      this.utilsService.alert("author or admin");
     }
   }
 

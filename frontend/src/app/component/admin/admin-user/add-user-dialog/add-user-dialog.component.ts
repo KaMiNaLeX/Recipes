@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {User} from "../../../../model/user";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../../../service/user.service";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'app-add-user-dialog',
@@ -13,7 +14,7 @@ export class AddUserDialogComponent implements OnInit {
   returnUser: User = new User();
 
   constructor(private userService: UserService, public dialogRef: MatDialogRef<AddUserDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+              @Inject(MAT_DIALOG_DATA) public data: any, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -30,13 +31,13 @@ export class AddUserDialogComponent implements OnInit {
           this.returnUser = data;
           if (this.returnUser != null) {
             window.location.reload();
-            window.alert("User is created!");
+            this.utilsService.alert("user created");
           } else {
-            window.alert("User with this login or email already exists!");
+            this.utilsService.alert("login or email exist");
           }
         }
       );
-    } else window.alert("Please, fill in all fields!");
+    } else this.utilsService.alert("fill all fields");
   }
 
 }

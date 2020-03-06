@@ -47,6 +47,7 @@ import {MatSelectModule} from "@angular/material/select";
 import { AddUserDialogComponent } from './component/admin/admin-user/add-user-dialog/add-user-dialog.component';
 import { EditUserDialogComponent } from './component/admin/admin-user/edit-user-dialog/edit-user-dialog.component';
 import { DeleteUserDialogComponent } from './component/admin/admin-user/delete-user-dialog/delete-user-dialog.component';
+import { AlertComponent } from './component/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { DeleteUserDialogComponent } from './component/admin/admin-user/delete-u
     DeleteIngredientDialogComponent,
     AddUserDialogComponent,
     EditUserDialogComponent,
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    AlertComponent
   ],
     imports: [
         BrowserModule,

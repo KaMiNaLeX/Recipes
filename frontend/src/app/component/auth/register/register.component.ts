@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../../service/auth.service";
 import {UserService} from "../../../service/user.service";
 import {User} from "../../../model/user";
+import {UtilsService} from "../../../service/utils.service";
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,7 @@ export class RegisterComponent implements OnInit {
   user: User = new User();
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
-              private userService: UserService) {
+              private userService: UserService, private utilsService: UtilsService) {
   }
 
   ngOnInit() {
@@ -45,7 +46,7 @@ export class RegisterComponent implements OnInit {
         this.user = data;
         if (this.user != null) {
           (<HTMLInputElement>document.getElementById('login')).value = null;
-          window.alert('This Login already exist!');
+          this.utilsService.alert("login exist");
           this.registerForm.get('login').setValue(null);
         }
       })
@@ -59,7 +60,7 @@ export class RegisterComponent implements OnInit {
         this.user = data;
         if (this.user != null) {
           (<HTMLInputElement>document.getElementById('email')).value = null;
-          window.alert('This Email already exist!');
+          this.utilsService.alert("email exist");
           this.registerForm.get('email').setValue(null);
         }
       })

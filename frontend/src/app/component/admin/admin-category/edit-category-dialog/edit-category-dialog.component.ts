@@ -3,6 +3,7 @@ import {Category} from "../../../../model/category";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {CategoryService} from "../../../../service/category.service";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'app-edit-category-dialog',
@@ -17,7 +18,7 @@ export class EditCategoryDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<EditCategoryDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Category,
-              private router: Router, private categoryService: CategoryService) {
+              private router: Router, private categoryService: CategoryService, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -39,13 +40,13 @@ export class EditCategoryDialogComponent implements OnInit {
               this.categoryService.addPhoto4Category(this.returnCategory.id, this.selectedFile);
             }
             window.location.reload();
-            window.alert("Category is updated!");
+            this.utilsService.alert("category is updated");
           } else {
-            window.alert("The category with this name is already exists!");
+            this.utilsService.alert("category exists");
           }
         }
       );
-    } else window.alert("Please, fill in all fields!");
+    } else this.utilsService.alert("fill all fields");
   }
 
   handleFileInput(event) {

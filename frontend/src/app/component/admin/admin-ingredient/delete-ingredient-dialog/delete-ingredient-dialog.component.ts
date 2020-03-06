@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {Ingredient} from "../../../../model/ingredient";
 import {IngredientService} from "../../../../service/ingredient.service";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'app-delete-ingredient-dialog',
@@ -13,7 +14,8 @@ export class DeleteIngredientDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DeleteIngredientDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Ingredient,
-              private router: Router, private ingredientService: IngredientService) {
+              private router: Router, private ingredientService: IngredientService,
+              private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -29,8 +31,8 @@ export class DeleteIngredientDialogComponent implements OnInit {
         data => {
           window.location.reload();
           if (data == false) {
-            window.alert("Ingredient is not deleted, because it's used!");
-          } else window.alert("Ingredient is deleted!");
+            this.utilsService.alert("ingredient used");
+          }
         },
         error => console.log(error));
   }
