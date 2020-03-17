@@ -14,54 +14,74 @@
 </ng-template>
 <div class="resultDiv">
   <div class="container-fluid">
-    <div class="card mb-3 card-columns recipe" *ngFor="let recipe of recipes">
-      <div class="row no-gutters" *ngIf="recipe.name != null">
-        <div class="col-md-4">
-          <img height="250" weight="300" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null" class="card-img">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <ng-container *ngIf="!ru;else lang">
-              <h5 class="card-title">{{ recipe.name }}</h5>
-              <h6 class="card-text">{{'difficulty' | translate}}:{{ recipe.cookingDifficulty }}</h6>
-            </ng-container>
-            <ng-template #lang>
-              <h5 class="card-title">{{ recipe.nameRu }}</h5>
-              <h6 class="card-text">{{'difficulty' | translate}}:{{ recipe.cookingDifficultyRu }}</h6>
-            </ng-template>
-            <h6 class="card-text">{{'time' | translate}}:{{ recipe.cookingTime }} {{'minutes' | translate}}</h6>
-            <h6 class="card-text">{{'author' | translate}}:{{ recipe.authorName }}</h6>
-            <div class="div">
-              <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
-                <button type="submit" class="btn btn-primary">{{'view' | translate}}</button>
-              </form>
-              <form class="divChild2" (ngSubmit)="addToFavorite(recipe.id)">
-                <button type="submit" class="btn btn-warning">{{'add to favorite' | translate}}</button>
-              </form>
-            </div>
+    <div class="card-deck-custom">
+      <mat-card class="example-card divChild" *ngFor="let recipe of recipes">
+        <ng-container *ngIf="!ru;else lang">
+          <mat-card-header>
+            <mat-card-title>{{ recipe.name }}</mat-card-title>
+            <mat-card-subtitle>{{'author' | translate}}: {{ recipe.authorName }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image height="250" style="width: 300px" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null"
+               alt="">
+          <mat-card-content>
+            <h6>
+              {{'difficulty' | translate}}: {{ recipe.cookingDifficulty }}
+            </h6>
+            <h6>
+              {{'time' | translate}}: {{ recipe.cookingTime }} {{'minutes' | translate}}
+            </h6>
             <p class="card-text"><small
               class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
+          </mat-card-content>
+        </ng-container>
+        <ng-template #lang>
+          <mat-card-header>
+            <mat-card-title>{{ recipe.nameRu }}</mat-card-title>
+            <mat-card-subtitle>{{'author' | translate}}:{{ recipe.authorName }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image height="250" weight="350" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null"
+               alt="">
+          <mat-card-content>
+            <h6>
+              {{'difficulty' | translate}}:{{ recipe.cookingDifficultyRu }}
+            </h6>
+            <h6>
+              {{'time' | translate}}:{{ recipe.cookingTime }} {{'minutes' | translate}}
+            </h6>
+            <p class="card-text"><small
+              class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
+          </mat-card-content>
+        </ng-template>
+        <mat-card-actions>
+          <div class="example-button-row">
+            <button (click)="view(recipe.id)" mat-raised-button color="primary"
+                    type="submit">{{'view' | translate}}</button>
+
+            <button (click)="addToFavorite(recipe.id)" mat-raised-button color="primary"
+                    type="submit">{{'add to favorite' | translate}}</button>
+
           </div>
-        </div>
-      </div>
-      <div *ngIf="recipe.name == null">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="error-template">
-                <h1>
-                  {{'oops' | translate}}!</h1>
-                <h2>
-                  {{'recipes not found' | translate}}</h2>
-                <div class="error-details">
-                  {{'no one' | translate}}
-                </div>
-                <div class="error-actions">
-                  <button (click)="addRecipe()" class="btn btn-primary btn-lg"><span
-                    class="glyphicon glyphicon-home"></span>
-                    {{'add recipe' | translate}} +
-                  </button>
-                </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div *ngIf="recipes.length == 0">
+      <div class="container box" style="padding-bottom: 20px">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="error-template">
+              <h1>
+                {{'oops' | translate}}!</h1>
+              <h2>
+                {{'recipes not found' | translate}}</h2>
+              <div class="error-details">
+                {{'no one' | translate}}
+              </div>
+              <div class="error-actions">
+                <button mat-raised-button color="accent" (click)="addRecipe()"><span
+                  class="glyphicon glyphicon-home"></span>
+                  + {{'add recipe' | translate}}
+                </button>
               </div>
             </div>
           </div>

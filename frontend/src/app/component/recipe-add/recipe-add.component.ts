@@ -12,6 +12,9 @@ import {Unit} from "../../model/unit.enum";
 import {Recipe} from "../../model/recipe";
 import {SharedService} from "../../service/shared.service";
 import {UtilsService} from "../../service/utils.service";
+import {TypeIngredient} from "../../model/type-ingredient.enum";
+import {TypeIngredientRu} from "../../model/type-ingredient-ru.enum";
+import {UnitRu} from "../../model/unit-ru.enum";
 
 @Component({
   selector: 'app-recipe-add',
@@ -50,17 +53,31 @@ export class RecipeAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    let u = Unit;
-    this.unit = Object.values(u);
     this.first = true;
     this.second = false;
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
       this.categories = data;
     });
-    this.ingredientService.findAll(0, 10, "name").subscribe(data => this.allIngredients = data);
+    this.ingredientService.findAllIngredients().subscribe(data => this.allIngredients = data);
     this.ru = (localStorage.getItem('lang') == 'ru');
+    if (this.ru != true) {
+      let u = Unit;
+      this.unit = Object.values(u);
+    } else {
+      let u = UnitRu;
+      this.unit = Object.values(u);
+    }
     this.ss.getEmittedValue()
-      .subscribe(item => this.ru = item);
+      .subscribe(item => {
+        this.ru = item;
+        if (this.ru != true) {
+          let u = Unit;
+          this.unit = Object.values(u);
+        } else {
+          let u = UnitRu;
+          this.unit = Object.values(u);
+        }
+      });
   }
 
   toDescription() {
@@ -104,12 +121,25 @@ export class RecipeAddComponent implements OnInit {
   }
 
   addIngredient(name: string, amount: number, unit: string, note: string) {
-    let ingredient = new IngredientRecipeDTO();
-    ingredient.name = name;
-    ingredient.amount = amount;
-    ingredient.unit = unit;
-    ingredient.note = note;
-    this.ingredients.push(ingredient);
+    let ingredientRecipeDTO = new IngredientRecipeDTO();
+    let ingredient = new Ingredient();
+    this.ingredientService.getByName(name).subscribe(data => {
+      ingredient = data;
+      ingredientRecipeDTO.nameRu = ingredient.nameRu;
+      ingredientRecipeDTO.name = ingredient.name;
+    });
+    //todo: need to fix
+    if (this.ru == true){
+      ingredientRecipeDTO.unitRu = unit;
+      ingredientRecipeDTO.unit = unit;
+      ingredientRecipeDTO.note = note;
+    } else {
+      ingredientRecipeDTO.unitRu = unit;
+      ingredientRecipeDTO.unit = unit;
+      ingredientRecipeDTO.note = note;
+    }
+    ingredientRecipeDTO.amount = amount;
+    this.ingredients.push(ingredientRecipeDTO);
   }
 
   deleteIngredient(ingredientName: string) {
@@ -134,8 +164,11 @@ export class RecipeAddComponent implements OnInit {
 
   addCookingStep(name: string, description: string, number: number) {
     let step = new CookingStepRecipeDTO();
+    //todo: need to fix
     step.name = name;
+    step.nameRu = name;
     step.description = description;
+    step.descriptionRu = description;
     step.number = number + 1;
     step.active = true;
     step.imgSource = this.imgURL;
@@ -182,6 +215,10 @@ export class RecipeAddComponent implements OnInit {
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
     this.createRecipeDTO.categoryRecipeDTOList = this.checkedArray;
+    // need to fix
+    this.createRecipeDTO.cookingDifficultyRu = "ЛЕГКО";
+    this.createRecipeDTO.nameRu = "Тест";
+
     if (this.createRecipeDTO.cookingStepRecipeDTOList.length != 0 &&
       this.createRecipeDTO.ingredientRecipeDTOList.length != 0 &&
       this.createRecipeDTO.categoryRecipeDTOList.length != 0 &&
@@ -190,7 +227,12 @@ export class RecipeAddComponent implements OnInit {
       this.createRecipeDTO.cookingDifficulty != null) {
       this.recipeService.createRecipe(this.createRecipeDTO).subscribe(data => {
         this.createRecipeDTO = data;
-        this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile2);
+        if (this.selectedFile2 != null){
+          this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile2);
+        } else {
+          this.selectedFile2 = new File([], "null", undefined);
+          this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile2);
+        }
         this.cookingSteps = [];
         for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
           this.cookingSteps.push(this.createRecipeDTO.cookingStepRecipeDTOList[i]);

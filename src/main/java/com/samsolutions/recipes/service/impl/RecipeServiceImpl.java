@@ -327,9 +327,13 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     @Override
     public RecipeDTO getByNameAuthorId(String name, UUID uuid) {
         RecipeEntity recipeEntity = recipeRepository.getByNameAndAuthorId(name, uuid);
-        RecipeDTO recipeDTO = new RecipeDTO();
-        map(recipeEntity, recipeDTO);
-        return recipeDTO;
+        if (recipeEntity == null) {
+            return null;
+        } else {
+            RecipeDTO recipeDTO = new RecipeDTO();
+            map(recipeEntity, recipeDTO);
+            return recipeDTO;
+        }
     }
 
     @Override
@@ -427,8 +431,14 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     @Override
     public RecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException {
         RecipeEntity recipeEntity = recipeRepository.getById(id);
-        String imageSrc = fileStorageService.storeFile(file);
+        String imageSrc;
+        if (file.getOriginalFilename().equals("null")) {
+            imageSrc = "http://localhost:4200/getFile/noImage.png";
+        } else {
+            imageSrc = fileStorageService.storeFile(file);
+        }
         recipeEntity.setImgSource(imageSrc);
+
         RecipeDTO recipeDTO = new RecipeDTO();
         map(recipeRepository.save(recipeEntity), recipeDTO);
         return recipeDTO;

@@ -18,7 +18,7 @@ import {UtilsService} from "../../service/utils.service";
 export class RecipeListComponent implements OnInit {
   ru: boolean;
   recipe: Recipe = new Recipe();
-  recipes: Recipe[];
+  recipes: Recipe[] = [];
   admin = false;
   author = false;
   favorite: Favorite = new Favorite();
@@ -36,12 +36,10 @@ export class RecipeListComponent implements OnInit {
     this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), 0, 10, "name").subscribe(data => {
       this.recipes = data;
       if (this.recipes != null) {
-        if (this.recipes[0].id != null) {
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
-          }
+        for (let i = 0; i < this.recipes.length; i++) {
+          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+            this.recipes[i].authorName = data.login;
+          })
         }
       }
     });

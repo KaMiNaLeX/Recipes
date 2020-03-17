@@ -58,6 +58,11 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
         return ingredientService.findByType(type);
     }
 
+    @GetMapping("/name/{name}")
+    public IngredientDTO getByName(@PathVariable("name") String name) {
+        return ingredientService.getByName(name);
+    }
+
     @PostMapping("/create")
     public IngredientDTO createIngredient(@Valid @RequestBody IngredientDTO ingredient) {
         try {

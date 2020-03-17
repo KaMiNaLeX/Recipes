@@ -90,7 +90,11 @@ public class IngredientServiceImpl extends ModelMapperService implements Ingredi
     @Override
     public IngredientDTO getByName(String name) {
         IngredientDTO ingredientDTO = new IngredientDTO();
-        map(ingredientRepository.getByName(name), ingredientDTO);
+        if (name.matches("^[A-Za-z\\s]+$")) {
+            map(ingredientRepository.getByName(name), ingredientDTO);
+        } else {
+            map(ingredientRepository.getByNameRu(name), ingredientDTO);
+        }
         return ingredientDTO;
     }
 

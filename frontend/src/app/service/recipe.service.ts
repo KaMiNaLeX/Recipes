@@ -88,6 +88,6 @@ export class RecipeService {
       body: data
     }).then(r => {
 
-    })
+    });
   }
 }

@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Ingredient} from "../model/ingredient";
 import {TypeIngredient} from "../model/type-ingredient.enum";
 import {TypeIngredientRu} from "../model/type-ingredient-ru.enum";
+import {IngredientRecipeDTO} from "../model/createRecipe/ingredient-recipe-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +47,9 @@ export class IngredientService {
 
   public delete(id: string): Observable<boolean> {
     return this.http.delete<boolean>(`${this.baseUrl}/delete/${id}`);
+  }
+
+  public getByName(name: string): Observable<Ingredient> {
+    return this.http.get<Ingredient>(`${this.baseUrl}/name/${name}`);
   }
 }
