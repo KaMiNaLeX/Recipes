@@ -15,4 +15,6 @@ public interface CategoryRecipeRepository extends BaseRepository<CategoryRecipeE
     Page<CategoryRecipeEntity> findAllByCategoryId(UUID uuid, Pageable pageable);
 
     List<CategoryRecipeEntity> findAllByRecipeId(UUID recipeId);
+
+    List<CategoryRecipeEntity> findAllByCategoryName(String categoryName);
 }

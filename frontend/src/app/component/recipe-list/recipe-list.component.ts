@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {RecipeService} from "../../service/recipe.service";
 import {Recipe} from "../../model/recipe";
@@ -9,6 +9,8 @@ import {SharedService} from "../../service/shared.service";
 import {CategoryService} from "../../service/category.service";
 import {Category} from "../../model/category";
 import {UtilsService} from "../../service/utils.service";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
+import {MatCard} from "@angular/material/card";
 
 @Component({
   selector: 'app-recipe-list',
@@ -24,6 +26,12 @@ export class RecipeListComponent implements OnInit {
   favorite: Favorite = new Favorite();
   authenticated = false;
   category: Category = new Category();
+  // MatPaginator Inputs
+  length: number;
+  pageSize = 8;
+  pageSizeOptions: number[] = [8, 32, 64];
+  // MatPaginator Output
+  pageEvent: PageEvent;
 
   constructor(private router: Router, private recipeService: RecipeService, private favoriteService: FavoriteService, private ss: SharedService,
               private categoryService: CategoryService, private utilsService: UtilsService) {
@@ -33,7 +41,10 @@ export class RecipeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), 0, 10, "name").subscribe(data => {
+    this.recipeService.getCountAllRecipesInCategory(sessionStorage.getItem('categoryName')).subscribe(data => {
+      this.length = data;
+    });
+    this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), 0, this.pageSize, "name").subscribe(data => {
       this.recipes = data;
       if (this.recipes != null) {
         for (let i = 0; i < this.recipes.length; i++) {
@@ -71,5 +82,21 @@ export class RecipeListComponent implements OnInit {
     if (this.author != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
     } else this.utilsService.alert("author or admin");
+  }
+
+  getServerData(event?: PageEvent) {
+    this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), event.pageIndex, event.pageSize, "name").subscribe(
+      response => {
+        this.recipes = response;
+        if (this.recipes != null) {
+          for (let i = 0; i < this.recipes.length; i++) {
+            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+              this.recipes[i].authorName = data.login;
+            })
+          }
+        }
+      }
+    );
+    return undefined;
   }
 }

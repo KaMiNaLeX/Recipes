@@ -36,6 +36,8 @@ public interface RecipeService {
 
     List<RecipeDTO> getByCategoryName(String categoryName, int page, int size, String sort);
 
+    int getCountAllRecipesInCategory(String categoryName);
+
     CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO);
 
     CreateRecipeDTO getByRecipeId(UUID uuid);

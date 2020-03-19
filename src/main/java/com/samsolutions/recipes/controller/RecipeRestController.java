@@ -184,4 +184,9 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
         return recipeService.getAuthorName(authorId);
     }
 
+    @GetMapping("/countAllRecipesInCategory/{categoryName}")
+    public int getCountAllRecipesInCategory(@PathVariable("categoryName") String categoryName) {
+        return recipeService.getCountAllRecipesInCategory(categoryName);
+    }
+
 }

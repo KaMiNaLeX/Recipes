@@ -21,7 +21,8 @@
             <mat-card-title>{{ recipe.name }}</mat-card-title>
             <mat-card-subtitle>{{'author' | translate}}: {{ recipe.authorName }}</mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image height="250" style="width: 300px" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null"
+          <img mat-card-image height="250" style="width: 300px" [src]="recipe.imgSource"
+               *ngIf="recipe.imgSource !=null"
                alt="">
           <mat-card-content>
             <h6>
@@ -64,7 +65,14 @@
         </mat-card-actions>
       </mat-card>
     </div>
-
+    <div *ngIf="recipes.length != 0">
+      <mat-paginator style="margin: auto 115px"
+                     [length]="length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="pageSizeOptions"
+                     (page)="pageEvent = getServerData($event)">
+      </mat-paginator>
+    </div>
     <div *ngIf="recipes.length == 0">
       <div class="container box" style="padding-bottom: 20px">
         <div class="row">

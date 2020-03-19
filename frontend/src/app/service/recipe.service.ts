@@ -26,6 +26,10 @@ export class RecipeService {
     return this.http.get<Recipe[]>(`${this.baseUrl}/categoryName/${categoryName}?page=${page}&size=${size}&sort=${sort}`);
   }
 
+  public getCountAllRecipesInCategory(categoryName: string): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/countAllRecipesInCategory/${categoryName}`);
+  }
+
   public createRecipe(recipe: CreateRecipeDTO) {
     return this.http.post<CreateRecipeDTO>(`${this.baseUrl}/createRecipe`, recipe);
   }
