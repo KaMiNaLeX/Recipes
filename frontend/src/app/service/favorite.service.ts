@@ -44,4 +44,8 @@ export class FavoriteService {
       })
     } else this.utilsService.alert("you need to authenticated");
   }
+
+  public getCountAllFavoritesRecipes(userId: string): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/countAllFavoritesRecipes/${userId}`);
+  }
 }

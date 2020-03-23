@@ -5,6 +5,7 @@ import {Favorite} from "../../model/favorite";
 import {User} from "../../model/user";
 import {RecipeService} from "../../service/recipe.service";
 import {SharedService} from "../../service/shared.service";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-favorite',
@@ -14,13 +15,22 @@ import {SharedService} from "../../service/shared.service";
 export class FavoriteComponent implements OnInit {
   ru: boolean;
   favorite: Favorite = new Favorite();
-  favorites: Favorite[];
+  favorites: Favorite[] = [];
+  // MatPaginator Inputs
+  length: number;
+  pageSize = 8;
+  pageSizeOptions: number[] = [8, 32, 64];
+  // MatPaginator Output
+  pageEvent: PageEvent;
 
   constructor(private router: Router, private favoriteService: FavoriteService, private recipeService: RecipeService, private ss: SharedService) {
   }
 
   ngOnInit() {
-    this.favoriteService.findAll(localStorage.getItem('id'),0, 10, "addedAt").subscribe((data: Favorite[]) => {
+    this.favoriteService.getCountAllFavoritesRecipes(localStorage.getItem('id')).subscribe(data => {
+      this.length = data;
+    });
+    this.favoriteService.findAll(localStorage.getItem('id'), 0, this.pageSize, "addedAt").subscribe((data: Favorite[]) => {
       this.favorites = data;
       for (let i = 0; i < this.favorites.length; i++) {
         this.recipeService.getAuthorName(this.favorites[i].recipeDTO.authorId).subscribe((data: User) => {
@@ -44,9 +54,28 @@ export class FavoriteComponent implements OnInit {
 
   deleteFromFavorite(id: string) {
     this.favoriteService.delete(id).subscribe(data => {
-      this.favoriteService.findAll(localStorage.getItem('id'),0, 10, "addedAt").subscribe(data => {
+      this.favoriteService.findAll(localStorage.getItem('id'), 0, this.pageSize, "addedAt").subscribe(data => {
         this.favorites = data;
+        this.favoriteService.getCountAllFavoritesRecipes(localStorage.getItem('id')).subscribe(data => {
+          this.length = data;
+        });
       });
-    })
+    });
+  }
+
+  getServerData(event?: PageEvent) {
+    this.favoriteService.findAll(localStorage.getItem('id'), event.pageIndex, event.pageSize, "addedAt").subscribe(
+      response => {
+        this.favorites = response;
+        if (this.favorites != null) {
+          for (let i = 0; i < this.favorites.length; i++) {
+            this.recipeService.getAuthorName(this.favorites[i].recipeDTO.authorId).subscribe((data: User) => {
+              this.favorites[i].recipeDTO.authorName = data.login;
+            })
+          }
+        }
+      }
+    );
+    return undefined;
   }
 }

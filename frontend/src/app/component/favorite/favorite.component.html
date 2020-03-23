@@ -5,57 +5,83 @@
 </h1>
 <div class="resultDiv">
   <div class="container-fluid">
-    <div class="card mb-3 card-columns recipe" *ngFor="let favorite of favorites">
-      <div class="row no-gutters" *ngIf="favorite.uuid != null">
-        <div class="col-md-4">
-          <img height="250" weight="300" [src]="favorite.recipeDTO.imgSource"
-               *ngIf="favorite.recipeDTO.imgSource !=null" class="card-img">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <ng-container *ngIf="!ru;else lang">
-              <h5 class="card-title">{{ favorite.recipeDTO.name }}</h5>
-              <h6 class="card-text">{{'difficulty' | translate}}:{{ favorite.recipeDTO.cookingDifficulty }}</h6>
-            </ng-container>
-            <ng-template #lang>
-              <h5 class="card-title">{{ favorite.recipeDTO.nameRu }}</h5>
-              <h6 class="card-text">{{'difficulty' | translate}}:{{ favorite.recipeDTO.cookingDifficultyRu }}</h6>
-            </ng-template>
-            <h6 class="card-text">{{'time' | translate}}
-              :{{ favorite.recipeDTO.cookingTime }} {{'minutes' | translate}}</h6>
-            <h6 class="card-text">{{'author' | translate}}:{{ favorite.recipeDTO.authorName }}</h6>
-            <div class="div">
-              <form (ngSubmit)="view(favorite.recipeDTO.id)" #addToCartForm="ngForm">
-                <button type="submit" class="btn btn-primary">{{'view' | translate}}</button>
-              </form>
-              <form class="divChild2" (ngSubmit)="deleteFromFavorite(favorite.uuid)">
-                <button type="submit" class="btn btn-danger">{{'delete fav' | translate}}</button>
-              </form>
-            </div>
+    <div class="card-deck-custom">
+      <mat-card class="example-card divChild" *ngFor="let favorite of favorites">
+        <ng-container *ngIf="!ru;else lang">
+          <mat-card-header>
+            <mat-card-title>{{ favorite.recipeDTO.name }}</mat-card-title>
+            <mat-card-subtitle>{{'author' | translate}}: {{ favorite.recipeDTO.authorName }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image height="250" style="width: 300px" [src]="favorite.recipeDTO.imgSource"
+               *ngIf="favorite.recipeDTO.imgSource !=null"
+               alt="">
+          <mat-card-content>
+            <h6>
+              {{'difficulty' | translate}}: {{ favorite.recipeDTO.cookingDifficulty }}
+            </h6>
+            <h6>
+              {{'time' | translate}}: {{ favorite.recipeDTO.cookingTime }} {{'minutes' | translate}}
+            </h6>
             <p class="card-text"><small
-              class="text-muted">{{'last updated' | translate}} {{ favorite.recipeDTO.lastModified }}</small></p>
-            <p class="card-text"><small class="text-muted">{{'added at' | translate}} {{ favorite.addedAt }}</small></p>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="favorite.uuid == null">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="error-template">
-                <h1>
-                  {{'Oops' | translate}}!</h1>
-                <h2>
-                  {{'recipes in fav not found' | translate}}</h2>
-                <div class="error-details">
-                  {{'no one in fav' | translate}}
-                </div>
-                <div class="error-actions">
-                  <button (click)="categories()" class="btn btn-primary btn-lg"><span
-                    class="glyphicon glyphicon-home"></span>
-                    {{'go to categories' | translate}}
-                  </button>
-                </div>
+              class="text-muted">{{'last update' | translate}} {{ favorite.recipeDTO.lastModified }}</small></p>
+            <p class="card-text"><small
+              class="text-muted">{{'added at' | translate}} {{ favorite.addedAt }}</small></p>
+          </mat-card-content>
+        </ng-container>
+        <ng-template #lang>
+          <mat-card-header>
+            <mat-card-title>{{ favorite.recipeDTO.nameRu }}</mat-card-title>
+            <mat-card-subtitle>{{'author' | translate}}: {{ favorite.recipeDTO.authorName }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image height="250" style="max-width: 345px" [src]="favorite.recipeDTO.imgSource"
+               *ngIf="favorite.recipeDTO.imgSource !=null"
+               alt="">
+          <mat-card-content>
+            <h6>
+              {{'difficulty' | translate}}:{{ favorite.recipeDTO.cookingDifficultyRu }}
+            </h6>
+            <h6>
+              {{'time' | translate}}:{{ favorite.recipeDTO.cookingTime }} {{'minutes' | translate}}
+            </h6>
+            <p class="card-text"><small
+              class="text-muted">{{'last update' | translate}} {{ favorite.recipeDTO.lastModified }}</small></p>
+            <p class="card-text"><small
+              class="text-muted">{{'added at' | translate}} {{ favorite.addedAt }}</small></p>
+          </mat-card-content>
+        </ng-template>
+        <mat-card-actions>
+          <button (click)="view(favorite.recipeDTO.id)" mat-raised-button color="primary"
+                  type="submit">{{'view' | translate}}</button>
+          <button (click)="deleteFromFavorite(favorite.uuid)" mat-raised-button color="primary"
+                  type="submit">{{'delete fav' | translate}}</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div *ngIf="favorites.length != 0">
+      <mat-paginator style="margin: auto 115px"
+                     [length]="length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="pageSizeOptions"
+                     (page)="pageEvent = getServerData($event)">
+      </mat-paginator>
+    </div>
+    <div *ngIf="favorites.length == 0">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="error-template">
+              <h1>
+                {{'Oops' | translate}}!</h1>
+              <h2>
+                {{'recipes in fav not found' | translate}}</h2>
+              <div class="error-details">
+                {{'no one in fav' | translate}}
+              </div>
+              <div class="error-actions">
+                <button (click)="categories()" class="btn btn-primary btn-lg"><span
+                  class="glyphicon glyphicon-home"></span>
+                  {{'go to categories' | translate}}
+                </button>
               </div>
             </div>
           </div>

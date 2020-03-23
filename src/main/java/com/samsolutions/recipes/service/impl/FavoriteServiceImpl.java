@@ -72,4 +72,9 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
         }
         return favoriteDTOList;
     }
+
+    @Override
+    public int getCountAllFavoritesRecipes(UUID userId) {
+        return favoriteRepository.findAllByUserId(userId).size();
+    }
 }

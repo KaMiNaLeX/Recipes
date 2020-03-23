@@ -9,8 +9,7 @@ import {SharedService} from "../../service/shared.service";
 import {CategoryService} from "../../service/category.service";
 import {Category} from "../../model/category";
 import {UtilsService} from "../../service/utils.service";
-import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {MatCard} from "@angular/material/card";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-recipe-list',

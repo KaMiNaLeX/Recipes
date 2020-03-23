@@ -18,4 +18,6 @@ public interface FavoriteService {
 
     List<FavoriteDTO> findAllByUserId(UUID uuid, int page, int size, String sort);
 
+    int getCountAllFavoritesRecipes(UUID userId);
+
 }

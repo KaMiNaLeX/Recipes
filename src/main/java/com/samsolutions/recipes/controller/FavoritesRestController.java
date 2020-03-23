@@ -57,4 +57,9 @@ public class FavoritesRestController extends CustomGlobalExceptionHandler {
                                              @RequestParam("size") int size, @RequestParam("sort") String sort) {
         return favoriteService.findAllByUserId(uuid, page, size, sort);
     }
+
+    @GetMapping("/countAllFavoritesRecipes/{userId}")
+    public int getCountAllFavoritesRecipes(@PathVariable("userId") UUID userId) {
+        return favoriteService.getCountAllFavoritesRecipes(userId);
+    }
 }
