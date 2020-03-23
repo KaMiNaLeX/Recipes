@@ -1,61 +1,36 @@
 <h1>{{'registration' | translate}}</h1>
-<div class="container-fluid">
-  <div class="col-md-6 login-container" style="max-width: 70%">
-    <br/>
-    <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit(registerForm.value)">
-      <div class="form-group">
-        <h6 for="firstName">{{'first name' | translate}}:</h6>
-        <input type="text" class="form-control" formControlName="firstName" id="firstName" autocomplete="off">
-        <div class="alert alert-danger"
-             *ngIf="!registerForm.get('firstName').valid && registerForm.get('firstName').touched">
-          {{'required' | translate}}
-        </div>
-        <div class="form-group">
-          <h6 for="lastName">{{'last name' | translate}}:</h6>
-          <input type="text" class="form-control" formControlName="lastName" id="lastName" autocomplete="off">
-          <div class="alert alert-danger"
-               *ngIf="!registerForm.get('lastName').valid && registerForm.get('lastName').touched">
-            {{'required' | translate}}
-          </div>
-        </div>
-        <div class="form-group">
-          <h6 for="login">{{'login' | translate}}:</h6>
-          <input (change)="checkLogin()" type="text" class="form-control" formControlName="login" id="login"
-                 autocomplete="off">
-          <div class="alert alert-danger" *ngIf="!registerForm.get('login').valid && registerForm.get('login').touched">
-            {{'login exist or required' | translate}}
-          </div>
-        </div>
-        <div class="form-group">
-          <h6 for="email">{{'email' | translate}}:</h6>
-          <input (change)="checkEmail()" type="email" class="form-control" formControlName="email" id="email"
-                 autocomplete="off">
-          <div class="alert alert-danger" *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">
-            {{'email exist or required' | translate}}
-          </div>
-        </div>
-        <div class="form-group">
-          <h6 for="pwd">{{'password' | translate}}:</h6>
-          <input type="password" class="form-control" formControlName="password" id="pwd" autocomplete="off">
-          <div class="alert alert-danger"
-               *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
-            {{'required' | translate}}
-          </div>
-        </div>
-        <div class="div">
-          <h6 class="divChild2" for="inlineCheckbox1">{{'author role' | translate}}</h6>
-          <input class="divChild2" formControlName="isAuthor" type="checkbox"
-                 id="inlineCheckbox1" value="1" name="check">
-        </div>
-        <p>{{'role description' | translate}}</p>
-        <div class="div">
-          <button style="width: 300px" type="submit" class="btn btn-success divChild2" [disabled]="!registerForm.valid">
-            {{'registration' | translate}}
-          </button>
-          <button style="width: 300px" type="button" class="btn btn-primary divChild2" (click)="loginPage()">{{'login' | translate}}
-          </button>
-        </div>
-      </div>
-    </form>
+<form [formGroup]="registerForm" (ngSubmit)="onFormSubmit(registerForm.value)">
+  <div mat-dialog-content>
+    <mat-form-field class="full-width">
+      <mat-label>{{'first name' | translate}}</mat-label>
+      <input matInput formControlName="firstName" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'last name' | translate}}</mat-label>
+      <input matInput formControlName="lastName" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'login' | translate}}</mat-label>
+      <input id="login" (change)="checkLogin()" matInput formControlName="login" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'email' | translate}}</mat-label>
+      <input id="email" (change)="checkEmail()" matInput formControlName="email" required email placeholder="Ex@example.com">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'password' | translate}}</mat-label>
+      <input type="password" matInput formControlName="password" required>
+    </mat-form-field>
   </div>
-</div>
+  <div class="div">
+    <mat-checkbox class="example-margin" formControlName="isAuthor"
+                  value="1" name="check">{{'author role' | translate}}</mat-checkbox>
+  </div>
+  <p>{{'role description' | translate}}</p>
+  <div mat-dialog-actions class="example-button-row">
+    <button mat-button type="button" (click)="onNoClick()">{{'cancel' | translate}}</button>
+    <button type="submit" mat-raised-button color="accent"
+            [disabled]="!registerForm.valid">
+      {{'registration' | translate}}</button>
+  </div>
+</form>

@@ -44,18 +44,26 @@ public class UserServiceImpl extends ModelMapperService implements UserService {
 
     @Override
     public UserDTO getById(UUID uuid) {
-        UserEntity userEntity = userRepository.getById(uuid);
-        UserDTO userDTO = new UserDTO();
-        map(userEntity, userDTO);
-        return userDTO;
+        try {
+            UserEntity userEntity = userRepository.getById(uuid);
+            UserDTO userDTO = new UserDTO();
+            map(userEntity, userDTO);
+            return userDTO;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public UserDTO getByLogin(String login) {
-        UserEntity userEntity = userRepository.getByLogin(login);
-        UserDTO userDTO = new UserDTO();
-        map(userEntity, userDTO);
-        return userDTO;
+        try {
+            UserEntity userEntity = userRepository.getByLogin(login);
+            UserDTO userDTO = new UserDTO();
+            map(userEntity, userDTO);
+            return userDTO;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 

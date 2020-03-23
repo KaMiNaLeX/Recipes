@@ -47,8 +47,8 @@
         {{ 'login and registration' | translate }}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <button class="btn dropdown-item" (click)="login()">{{ 'login' | translate }}</button>
-        <button class="btn dropdown-item" (click)="register()">{{ 'registration' | translate }}</button>
+        <button *ngIf="!authenticated" class="btn dropdown-item" (click)="login()">{{ 'login' | translate }}</button>
+        <button *ngIf="!authenticated" class="btn dropdown-item" (click)="register()">{{ 'registration' | translate }}</button>
         <button [hidden]="!authenticated" class="btn dropdown-item"
                 (click)="profile()">{{ 'profile' | translate }}</button>
         <button [hidden]="!authenticated" type="button" class="btn dropdown-item"

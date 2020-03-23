@@ -5,6 +5,8 @@ import {AuthService} from "../../../service/auth.service";
 import {UserService} from "../../../service/user.service";
 import {User} from "../../../model/user";
 import {UtilsService} from "../../../service/utils.service";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {LoginComponent} from "../login/login.component";
 
 @Component({
   selector: 'app-register',
@@ -19,13 +21,11 @@ export class RegisterComponent implements OnInit {
   login = '';
   email = '';
   password = '';
-  isLoadingResults = false;
-  existsUserEmail = null;
-  existsUserLogin = null;
   user: User = new User();
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
-              private userService: UserService, private utilsService: UtilsService) {
+              private userService: UserService, private utilsService: UtilsService,
+              public dialogRef: MatDialogRef<RegisterComponent>, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -68,17 +68,22 @@ export class RegisterComponent implements OnInit {
   }
 
   onFormSubmit(form: NgForm) {
+    this.dialogRef.close();
     this.authService.register(form)
       .subscribe(res => {
-        this.router.navigate(['login']);
+        this.dialog.open(LoginComponent, {
+          maxWidth: '30%',
+          maxHeight: '50%',
+          data: {}
+        });
+        this.utilsService.alert("success registration");
       }, (err) => {
         console.log(err);
         alert(err.error);
       });
   }
 
-  loginPage() {
-    this.router.navigate(['login']);
+  onNoClick() {
+    this.dialogRef.close();
   }
-
 }

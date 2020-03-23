@@ -72,9 +72,10 @@
               {{'you can add' | translate}}
             </div>
             <div class="error-actions">
-              <button (click)="addRecipe()" class="btn btn-primary btn-lg"><span
+              <button mat-raised-button color="accent" (click)="addRecipe()" class="btn btn-primary btn-lg"><span
                 class="glyphicon glyphicon-home"></span>
-                {{'add recipe' | translate}} +
+                <mat-icon>add</mat-icon>
+                {{'add recipe' | translate}}
               </button>
             </div>
           </div>

@@ -6,6 +6,9 @@ import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {SharedService} from "./service/shared.service";
 import {UtilsService} from "./service/utils.service";
+import {MatDialog} from "@angular/material/dialog";
+import {LoginComponent} from "./component/auth/login/login.component";
+import {RegisterComponent} from "./component/auth/register/register.component";
 
 @Component({
   selector: 'app-root',
@@ -13,8 +16,7 @@ import {UtilsService} from "./service/utils.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  title = 'frontend';
+  title = 'Recipes';
   authenticated = false;
   admin = false;
   author = false;
@@ -22,7 +24,7 @@ export class AppComponent {
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
               private http: HttpClient, private translate: TranslateService, private ss: SharedService,
-              private utilsService: UtilsService) {
+              private utilsService: UtilsService, private dialog: MatDialog) {
     if (localStorage.getItem('lang') !== null) {
       translate.setDefaultLang(localStorage.getItem('lang'));
     } else {
@@ -48,12 +50,12 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['login']).then(() => {
-      window.location.reload();
-    });
     this.authenticated = false;
     this.admin = false;
     this.author = false;
+    this.router.navigate(['category']).then(data =>
+      window.location.reload()
+    )
   }
 
   addRecipe() {
@@ -65,7 +67,11 @@ export class AppComponent {
   }
 
   login() {
-    this.router.navigate(['login']);
+    this.dialog.open(LoginComponent, {
+      maxWidth: '30%',
+      maxHeight: '50%',
+      data: {}
+    });
   }
 
   favorite() {
@@ -85,7 +91,11 @@ export class AppComponent {
   }
 
   register() {
-    this.router.navigate(['register']);
+    this.dialog.open(RegisterComponent, {
+      maxWidth: '30%',
+      maxHeight: '50%',
+      data: {}
+    });
   }
 
   profile() {

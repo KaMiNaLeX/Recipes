@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../service/auth.service";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   email = '';
   password = '';
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
+              public dialogRef: MatDialogRef<LoginComponent>) {
   }
 
   ngOnInit() {
@@ -40,8 +42,7 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  register() {
-    this.router.navigate(['register']);
+  onNoClick() {
+    this.dialogRef.close();
   }
-
 }

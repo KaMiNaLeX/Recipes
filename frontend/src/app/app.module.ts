@@ -48,6 +48,7 @@ import { AddUserDialogComponent } from './component/admin/admin-user/add-user-di
 import { EditUserDialogComponent } from './component/admin/admin-user/edit-user-dialog/edit-user-dialog.component';
 import { DeleteUserDialogComponent } from './component/admin/admin-user/delete-user-dialog/delete-user-dialog.component';
 import { AlertComponent } from './component/alert/alert.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -94,7 +95,7 @@ import { AlertComponent } from './component/alert/alert.component';
                 deps: [HttpClient]
             }
         })
-        , MatSliderModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule, MatCardModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSortModule, MatDialogModule, MatSelectModule
+        , MatSliderModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule, MatCardModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSortModule, MatDialogModule, MatSelectModule, MatCheckboxModule
     ],
   providers: [
     {

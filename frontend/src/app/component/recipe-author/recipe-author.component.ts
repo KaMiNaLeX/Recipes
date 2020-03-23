@@ -48,7 +48,7 @@ export class RecipeAuthorComponent implements OnInit {
   }
 
   addRecipe() {
-    this.router.navigate(['recipe-add']);
+    this.router.navigate(['addRecipe']);
   }
 
   delete(id: string) {
@@ -56,8 +56,11 @@ export class RecipeAuthorComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.recipeService.getByAuthorId(localStorage.getItem('id'), 0, 10, "name").subscribe(data => {
+          this.recipeService.getByAuthorId(localStorage.getItem('id'), 0, this.pageSize, "name").subscribe(data => {
             this.recipes = data;
+            this.recipeService.getCountAllOwnRecipes(localStorage.getItem('id')).subscribe(data => {
+              this.length = data;
+            });
           })
         },
         error => console.log(error));

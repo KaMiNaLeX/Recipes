@@ -150,5 +150,6 @@
   "category is updated" : "Category is updated",
   "ingredient exists" : "Ingredient with this name is already exists",
   "category exists" : "Category with this name is already exists",
-  "ingredient used" : "Ingredient is not deleted, because it's used"
+  "ingredient used" : "Ingredient is not deleted, because it's used",
+  "success registration": "Registration was successful"
 }
