@@ -189,4 +189,9 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
         return recipeService.getCountAllRecipesInCategory(categoryName);
     }
 
+    @GetMapping("/countAllOwnRecipes/{authorId}")
+    public int getCountAllOwnRecipes(@PathVariable("authorId") UUID authorId) {
+        return recipeService.getCountAllOwnRecipes(authorId);
+    }
+
 }

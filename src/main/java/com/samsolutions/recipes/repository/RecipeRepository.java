@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -32,4 +33,6 @@ public interface RecipeRepository extends BaseRepository<RecipeEntity> {
     Page<RecipeEntity> findAllByCookingTimeBetweenAndCookingDifficulty(int start, int end, CookingDifficulty dif, Pageable pageable);
 
     Page<RecipeEntity> findAllByCookingTimeBetweenAndCookingDifficultyRu(int start, int end, CookingDifficulty dif, Pageable pageable);
+
+    List<RecipeEntity> findAllByAuthorId(UUID authorId);
 }

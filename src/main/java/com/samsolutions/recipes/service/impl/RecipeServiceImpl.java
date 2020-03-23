@@ -236,6 +236,11 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     }
 
     @Override
+    public int getCountAllOwnRecipes(UUID authorId) {
+        return recipeRepository.findAllByAuthorId(authorId).size();
+    }
+
+    @Override
     public CreateRecipeDTO mapCategoryRecipeEntityListToDTO(UUID uuid, CreateRecipeDTO createRecipeDTO) {
         List<CategoryRecipeDTO> categoryRecipeDTOList = new ArrayList<>();
         for (CategoryRecipeEntity categoryRecipeEntity : categoryRecipeRepository.findAllByRecipeId(uuid)) {

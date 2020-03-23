@@ -118,8 +118,7 @@ body {
   column-count: 3;
 }
 
-.example-button-row button,
-.example-button-row a, card {
+.example-button-row button, a, card {
   margin-right: 12px;
 }
 

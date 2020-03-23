@@ -38,6 +38,8 @@ public interface RecipeService {
 
     int getCountAllRecipesInCategory(String categoryName);
 
+    int getCountAllOwnRecipes(UUID authorId);
+
     CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO);
 
     CreateRecipeDTO getByRecipeId(UUID uuid);

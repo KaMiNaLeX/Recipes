@@ -4,6 +4,8 @@ import {CreateRecipeDTO} from "../../model/createRecipe/create-recipe-dto";
 import {Router} from "@angular/router";
 import {SharedService} from "../../service/shared.service";
 import {UtilsService} from "../../service/utils.service";
+import {PageEvent} from "@angular/material/paginator";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-recipe-author',
@@ -14,13 +16,22 @@ export class RecipeAuthorComponent implements OnInit {
   recipes: CreateRecipeDTO[] = [];
   recipe: CreateRecipeDTO = new CreateRecipeDTO();
   ru: boolean;
+  // MatPaginator Inputs
+  length: number;
+  pageSize = 8;
+  pageSizeOptions: number[] = [8, 32, 64];
+  // MatPaginator Output
+  pageEvent: PageEvent;
 
   constructor(private router: Router, private recipeService: RecipeService, private ss: SharedService,
               private utilsService: UtilsService) {
   }
 
   ngOnInit() {
-    this.recipeService.getByAuthorId(localStorage.getItem('id'), 0, 10, "name").subscribe(data => this.recipes = data);
+    this.recipeService.getCountAllOwnRecipes(localStorage.getItem('id')).subscribe(data => {
+      this.length = data;
+    });
+    this.recipeService.getByAuthorId(localStorage.getItem('id'), 0, this.pageSize, "name").subscribe(data => this.recipes = data);
     this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
       .subscribe(item => this.ru = item);
@@ -51,5 +62,14 @@ export class RecipeAuthorComponent implements OnInit {
         },
         error => console.log(error));
     this.utilsService.alert("recipe deleted");
+  }
+
+  getServerData(event?: PageEvent) {
+    this.recipeService.getByAuthorId(localStorage.getItem('id'), event.pageIndex, event.pageSize, "name").subscribe(
+      response => {
+        this.recipes = response;
+      }
+    );
+    return undefined;
   }
 }
