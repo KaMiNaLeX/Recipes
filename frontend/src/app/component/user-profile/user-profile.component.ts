@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {UserService} from "../../service/user.service";
 import {first} from "rxjs/operators";
 import {UtilsService} from "../../service/utils.service";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {ChangePasswordComponent} from "./change-password/change-password.component";
 
 @Component({
   selector: 'app-user-profile',
@@ -15,17 +17,9 @@ export class UserProfileComponent implements OnInit {
 
   user: User;
   editForm: FormGroup;
-  passDiv = false;
-  checkDiv = false;
-  oldPass = null;
-  newPass = null;
-  confPass = null;
-  invalid = false;
-  check: Boolean = false;
-  button = true;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService,
-              private utilsService: UtilsService) {
+              private utilsService: UtilsService, public dialogRef: MatDialogRef<UserProfileComponent>, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -48,51 +42,16 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  comparison() {
-    if (this.newPass != this.confPass) {
-      this.utilsService.alert('passwords don`t match');
-      (<HTMLButtonElement>document.getElementById('save')).disabled = true;
-    }
-  }
-
   changePass() {
-    this.checkDiv = true;
-    this.button = false;
-  }
-
-  checkPass() {
-    this.userService.checkPass(localStorage.getItem('id'), this.oldPass).subscribe(data => {
-      this.check = data;
-      if (this.check != true) {
-        this.utilsService.alert("wrong password");
-      } else {
-        this.passDiv = true;
-        this.checkDiv = false;
-      }
-    })
-  }
-
-  savePass() {
-    let email = window.localStorage.getItem("email");
-    this.userService.savePass(localStorage.getItem('id'), this.confPass).subscribe(data => {
-      this.userService.getByEmail(email)
-        .subscribe(data => {
-          this.editForm.setValue(data);
-        });
+    this.dialog.open(ChangePasswordComponent, {
+      maxWidth: '30%',
+      maxHeight: '60%',
+      data: {}
     });
-    this.utilsService.alert("password is updated");
-    this.passDiv = false;
-    this.checkDiv = false;
-    this.oldPass = null;
-    this.newPass = null;
-    this.confPass = null;
-    this.invalid = false;
-    this.check = false;
-    this.button = true;
   }
-
 
   onSubmit() {
+    this.dialogRef.close();
     let id = window.localStorage.getItem("id");
     this.userService.update(id, this.editForm.value)
       .pipe(first())
@@ -100,7 +59,7 @@ export class UserProfileComponent implements OnInit {
         data => {
           if (data != null) {
             this.utilsService.alert("user updated successfully");
-            this.router.navigate(['profile']);
+            this.router.navigate(['category']);
           } else {
           }
         },
@@ -109,4 +68,7 @@ export class UserProfileComponent implements OnInit {
         });
   }
 
+  onNoClick() {
+    this.dialogRef.close();
+  }
 }

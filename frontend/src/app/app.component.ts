@@ -9,6 +9,7 @@ import {UtilsService} from "./service/utils.service";
 import {MatDialog} from "@angular/material/dialog";
 import {LoginComponent} from "./component/auth/login/login.component";
 import {RegisterComponent} from "./component/auth/register/register.component";
+import {UserProfileComponent} from "./component/user-profile/user-profile.component";
 
 @Component({
   selector: 'app-root',
@@ -99,7 +100,11 @@ export class AppComponent {
   }
 
   profile() {
-    this.router.navigate(['profile']);
+    this.dialog.open(UserProfileComponent, {
+      maxWidth: '30%',
+      maxHeight: '50%',
+      data: {}
+    });
   }
 
   users() {

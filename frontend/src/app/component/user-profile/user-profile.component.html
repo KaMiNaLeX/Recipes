@@ -1,11 +1,36 @@
 <h1>
-  <app-back-button></app-back-button>
-  <div class="qub-page-header-divider"></div>
   {{'profile' | translate}}
 </h1>
-<div class="container-fluid">
-  <h2>{{'edit user' | translate}}</h2>
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <mat-form-field class="full-width">
+      <mat-label>{{'login' | translate}}</mat-label>
+      <input matInput formControlName="login" readonly="true">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'email' | translate}}</mat-label>
+      <input matInput formControlName="email" readonly="true">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'first name' | translate}}</mat-label>
+      <input matInput formControlName="firstName">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'last name' | translate}}</mat-label>
+      <input matInput formControlName="lastName">
+    </mat-form-field>
+      <button type="button" (click)="changePass()" mat-stroked-button>{{'change password' | translate}}</button>
+  </div>
   <br/>
+  <div mat-dialog-actions class="example-button-row">
+    <button mat-button type="button" (click)="onNoClick()">{{'cancel' | translate}}</button>
+    <button type="submit" mat-raised-button color="accent"
+            [disabled]="!editForm.valid">
+      {{'update' | translate}}</button>
+  </div>
+</form>
+<!--
+<div class="container-fluid">
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()" style="max-width: 70%">
     <div hidden="hidden" class="form-group">
       <input type="text" formControlName="id" placeholder="id" name="id" class="form-control" id="id"
@@ -81,3 +106,4 @@
   </button>
   <br/>
 </div>
+-->

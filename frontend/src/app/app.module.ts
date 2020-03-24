@@ -49,6 +49,7 @@ import { EditUserDialogComponent } from './component/admin/admin-user/edit-user-
 import { DeleteUserDialogComponent } from './component/admin/admin-user/delete-user-dialog/delete-user-dialog.component';
 import { AlertComponent } from './component/alert/alert.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ChangePasswordComponent } from './component/user-profile/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     AddUserDialogComponent,
     EditUserDialogComponent,
     DeleteUserDialogComponent,
-    AlertComponent
+    AlertComponent,
+    ChangePasswordComponent
   ],
     imports: [
         BrowserModule,
