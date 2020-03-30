@@ -100,10 +100,10 @@
   "clear": "Clear all ingredients from card",
   "parameters": "Parameters",
   "cooking time": "Cooking time",
-  "less than 10 min": "less than 10 minutes",
-  "less than 30 min": "less than 30 minutes",
-  "less than 1 hour": "less than 1 hour",
-  "more than 1 hour": "more than 1 hour",
+  "less than 10 min": "Less than 10 minutes",
+  "less than 30 min": "Less than 30 minutes",
+  "less than 1 hour": "Less than 1 hour",
+  "more than 1 hour": "More than 1 hour",
   "cooking difficulty": "Cooking difficulty",
   "no result": "There are no results for the given parameters, check the parameters and try again",
   "old password": "Old Password",
@@ -151,5 +151,6 @@
   "ingredient exists" : "Ingredient with this name is already exists",
   "category exists" : "Category with this name is already exists",
   "ingredient used" : "Ingredient is not deleted, because it's used",
-  "success registration": "Registration was successful"
+  "success registration": "Registration was successful",
+  "new ingredient": "New ingredient..."
 }

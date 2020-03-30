@@ -18,9 +18,15 @@ public interface RecipeRepository extends BaseRepository<RecipeEntity> {
 
     Page<RecipeEntity> getByAuthorId(UUID authorId, Pageable pageable);
 
+    List<RecipeEntity> getByAuthorId(UUID authorId);
+
     Page<RecipeEntity> findAllByName(String name, Pageable pageable);
 
+    List<RecipeEntity> findAllByName(String name);
+
     Page<RecipeEntity> findAllByNameRu(String name, Pageable pageable);
+
+    List<RecipeEntity> findAllByNameRu(String name);
 
     RecipeEntity getByNameAndAuthorId(String name, UUID uuid);
 

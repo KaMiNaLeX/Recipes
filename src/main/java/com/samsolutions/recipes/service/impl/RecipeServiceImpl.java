@@ -232,7 +232,9 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
 
     @Override
     public int getCountAllRecipesInCategory(String categoryName) {
-        return categoryRecipeRepository.findAllByCategoryName(categoryName).size();
+        if (categoryName.matches("^[A-Za-z\\s]+$")) {
+            return categoryRecipeRepository.findAllByCategoryName(categoryName).size();
+        } else return categoryRecipeRepository.findAllByCategoryNameRu(categoryName).size();
     }
 
     @Override
@@ -326,12 +328,29 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     }
 
     @Override
+    public int getCountAllRecipesByAuthorName(String name) {
+        UUID uuid = userRepository.getByLogin(name).getId();
+        if (uuid == null) {
+            log.error(new UserNotFoundException("User not found"));
+            return 0;
+        }
+        return recipeRepository.getByAuthorId(uuid).size();
+    }
+
+    @Override
     public List<RecipeDTO> findAllByName(String name, int page, int size, String sort) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         if (name.matches("^[A-Za-z\\s]+$")) {
             return mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
         } else return mapListLambda(recipeRepository.findAllByNameRu(name, pageable).getContent(), RecipeDTO.class);
 
+    }
+
+    @Override
+    public int getCountAllRecipesByName(String name) {
+        if (name.matches("^[A-Za-z\\s]+$")) {
+            return recipeRepository.findAllByName(name).size();
+        } else return recipeRepository.findAllByNameRu(name).size();
     }
 
     @Override
@@ -386,7 +405,20 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                 return o1.getName().compareTo(o2.getName());
             }
         });
+
+        if (resultList.size() > size) {
+            int deleted = (resultList.size() - size);
+            for (int i = 0; i < deleted; i++) {
+                resultList.remove((size - 1) + 1);
+            }
+        }
         return mapListLambda(resultList, RecipeDTO.class);
+    }
+
+    //todo: need to fix
+    @Override
+    public int getCountAllRecipesByIngredient(IngredientNameListDTO ingredientNameListDTO) {
+        return 0;
     }
 
     @Override
@@ -432,10 +464,21 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                     recipeEntityList.addAll(recipeRepository.findAllByCookingDifficulty(
                             CookingDifficulty.valueOf(difficultyDTO.getCookingDifficulty()), pageable).getContent());
                 }
-
+            }
+        }
+        if (recipeEntityList.size() > size) {
+            int deleted = (recipeEntityList.size() - size);
+            for (int i = 0; i < deleted; i++) {
+                recipeEntityList.remove((size - 1) + 1);
             }
         }
         return mapListLambda(recipeEntityList, RecipeDTO.class);
+    }
+
+    //todo: need to fix
+    @Override
+    public int getCountAllRecipesByData(RecipeDataDTO recipeDataDTO) {
+        return 0;
     }
 
     @Override

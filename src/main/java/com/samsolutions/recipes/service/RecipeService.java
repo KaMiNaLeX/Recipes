@@ -48,13 +48,21 @@ public interface RecipeService {
 
     List<RecipeDTO> getByAuthorName(String name, int page, int size, String sort);
 
+    int getCountAllRecipesByAuthorName(String name);
+
     List<RecipeDTO> findAllByName(String name, int page, int size, String sort);
+
+    int getCountAllRecipesByName(String name);
 
     RecipeDTO getByNameAuthorId(String name, UUID uuid);
 
     List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO, int page, int size, String sort);
 
+    int getCountAllRecipesByIngredient(IngredientNameListDTO ingredientNameListDTO);
+
     List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO, int page, int size, String sort);
+
+    int getCountAllRecipesByData(RecipeDataDTO recipeDataDTO);
 
     RecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException;
 

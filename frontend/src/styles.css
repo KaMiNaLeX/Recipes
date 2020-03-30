@@ -19,6 +19,13 @@ h5 {
   padding: 10px 15px;
 }
 
+h4 {
+  color: rgba(255, 255, 255, .8);
+  line-height: 1.125;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  width: 100%;
+}
+
 .back {
   background-color: #303030;
   color: white;
@@ -172,7 +179,38 @@ body {
   background: rgba(121, 121, 121, 0.5)
 }
 
+.example-form-field {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  width: 33%;
+}
 
+.example-stretched-tabs {
+  min-width: 500px;
+}
+
+.example-chip-list {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  width: 99%;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
 
 
 

@@ -38,5 +38,4 @@ public class RecipeDTO {
     private String imgSource;
     @ValidUUID
     private UUID authorId;
-
 }

@@ -1,235 +1,192 @@
 <h1>{{'search' | translate}}</h1>
 <div class="resultDiv">
-  <div [hidden]="!first" id="first" class="container-fluid">
-    <ul class="nav nav-pills nav-fill">
-      <li class="nav-item">
-        <button class="btn btn-info btn-lg btn-block">{{'search by name' | translate}}</button>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-outline-info btn-lg btn-block"
-                (click)="byIngredients()">{{'search by ingredients' | translate}}</button>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-outline-info btn-lg btn-block"
-                (click)="byRecipes()">{{'search by parameters' | translate}}</button>
-      </li>
-    </ul>
-    <div class="input-group mb-6 div bg-info" style="padding-bottom: 10px">
+  <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z6">
+    <mat-tab label="{{'search by name' | translate}}">
       <ng-container *ngIf="!ru;else lang">
-        <input type="text" class="form-control divChild" placeholder="{{'search by recipe name' | translate}}"
-               aria-label="Recipient's username"
-               aria-describedby="button-addon2" [(ngModel)]="recipe.name">
-        <div class="input-group-append divChild">
-          <button class="btn btn-success" type="button" id="button-addon1" (click)="searchByName(recipe.name)">
-            {{'search' | translate}}
+        <mat-form-field class="example-form-field">
+          <mat-label>{{'search by recipe name' | translate}}</mat-label>
+          <input id="recipeName" matInput type="text" [(ngModel)]="recipe.name">
+          <button mat-button *ngIf="recipe.name" matSuffix mat-icon-button aria-label="Clear" (click)="recipe.name=''">
+            <mat-icon>close</mat-icon>
           </button>
-        </div>
+        </mat-form-field>
+        <button style="margin-left: 15px" mat-raised-button color="accent" (click)="searchByName(recipe.name)">
+          {{'search' | translate}}
+        </button>
       </ng-container>
       <ng-template #lang>
-        <input type="text" class="form-control divChild" placeholder="{{'search by recipe name' | translate}}"
-               aria-label="Recipient's username"
-               aria-describedby="button-addon2" [(ngModel)]="recipe.nameRu">
-        <div class="input-group-append divChild">
-          <button class="btn btn-success" type="button" (click)="searchByName(recipe.nameRu)">
-            {{'search' | translate}}
+        <mat-form-field class="example-form-field">
+          <mat-label>{{'search by recipe name' | translate}}</mat-label>
+          <input id="recipeNameRu" matInput type="text" [(ngModel)]="recipe.nameRu">
+          <button mat-button *ngIf="recipe.nameRu" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="recipe.nameRu=''">
+            <mat-icon>close</mat-icon>
           </button>
-        </div>
+        </mat-form-field>
+        <button style="margin-left: 15px" mat-raised-button color="accent" (click)="searchByName(recipe.nameRu)">
+          {{'search' | translate}}
+        </button>
       </ng-template>
-      <input type="text" class="form-control divChild" placeholder="{{'search by author name' | translate}}"
-             aria-label="Recipient's username"
-             aria-describedby="button-addon2"
-             id="authorName" [(ngModel)]="author.login">
-      <div class="input-group-append divChild">
-        <button class="btn btn-success" type="button" id="button-addon2"
-                (click)="searchByAuthorName(author.login)">{{'search' | translate}}
+      <mat-form-field style="margin-left: 300px" class="example-form-field">
+        <mat-label>{{'search by author name' | translate}}</mat-label>
+        <input id="authorName" matInput type="text" [(ngModel)]="author.login">
+        <button mat-button *ngIf="author.login" matSuffix mat-icon-button aria-label="Clear" (click)="author.login=''">
+          <mat-icon>close</mat-icon>
         </button>
-      </div>
-    </div>
-  </div>
-
-  <div [hidden]="!second" id="second" class="container-fluid">
-    <ul class="nav nav-pills nav-fill">
-      <li class="nav-item">
-        <button class="btn btn-outline-info btn-lg btn-block"
-                (click)="byName()">{{'search by name' | translate}}</button>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-info btn-lg btn-block">{{'search by ingredients' | translate}}</button>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-outline-info btn-lg btn-block"
-                (click)="byRecipes()">{{'search by parameters' | translate}}</button>
-      </li>
-    </ul>
-    <div class="bg-info" style="padding-bottom: 10px">
-      <div class="card text-white bg-info mb-3" style="width: 100%">
-        <div class="card-header">{{'selected ingredients' | translate}}:</div>
-        <div class="card-body text-dark">
-          <div class="div">
-            <ul *ngFor="let i of ingredientNameDTOS" class="divChild">
-              <li>
-                <ng-container>
-                  <button class="btn btn-light">{{i.name}}</button>
-                  <button class="btn btn-light">{{i.nameRu}}</button>
-                  <button class="btn btn-danger" (click)="deleteFromCart(i.name)">x</button>
-                </ng-container>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div>
-        <label>{{'droplist' | translate}}:</label>
-        <ng-container *ngIf="!ru;else lang3">
-          <select style="max-width: 300px" (change)="addToCart(ingredient.name)" class="custom-select"
-                  data-live-search="true"
-                  [(ngModel)]="ingredient.name" id="select">
-            <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
-                    value="{{ingredient.name}}">{{ingredient.name}}</option>
-          </select>
-        </ng-container>
-        <ng-template #lang3>
-          <select style="max-width: 300px" (change)="addToCart(ingredient.nameRu)" class="custom-select"
-                  data-live-search="true"
-                  [(ngModel)]="ingredient.nameRu" id="select2">
-            <option style="width: 1000px" *ngFor="let ingredient of allIngredients"
-                    value="{{ingredient.nameRu}}">{{ingredient.nameRu}}</option>
-          </select>
-        </ng-template>
-        <button class="divChild2 btn btn-danger" (click)="clearAll()">{{'clear' | translate}}
-        </button>
-      </div>
-      <div class="div">
-        <ng-container *ngIf="!ru;else lang6">
-          <div id="outer" class="divChild" *ngFor="let type of keys">
-            <button type="button" (click)="findIngredientByType(type)" class="btn btn-info">{{type}}</button>
-          </div>
-        </ng-container>
-        <ng-template #lang6>
-          <div class="divChild" *ngFor="let type of keysRu">
-            <button type="button" (click)="findIngredientByTypeRu(type)" class="btn btn-info">{{type}}</button>
-          </div>
-        </ng-template>
-      </div>
-      <div [hidden]="!typeDiv" class="div">
-        <div class="divChild" *ngFor="let ingredient of typeIngredients">
-          <div>
-            <ng-container *ngIf="!ru;else lang4">
-              <input (change)="addSelectIngredient(ingredient)" type="checkbox"
-                     id="inlineCheckbox1" value="{{ingredient.name}}" name="check" [(ngModel)]="ingredient.checked">
-              <label for="inlineCheckbox1">{{ingredient.name}}</label>
-            </ng-container>
-            <ng-template #lang4>
-              <input (change)="addSelectIngredient(ingredient)" type="checkbox"
-                     id="inlineCheckbox2" value="{{ingredient.nameRu}}" name="check" [(ngModel)]="ingredient.checked">
-              <label for="inlineCheckbox1">{{ingredient.nameRu}}</label>
-            </ng-template>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <button style="width: 300px" class="btn btn-success divChild" type="button" id="button-addon3"
-              (click)="searchByIngredients()">{{'search' | translate}}
+      </mat-form-field>
+      <button style="margin-left: 15px" mat-raised-button color="accent" (click)="searchByAuthorName(author.login)">
+        {{'search' | translate}}
       </button>
-    </div>
-  </div>
+    </mat-tab>
+    <mat-tab label="{{'search by ingredients' | translate}}">
+      <ng-container *ngIf="!ru;else lang2">
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip
+              *ngFor="let fruit of fruits"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(fruit)">
+              {{fruit}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="{{'new ingredient' | translate}}"
+              #fruitInput
+              (keyup)="applyFilter($event)"
+              [formControl]="fruitCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let ingredient of filteredIngredients" [value]="ingredient.name">
+              {{ingredient.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </ng-container>
+      <ng-template #lang2>
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip
+              *ngFor="let fruit of fruits"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(fruit)">
+              {{fruit}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="{{'new ingredient' | translate}}"
+              #fruitInput
+              (keyup)="applyFilterRu($event)"
+              [formControl]="fruitCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let ingredient of filteredIngredients" [value]="ingredient.nameRu">
+              {{ingredient.nameRu}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </ng-template>
+      <button style="margin-left: 10px;margin-bottom: 10px" mat-raised-button color="accent"
+              (click)="searchByIngredients()">
+        {{'search' | translate}}
+      </button>
+    </mat-tab>
+    <mat-tab label="{{'search by parameters' | translate}}">
+      <h4 style="padding-left: 10px;margin-top: 10px">{{'cooking time' | translate}}:</h4>
+      <mat-radio-group style="margin-left: 10px" aria-label="Select an option">
+        <mat-radio-button ngDefaultControl name="rad1" [(ngModel)]="recipeData.cookingTime"
+                          value="10">{{'less than 10 min' | translate}}</mat-radio-button>
+        <mat-radio-button ngDefaultControl name="rad2" [(ngModel)]="recipeData.cookingTime"
+                          value="30">{{'less than 30 min' | translate}}</mat-radio-button>
+        <mat-radio-button ngDefaultControl name="rad3" [(ngModel)]="recipeData.cookingTime"
+                          value="60">{{'less than 1 hour' | translate}}</mat-radio-button>
+        <mat-radio-button ngDefaultControl name="rad4" [(ngModel)]="recipeData.cookingTime"
+                          value="1440">{{'more than 1 hour' | translate}}</mat-radio-button>
+      </mat-radio-group>
+      <h4 style="padding-left: 10px;margin-top: 15px">{{'cooking difficulty' | translate}}:</h4>
+      <section class="example-section">
+        <mat-checkbox (change)="chkAllChange1($event,checkbox1.value)" #checkbox1 id="Checkbox1" value="{{'easy' | translate}}"
+                      class="example-margin" [checked]="chkArr[0]">{{'easy' | translate}} </mat-checkbox>
+        <mat-checkbox (change)="chkAllChange2($event,checkbox2.value)" #checkbox2 id="Checkbox2" value="{{'medium' | translate}}"
+                      class="example-margin" [checked]="chkArr[1]">{{'medium' | translate}}</mat-checkbox>
+        <mat-checkbox (change)="chkAllChange3($event,checkbox3.value)" #checkbox3 id="Checkbox3" value="{{'hard' | translate}}"
+                      class="example-margin" [checked]="chkArr[2]">{{'hard' | translate}}</mat-checkbox>
+      </section>
+      <button style="margin-left: 10px;margin-bottom: 10px" mat-raised-button color="accent"
+              (click)="searchByData(recipeData.cookingTime)">
+        {{'search' | translate}}
+      </button>
+    </mat-tab>
+  </mat-tab-group>
 
-  <div [hidden]="!third" id="third" class="container-fluid">
-    <ul class="nav nav-pills nav-fill">
-      <li class="nav-item">
-        <button class="btn btn-outline-info btn-lg btn-block"
-                (click)="byName()">{{'search by name' | translate}}</button>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-outline-info btn-lg btn-block"
-                (click)="byIngredients()">{{'search by ingredients' | translate}}</button>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-info btn-lg btn-block">{{'search by parameters' | translate}}</button>
-      </li>
-    </ul>
-    <div class="card text-white bg-info mb-3" style="max-width: 100%;padding-bottom: 10px">
-      <div class="card-header">{{'parameters' | translate}}</div>
-      <div class="card-body">
-        <h5>{{'cooking time' | translate}}:</h5>
-        <div class="form-check form-check-inline">
-          <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
-                 name="exampleRadios" id="exampleRadios1" value="10">
-          <h6 class="form-check-label" for="exampleRadios1">{{'less than 10 min' | translate}}</h6>
-        </div>
-        <div class="form-check form-check-inline">
-          <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
-                 name="exampleRadios" id="exampleRadios2" value="30">
-          <h6 class="form-check-label" for="exampleRadios2">{{'less than 30 min' | translate}}</h6>
-        </div>
-        <div class="form-check form-check-inline">
-          <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
-                 name="exampleRadios" id="exampleRadios3" value="60">
-          <h6 class="form-check-label" for="exampleRadios3">{{'less than 1 hour' | translate}}</h6>
-        </div>
-        <div class="form-check form-check-inline">
-          <input [(ngModel)]="recipeData.cookingTime" class="form-check-input" type="radio"
-                 name="exampleRadios" id="exampleRadios4" value="1440">
-          <h6 class="form-check-label" for="exampleRadios3">{{'more than 1 hour' | translate}}</h6>
-        </div>
-        <br/>
-        <h5>{{'cooking difficulty' | translate}}:</h5>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox"
-                 id="Checkbox1" value="EASY" name="check">
-          <h6 class="form-check-label" for="inlineCheckbox1">{{'easy' | translate}}</h6>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox"
-                 id="Checkbox2" value="MEDIUM" name="check">
-          <h6 class="form-check-label" for="inlineCheckbox1">{{'medium' | translate}}</h6>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox"
-                 id="Checkbox3" value="HARD" name="check">
-          <h6 class="form-check-label" for="inlineCheckbox1">{{'hard' | translate}}</h6>
-        </div>
-      </div>
-    </div>
-    <button style="width: 300px" class="btn btn-success" type="button"
-            (click)="searchByData(recipeData.cookingTime)">{{'search' | translate}}
-    </button>
-  </div>
+  <div [hidden]="!recipeDiv">
+    <div class="container-fluid">
+      <div class="card-deck-custom">
+        <mat-card class="example-card divChild" *ngFor="let recipe of recipes">
+          <ng-container *ngIf="!ru;else lang">
+            <mat-card-header>
+              <mat-card-title>{{ recipe.name }}</mat-card-title>
+              <mat-card-subtitle>{{'author' | translate}}: {{ recipe.authorName }}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image height="250" style="width: 300px" [src]="recipe.imgSource"
+                 *ngIf="recipe.imgSource !=null"
+                 alt="">
+            <mat-card-content>
+              <h6>
+                {{'difficulty' | translate}}: {{ recipe.cookingDifficulty }}
+              </h6>
+              <h6>
+                {{'time' | translate}}: {{ recipe.cookingTime }} {{'minutes' | translate}}
+              </h6>
+              <p class="card-text"><small
+                class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
+            </mat-card-content>
+          </ng-container>
+          <ng-template #lang>
+            <mat-card-header>
+              <mat-card-title>{{ recipe.nameRu }}</mat-card-title>
+              <mat-card-subtitle>{{'author' | translate}}:{{ recipe.authorName }}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image height="250" weight="350" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null"
+                 alt="">
+            <mat-card-content>
+              <h6>
+                {{'difficulty' | translate}}:{{ recipe.cookingDifficultyRu }}
+              </h6>
+              <h6>
+                {{'time' | translate}}:{{ recipe.cookingTime }} {{'minutes' | translate}}
+              </h6>
+              <p class="card-text"><small
+                class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
+            </mat-card-content>
+          </ng-template>
+          <mat-card-actions>
+            <div class="example-button-row">
+              <button (click)="view(recipe.id)" mat-raised-button color="primary"
+                      type="submit">{{'view' | translate}}</button>
 
-  <div [hidden]="!recipeDiv" id="recipeDiv" class="container-fluid">
-    <div class="card mb-3 card-columns recipe" *ngFor="let recipe of recipes">
-      <div class="row no-gutters" *ngIf="recipe.name != null">
-        <div class="col-md-4">
-          <img height="250" weight="300" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null" class="card-img">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <ng-container *ngIf="!ru;else lang5">
-              <h5 class="card-title">{{ recipe.name }}</h5>
-              <h6 class="card-text">{{'difficulty' | translate}}:{{ recipe.cookingDifficulty }}</h6>
-            </ng-container>
-            <ng-template #lang5>
-              <h5 class="card-title">{{ recipe.nameRu }}</h5>
-              <h6 class="card-text">{{'difficulty' | translate}}:{{ recipe.cookingDifficultyRu }}</h6>
-            </ng-template>
-            <h6 class="card-text">{{'time' | translate}}:{{ recipe.cookingTime }} {{'minutes' | translate}}</h6>
-            <h6 class="card-text">{{'author' | translate}}:{{ recipe.authorName }}</h6>
-            <div class="div">
-              <form (ngSubmit)="view(recipe.id)" #addToCartForm="ngForm">
-                <button type="submit" class="btn btn-primary">{{'view' | translate}}</button>
-              </form>
-              <form class="divChild2" (ngSubmit)="addToFavorite(recipe.id)">
-                <button type="submit" class="btn btn-warning">{{'add to favorite' | translate}}</button>
-              </form>
+              <button (click)="addToFavorite(recipe.id)" mat-raised-button color="primary"
+                      type="submit">{{'add to favorite' | translate}}</button>
+
             </div>
-            <p class="card-text"><small
-              class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
-          </div>
-        </div>
+          </mat-card-actions>
+        </mat-card>
       </div>
-      <div *ngIf="recipe.name == null">
-        <div class="container">
+      <div *ngIf="recipes.length != 0">
+        <mat-paginator style="margin: auto 115px"
+                       [length]="length"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="pageSizeOptions"
+                       (page)="pageEvent = getServerData($event)">
+        </mat-paginator>
+      </div>
+      <div *ngIf="recipes.length == 0">
+        <div class="container box" style="padding-bottom: 20px;margin-top: 10px">
           <div class="row">
             <div class="col-md-12">
               <div class="error-template">
@@ -238,7 +195,7 @@
                 <h2>
                   {{'recipes not found' | translate}}</h2>
                 <div class="error-details">
-                  {{'no result' | translate}}
+                  {{'no one' | translate}}
                 </div>
               </div>
             </div>
