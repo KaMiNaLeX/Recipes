@@ -57,10 +57,8 @@
           <div class="example-button-row">
             <button (click)="view(recipe.id)" mat-raised-button color="primary"
                     type="submit">{{'view' | translate}}</button>
-
-            <button (click)="addToFavorite(recipe.id)" mat-raised-button color="primary"
-                    type="submit">{{'add to favorite' | translate}}</button>
-
+            <button mat-icon-button color="warn" (click)="addToFavorite(recipe.id)"
+                    type="submit"><mat-icon>favorite_border</mat-icon></button>
           </div>
         </mat-card-actions>
       </mat-card>

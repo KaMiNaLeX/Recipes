@@ -3,96 +3,125 @@
   <div class="qub-page-header-divider"></div>
   {{'view recipe' | translate}}
 </h1>
-<div id="first" class="container-fluid">
-  <div class="col-md-6 login-container" style="max-width: 100%">
-    <div class="form-group">
-      <h2 *ngIf="!ru;else lang">{{'name' | translate}}:{{createRecipeDTO.name}}</h2>
-      <ng-template #lang>
-        <h2>{{'name' | translate}}:{{createRecipeDTO.nameRu}}</h2>
-      </ng-template>
-    </div>
-    <br/>
-    <div class="form-group">
-      <div class="row">
-        <div class="col">
-          <div class="form-check form-check-inline">
-            <h5 *ngIf="!ru;else lang2" class="form-check-label">{{'difficulty' | translate}}
-              : {{createRecipeDTO.cookingDifficulty}}</h5>
-            <ng-template #lang2>
-              <h5 class="form-check-label">{{'difficulty' | translate}}
-                : {{createRecipeDTO.cookingDifficultyRu}}</h5>
-            </ng-template>
+<div class="resultDiv">
+  <div class="container-fluid" style="text-align: center">
+    <ng-container *ngIf="!ru;else lang">
+      <mat-card>
+        <mat-card-header>
+          <h2 class="center">{{createRecipeDTO.name}}</h2>
+          <button mat-icon-button color="warn" (click)="addToFavorite(createRecipeDTO.id)"
+                  type="submit"><mat-icon>favorite</mat-icon></button>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="div">
+            <mat-icon>timer</mat-icon>
+            <h4>{{createRecipeDTO.cookingTime}} {{'minutes' | translate}}</h4>
           </div>
-        </div>
-        <div class="col">
-          <h5>{{'minutes' | translate}}:{{createRecipeDTO.cookingTime}}</h5>
-        </div>
-        <div class="col">
-          <div class="form-check form-check-inline">
-            <h5>{{'categories' | translate}}:</h5>
-            <ng-container *ngIf="!ru;else lang3">
-              <h5 *ngFor="let category of createRecipeDTO.categoryRecipeDTOList">{{category.name}};</h5>
+          <div class="div" style="margin-left: 20px">
+            <mat-icon>extension</mat-icon>
+            <h4>{{createRecipeDTO.cookingDifficulty}}</h4>
+          </div>
+        </mat-card-content>
+        <img mat-card-image height="350" style="width: 80%" [src]="createRecipeDTO.imgSource"
+             *ngIf="createRecipeDTO.imgSource !=null"
+             alt="">
+        <mat-card-content>
+          <h3>{{'ingredients' | translate}}</h3>
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="ingredient">
+              <mat-header-cell *matHeaderCellDef>{{'ingredient' | translate}}</mat-header-cell>
+              <mat-cell *matCellDef="let ingredient"> {{ingredient.name}} </mat-cell>
             </ng-container>
-            <ng-template #lang3>
-              <h5 *ngFor="let category of createRecipeDTO.categoryRecipeDTOList">{{category.nameRu}};</h5>
-            </ng-template>
+            <ng-container matColumnDef="amount">
+              <mat-header-cell *matHeaderCellDef>{{'amount' | translate}}</mat-header-cell>
+              <mat-cell *matCellDef="let ingredient"> {{ingredient.amount}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="unit">
+              <mat-header-cell *matHeaderCellDef>{{'unit' | translate}}</mat-header-cell>
+              <mat-cell *matCellDef="let ingredient"> {{ingredient.unit}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="note">
+              <mat-header-cell *matHeaderCellDef>{{'note' | translate}}</mat-header-cell>
+              <mat-cell *matCellDef="let ingredient"> {{ingredient.note}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <h3 style="margin-top: 15px">{{'cooking' | translate}}</h3>
+          <mat-table [dataSource]="dataSource2" class="mat-elevation-z8" style="text-align: justify">
+            <ng-container matColumnDef="photo">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" *ngIf="step.imgSource != null">
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell  *matCellDef="let step"> {{step.description}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
+          </mat-table>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+    <ng-template #lang>
+      <mat-card>
+        <mat-card-header>
+          <h2 class="center">{{createRecipeDTO.nameRu}}</h2>
+          <button mat-icon-button color="warn" (click)="addToFavorite(createRecipeDTO.id)"
+                  type="submit"><mat-icon>favorite</mat-icon></button>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="div">
+            <mat-icon>timer</mat-icon>
+            <h4>{{createRecipeDTO.cookingTime}} {{'minutes' | translate}}</h4>
           </div>
-        </div>
-      </div>
-
-      <h2 style="margin: auto">{{'ingredients' | translate}}</h2>
-      <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-        <tr>
-          <th scope="col">{{'ingredient' | translate}}</th>
-          <th scope="col">{{'amount' | translate}}</th>
-          <th scope="col">{{'unit' | translate}}</th>
-          <th scope="col">{{'note' | translate}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr id="ingredient" name="ingredient" *ngFor="let ingredient of createRecipeDTO.ingredientRecipeDTOList">
-          <ng-container *ngIf="!ru;else lang4">
-            <td name="i.name">{{ingredient.name}}</td>
-            <td name="i.amount">{{ingredient.amount}}</td>
-            <td name="i.unit">{{ingredient.unit}}</td>
-            <td name="i.note">{{ingredient.note}}</td>
-          </ng-container>
-          <ng-template #lang4>
-            <td name="i.name">{{ingredient.nameRu}}</td>
-            <td name="i.amount">{{ingredient.amount}}</td>
-            <td name="i.unit">{{ingredient.unitRu}}</td>
-            <td name="i.note">{{ingredient.noteRu}}</td>
-          </ng-template>
-        </tr>
-        </tbody>
-      </table>
-      <h2 style="margin: auto">{{'cooking' | translate}}</h2>
-      <br/>
-      <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-        <tr>
-          <th scope="col">{{'number' | translate}}</th>
-          <th scope="col">{{'photo' | translate}}</th>
-          <th scope="col">{{'name' | translate}}</th>
-          <th scope="col">{{'description' | translate}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr id="cookingStep" *ngFor="let step of createRecipeDTO.cookingStepRecipeDTOList">
-          <td name="c.number">{{step.number}}</td>
-          <td name="c.photo"><img [src]="step.imgSource" height="100" weight="100" *ngIf="step.imgSource != null"></td>
-          <ng-container *ngIf="!ru;else lang5">
-            <td name="c.name">{{step.name}}</td>
-            <td name="c.description">{{step.description}}</td>
-          </ng-container>
-          <ng-template #lang5>
-            <td name="c.name">{{step.nameRu}}</td>
-            <td name="c.description">{{step.descriptionRu}}</td>
-          </ng-template>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+          <div class="div" style="margin-left: 20px">
+            <mat-icon>extension</mat-icon>
+            <h4>{{createRecipeDTO.cookingDifficultyRu}}</h4>
+          </div>
+        </mat-card-content>
+        <img mat-card-image height="350" style="width: 80%" [src]="createRecipeDTO.imgSource"
+             *ngIf="createRecipeDTO.imgSource !=null"
+             alt="">
+        <mat-card-content>
+          <h3>{{'ingredients' | translate}}</h3>
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="ingredient">
+              <mat-header-cell *matHeaderCellDef>{{'ingredient' | translate}}</mat-header-cell>
+              <mat-cell *matCellDef="let ingredient"> {{ingredient.nameRu}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <mat-header-cell *matHeaderCellDef>{{'amount' | translate}}</mat-header-cell>
+              <mat-cell *matCellDef="let ingredient"> {{ingredient.amount}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="unit">
+              <mat-header-cell *matHeaderCellDef>{{'unit' | translate}}</mat-header-cell>
+              <mat-cell *matCellDef="let ingredient"> {{ingredient.unitRu}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="note">
+              <mat-header-cell *matHeaderCellDef>{{'note' | translate}}</mat-header-cell>
+              <mat-cell *matCellDef="let ingredient"> {{ingredient.noteRu}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <h3 style="margin-top: 15px">{{'cooking' | translate}}</h3>
+          <mat-table [dataSource]="dataSource2" class="mat-elevation-z8" style="text-align: justify">
+            <ng-container matColumnDef="photo">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" *ngIf="step.imgSource != null">
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell  *matCellDef="let step"> {{step.descriptionRu}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
+          </mat-table>
+        </mat-card-content>
+      </mat-card>
+    </ng-template>
   </div>
 </div>

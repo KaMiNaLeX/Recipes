@@ -45,8 +45,7 @@ body {
 }
 
 .div {
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-flex;
 }
 
 .divChild {
@@ -125,7 +124,7 @@ body {
   column-count: 3;
 }
 
-.example-button-row button, a, card {
+.example-button-row button, a, card, h4, mat-icon {
   margin-right: 12px;
 }
 
@@ -210,6 +209,12 @@ body {
 
 .example-margin {
   margin: 0 10px;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
 }
 
 
