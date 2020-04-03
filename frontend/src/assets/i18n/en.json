@@ -152,5 +152,7 @@
   "category exists" : "Category with this name is already exists",
   "ingredient used" : "Ingredient is not deleted, because it's used",
   "success registration": "Registration was successful",
-  "new ingredient": "New ingredient..."
+  "new ingredient": "New ingredient...",
+  "cook time": "Сooking time",
+  "next" :"Next"
 }

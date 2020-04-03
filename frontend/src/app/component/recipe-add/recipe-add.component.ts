@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "../../service/recipe.service";
 import {CreateRecipeDTO} from "../../model/createRecipe/create-recipe-dto";
@@ -12,9 +12,10 @@ import {Unit} from "../../model/unit.enum";
 import {Recipe} from "../../model/recipe";
 import {SharedService} from "../../service/shared.service";
 import {UtilsService} from "../../service/utils.service";
-import {TypeIngredient} from "../../model/type-ingredient.enum";
-import {TypeIngredientRu} from "../../model/type-ingredient-ru.enum";
 import {UnitRu} from "../../model/unit-ru.enum";
+import {MatCheckboxChange} from "@angular/material/checkbox";
+import {Fruit} from "../../model/fruit";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-recipe-add',
@@ -23,9 +24,6 @@ import {UnitRu} from "../../model/unit-ru.enum";
 })
 export class RecipeAddComponent implements OnInit {
   createRecipeDTO: CreateRecipeDTO;
-  first = true;
-  second = false;
-  third = false;
   ingredients: IngredientRecipeDTO[] = [];
   ingredient: IngredientRecipeDTO = new IngredientRecipeDTO();
   categories: CategoryRecipeDTO[];
@@ -36,14 +34,18 @@ export class RecipeAddComponent implements OnInit {
   unit = [];
   allIngredients: Ingredient[];
   recipe: Recipe;
-
   selectedFile: File[] = [];
   imgURL: any;
-
   selectedFile2: File = null;
   imgURL2: any;
-
   ru: boolean;
+  ///
+  isEditable = true;
+  removable = true;
+  fruits: Fruit[] = [];
+  ///
+  dataSource: any;
+  displayedColumns: string[] = ['photo', 'description', 'actions'];
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService, private ss: SharedService,
@@ -53,8 +55,6 @@ export class RecipeAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.first = true;
-    this.second = false;
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
       this.categories = data;
     });
@@ -80,66 +80,47 @@ export class RecipeAddComponent implements OnInit {
       });
   }
 
-  toDescription() {
-    this.first = true;
-    this.second = false;
-    this.third = false;
-  }
-
   checkRecipe() {
-    let name = (<HTMLInputElement>document.getElementById('name')).value;
-    if (name != null) {
-      this.recipeService.getByNameAndAuthor(name, localStorage.getItem('id')).subscribe(data => {
-        this.recipe = data;
-        if (this.recipe != null) {
-          (<HTMLInputElement>document.getElementById('name')).value = null;
-          this.createRecipeDTO.name = null;
-          this.utilsService.alert("have recipe with this name");
-        }
-      })
+    if ((this.createRecipeDTO.name != null && this.createRecipeDTO.name != "") || (this.createRecipeDTO.nameRu != null
+      && this.createRecipeDTO.nameRu != "")) {
+      if (this.ru != true) {
+        this.recipeService.getByNameAndAuthor(this.createRecipeDTO.name, localStorage.getItem('id')).subscribe(data => {
+          this.recipe = data;
+          if (this.recipe != null) {
+            this.createRecipeDTO.name = null;
+            this.utilsService.alert("have recipe with this name");
+          }
+        })
+      } else {
+        this.recipeService.getByNameAndAuthor(this.createRecipeDTO.nameRu, localStorage.getItem('id')).subscribe(data => {
+          this.recipe = data;
+          if (this.recipe != null) {
+            this.createRecipeDTO.nameRu = null;
+            this.utilsService.alert("have recipe with this name");
+          }
+        })
+      }
     }
   }
 
-  toIngredient(name: string, difficulty: string, time: number) {
-    this.first = false;
-    this.second = true;
-    this.third = false;
-
-    this.createRecipeDTO.name = name;
-    this.createRecipeDTO.cookingDifficulty = difficulty;
-    this.createRecipeDTO.cookingTime = time;
-  }
-
-  toCooking() {
-    this.first = false;
-    this.second = false;
-    this.third = true;
-  }
-
-  checkArray(category: CategoryRecipeDTO) {
-    this.checkedArray.push(category);
-  }
-
-  addIngredient(name: string, amount: number, unit: string, note: string) {
+  addIngredient(name: string, amount: number, unit: string) {
     let ingredientRecipeDTO = new IngredientRecipeDTO();
-    let ingredient = new Ingredient();
+    let fruit = new Fruit();
     this.ingredientService.getByName(name).subscribe(data => {
-      ingredient = data;
+      let ingredient = data;
       ingredientRecipeDTO.nameRu = ingredient.nameRu;
       ingredientRecipeDTO.name = ingredient.name;
+      ingredientRecipeDTO.amount = amount;
+      ingredientRecipeDTO.unitRu = unit;
+      ingredientRecipeDTO.unitRu = unit;
+      fruit.name = ingredient.name;
+      fruit.nameRu = ingredient.nameRu;
+      fruit.amount = amount;
+      fruit.unit = unit.toLowerCase();
+      fruit.unitRu = unit.toLowerCase();
     });
-    //todo: need to fix
-    if (this.ru == true){
-      ingredientRecipeDTO.unitRu = unit;
-      ingredientRecipeDTO.unit = unit;
-      ingredientRecipeDTO.note = note;
-    } else {
-      ingredientRecipeDTO.unitRu = unit;
-      ingredientRecipeDTO.unit = unit;
-      ingredientRecipeDTO.note = note;
-    }
-    ingredientRecipeDTO.amount = amount;
     this.ingredients.push(ingredientRecipeDTO);
+    this.fruits.push(fruit);
   }
 
   deleteIngredient(ingredientName: string) {
@@ -150,29 +131,40 @@ export class RecipeAddComponent implements OnInit {
         this.ingredients.splice(i, 1);
       }
     }
+    for (let i = 0; i < this.fruits.length; i++) {
+      let fruit = new Fruit();
+      fruit = this.fruits[i];
+      if (fruit.name == ingredientName) {
+        this.fruits.splice(i, 1);
+      }
+    }
   }
 
   deleteStep(stepName: string) {
     for (let i = 0; i < this.cookingSteps.length; i++) {
       let step = new CookingStepRecipeDTO();
       step = this.cookingSteps[i];
-      if (step.name == stepName) {
+      if (step.description == stepName) {
         this.cookingSteps.splice(i, 1);
       }
     }
+    this.dataSource = new MatTableDataSource<CookingStepRecipeDTO>(this.cookingSteps);
   }
 
-  addCookingStep(name: string, description: string, number: number) {
+  addCookingStep(description: string) {
     let step = new CookingStepRecipeDTO();
     //todo: need to fix
-    step.name = name;
-    step.nameRu = name;
+    step.name = 'name';
+    step.nameRu = 'name';
     step.description = description;
     step.descriptionRu = description;
-    step.number = number + 1;
+    step.number = 1;
     step.active = true;
     step.imgSource = this.imgURL;
     this.cookingSteps.push(step);
+    this.cookingStep.description = null;
+    this.imgURL = null;
+    this.dataSource = new MatTableDataSource<CookingStepRecipeDTO>(this.cookingSteps);
   }
 
   handleFileInput(event) {
@@ -199,14 +191,6 @@ export class RecipeAddComponent implements OnInit {
   }
 
   onSubmit() {
-    let stepTable = (<HTMLTableElement>document.getElementById('stepTable')).rows.length;
-    if (stepTable == 1) {
-      this.utilsService.alert("add one step");
-    }
-    let ingTable = (<HTMLTableElement>document.getElementById('ingredientTable')).rows.length;
-    if (ingTable == 1) {
-      this.utilsService.alert('add one ingredient');
-    }
     this.createRecipeDTO.imgSource = null;
     for (let i = 0; i < this.cookingSteps.length; i++) {
       this.cookingSteps[i].imgSource = null;
@@ -219,15 +203,15 @@ export class RecipeAddComponent implements OnInit {
     this.createRecipeDTO.cookingDifficultyRu = "ЛЕГКО";
     this.createRecipeDTO.nameRu = "Тест";
 
-    if (this.createRecipeDTO.cookingStepRecipeDTOList.length != 0 &&
-      this.createRecipeDTO.ingredientRecipeDTOList.length != 0 &&
-      this.createRecipeDTO.categoryRecipeDTOList.length != 0 &&
+    if (this.cookingSteps.length != 0 &&
+      this.ingredients.length != 0 &&
+      this.checkedArray.length != 0 &&
       this.createRecipeDTO.cookingTime != null &&
       this.createRecipeDTO.name != null &&
       this.createRecipeDTO.cookingDifficulty != null) {
       this.recipeService.createRecipe(this.createRecipeDTO).subscribe(data => {
         this.createRecipeDTO = data;
-        if (this.selectedFile2 != null){
+        if (this.selectedFile2 != null) {
           this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile2);
         } else {
           this.selectedFile2 = new File([], "null", undefined);
@@ -236,7 +220,6 @@ export class RecipeAddComponent implements OnInit {
         this.cookingSteps = [];
         for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
           this.cookingSteps.push(this.createRecipeDTO.cookingStepRecipeDTOList[i]);
-          console.log(this.cookingSteps[i]);
           this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id, this.selectedFile[i]);
         }
       });
@@ -244,6 +227,18 @@ export class RecipeAddComponent implements OnInit {
       this.utilsService.alert("recipe created");
     } else {
       this.utilsService.alert("fill all fields");
+    }
+  }
+
+  chkChange(event: MatCheckboxChange, category: CategoryRecipeDTO) {
+    if (event.checked == true) {
+      this.checkedArray.push(category);
+    } else {
+      for (let i = 0; i < this.checkedArray.length; i++) {
+        if (this.checkedArray[i].name == category.name) {
+          this.checkedArray.splice(i, 1);
+        }
+      }
     }
   }
 }

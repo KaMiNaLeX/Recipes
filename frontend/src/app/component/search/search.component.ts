@@ -18,6 +18,7 @@ import {UtilsService} from "../../service/utils.service";
 import {FormControl} from "@angular/forms";
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {MatCheckboxChange} from "@angular/material/checkbox";
+import {Fruit} from "../../model/fruit";
 
 @Component({
   selector: 'app-search',
@@ -49,7 +50,7 @@ export class SearchComponent implements OnInit {
   removable = true;
   fruitCtrl = new FormControl();
   filteredIngredients: Ingredient[];
-  fruits: any = [];
+  fruits: Fruit[] = [];
   chkArr: boolean[] = [false, false, false];
   chkArrValue: string[] = [null, null, null];
   //
@@ -87,26 +88,37 @@ export class SearchComponent implements OnInit {
     this.filteredIngredients = this.allIngredients.filter(fruit => fruit.nameRu.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
+  remove(ingredientName: string): void {
+    for (let i = 0; i < this.fruits.length; i++) {
+      let fruit = new Fruit();
+      fruit = this.fruits[i];
+      if (fruit.name == ingredientName) {
+        this.fruits.splice(i, 1);
+      }
     }
     for (let i = 0; i < this.ingredientNameDTOS.length; i++) {
-      if (this.ingredientNameDTOS[i].name == fruit) {
+      if (this.ingredientNameDTOS[i].name == ingredientName) {
         this.ingredientNameDTOS.splice(i, 1);
       }
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
     this.fruitCtrl.setValue(null);
 
+    let fruit = new Fruit();
     let ingredientNameDTO = new IngredientNameDTO();
-    ingredientNameDTO.name = event.option.viewValue;
+    this.ingredientService.getByName(event.option.viewValue).subscribe(data => {
+      let ingredient = data;
+      ingredientNameDTO.name = ingredient.name;
+      ingredientNameDTO.nameRu = ingredient.nameRu;
+      fruit.name = ingredient.name;
+      fruit.nameRu = ingredient.nameRu;
+    });
+
     this.ingredientNameDTOS.push(ingredientNameDTO);
+    this.fruits.push(fruit);
   }
 
   searchByName(name: string) {
@@ -118,7 +130,7 @@ export class SearchComponent implements OnInit {
         })
       }
     });
-    this.recipeService.getCountAllRecipesByName(name).subscribe(data =>{
+    this.recipeService.getCountAllRecipesByName(name).subscribe(data => {
       this.length = data;
     });
     this.currentsSearch = this.searchArr[0];
@@ -134,7 +146,7 @@ export class SearchComponent implements OnInit {
         })
       }
     });
-    this.recipeService.getCountAllRecipesByAuthorName(name).subscribe(data =>{
+    this.recipeService.getCountAllRecipesByAuthorName(name).subscribe(data => {
       this.length = data;
     });
     this.currentsSearch = this.searchArr[1];
@@ -252,8 +264,7 @@ export class SearchComponent implements OnInit {
           }
         }
       );
-    }
-    else if (this.currentsSearch == this.searchArr[2]){
+    } else if (this.currentsSearch == this.searchArr[2]) {
       this.recipeService.findAllByIngredients(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "name").subscribe(data => {
         this.recipes = data;
         for (let i = 0; i < this.recipes.length; i++) {
@@ -262,8 +273,7 @@ export class SearchComponent implements OnInit {
           })
         }
       });
-    }
-    else if (this.currentsSearch == this.searchArr[3]){
+    } else if (this.currentsSearch == this.searchArr[3]) {
       this.recipeService.findAllByData(this.recipeData, event.pageIndex, event.pageSize, "name").subscribe(data => {
         this.recipes = data;
         for (let i = 0; i < this.recipes.length; i++) {

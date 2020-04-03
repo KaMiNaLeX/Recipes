@@ -46,8 +46,8 @@
               *ngFor="let fruit of fruits"
               [selectable]="selectable"
               [removable]="removable"
-              (removed)="remove(fruit)">
-              {{fruit}}
+              (removed)="remove(fruit.name)">
+              {{fruit.name}}
               <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
             <input
@@ -72,8 +72,8 @@
               *ngFor="let fruit of fruits"
               [selectable]="selectable"
               [removable]="removable"
-              (removed)="remove(fruit)">
-              {{fruit}}
+              (removed)="remove(fruit.nameRu)">
+              {{fruit.nameRu}}
               <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
             <input
@@ -117,7 +117,7 @@
         <mat-checkbox (change)="chkAllChange3($event,checkbox3.value)" #checkbox3 id="Checkbox3" value="{{'hard' | translate}}"
                       class="example-margin" [checked]="chkArr[2]">{{'hard' | translate}}</mat-checkbox>
       </section>
-      <button style="margin-left: 10px;margin-bottom: 10px" mat-raised-button color="accent"
+      <button style="margin-left: 10px;margin-bottom: 10px;margin-top: 10px" mat-raised-button color="accent"
               (click)="searchByData(recipeData.cookingTime)">
         {{'search' | translate}}
       </button>
