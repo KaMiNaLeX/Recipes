@@ -25,15 +25,6 @@ import java.util.UUID;
 @Table(name = "cooking_steps")
 public class CookingStepsEntity extends BaseEntity {
 
-    @Column(name = "number")
-    private int number;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "name_ru")
-    private String nameRu;
-
     @Column(name = "description")
     private String description;
 

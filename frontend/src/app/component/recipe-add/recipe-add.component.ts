@@ -154,11 +154,8 @@ export class RecipeAddComponent implements OnInit {
   addCookingStep(description: string) {
     let step = new CookingStepRecipeDTO();
     //todo: need to fix
-    step.name = 'name';
-    step.nameRu = 'name';
     step.description = description;
     step.descriptionRu = description;
-    step.number = 1;
     step.active = true;
     step.imgSource = this.imgURL;
     this.cookingSteps.push(step);

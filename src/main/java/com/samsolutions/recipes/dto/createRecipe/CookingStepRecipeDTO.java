@@ -19,12 +19,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CookingStepRecipeDTO {
     private UUID id;
-    @NotNull
-    private int number;
-    @NotBlank
-    private String name;
-    @NotBlank
-    private String nameRu;
     @NotBlank
     private String description;
     @NotBlank

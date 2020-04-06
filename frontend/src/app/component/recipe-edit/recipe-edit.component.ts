@@ -156,7 +156,7 @@ export class RecipeEditComponent implements OnInit {
     for (let i = 0; i < this.cookingSteps.length; i++) {
       let step = new CookingStepRecipeDTO();
       step = this.cookingSteps[i];
-      if (step.name == stepName) {
+      if (step.description == stepName) {
         this.cookingSteps.splice(i, 1);
         this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
       }
@@ -165,16 +165,13 @@ export class RecipeEditComponent implements OnInit {
 
   addCookingStep(name: string, description: string, number: number) {
     let step = new CookingStepRecipeDTO();
-    step.name = name;
     step.description = description;
-    step.number = number + 1;
     step.active = true;
     step.imgSource = this.imgURL2;
     this.cookingSteps.push(step);
   }
 
   handleFileInput2(event) {
-    console.log(event);
     this.selectedFile2.push(event.target.files[0]);
     // Below part is used to display the selected image
     let reader = new FileReader();
@@ -185,7 +182,6 @@ export class RecipeEditComponent implements OnInit {
   }
 
   handleFileInput(event) {
-    console.log(event);
     this.selectedFile = event.target.files[0];
     // Below part is used to display the selected image
     let reader = new FileReader();
