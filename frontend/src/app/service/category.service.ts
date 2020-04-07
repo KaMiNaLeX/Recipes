@@ -56,7 +56,7 @@ export class CategoryService {
     }).then(r => {
 
     }).catch(r => {
-      alert(r);
+
     });
   }
 }

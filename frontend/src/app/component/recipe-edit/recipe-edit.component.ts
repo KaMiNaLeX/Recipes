@@ -12,6 +12,10 @@ import {Recipe} from "../../model/recipe";
 import {Unit} from "../../model/unit.enum";
 import {SharedService} from "../../service/shared.service";
 import {UtilsService} from "../../service/utils.service";
+import {MatCheckboxChange} from "@angular/material/checkbox";
+import {MatTableDataSource} from "@angular/material/table";
+import {Fruit} from "../../model/fruit";
+import {UnitRu} from "../../model/unit-ru.enum";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -21,14 +25,12 @@ import {UtilsService} from "../../service/utils.service";
 export class RecipeEditComponent implements OnInit {
 
   createRecipeDTO: CreateRecipeDTO = new CreateRecipeDTO();
-  first = true;
-  second = false;
-  third = false;
   ingredients: IngredientRecipeDTO[] = [];
   ingredient: IngredientRecipeDTO = new IngredientRecipeDTO();
   categories: CategoryRecipeDTO[];
   category: CategoryRecipeDTO = new CategoryRecipeDTO();
   checkedArray: CategoryRecipeDTO[] = [];
+  categoryArray: CategoryRecipeDTO[] = [];
   cookingStep: CookingStepRecipeDTO = new CookingStepRecipeDTO();
   cookingSteps: CookingStepRecipeDTO[] = [];
   unit = [];
@@ -43,6 +45,13 @@ export class RecipeEditComponent implements OnInit {
   imgURL: any;
 
   ru: boolean;
+  ///
+  isEditable = true;
+  removable = true;
+  fruits: Fruit[] = [];
+  ///
+  dataSource: any;
+  displayedColumns: string[] = ['photo', 'description', 'actions'];
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService,
@@ -54,91 +63,88 @@ export class RecipeEditComponent implements OnInit {
       data => {
         this.createRecipeDTO = data;
         this.primaryName = this.createRecipeDTO.name;
+        this.fruits = this.createRecipeDTO.ingredientRecipeDTOList;
+        this.cookingSteps = this.createRecipeDTO.cookingStepRecipeDTOList;
+        this.categoryArray = this.createRecipeDTO.categoryRecipeDTOList;
+        this.ingredients = this.createRecipeDTO.ingredientRecipeDTOList;
+        this.dataSource = new MatTableDataSource<CookingStepRecipeDTO>(this.cookingSteps);
+        for (let i = 0; i < this.createRecipeDTO.categoryRecipeDTOList.length; i++) {
+          this.checkedArray[i] = this.createRecipeDTO.categoryRecipeDTOList[i];
+        }
       }
     );
-    let u = Unit;
-    this.unit = Object.values(u);
-    this.first = true;
-    this.second = false;
+    this.ru = (localStorage.getItem('lang') == 'ru');
+    if (this.ru != true) {
+      let u = Unit;
+      this.unit = Object.values(u);
+    } else {
+      let u = UnitRu;
+      this.unit = Object.values(u);
+    }
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
       this.categories = data;
+      let category = new CategoryRecipeDTO();
+      category.name = null;
+      category.nameRu = null;
+      for (let i = 0; i < this.categories.length; i++) {
+        this.checkedArray.push(category);
+      }
     });
-    this.ingredientService.findAll(0, 10, "name").subscribe(data => this.allIngredients = data);
+    this.ingredientService.findAllIngredients().subscribe(data => this.allIngredients = data);
 
-    //set checked radiobutton
-    let radioButton;
-    let difficult = this.createRecipeDTO.cookingDifficulty;
-    if (difficult == 'EASY') {
-      radioButton = document.getElementById('exampleRadios1');
-      radioButton.checked = true;
-    } else if (difficult == 'MEDIUM') {
-      radioButton = document.getElementById('exampleRadios2');
-      radioButton.checked = true;
-    } else if (difficult == 'HARD') {
-      radioButton = document.getElementById('exampleRadios3');
-      radioButton.checked = true;
-    }
-
-    this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
-      .subscribe(item => this.ru = item);
-  }
-
-  toDescription() {
-    this.first = true;
-    this.second = false;
-    this.third = false;
+      .subscribe(item => {
+        this.ru = item;
+        if (this.ru != true) {
+          let u = Unit;
+          this.unit = Object.values(u);
+        } else {
+          let u = UnitRu;
+          this.unit = Object.values(u);
+        }
+      });
   }
 
   checkRecipe() {
-    let name = (<HTMLInputElement>document.getElementById('name')).value;
-    if (name != null && name != this.primaryName) {
-      this.recipeService.getByNameAndAuthor(name, localStorage.getItem('id')).subscribe(data => {
-        this.recipe = data;
-        if (this.recipe != null) {
-          (<HTMLInputElement>document.getElementById('name')).value = null;
-          this.createRecipeDTO.name = null;
-          this.utilsService.alert("have recipe with this name");
-        }
-      })
+    if ((this.createRecipeDTO.name != null && this.createRecipeDTO.name != "") || (this.createRecipeDTO.nameRu != null
+      && this.createRecipeDTO.nameRu != "")) {
+      if (this.ru != true) {
+        this.recipeService.getByNameAndAuthor(this.createRecipeDTO.name, localStorage.getItem('id')).subscribe(data => {
+          this.recipe = data;
+          if (this.recipe != null) {
+            this.createRecipeDTO.name = null;
+            this.utilsService.alert("have recipe with this name");
+          }
+        })
+      } else {
+        this.recipeService.getByNameAndAuthor(this.createRecipeDTO.nameRu, localStorage.getItem('id')).subscribe(data => {
+          this.recipe = data;
+          if (this.recipe != null) {
+            this.createRecipeDTO.nameRu = null;
+            this.utilsService.alert("have recipe with this name");
+          }
+        })
+      }
     }
   }
 
-  toIngredient(name: string, difficulty: string, time: number) {
-    this.first = false;
-    this.second = true;
-    this.third = false;
-
-    this.createRecipeDTO.name = name;
-    this.createRecipeDTO.cookingDifficulty = difficulty;
-    this.createRecipeDTO.cookingTime = time;
-    this.ingredients = this.createRecipeDTO.ingredientRecipeDTOList;
-    if (this.ingredients.length >= this.createRecipeDTO.ingredientRecipeDTOList.length) {
-      this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
-    }
-  }
-
-  toCooking() {
-    this.first = false;
-    this.second = false;
-    this.third = true;
-    this.cookingSteps = this.createRecipeDTO.cookingStepRecipeDTOList;
-    if (this.cookingSteps.length >= this.createRecipeDTO.cookingStepRecipeDTOList.length) {
-      this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
-    }
-  }
-
-  checkArray(category: CategoryRecipeDTO) {
-    this.checkedArray.push(category);
-  }
-
-  addIngredient(name: string, amount: number, unit: string, note: string) {
-    let ingredient = new IngredientRecipeDTO();
-    ingredient.name = name;
-    ingredient.amount = amount;
-    ingredient.unit = unit;
-    ingredient.note = note;
-    this.ingredients.push(ingredient);
+  addIngredient(name: string, amount: number, unit: string) {
+    let ingredientRecipeDTO = new IngredientRecipeDTO();
+    let fruit = new Fruit();
+    this.ingredientService.getByName(name).subscribe(data => {
+      let ingredient = data;
+      ingredientRecipeDTO.nameRu = ingredient.nameRu;
+      ingredientRecipeDTO.name = ingredient.name;
+      ingredientRecipeDTO.amount = amount;
+      ingredientRecipeDTO.unitRu = unit;
+      ingredientRecipeDTO.unit = unit;
+      fruit.name = ingredient.name;
+      fruit.nameRu = ingredient.nameRu;
+      fruit.amount = amount;
+      fruit.unit = unit.toLowerCase();
+      fruit.unitRu = unit.toLowerCase();
+    });
+    this.ingredients.push(ingredientRecipeDTO);
   }
 
   deleteIngredient(ingredientName: string) {
@@ -147,7 +153,13 @@ export class RecipeEditComponent implements OnInit {
       ingredient = this.ingredients[i];
       if (ingredient.name == ingredientName) {
         this.ingredients.splice(i, 1);
-        this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
+      }
+    }
+    for (let i = 0; i < this.fruits.length; i++) {
+      let fruit = new Fruit();
+      fruit = this.fruits[i];
+      if (fruit.name == ingredientName) {
+        this.fruits.splice(i, 1);
       }
     }
   }
@@ -158,17 +170,22 @@ export class RecipeEditComponent implements OnInit {
       step = this.cookingSteps[i];
       if (step.description == stepName) {
         this.cookingSteps.splice(i, 1);
-        this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
       }
     }
+    this.dataSource = new MatTableDataSource<CookingStepRecipeDTO>(this.cookingSteps);
   }
 
-  addCookingStep(name: string, description: string, number: number) {
+  addCookingStep(description: string) {
     let step = new CookingStepRecipeDTO();
+    //todo: need to fix
     step.description = description;
+    step.descriptionRu = description;
     step.active = true;
     step.imgSource = this.imgURL2;
     this.cookingSteps.push(step);
+    this.cookingStep.description = null;
+    this.imgURL = null;
+    this.dataSource = new MatTableDataSource<CookingStepRecipeDTO>(this.cookingSteps);
   }
 
   handleFileInput2(event) {
@@ -192,22 +209,18 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    let stepTable = (<HTMLTableElement>document.getElementById('stepTable')).rows.length;
-    if (stepTable == 1) {
-      this.utilsService.alert("add one step");
-    }
-    let ingTable = (<HTMLTableElement>document.getElementById('ingredientTable')).rows.length;
-    if (ingTable == 1) {
-      this.utilsService.alert('add one ingredient');
-    }
     let y = -1;
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
-    this.createRecipeDTO.categoryRecipeDTOList = this.checkedArray;
-    if (this.createRecipeDTO.cookingStepRecipeDTOList.length != 0 &&
-      this.createRecipeDTO.ingredientRecipeDTOList.length != 0 &&
-      this.createRecipeDTO.categoryRecipeDTOList.length != 0 &&
+    this.createRecipeDTO.categoryRecipeDTOList = this.categoryArray;
+    // need to fix
+    this.createRecipeDTO.cookingDifficultyRu = "ЛЕГКО";
+    this.createRecipeDTO.nameRu = "Тест";
+
+    if (this.cookingSteps.length != 0 &&
+      this.ingredients.length != 0 &&
+      this.categoryArray.length != 0 &&
       this.createRecipeDTO.cookingTime != null &&
       this.createRecipeDTO.name != null &&
       this.createRecipeDTO.cookingDifficulty != null) {
@@ -238,18 +251,27 @@ export class RecipeEditComponent implements OnInit {
                   }
                 }
               }
-              this.first = true;
-              this.second = false;
-              this.third = false;
               window.location.reload();
             }
           );
-
         }
       );
       this.utilsService.alert("recipe is updated");
     } else {
       this.utilsService.alert("fill all fields");
     }
+  }
+
+  chkChange(event: MatCheckboxChange, category: CategoryRecipeDTO) {
+    if (event.checked == true) {
+      this.categoryArray.push(category);
+    } else {
+      for (let i = 0; i < this.categoryArray.length; i++) {
+        if (this.categoryArray[i].name == category.name) {
+          this.categoryArray.splice(i, 1);
+        }
+      }
+    }
+    console.log(this.categoryArray);
   }
 }

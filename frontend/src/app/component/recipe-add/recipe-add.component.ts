@@ -112,7 +112,7 @@ export class RecipeAddComponent implements OnInit {
       ingredientRecipeDTO.name = ingredient.name;
       ingredientRecipeDTO.amount = amount;
       ingredientRecipeDTO.unitRu = unit;
-      ingredientRecipeDTO.unitRu = unit;
+      ingredientRecipeDTO.unit = unit;
       fruit.name = ingredient.name;
       fruit.nameRu = ingredient.nameRu;
       fruit.amount = amount;

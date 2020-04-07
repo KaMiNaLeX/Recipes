@@ -3,256 +3,249 @@
   <div class="qub-page-header-divider"></div>
   {{'edit recipe' | translate}}
 </h1>
-<div [hidden]="!first" id="first" class="container-fluid">
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <button class="btn btn-primary btn-lg btn-block">{{'dish description' | translate}}</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
-              createRecipeDTO.cookingTime)">{{'ingredients' | translate}}
+<div class="resultDiv">
+  <mat-horizontal-stepper linear>
+    <mat-step [editable]="isEditable">
+      <ng-template matStepLabel>{{'dish description' | translate}}</ng-template>
+      <mat-form-field>
+        <mat-label>{{'name' | translate}}</mat-label>
+        <ng-container *ngIf="!ru;else lang">
+          <input #name="ngModel" matInput [(ngModel)]="createRecipeDTO.name" (change)="checkRecipe()"
+                 required>
+        </ng-container>
+        <ng-template #lang>
+          <input #nameRu="ngModel" matInput [(ngModel)]="createRecipeDTO.nameRu" (change)="checkRecipe()"
+                 required>
+        </ng-template>
+      </mat-form-field>
+      <mat-form-field style="margin-top: -10px;max-width: 15%">
+        <mat-label>{{'cook time' | translate}}</mat-label>
+        <input matInput type="number" [(ngModel)]="createRecipeDTO.cookingTime" min="1"
+               #minutes="ngModel" required>
+        <span matSuffix>{{'minutes' | translate}}</span>
+      </mat-form-field>
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="createRecipeDTO.cookingDifficulty"
+                       #difficulty="ngModel" required>
+        <h4 class="mat-form-field">{{'difficulty' | translate}} * :</h4>
+        <mat-radio-button value="{{'easy' | translate}}">{{'easy' | translate}}</mat-radio-button>
+        <mat-radio-button value="{{'medium' | translate}}">{{'medium' | translate}}</mat-radio-button>
+        <mat-radio-button value="{{'hard' | translate}}">{{'hard' | translate}}</mat-radio-button>
+      </mat-radio-group>
+      <h4 class="mat-form-field" style="margin-top: 20px">{{'category' | translate}} * :</h4>
+      <section class="example-section">
+        <div *ngFor="let category of categories;let i = index">
+          <ng-container *ngIf="!ru;else lang2">
+            <mat-checkbox (change)="chkChange($event,category)" value="{{category.name}}"
+                          class="example-margin"
+                          [checked]="category.name==checkedArray[i].name">{{category.name}}</mat-checkbox>
+          </ng-container>
+          <ng-template #lang2>
+            <mat-checkbox (change)="chkChange($event,category)" value="{{category.nameRu}}"
+                          class="example-margin"
+                          [checked]="category.nameRu==checkedArray[i].nameRu">{{category.nameRu}}</mat-checkbox>
+          </ng-template>
+        </div>
+      </section>
+      <h4 class="mat-form-field">{{'photo' | translate}}:</h4>
+      <img height="100" weight="100" [src]="createRecipeDTO.imgSource" *ngIf="createRecipeDTO.imgSource !=null">
+      <h4 class="mat-form-field">{{'new photo' | translate}}:</h4>
+      <div>
+        <img [src]="imgURL" height="100" style="max-width: 100%" *ngIf="imgURL">
+      </div>
+      <div class="input-group mb-3" style="margin-top: 10px; max-width: 22%">
+        <div class="input-group-prepend">
+          <span class="input-group-text">{{'upload' | translate}}</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" (change)="handleFileInput($event)" class="custom-file-input"
+                 aria-describedby="inputGroupFileAddon01">
+          <label class="custom-file-label">{{'choose file' | translate}}</label>
+        </div>
+      </div>
+      <button style="margin-top: 15px"
+              [disabled]=" difficulty.invalid || minutes.invalid || checkedArray.length == 0"
+              mat-raised-button matStepperNext>{{'next' | translate}}
+        <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link">{{'cooking' | translate}}</button>
-    </li>
-  </ul>
-  <div class="col-md-6 login-container" style="max-width: 100%">
-    <h2 style="margin: auto">{{'description' | translate}}</h2>
-    <br/>
-    <div class="form-group">
-      <h6 for="name">{{'name' | translate}}:</h6>
-      <input (change)="checkRecipe()" style="max-width: 50%" type="text" [(ngModel)]="createRecipeDTO.name" class="form-control" id="name"
-             autocomplete="off" #name="ngModel" placeholder="{{createRecipeDTO.name}}" required>
-      <div *ngIf="name.invalid" style="color: red">{{'required' | translate}}</div>
-    </div>
-    <h2 style="margin: auto">{{'selection characteristics' | translate}}</h2>
-    <br/>
-    <div class="form-group">
-      <div class="row">
-        <div class="col">
-          <h6 for="minute">{{'difficulty' | translate}}:</h6>
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
-                   name="exampleRadios" id="exampleRadios1" value="EASY" #difficulty="ngModel" required>
-            <label class="form-check-label" for="exampleRadios1">{{'easy' | translate}}</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
-                   name="exampleRadios" id="exampleRadios2" value="MEDIUM" #difficulty="ngModel" required>
-            <label class="form-check-label" for="exampleRadios2">{{'medium' | translate}}</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="createRecipeDTO.cookingDifficulty" class="form-check-input" type="radio"
-                   name="exampleRadios" id="exampleRadios3" value="HARD" #difficulty="ngModel" required>
-            <label class="form-check-label" for="exampleRadios3">{{'hard' | translate}}</label>
-          </div>
-          <div *ngIf="difficulty.invalid" style="color: red">{{'required' | translate}}</div>
-        </div>
-        <div class="col">
-          <h6 for="minute">{{'minutes' | translate}}:</h6>
-          <input style="width: 100px" type="text" name="minute" [(ngModel)]="createRecipeDTO.cookingTime"
-                 class="form-control"
-                 id="minute"
-                 autocomplete="off" #minutes="ngModel"
-                 placeholder="{{createRecipeDTO.cookingTime}}" required pattern="[0-9]{1,7}">
-          <div *ngIf="minutes.invalid" style="color: red">{{'required or invalid' | translate}}</div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="row">
-        <div class="col">
-          <h6 for="minute">{{'category' | translate}}:</h6>
-          <div class="form-check form-check-inline" *ngFor="let category of categories">
-            <input (change)="checkArray(category)" class="form-check-input" type="checkbox"
-                   id="inlineCheckbox1" value="{{category.name}}" name="check">
-            <label class="form-check-label" for="inlineCheckbox1">{{category.name}}</label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <h5>{{'photo' | translate}}:</h5>
-    <img height="100" weight="100" [src]="createRecipeDTO.imgSource" *ngIf="createRecipeDTO.imgSource !=null">
-    <h5>{{'new photo' | translate}}:</h5>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroupFileAddon01">{{'upload' | translate}}</span>
-      </div>
-      <div class="custom-file">
-        <input type="file" (change)="handleFileInput($event)" class="custom-file-input"
-               id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-        <label class="custom-file-label" for="inputGroupFile01">{{'choose file' | translate}}</label>
-      </div>
-    </div>
-    <div>
-      <img [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
-    </div>
-    <button style="width: 300px" class="btn btn-success"
-            (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
-              createRecipeDTO.cookingTime)">
-      {{'continue' | translate}}
-    </button>
-  </div>
-</div>
-
-
-<div [hidden]="!second" id="second" class="container-fluid">
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toDescription()">{{'dish description' | translate}}</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-primary btn-lg btn-block">{{'ingredients' | translate}}</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toCooking()">{{'cooking' | translate}}</button>
-    </li>
-  </ul>
-  <h2 style="margin: auto">{{'add ingredients' | translate}}</h2>
-  <table id="ingredientTable" class="table table-bordered table-striped">
-    <thead class="thead-dark">
-    <tr>
-      <th scope="col">{{'ingredient' | translate}}</th>
-      <th scope="col">{{'amount' | translate}}</th>
-      <th scope="col">{{'unit' | translate}}</th>
-      <th scope="col">{{'note' | translate}}</th>
-      <th scope="col">{{'delete' | translate}}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr id="ingredient" name="ingredient" *ngFor="let ingredient of ingredients">
-      <td name="i.name">{{ingredient.name}}</td>
-      <td name="i.amount">{{ingredient.amount}}</td>
-      <td name="i.unit">{{ingredient.unit}}</td>
-      <td name="i.note">{{ingredient.note}}</td>
-      <td>
-        <button name="delete" (click)="deleteIngredient(ingredient.name)" class='btn btn-danger'>{{'delete' | translate}}
+    </mat-step>
+    <mat-step [editable]="isEditable">
+      <ng-template matStepLabel>{{'ingredients' | translate}}</ng-template>
+      <ng-container *ngIf="!ru;else lang3">
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip style="font-size: 20px" *ngFor="let fruit of fruits"
+                    [removable]="removable"
+                    (removed)="deleteIngredient(fruit.name)">
+            {{fruit.name}} {{fruit.amount}} {{fruit.unit}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-form-field style="max-width: 20%">
+          <mat-label>{{'ingredient name' | translate}}</mat-label>
+          <mat-select [(ngModel)]="ingredient.name" #ingName="ngModel" required>
+            <mat-option *ngFor="let ingredient of allIngredients" [value]="ingredient.name">
+              {{ingredient.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="max-width: 20%; margin-left: 30px">
+          <mat-label>{{'amount' | translate}}</mat-label>
+          <input matInput type="number" [(ngModel)]="ingredient.amount"
+                 #amount="ngModel" required>
+        </mat-form-field>
+        <mat-form-field style="max-width: 20%; margin-left: 30px">
+          <mat-label>{{'unit' | translate}}</mat-label>
+          <mat-select [(ngModel)]="ingredient.unit" #unit1="ngModel" required>
+            <mat-option *ngFor="let u of unit" [value]="u">
+              {{u}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+      <ng-template #lang3>
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip style="font-size: 20px" *ngFor="let fruit of fruits"
+                    [removable]="removable"
+                    (removed)="deleteIngredient(fruit.nameRu)">
+            {{fruit.nameRu}} {{fruit.amount}} {{fruit.unitRu}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-form-field style="max-width: 20%">
+          <mat-label>{{'ingredient name' | translate}}</mat-label>
+          <mat-select [(ngModel)]="ingredient.nameRu" #ingName="ngModel" required>
+            <mat-option *ngFor="let ingredient of allIngredients" [value]="ingredient.nameRu">
+              {{ingredient.nameRu}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="max-width: 20%; margin-left: 30px">
+          <mat-label>{{'amount' | translate}}</mat-label>
+          <input matInput type="number" [(ngModel)]="ingredient.amount"
+                 #amount="ngModel" required>
+        </mat-form-field>
+        <mat-form-field style="max-width: 20%; margin-left: 30px">
+          <mat-label>{{'unit' | translate}}</mat-label>
+          <mat-select [(ngModel)]="ingredient.unitRu" #unit1="ngModel" required>
+            <mat-option *ngFor="let u of unit" [value]="u">
+              {{u}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-template>
+      <mat-form-field style="max-width: 20%; margin-left: 30px">
+        <mat-label>{{'note' | translate}}</mat-label>
+        <input matInput [(ngModel)]="ingredient.note"
+               #note="ngModel">
+      </mat-form-field>
+      <button style="margin-left: 30px" mat-mini-fab
+              (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit)">
+        <mat-icon style="margin-left: 8px">add</mat-icon>
+      </button>
+      <div>
+        <button style="margin-top: 15px" mat-button matStepperPrevious mat-raised-button>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          {{'back' | translate}}
         </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  <div class="form-group">
-    <div class="row">
-      <div class="col">
-        <h6 for="name">{{'ingredient name' | translate}}:</h6>
-        <select class="custom-select" id="ingredientName" [(ngModel)]="ingredient.name"
-                #ingName="ngModel" required>
-          <option *ngFor="let ingredient of allIngredients" value="{{ingredient.name}}">{{ingredient.name}}</option>
-        </select>
-        <div *ngIf="ingName.invalid" style="color: red">{{'required' | translate}}</div>
-      </div>
-      <div class="col">
-        <h6 for="name">{{'amount' | translate}}:</h6>
-        <input type="text" name="amount"
-               class="form-control"
-               id="amount"
-               autocomplete="off"
-               [(ngModel)]="ingredient.amount"
-               #amount="ngModel" required pattern="[0-9]{1,7}">
-        <div *ngIf="amount.invalid" style="color: red">{{'required or invalid' | translate}}</div>
-      </div>
-      <div class="col">
-        <h6 for="name">{{'unit' | translate}}:</h6>
-        <select class="custom-select" id="unit" [(ngModel)]="ingredient.unit"
-                #unit1="ngModel" required>
-          <option *ngFor="let u of unit" value="{{u}}">{{u}}</option>
-        </select>
-        <div *ngIf="unit1.invalid" style="color: red">{{'required' | translate}}</div>
-      </div>
-      <div class="col">
-        <h6 for="name">{{'note' | translate}}:</h6>
-        <input type="text" name="note"
-               class="form-control"
-               id="note"
-               autocomplete="off"
-               [(ngModel)]="ingredient.note">
-      </div>
-      <div class="col">
-        <br/>
-        <button type="submit" [disabled]="ingName.invalid || unit1.invalid || amount.invalid"
-                (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit,ingredient.note)"
-                class="btn btn-success">{{'add ingredient' | translate}} +
+        <button style="margin-top: 15px" [disabled]="fruits.length == 0"
+                mat-button matStepperNext mat-raised-button>{{'next' | translate}}
+          <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
       </div>
-    </div>
-  </div>
-  <button style="width: 300px" type="submit" (click)="toCooking()" class="btn btn-success ">{{'continue' | translate}}</button>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{'cooking' | translate}}</ng-template>
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="text-align: justify"
+                 *ngIf="cookingSteps.length != 0">
+        <ng-container matColumnDef="photo">
+          <mat-header-cell *matHeaderCellDef>{{'photo' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" *ngIf="step.imgSource != null">
+          </mat-cell>
+        </ng-container>
+        <ng-container *ngIf="!ru;else lang4">
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>{{'description' | translate}}</mat-header-cell>
+            <mat-cell *matCellDef="let step"> {{step.description}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>{{'actions' | translate}}</mat-header-cell>
+            <mat-cell *matCellDef="let step">
+              <button (click)="deleteStep(step.description)" mat-raised-button color="primary">
+                <mat-icon>delete</mat-icon>
+                {{'delete' | translate}}
+              </button>
+            </mat-cell>
+          </ng-container>
+        </ng-container>
+        <ng-template #lang4>
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>{{'description' | translate}}</mat-header-cell>
+            <mat-cell *matCellDef="let step"> {{step.descriptionRu}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>{{'actions' | translate}}</mat-header-cell>
+            <mat-cell *matCellDef="let step">
+              <button (click)="deleteStep(step.descriptionRu)" mat-raised-button color="primary">
+                <mat-icon>delete</mat-icon>
+                {{'delete' | translate}}
+              </button>
+            </mat-cell>
+          </ng-container>
+        </ng-template>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-form-field class="example-full-width">
+        <mat-label>{{'description' | translate}}</mat-label>
+        <ng-container *ngIf="!ru;else lang4">
+          <textarea [(ngModel)]="cookingStep.description" #step="ngModel" required matInput></textarea>
+        </ng-container>
+        <ng-template #lang4>
+          <textarea [(ngModel)]="cookingStep.descriptionRu" #step="ngModel" required matInput></textarea>
+        </ng-template>
+      </mat-form-field>
+      <h4 class="mat-form-field">{{'photo' | translate}}:</h4>
+      <div>
+        <img [src]="imgURL2" height="100" style="max-width: 100%" *ngIf="imgURL2">
+      </div>
+      <div class="input-group mb-3" style="margin-top: 10px; max-width: 22%">
+        <div class="input-group-prepend">
+          <span class="input-group-text">{{'upload' | translate}}</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" (change)="handleFileInput2($event)" class="custom-file-input"
+                 aria-describedby="inputGroupFileAddon01">
+          <label class="custom-file-label">{{'choose file' | translate}}</label>
+        </div>
+      </div>
+      <ng-container *ngIf="!ru;else lang5">
+        <button mat-raised-button color="accent"
+                (click)="addCookingStep(cookingStep.description)">
+          <mat-icon>add</mat-icon>
+          {{'add step' | translate}}
+        </button>
+      </ng-container>
+      <ng-template #lang5>
+        <button mat-raised-button color="accent"
+                (click)="addCookingStep(cookingStep.descriptionRu)">
+          <mat-icon>add</mat-icon>
+          {{'add step' | translate}}
+        </button>
+      </ng-template>
+      <div>
+        <button style="margin-top: 15px" matStepperPrevious mat-raised-button>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          {{'back' | translate}}
+        </button>
+        <button [disabled]=" ((createRecipeDTO.name == null || createRecipeDTO.name == '') &&
+              (createRecipeDTO.nameRu == null || createRecipeDTO.nameRu == '')) ||
+        cookingSteps.length == 0 || ingredients.length == 0 || difficulty.invalid
+        || minutes.invalid || categoryArray.length == 0"
+                type="submit" (click)="onSubmit()" style="margin-top: 15px; margin-left: 15px;width: 300px"
+                mat-raised-button color="accent">
+          {{'edit recipe' | translate}}
+        </button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
 </div>
 
-<div [hidden]="!third" id="third" class="container-fluid">
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toDescription()">{{'dish description' | translate}}</button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-link" (click)="toIngredient(createRecipeDTO.name,createRecipeDTO.cookingDifficulty,
-              createRecipeDTO.cookingTime)">{{'ingredients' | translate}}
-      </button>
-    </li>
-    <li class="nav-item">
-      <button class="btn btn-primary btn-lg btn-block">{{'cooking' | translate}}</button>
-    </li>
-  </ul>
-  <div class="col-md-6 login-container" style="max-width: 100%">
-    <h2 style="margin: auto">{{'cooking' | translate}}</h2>
-    <br/>
-    <table id="stepTable" class="table table-bordered table-striped">
-      <thead class="thead-dark">
-      <tr>
-        <th scope="col">{{'number' | translate}}</th>
-        <th scope="col">{{'photo' | translate}}</th>
-        <th scope="col">{{'name' | translate}}</th>
-        <th scope="col">{{'description' | translate}}</th>
-        <th scope="col">{{'delete' | translate}}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr id="cookingStep" *ngFor="let step of cookingSteps">
-        <td name="c.photo"><img [src]="step.imgSource" height="100" weight="100" *ngIf="step.imgSource != null"></td>
-        <td name="c.description">{{step.description}}</td>
-        <td>
-          <button class='btn btn-danger' (click)="deleteStep(step.description)">{{'delete' | translate}}</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-
-    <div class="form-group">
-    </div>
-    <div class="form-group">
-      <h6>{{'description' | translate}}:</h6>
-      <textarea name="s.description" class="form-control" [(ngModel)]="cookingStep.description"
-                #cookDescription="ngModel" autocomplete="off" required></textarea>
-      <div *ngIf="cookDescription.invalid" style="color: red">{{'required' | translate}}</div>
-    </div>
-    <h6>{{'photo' | translate}}:</h6>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroupFileAddon02">{{'upload' | translate}}</span>
-      </div>
-      <div class="custom-file">
-        <input type="file" (change)="handleFileInput2($event)" class="custom-file-input"
-               id="inputGroupFile02" aria-describedby="inputGroupFileAddon02">
-        <label class="custom-file-label" for="inputGroupFile02">{{'choose file' | translate}}</label>
-      </div>
-    </div>
-    <div>
-      <img [src]="imgURL2" height="100" weight="100" *ngIf="imgURL2">
-    </div>
-    <div>
-      <button type="submit" class="btn btn-success" [disabled]="cookDescription.invalid"
-              (click)="addCookingStep(cookingStep.description,cookingSteps.length)">
-        {{'add step' | translate}}+
-      </button>
-    </div>
-
-    <br/>
-    <form (ngSubmit)="onSubmit()">
-      <button [disabled]="name.invalid || difficulty.invalid || minutes.invalid"
-              style="width: 300px" type="submit" class="btn btn-success">{{'edit recipe' | translate}}
-      </button>
-    </form>
-  </div>
-</div>
