@@ -204,14 +204,14 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
         return recipeService.getCountAllRecipesByName(name);
     }
 
-    @PostMapping("/countAllRecipesByIngredient")
-    public int getCountAllRecipesByIngredient(@Valid @RequestBody IngredientNameListDTO ingredientNameList) {
-        return recipeService.getCountAllRecipesByIngredient(ingredientNameList);
+    @GetMapping("/countAllRecipesByIngredient")
+    public int getCountAllRecipesByIngredient() {
+        return recipeService.getCountAllRecipesByIngredient();
     }
 
-    @PostMapping("/countAllRecipesByData")
-    public int getCountAllRecipesByData(@Valid @RequestBody RecipeDataDTO recipeDataDTO) {
-        return recipeService.getCountAllRecipesByData(recipeDataDTO);
+    @GetMapping("/countAllRecipesByData")
+    public int getCountAllRecipesByData() {
+        return recipeService.getCountAllRecipesByData();
     }
 
 }

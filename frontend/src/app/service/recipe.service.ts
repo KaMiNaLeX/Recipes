@@ -30,6 +30,14 @@ export class RecipeService {
     return this.http.get<number>(`${this.baseUrl}/countAllRecipesInCategory/${categoryName}`);
   }
 
+  public getCountAllRecipesByIngredient(): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/countAllRecipesByIngredient`);
+  }
+
+  public getCountAllRecipesByData(): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/countAllRecipesByData`);
+  }
+
   public getCountAllRecipesByName(categoryName: string): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}/countAllRecipesByName/${categoryName}`);
   }

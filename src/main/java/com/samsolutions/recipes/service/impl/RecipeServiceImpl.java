@@ -86,6 +86,9 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         this.fileStorageService = fileStorageService;
     }
 
+    private static int getCountAllRecipesByIngredient;
+    private static int getCountAllRecipesByData;
+
     @Override
     @Transactional
     public CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO) {
@@ -406,7 +409,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                 return o1.getName().compareTo(o2.getName());
             }
         });
-
+        getCountAllRecipesByIngredient = resultList.size();
         if (resultList.size() > size) {
             int deleted = (resultList.size() - size);
             for (int i = 0; i < deleted; i++) {
@@ -416,10 +419,9 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         return mapListLambda(resultList, RecipeDTO.class);
     }
 
-    //todo: need to fix
     @Override
-    public int getCountAllRecipesByIngredient(IngredientNameListDTO ingredientNameListDTO) {
-        return 0;
+    public int getCountAllRecipesByIngredient() {
+        return getCountAllRecipesByIngredient;
     }
 
     @Override
@@ -467,6 +469,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                 }
             }
         }
+        getCountAllRecipesByData = recipeEntityList.size();
         if (recipeEntityList.size() > size) {
             int deleted = (recipeEntityList.size() - size);
             for (int i = 0; i < deleted; i++) {
@@ -476,10 +479,9 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         return mapListLambda(recipeEntityList, RecipeDTO.class);
     }
 
-    //todo: need to fix
     @Override
-    public int getCountAllRecipesByData(RecipeDataDTO recipeDataDTO) {
-        return 0;
+    public int getCountAllRecipesByData() {
+        return getCountAllRecipesByData;
     }
 
     @Override

@@ -215,6 +215,9 @@ export class SearchComponent implements OnInit {
           this.recipes[i].authorName = data.login;
         })
       }
+      this.recipeService.getCountAllRecipesByData().subscribe(data => {
+        this.length = data;
+      })
     });
     this.currentsSearch = this.searchArr[3];
     this.recipeDiv = true;
@@ -229,6 +232,9 @@ export class SearchComponent implements OnInit {
           this.recipes[i].authorName = data.login;
         })
       }
+      this.recipeService.getCountAllRecipesByIngredient().subscribe(data => {
+        this.length = data;
+      })
     });
     this.currentsSearch = this.searchArr[2];
     this.recipeDiv = true;
