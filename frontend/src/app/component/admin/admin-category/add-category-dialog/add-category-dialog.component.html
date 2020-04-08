@@ -12,9 +12,9 @@
     <mat-label>{{'tag' | translate}}</mat-label>
     <input matInput [(ngModel)]="category.tag" #tag="ngModel" required>
   </mat-form-field>
-  <mat-label class="label">{{'photo' | translate}}:</mat-label>
+  <mat-label class="label">{{'photo' | translate}} * :</mat-label>
   <br/>
-  <img style="margin-top: 6px;margin-bottom: 6px" [src]="imgURL" height="100" weight="100" *ngIf="imgURL">
+  <img style="margin-top: 6px;margin-bottom: 6px;width: 150px" [src]="imgURL" height="100" *ngIf="imgURL">
   <div class="input-group mb-3">
     <div class="input-group-prepend">
       <span class="input-group-text" id="inputGroupFileAddon01">{{'upload' | translate}}</span>
@@ -29,8 +29,8 @@
 <div mat-dialog-actions class="example-button-row">
   <button mat-button (click)="onNoClick()">{{'cancel' | translate}}</button>
   <form (ngSubmit)="addCategory()">
-    <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data" cdkFocusInitial
-            [disabled]="name.invalid || description.invalid || tag.invalid">
+    <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data"
+            [disabled]="name.invalid || description.invalid || tag.invalid || imgURL == null">
       + {{'add category' | translate}}</button>
   </form>
 </div>

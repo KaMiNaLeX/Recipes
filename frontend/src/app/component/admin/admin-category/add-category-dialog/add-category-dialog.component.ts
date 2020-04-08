@@ -14,7 +14,7 @@ export class AddCategoryDialogComponent implements OnInit {
   category: Category = new Category();
   returnCategory: Category = new Category();
   selectedFile: File = null;
-  imgURL: any;
+  imgURL: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<AddCategoryDialogComponent>,
@@ -35,6 +35,7 @@ export class AddCategoryDialogComponent implements OnInit {
       this.category.tagRu = "x";
       this.category.descriptionRu = "c";
       this.category.nameRu = "d";
+      this.category.imgSource = "img";
       this.categoryService.create(this.category).subscribe(data => {
           this.returnCategory = data;
           if (this.returnCategory != null) {

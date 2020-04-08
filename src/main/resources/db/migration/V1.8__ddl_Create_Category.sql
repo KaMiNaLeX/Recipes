@@ -7,7 +7,7 @@ CREATE TABLE category
     description_ru varchar(255) NOT NULL,
     tag            varchar(255) NOT NULL,
     tag_ru         varchar(255) NOT NULL,
-    img_source     varchar(255),
+    img_source     varchar(255) NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
