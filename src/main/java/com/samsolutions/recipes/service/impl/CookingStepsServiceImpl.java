@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -68,7 +69,11 @@ public class CookingStepsServiceImpl extends ModelMapperService implements Cooki
     @Override
     public CookingStepRecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException {
         CookingStepsEntity stepsEntity = cookingStepsRepository.getById(id);
-        String imageSrc = fileStorageService.storeFile(file);
+        String imageSrc;
+        if (Objects.equals(file.getOriginalFilename(), "null")) imageSrc = "http://localhost:4200/getFile/noImage.png";
+        else {
+            imageSrc = fileStorageService.storeFile(file);
+        }
         stepsEntity.setImgSource(imageSrc);
         CookingStepRecipeDTO stepRecipeDTO = new CookingStepRecipeDTO();
         map(cookingStepsRepository.save(stepsEntity), stepRecipeDTO);

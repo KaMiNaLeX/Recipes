@@ -42,6 +42,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -485,13 +486,11 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     public RecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException {
         RecipeEntity recipeEntity = recipeRepository.getById(id);
         String imageSrc;
-        if (file.getOriginalFilename().equals("null")) {
-            imageSrc = "http://localhost:4200/getFile/noImage.png";
-        } else {
+        if (Objects.equals(file.getOriginalFilename(), "null")) imageSrc = "http://localhost:4200/getFile/noImage.png";
+        else {
             imageSrc = fileStorageService.storeFile(file);
         }
         recipeEntity.setImgSource(imageSrc);
-
         RecipeDTO recipeDTO = new RecipeDTO();
         map(recipeRepository.save(recipeEntity), recipeDTO);
         return recipeDTO;
