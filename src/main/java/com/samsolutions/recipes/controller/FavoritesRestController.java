@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.controller;
 
 import com.samsolutions.recipes.dto.FavoriteDTO;
+import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
 import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
 import com.samsolutions.recipes.service.FavoriteService;
@@ -62,4 +63,10 @@ public class FavoritesRestController extends CustomGlobalExceptionHandler {
     public int getCountAllFavoritesRecipes(@PathVariable("userId") UUID userId) {
         return favoriteService.getCountAllFavoritesRecipes(userId);
     }
+
+    @PostMapping("/check/{userId}")
+    public List<RecipeDTO> check(@PathVariable("userId") UUID userId, @RequestBody List<RecipeDTO> recipeDTOList) {
+        return favoriteService.checkInFavorite(userId, recipeDTOList);
+    }
+
 }

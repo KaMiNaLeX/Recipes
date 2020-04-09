@@ -77,4 +77,17 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
     public int getCountAllFavoritesRecipes(UUID userId) {
         return favoriteRepository.findAllByUserId(userId).size();
     }
+
+    @Override
+    public List<RecipeDTO> checkInFavorite(UUID userId, List<RecipeDTO> list) {
+        List<FavoriteEntity> favorites = favoriteRepository.findAllByUserId(userId);
+        for (FavoriteEntity favorite : favorites) {
+            for (RecipeDTO dto : list) {
+                if (favorite.getRecipeId().equals(dto.getId())) {
+                    dto.setInFavorite(true);
+                }
+            }
+        }
+        return list;
+    }
 }

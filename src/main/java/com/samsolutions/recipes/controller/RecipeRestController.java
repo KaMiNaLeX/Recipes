@@ -95,8 +95,9 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     public List<RecipeDTO> findAllByCategoryName(@PathVariable("name") @NotBlank String categoryName,
                                                  @RequestParam("page") int page,
                                                  @RequestParam("size") int size,
-                                                 @RequestParam("sort") String sort) {
-        return recipeService.getByCategoryName(categoryName, page, size, sort);
+                                                 @RequestParam("sort") String sort,
+                                                 @RequestParam("userId") UUID... userId) {
+        return recipeService.getByCategoryName(categoryName, page, size, sort, userId);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")

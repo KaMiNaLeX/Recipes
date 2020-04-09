@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Favorite} from "../model/favorite";
 import {CreateFavorite} from "../model/create-favorite";
 import {UtilsService} from "./utils.service";
+import {Recipe} from "../model/recipe";
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,9 @@ export class FavoriteService {
 
   public getCountAllFavoritesRecipes(userId: string): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}/countAllFavoritesRecipes/${userId}`);
+  }
+
+  public check(userId: string, list: Recipe[]) {
+    return this.http.post<Recipe[]>(`${this.baseUrl}/check/${userId}`, list);
   }
 }

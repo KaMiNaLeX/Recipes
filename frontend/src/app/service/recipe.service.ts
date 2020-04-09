@@ -22,8 +22,12 @@ export class RecipeService {
     return this.http.get<User>(`${this.baseUrl}/authorName/id/${userId}`);
   }
 
-  public getRecipesByCategoryName(categoryName: string, page: number, size: number, sort: string): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.baseUrl}/categoryName/${categoryName}?page=${page}&size=${size}&sort=${sort}`);
+  public getRecipesByCategoryName(categoryName: string, userId: string, page: number, size: number, sort: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/categoryName/${categoryName}?page=${page}&size=${size}&sort=${sort}&userId=${userId}`);
+  }
+
+  public getRecipesByCategoryName2(categoryName: string, page: number, size: number, sort: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/categoryName/${categoryName}?page=${page}&size=${size}&sort=${sort}&userId=`);
   }
 
   public getCountAllRecipesInCategory(categoryName: string): Observable<number> {

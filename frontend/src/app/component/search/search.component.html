@@ -110,11 +110,14 @@
       </mat-radio-group>
       <h4 style="padding-left: 10px;margin-top: 15px">{{'cooking difficulty' | translate}}:</h4>
       <section class="example-section">
-        <mat-checkbox (change)="chkAllChange1($event,checkbox1.value)" #checkbox1 id="Checkbox1" value="{{'easy' | translate}}"
+        <mat-checkbox (change)="chkAllChange1($event,checkbox1.value)" #checkbox1 id="Checkbox1"
+                      value="{{'easy' | translate}}"
                       class="example-margin" [checked]="chkArr[0]">{{'easy' | translate}} </mat-checkbox>
-        <mat-checkbox (change)="chkAllChange2($event,checkbox2.value)" #checkbox2 id="Checkbox2" value="{{'medium' | translate}}"
+        <mat-checkbox (change)="chkAllChange2($event,checkbox2.value)" #checkbox2 id="Checkbox2"
+                      value="{{'medium' | translate}}"
                       class="example-margin" [checked]="chkArr[1]">{{'medium' | translate}}</mat-checkbox>
-        <mat-checkbox (change)="chkAllChange3($event,checkbox3.value)" #checkbox3 id="Checkbox3" value="{{'hard' | translate}}"
+        <mat-checkbox (change)="chkAllChange3($event,checkbox3.value)" #checkbox3 id="Checkbox3"
+                      value="{{'hard' | translate}}"
                       class="example-margin" [checked]="chkArr[2]">{{'hard' | translate}}</mat-checkbox>
       </section>
       <button style="margin-left: 10px;margin-bottom: 10px;margin-top: 10px" mat-raised-button color="accent"
@@ -169,10 +172,11 @@
             <div class="example-button-row">
               <button (click)="view(recipe.id)" mat-raised-button color="primary"
                       type="submit">{{'view' | translate}}</button>
-
-              <button (click)="addToFavorite(recipe.id)" mat-raised-button color="primary"
-                      type="submit">{{'add to favorite' | translate}}</button>
-
+              <button style="margin-left: 178px;margin-right: auto" mat-icon-button color="warn"
+                      (click)="addToFavorite(recipe.id)"
+                      type="submit">
+                <mat-icon style="margin: auto auto">favorite_border</mat-icon>
+              </button>
             </div>
           </mat-card-actions>
         </mat-card>

@@ -34,7 +34,7 @@ public interface RecipeService {
 
     void removeById(UUID uuid);
 
-    List<RecipeDTO> getByCategoryName(String categoryName, int page, int size, String sort);
+    List<RecipeDTO> getByCategoryName(String categoryName, int page, int size, String sort, UUID... userId);
 
     int getCountAllRecipesInCategory(String categoryName);
 

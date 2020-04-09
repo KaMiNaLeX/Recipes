@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.FavoriteDTO;
+import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
 
 import java.util.List;
@@ -19,5 +20,7 @@ public interface FavoriteService {
     List<FavoriteDTO> findAllByUserId(UUID uuid, int page, int size, String sort);
 
     int getCountAllFavoritesRecipes(UUID userId);
+
+    List<RecipeDTO> checkInFavorite(UUID userId, List<RecipeDTO> list);
 
 }

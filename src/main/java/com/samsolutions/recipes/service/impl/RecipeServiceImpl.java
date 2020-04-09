@@ -69,13 +69,15 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
 
     private final FileStorageServiceImpl fileStorageService;
 
+    private final FavoriteServiceImpl favoriteService;
+
     public RecipeServiceImpl(RecipeRepository recipeRepository,
                              CategoryRepository categoryRepository,
                              CategoryRecipeRepository categoryRecipeRepository,
                              CookingStepsRepository cookingStepsRepository,
                              IngredientRepository ingredientRepository,
                              RecipeIngredientRepository recipeIngredientRepository,
-                             UserRepository userRepository, FileStorageServiceImpl fileStorageService) {
+                             UserRepository userRepository, FileStorageServiceImpl fileStorageService, FavoriteServiceImpl favoriteService) {
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
         this.categoryRecipeRepository = categoryRecipeRepository;
@@ -84,6 +86,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         this.recipeIngredientRepository = recipeIngredientRepository;
         this.userRepository = userRepository;
         this.fileStorageService = fileStorageService;
+        this.favoriteService = favoriteService;
     }
 
     private static int getCountAllRecipesByIngredient;
@@ -204,7 +207,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
 
     @Override
     @Transactional
-    public List<RecipeDTO> getByCategoryName(String categoryName, int page, int size, String sort) {
+    public List<RecipeDTO> getByCategoryName(String categoryName, int page, int size, String sort, UUID... userId) {
         try {
             CategoryEntity category;
             if (categoryName.matches("^[A-Za-z\\s]+$")) {
@@ -227,7 +230,13 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                     return o1.getName().compareTo(o2.getName());
                 }
             });
-            return mapListLambda(recipeEntityList, RecipeDTO.class);
+            if (userId.length > 0) {
+                List<RecipeDTO> result = mapListLambda(recipeEntityList, RecipeDTO.class);
+                return favoriteService.checkInFavorite(userId[0], result);
+            } else {
+                return mapListLambda(recipeEntityList, RecipeDTO.class);
+            }
+
         } catch (NotFoundException | NullPointerException ex) {
             log.error(new NotFoundException("NOT_FOUND"));
             return null;

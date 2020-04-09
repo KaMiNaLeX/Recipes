@@ -38,4 +38,5 @@ public class RecipeDTO {
     private String imgSource;
     @ValidUUID
     private UUID authorId;
+    private boolean inFavorite = false;
 }
