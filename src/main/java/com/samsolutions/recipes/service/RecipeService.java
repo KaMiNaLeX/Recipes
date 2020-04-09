@@ -46,7 +46,7 @@ public interface RecipeService {
 
     List<CreateRecipeDTO> getByAuthorId(UUID authorId, int page, int size, String sort);
 
-    List<RecipeDTO> getByAuthorName(String name, int page, int size, String sort);
+    List<RecipeDTO> getByAuthorName(String name, int page, int size, String sort, UUID... userId);
 
     int getCountAllRecipesByAuthorName(String name);
 

@@ -117,7 +117,6 @@ export class RecipeListComponent implements OnInit {
           }
         });
       }
-
     }
   }
 
@@ -128,19 +127,36 @@ export class RecipeListComponent implements OnInit {
   }
 
   getServerData(event ?: PageEvent) {
-    this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
-      event.pageIndex, event.pageSize, "name").subscribe(
-      response => {
-        this.recipes = response;
-        if (this.recipes != null) {
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
+    if (this.authenticated != false) {
+      this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
+        event.pageIndex, event.pageSize, "name").subscribe(
+        response => {
+          this.recipes = response;
+          if (this.recipes != null) {
+            for (let i = 0; i < this.recipes.length; i++) {
+              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+                this.recipes[i].authorName = data.login;
+              })
+            }
           }
         }
-      }
-    );
+      );
+    } else {
+      this.recipeService.getRecipesByCategoryName2(sessionStorage.getItem('categoryName'), event.pageIndex,
+        event.pageSize, "name").subscribe(
+        response => {
+          this.recipes = response;
+          if (this.recipes != null) {
+            for (let i = 0; i < this.recipes.length; i++) {
+              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+                this.recipes[i].authorName = data.login;
+              })
+            }
+          }
+        }
+      );
+    }
+
     return event;
   }
 }

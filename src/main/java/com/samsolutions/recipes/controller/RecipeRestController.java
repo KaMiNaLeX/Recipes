@@ -129,8 +129,9 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     public List<RecipeDTO> getByAuthorName(@PathVariable("name") @NotBlank String name,
                                            @RequestParam("page") int page,
                                            @RequestParam("size") int size,
-                                           @RequestParam("sort") String sort) {
-        return recipeService.getByAuthorName(name, page, size, sort);
+                                           @RequestParam("sort") String sort,
+                                           @RequestParam("userId") UUID... userId) {
+        return recipeService.getByAuthorName(name, page, size, sort, userId);
     }
 
     @GetMapping("/name/{name}")

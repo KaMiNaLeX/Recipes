@@ -138,14 +138,28 @@ export class SearchComponent implements OnInit {
   }
 
   searchByAuthorName(name: string) {
-    this.recipeService.getByAuthorName(name, 0, this.pageSize, "name").subscribe(data => {
-      this.recipes = data;
-      for (let i = 0; i < this.recipes.length; i++) {
-        this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-          this.recipes[i].authorName = data.login;
-        })
-      }
-    });
+    if (this.authenticated != false) {
+      console.log(name, 0, this.pageSize, "name", localStorage.getItem("id"));
+      this.recipeService.getByAuthorName(name, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+        this.recipes = data;
+        for (let i = 0; i < this.recipes.length; i++) {
+          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+            this.recipes[i].authorName = data.login;
+          })
+        }
+      });
+    } else {
+      console.log(name, 0, this.pageSize, "name", localStorage.getItem("id"));
+      this.recipeService.getByAuthorName2(name, 0, this.pageSize, "name").subscribe(data => {
+        this.recipes = data;
+        for (let i = 0; i < this.recipes.length; i++) {
+          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+            this.recipes[i].authorName = data.login;
+          })
+        }
+      });
+    }
+
     this.recipeService.getCountAllRecipesByAuthorName(name).subscribe(data => {
       this.length = data;
     });
@@ -159,7 +173,33 @@ export class SearchComponent implements OnInit {
   }
 
   addToFavorite(id: string) {
+    let name = <HTMLInputElement>document.getElementById('authorName');
     this.favoriteService.addToFavorite(id, this.authenticated);
+    if (this.authenticated != false) {
+      if (this.pageEvent != undefined) {
+        this.recipeService.getByAuthorName(name.value, this.pageEvent.pageIndex, this.pageEvent.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+          this.recipes = data;
+          if (this.recipes != null) {
+            for (let i = 0; i < this.recipes.length; i++) {
+              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+                this.recipes[i].authorName = data.login;
+              })
+            }
+          }
+        });
+      } else {
+        this.recipeService.getByAuthorName(name.value, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+          this.recipes = data;
+          if (this.recipes != null) {
+            for (let i = 0; i < this.recipes.length; i++) {
+              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+                this.recipes[i].authorName = data.login;
+              })
+            }
+          }
+        });
+      }
+    }
   }
 
   chkAllChange1(event: MatCheckboxChange, value: string) {
@@ -258,18 +298,34 @@ export class SearchComponent implements OnInit {
       });
     } else if (this.currentsSearch == this.searchArr[1]) {
       let authorName = <HTMLInputElement>document.getElementById('authorName');
-      this.recipeService.getByAuthorName(authorName.value, event.pageIndex, event.pageSize, "name").subscribe(
-        response => {
-          this.recipes = response;
-          if (this.recipes != null) {
-            for (let i = 0; i < this.recipes.length; i++) {
-              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-                this.recipes[i].authorName = data.login;
-              })
+      if (this.authenticated != false) {
+        this.recipeService.getByAuthorName(authorName.value, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(
+          response => {
+            this.recipes = response;
+            if (this.recipes != null) {
+              for (let i = 0; i < this.recipes.length; i++) {
+                this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+                  this.recipes[i].authorName = data.login;
+                })
+              }
             }
           }
-        }
-      );
+        );
+      } else {
+        this.recipeService.getByAuthorName2(authorName.value, event.pageIndex, event.pageSize, "name").subscribe(
+          response => {
+            this.recipes = response;
+            if (this.recipes != null) {
+              for (let i = 0; i < this.recipes.length; i++) {
+                this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+                  this.recipes[i].authorName = data.login;
+                })
+              }
+            }
+          }
+        );
+      }
+
     } else if (this.currentsSearch == this.searchArr[2]) {
       this.recipeService.findAllByIngredients(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "name").subscribe(data => {
         this.recipes = data;
@@ -289,6 +345,6 @@ export class SearchComponent implements OnInit {
         }
       });
     }
-    return undefined;
+    return event;
   }
 }

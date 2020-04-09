@@ -330,14 +330,19 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
 
     @Override
     @Transactional
-    public List<RecipeDTO> getByAuthorName(String name, int page, int size, String sort) {
+    public List<RecipeDTO> getByAuthorName(String name, int page, int size, String sort, UUID... userId) {
         UUID uuid = userRepository.getByLogin(name).getId();
         if (uuid == null) {
             log.error(new UserNotFoundException("User not found"));
             return null;
         }
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-        return mapListLambda(recipeRepository.getByAuthorId(uuid, pageable).getContent(), RecipeDTO.class);
+        if (userId.length > 0) {
+            List<RecipeDTO> result = mapListLambda(recipeRepository.getByAuthorId(uuid, pageable).getContent(), RecipeDTO.class);
+            return favoriteService.checkInFavorite(userId[0], result);
+        } else {
+            return mapListLambda(recipeRepository.getByAuthorId(uuid, pageable).getContent(), RecipeDTO.class);
+        }
     }
 
     @Override
