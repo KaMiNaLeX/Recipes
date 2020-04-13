@@ -50,7 +50,7 @@ public interface RecipeService {
 
     int getCountAllRecipesByAuthorName(String name);
 
-    List<RecipeDTO> findAllByName(String name, int page, int size, String sort);
+    List<RecipeDTO> findAllByName(String name, int page, int size, String sort, UUID... userId);
 
     int getCountAllRecipesByName(String name);
 

@@ -74,8 +74,12 @@ export class RecipeService {
     return this.http.put<CreateRecipeDTO>(`${this.baseUrl}/updateRecipe/${id}`, recipeData);
   }
 
-  public getByName(name: string, page: number, size: number, sort: string): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.baseUrl}/name/${name}?page=${page}&size=${size}&sort=${sort}`);
+  public getByName(name: string, page: number, size: number, sort: string, userId: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/name/${name}?page=${page}&size=${size}&sort=${sort}&userId=${userId}`);
+  }
+
+  public getByName2(name: string, page: number, size: number, sort: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/name/${name}?page=${page}&size=${size}&sort=${sort}&userId=`);
   }
 
   public getByNameAndAuthor(name: string, id: string): Observable<Recipe> {

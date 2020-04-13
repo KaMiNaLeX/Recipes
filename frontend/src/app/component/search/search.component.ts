@@ -122,14 +122,26 @@ export class SearchComponent implements OnInit {
   }
 
   searchByName(name: string) {
-    this.recipeService.getByName(name, 0, this.pageSize, "name").subscribe(data => {
-      this.recipes = data;
-      for (let i = 0; i < this.recipes.length; i++) {
-        this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-          this.recipes[i].authorName = data.login;
-        })
-      }
-    });
+    if (this.authenticated != false) {
+      this.recipeService.getByName(name, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+        this.recipes = data;
+        for (let i = 0; i < this.recipes.length; i++) {
+          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+            this.recipes[i].authorName = data.login;
+          })
+        }
+      });
+    } else {
+      this.recipeService.getByName2(name, 0, this.pageSize, "name").subscribe(data => {
+        this.recipes = data;
+        for (let i = 0; i < this.recipes.length; i++) {
+          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+            this.recipes[i].authorName = data.login;
+          })
+        }
+      });
+    }
+
     this.recipeService.getCountAllRecipesByName(name).subscribe(data => {
       this.length = data;
     });
@@ -139,7 +151,6 @@ export class SearchComponent implements OnInit {
 
   searchByAuthorName(name: string) {
     if (this.authenticated != false) {
-      console.log(name, 0, this.pageSize, "name", localStorage.getItem("id"));
       this.recipeService.getByAuthorName(name, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
         this.recipes = data;
         for (let i = 0; i < this.recipes.length; i++) {
@@ -149,7 +160,6 @@ export class SearchComponent implements OnInit {
         }
       });
     } else {
-      console.log(name, 0, this.pageSize, "name", localStorage.getItem("id"));
       this.recipeService.getByAuthorName2(name, 0, this.pageSize, "name").subscribe(data => {
         this.recipes = data;
         for (let i = 0; i < this.recipes.length; i++) {
@@ -288,14 +298,26 @@ export class SearchComponent implements OnInit {
       } else {
         name = <HTMLInputElement>document.getElementById('recipeName');
       }
-      this.recipeService.getByName(name.value, event.pageIndex, event.pageSize, "name").subscribe(data => {
-        this.recipes = data;
-        for (let i = 0; i < this.recipes.length; i++) {
-          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-            this.recipes[i].authorName = data.login;
-          })
-        }
-      });
+      if (this.authenticated != false) {
+        this.recipeService.getByName(name.value, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+          this.recipes = data;
+          for (let i = 0; i < this.recipes.length; i++) {
+            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+              this.recipes[i].authorName = data.login;
+            })
+          }
+        });
+      } else {
+        this.recipeService.getByName2(name.value, event.pageIndex, event.pageSize, "name").subscribe(data => {
+          this.recipes = data;
+          for (let i = 0; i < this.recipes.length; i++) {
+            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
+              this.recipes[i].authorName = data.login;
+            })
+          }
+        });
+      }
+
     } else if (this.currentsSearch == this.searchArr[1]) {
       let authorName = <HTMLInputElement>document.getElementById('authorName');
       if (this.authenticated != false) {

@@ -356,11 +356,19 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     }
 
     @Override
-    public List<RecipeDTO> findAllByName(String name, int page, int size, String sort) {
+    public List<RecipeDTO> findAllByName(String name, int page, int size, String sort, UUID... userId) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         if (name.matches("^[A-Za-z\\s]+$")) {
-            return mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
-        } else return mapListLambda(recipeRepository.findAllByNameRu(name, pageable).getContent(), RecipeDTO.class);
+            if (userId.length > 0) {
+                List<RecipeDTO> result = mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
+                return favoriteService.checkInFavorite(userId[0], result);
+            } else return mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
+        } else {
+            if (userId.length > 0) {
+                List<RecipeDTO> result = mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
+                return favoriteService.checkInFavorite(userId[0], result);
+            } else return mapListLambda(recipeRepository.findAllByNameRu(name, pageable).getContent(), RecipeDTO.class);
+        }
 
     }
 
