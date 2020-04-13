@@ -158,8 +158,9 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     public List<RecipeDTO> findAllByIngredientName(@Valid @RequestBody IngredientNameListDTO ingredientNameList,
                                                    @RequestParam("page") int page,
                                                    @RequestParam("size") int size,
-                                                   @RequestParam("sort") String sort) {
-        return recipeService.findAllByIngredient(ingredientNameList, page, size, sort);
+                                                   @RequestParam("sort") String sort,
+                                                   @RequestParam("userId") UUID... userId) {
+        return recipeService.findAllByIngredient(ingredientNameList, page, size, sort, userId);
     }
 
     @PostMapping("/data")

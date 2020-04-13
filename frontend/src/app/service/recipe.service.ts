@@ -94,8 +94,12 @@ export class RecipeService {
     return this.http.get<Recipe[]>(`${this.baseUrl}/authorName/${name}?page=${page}&size=${size}&sort=${sort}&userId=`);
   }
 
-  public findAllByIngredients(ingredientsList: IngredientNameListDTO, page: number, size: number, sort: string) {
-    return this.http.post<Recipe[]>(`${this.baseUrl}/ingredientName?page=${page}&size=${size}&sort=${sort}`, ingredientsList);
+  public findAllByIngredients(ingredientsList: IngredientNameListDTO, page: number, size: number, sort: string, userId: string) {
+    return this.http.post<Recipe[]>(`${this.baseUrl}/ingredientName?page=${page}&size=${size}&sort=${sort}&userId=${userId}`, ingredientsList);
+  }
+
+  public findAllByIngredients2(ingredientsList: IngredientNameListDTO, page: number, size: number, sort: string) {
+    return this.http.post<Recipe[]>(`${this.baseUrl}/ingredientName?page=${page}&size=${size}&sort=${sort}&userId=`, ingredientsList);
   }
 
   public findAllByData(recipeData: RecipeDataDTO, page: number, size: number, sort: string) {

@@ -392,7 +392,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     }
 
     @Override
-    public List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO, int page, int size, String sort) {
+    public List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO, int page, int size, String sort, UUID... userId) {
         List<RecipeEntity> recipeEntityList = new ArrayList<>();
         Pageable pageable = PageRequest.of(page, size);
         for (int i = 0; i < ingredientNameListDTO.getIngredientNameDTOList().size(); i++) {
@@ -438,7 +438,10 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                 resultList.remove((size - 1) + 1);
             }
         }
-        return mapListLambda(resultList, RecipeDTO.class);
+        if (userId.length > 0) {
+            List<RecipeDTO> result = mapListLambda(resultList, RecipeDTO.class);
+            return favoriteService.checkInFavorite(userId[0], result);
+        } else return mapListLambda(resultList, RecipeDTO.class);
     }
 
     @Override

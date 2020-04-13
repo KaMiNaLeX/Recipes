@@ -56,7 +56,7 @@ public interface RecipeService {
 
     RecipeDTO getByNameAuthorId(String name, UUID uuid);
 
-    List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO, int page, int size, String sort);
+    List<RecipeDTO> findAllByIngredient(IngredientNameListDTO ingredientNameListDTO, int page, int size, String sort, UUID... userId);
 
     int getCountAllRecipesByIngredient();
 
