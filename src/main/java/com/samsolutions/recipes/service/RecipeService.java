@@ -66,7 +66,7 @@ public interface RecipeService {
 
     RecipeDTO savePhoto(UUID id, MultipartFile file) throws IOException;
 
-    UserDTO getAuthorName(String authorId);
+    List<RecipeDTO> getAuthorName(List<RecipeDTO> list);
 
     //for createRecipe
     void saveCategoryRecipeEntityList(CreateRecipeDTO createRecipeDTO);

@@ -5,7 +5,6 @@ import {Recipe} from "../model/recipe";
 import {CreateRecipeDTO} from "../model/createRecipe/create-recipe-dto";
 import {IngredientNameListDTO} from "../model/findByIngredients/ingredient-name-list-dto";
 import {RecipeDataDTO} from "../model/findByData/recipe-data-dto";
-import {User} from "../model/user";
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +15,6 @@ export class RecipeService {
 
   constructor(private http: HttpClient) {
     this.baseUrl = '/api/recipe';
-  }
-
-  public getAuthorName(userId: string): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/authorName/id/${userId}`);
   }
 
   public getRecipesByCategoryName(categoryName: string, userId: string, page: number, size: number, sort: string): Observable<Recipe[]> {

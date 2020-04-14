@@ -1,10 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {RecipeService} from "../../service/recipe.service";
 import {Recipe} from "../../model/recipe";
 import {FavoriteService} from "../../service/favorite.service";
 import {Favorite} from "../../model/favorite";
-import {User} from "../../model/user";
 import {SharedService} from "../../service/shared.service";
 import {CategoryService} from "../../service/category.service";
 import {Category} from "../../model/category";
@@ -47,25 +46,11 @@ export class RecipeListComponent implements OnInit {
       this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
         0, this.pageSize, "name").subscribe(data => {
         this.recipes = data;
-        if (this.recipes != null) {
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
-          }
-        }
       });
     } else {
       this.recipeService.getRecipesByCategoryName2(sessionStorage.getItem('categoryName'),
         0, this.pageSize, "name").subscribe(data => {
         this.recipes = data;
-        if (this.recipes != null) {
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
-          }
-        }
       });
     }
 
@@ -96,25 +81,11 @@ export class RecipeListComponent implements OnInit {
         this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
           this.pageEvent.pageIndex, this.pageEvent.pageSize, "name").subscribe(data => {
           this.recipes = data;
-          if (this.recipes != null) {
-            for (let i = 0; i < this.recipes.length; i++) {
-              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-                this.recipes[i].authorName = data.login;
-              })
-            }
-          }
         });
       } else {
         this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
           0, this.pageSize, "name").subscribe(data => {
           this.recipes = data;
-          if (this.recipes != null) {
-            for (let i = 0; i < this.recipes.length; i++) {
-              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-                this.recipes[i].authorName = data.login;
-              })
-            }
-          }
         });
       }
     }
@@ -132,13 +103,6 @@ export class RecipeListComponent implements OnInit {
         event.pageIndex, event.pageSize, "name").subscribe(
         response => {
           this.recipes = response;
-          if (this.recipes != null) {
-            for (let i = 0; i < this.recipes.length; i++) {
-              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-                this.recipes[i].authorName = data.login;
-              })
-            }
-          }
         }
       );
     } else {
@@ -146,17 +110,9 @@ export class RecipeListComponent implements OnInit {
         event.pageSize, "name").subscribe(
         response => {
           this.recipes = response;
-          if (this.recipes != null) {
-            for (let i = 0; i < this.recipes.length; i++) {
-              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-                this.recipes[i].authorName = data.login;
-              })
-            }
-          }
         }
       );
     }
-
     return event;
   }
 }

@@ -4,7 +4,9 @@ import com.samsolutions.recipes.dto.FavoriteDTO;
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
 import com.samsolutions.recipes.model.FavoriteEntity;
+import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.repository.FavoriteRepository;
+import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.FavoriteService;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
@@ -31,6 +33,9 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
 
     @Autowired
     private RecipeService recipeService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     @Transactional
@@ -60,6 +65,8 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
         List<FavoriteDTO> favoriteDTOList = new ArrayList<>();
         for (FavoriteEntity favoriteEntity : favoriteEntityList) {
             RecipeDTO recipeDTO = recipeService.findByRecipeId(favoriteEntity.getRecipeId());
+            UserEntity userEntity = userRepository.getById(recipeDTO.getAuthorId());
+            recipeDTO.setAuthorName(userEntity.getLogin());
             FavoriteDTO favoriteDTO = new FavoriteDTO();
             favoriteDTO.setRecipeDTO(recipeDTO);
             favoriteDTO.setUuid(favoriteEntity.getId());
@@ -70,6 +77,7 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
         if (favoriteDTOList.size() == 0) {
             map(favoriteEntityList, FavoriteDTO.class);
         }
+
         return favoriteDTOList;
     }
 

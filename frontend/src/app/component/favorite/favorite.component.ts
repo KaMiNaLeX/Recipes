@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FavoriteService} from "../../service/favorite.service";
 import {Favorite} from "../../model/favorite";
-import {User} from "../../model/user";
 import {RecipeService} from "../../service/recipe.service";
 import {SharedService} from "../../service/shared.service";
 import {PageEvent} from "@angular/material/paginator";
@@ -32,11 +31,6 @@ export class FavoriteComponent implements OnInit {
     });
     this.favoriteService.findAll(localStorage.getItem('id'), 0, this.pageSize, "addedAt").subscribe((data: Favorite[]) => {
       this.favorites = data;
-      for (let i = 0; i < this.favorites.length; i++) {
-        this.recipeService.getAuthorName(this.favorites[i].recipeDTO.authorId).subscribe((data: User) => {
-          this.favorites[i].recipeDTO.authorName = data.login;
-        })
-      }
     });
     this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
@@ -67,13 +61,6 @@ export class FavoriteComponent implements OnInit {
     this.favoriteService.findAll(localStorage.getItem('id'), event.pageIndex, event.pageSize, "addedAt").subscribe(
       response => {
         this.favorites = response;
-        if (this.favorites != null) {
-          for (let i = 0; i < this.favorites.length; i++) {
-            this.recipeService.getAuthorName(this.favorites[i].recipeDTO.authorId).subscribe((data: User) => {
-              this.favorites[i].recipeDTO.authorName = data.login;
-            })
-          }
-        }
       }
     );
     return undefined;

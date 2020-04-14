@@ -230,11 +230,12 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                     return o1.getName().compareTo(o2.getName());
                 }
             });
+            List<RecipeDTO> result = mapListLambda(recipeEntityList, RecipeDTO.class);
             if (userId.length > 0) {
-                List<RecipeDTO> result = mapListLambda(recipeEntityList, RecipeDTO.class);
+                result = getAuthorName(result);
                 return favoriteService.checkInFavorite(userId[0], result);
             } else {
-                return mapListLambda(recipeEntityList, RecipeDTO.class);
+                return getAuthorName(result);
             }
 
         } catch (NotFoundException | NullPointerException ex) {
@@ -337,11 +338,12 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
             return null;
         }
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        List<RecipeDTO> result = mapListLambda(recipeRepository.getByAuthorId(uuid, pageable).getContent(), RecipeDTO.class);
         if (userId.length > 0) {
-            List<RecipeDTO> result = mapListLambda(recipeRepository.getByAuthorId(uuid, pageable).getContent(), RecipeDTO.class);
+            result = getAuthorName(result);
             return favoriteService.checkInFavorite(userId[0], result);
         } else {
-            return mapListLambda(recipeRepository.getByAuthorId(uuid, pageable).getContent(), RecipeDTO.class);
+            return getAuthorName(result);
         }
     }
 
@@ -359,17 +361,20 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     public List<RecipeDTO> findAllByName(String name, int page, int size, String sort, UUID... userId) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         if (name.matches("^[A-Za-z\\s]+$")) {
+            List<RecipeDTO> result = mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
             if (userId.length > 0) {
-                List<RecipeDTO> result = mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
+                result = getAuthorName(result);
                 return favoriteService.checkInFavorite(userId[0], result);
-            } else return mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
+            } else {
+                return getAuthorName(result);
+            }
         } else {
+            List<RecipeDTO> result = mapListLambda(recipeRepository.findAllByNameRu(name, pageable).getContent(), RecipeDTO.class);
             if (userId.length > 0) {
-                List<RecipeDTO> result = mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
+                result = getAuthorName(result);
                 return favoriteService.checkInFavorite(userId[0], result);
-            } else return mapListLambda(recipeRepository.findAllByNameRu(name, pageable).getContent(), RecipeDTO.class);
+            } else return getAuthorName(result);
         }
-
     }
 
     @Override
@@ -438,10 +443,11 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                 resultList.remove((size - 1) + 1);
             }
         }
+        List<RecipeDTO> result = mapListLambda(resultList, RecipeDTO.class);
         if (userId.length > 0) {
-            List<RecipeDTO> result = mapListLambda(resultList, RecipeDTO.class);
+            result = getAuthorName(result);
             return favoriteService.checkInFavorite(userId[0], result);
-        } else return mapListLambda(resultList, RecipeDTO.class);
+        } else return getAuthorName(result);
     }
 
     @Override
@@ -501,10 +507,11 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                 recipeEntityList.remove((size - 1) + 1);
             }
         }
+        List<RecipeDTO> result = mapListLambda(recipeEntityList, RecipeDTO.class);
         if (userId.length > 0) {
-            List<RecipeDTO> result = mapListLambda(recipeEntityList, RecipeDTO.class);
+            result = getAuthorName(result);
             return favoriteService.checkInFavorite(userId[0], result);
-        } else return mapListLambda(recipeEntityList, RecipeDTO.class);
+        } else return getAuthorName(result);
     }
 
     @Override
@@ -527,11 +534,12 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     }
 
     @Override
-    public UserDTO getAuthorName(String authorId) {
-        UserEntity userEntity = userRepository.getById(UUID.fromString(authorId));
-        UserDTO userDTO = new UserDTO();
-        map(userEntity, userDTO);
-        return userDTO;
+    public List<RecipeDTO> getAuthorName(List<RecipeDTO> recipeDTOS) {
+        for (RecipeDTO recipeDTO : recipeDTOS) {
+            UserEntity userEntity = userRepository.getById(recipeDTO.getAuthorId());
+            recipeDTO.setAuthorName(userEntity.getLogin());
+        }
+        return recipeDTOS;
     }
 
     @Override

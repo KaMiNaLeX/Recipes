@@ -184,11 +184,6 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
         return recipeService.savePhoto(id, file);
     }
 
-    @GetMapping("/authorName/id/{id}")
-    public UserDTO getAuthorName(@PathVariable("id") @NotBlank String authorId) {
-        return recipeService.getAuthorName(authorId);
-    }
-
     @GetMapping("/countAllRecipesInCategory/{categoryName}")
     public int getCountAllRecipesInCategory(@PathVariable("categoryName") String categoryName) {
         return recipeService.getCountAllRecipesInCategory(categoryName);

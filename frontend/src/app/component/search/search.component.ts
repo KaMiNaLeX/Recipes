@@ -125,20 +125,10 @@ export class SearchComponent implements OnInit {
     if (this.authenticated != false) {
       this.recipeService.getByName(name, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
         this.recipes = data;
-        for (let i = 0; i < this.recipes.length; i++) {
-          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-            this.recipes[i].authorName = data.login;
-          })
-        }
       });
     } else {
       this.recipeService.getByName2(name, 0, this.pageSize, "name").subscribe(data => {
         this.recipes = data;
-        for (let i = 0; i < this.recipes.length; i++) {
-          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-            this.recipes[i].authorName = data.login;
-          })
-        }
       });
     }
 
@@ -153,20 +143,10 @@ export class SearchComponent implements OnInit {
     if (this.authenticated != false) {
       this.recipeService.getByAuthorName(name, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
         this.recipes = data;
-        for (let i = 0; i < this.recipes.length; i++) {
-          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-            this.recipes[i].authorName = data.login;
-          })
-        }
       });
     } else {
       this.recipeService.getByAuthorName2(name, 0, this.pageSize, "name").subscribe(data => {
         this.recipes = data;
-        for (let i = 0; i < this.recipes.length; i++) {
-          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-            this.recipes[i].authorName = data.login;
-          })
-        }
       });
     }
 
@@ -189,24 +169,10 @@ export class SearchComponent implements OnInit {
       if (this.pageEvent != undefined) {
         this.recipeService.getByAuthorName(name.value, this.pageEvent.pageIndex, this.pageEvent.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
-          if (this.recipes != null) {
-            for (let i = 0; i < this.recipes.length; i++) {
-              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-                this.recipes[i].authorName = data.login;
-              })
-            }
-          }
         });
       } else {
         this.recipeService.getByAuthorName(name.value, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
-          if (this.recipes != null) {
-            for (let i = 0; i < this.recipes.length; i++) {
-              this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-                this.recipes[i].authorName = data.login;
-              })
-            }
-          }
         });
       }
     }
@@ -261,20 +227,10 @@ export class SearchComponent implements OnInit {
     if (this.authenticated != false) {
       this.recipeService.findAllByData(this.recipeData, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
         this.recipes = data;
-        for (let i = 0; i < this.recipes.length; i++) {
-          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-            this.recipes[i].authorName = data.login;
-          })
-        }
       });
     } else {
       this.recipeService.findAllByData2(this.recipeData, 0, this.pageSize, "name").subscribe(data => {
         this.recipes = data;
-        for (let i = 0; i < this.recipes.length; i++) {
-          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-            this.recipes[i].authorName = data.login;
-          })
-        }
       });
     }
     this.recipeService.getCountAllRecipesByData().subscribe(data => {
@@ -289,20 +245,10 @@ export class SearchComponent implements OnInit {
     if (this.authenticated != false) {
       this.recipeService.findAllByIngredients(this.ingredientNameDTOList, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
         this.recipes = data;
-        for (let i = 0; i < this.recipes.length; i++) {
-          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-            this.recipes[i].authorName = data.login;
-          })
-        }
       });
     } else {
       this.recipeService.findAllByIngredients2(this.ingredientNameDTOList, 0, this.pageSize, "name").subscribe(data => {
         this.recipes = data;
-        for (let i = 0; i < this.recipes.length; i++) {
-          this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-            this.recipes[i].authorName = data.login;
-          })
-        }
       });
     }
 
@@ -324,20 +270,10 @@ export class SearchComponent implements OnInit {
       if (this.authenticated != false) {
         this.recipeService.getByName(name.value, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
-          }
         });
       } else {
         this.recipeService.getByName2(name.value, event.pageIndex, event.pageSize, "name").subscribe(data => {
           this.recipes = data;
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
-          }
         });
       }
 
@@ -347,26 +283,12 @@ export class SearchComponent implements OnInit {
         this.recipeService.getByAuthorName(authorName.value, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(
           response => {
             this.recipes = response;
-            if (this.recipes != null) {
-              for (let i = 0; i < this.recipes.length; i++) {
-                this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-                  this.recipes[i].authorName = data.login;
-                })
-              }
-            }
           }
         );
       } else {
         this.recipeService.getByAuthorName2(authorName.value, event.pageIndex, event.pageSize, "name").subscribe(
           response => {
             this.recipes = response;
-            if (this.recipes != null) {
-              for (let i = 0; i < this.recipes.length; i++) {
-                this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-                  this.recipes[i].authorName = data.login;
-                })
-              }
-            }
           }
         );
       }
@@ -375,40 +297,20 @@ export class SearchComponent implements OnInit {
       if (this.authenticated != false) {
         this.recipeService.findAllByIngredients(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
-          }
         });
       } else {
         this.recipeService.findAllByIngredients2(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "name").subscribe(data => {
           this.recipes = data;
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
-          }
         });
       }
     } else if (this.currentsSearch == this.searchArr[3]) {
       if (this.authenticated != false) {
         this.recipeService.findAllByData(this.recipeData, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
-          }
         });
       } else {
         this.recipeService.findAllByData2(this.recipeData, event.pageIndex, event.pageSize, "name").subscribe(data => {
           this.recipes = data;
-          for (let i = 0; i < this.recipes.length; i++) {
-            this.recipeService.getAuthorName(this.recipes[i].authorId).subscribe((data: User) => {
-              this.recipes[i].authorName = data.login;
-            })
-          }
         });
       }
     }

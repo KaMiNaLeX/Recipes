@@ -39,4 +39,5 @@ public class RecipeDTO {
     @ValidUUID
     private UUID authorId;
     private boolean inFavorite = false;
+    private String authorName;
 }
