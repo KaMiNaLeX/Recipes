@@ -77,16 +77,10 @@ export class RecipeListComponent implements OnInit {
   addToFavorite(id: string) {
     this.favoriteService.addToFavorite(id, this.authenticated);
     if (this.authenticated != false) {
-      if (this.pageEvent != undefined) {
-        this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
-          this.pageEvent.pageIndex, this.pageEvent.pageSize, "name").subscribe(data => {
-          this.recipes = data;
-        });
-      } else {
-        this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
-          0, this.pageSize, "name").subscribe(data => {
-          this.recipes = data;
-        });
+      for (let i = 0; i < this.recipes.length; i++) {
+        if (this.recipes[i].id == id) {
+          this.recipes[i].inFavorite = true;
+        }
       }
     }
   }
@@ -95,6 +89,16 @@ export class RecipeListComponent implements OnInit {
     if (this.author != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
     } else this.utilsService.alert("author or admin");
+  }
+
+  deleteFromFavorite(recipeId: string) {
+    this.favoriteService.deleteByUserAndRecipeId(localStorage.getItem('id'), recipeId).subscribe(data => {
+      for (let i = 0; i < this.recipes.length; i++) {
+        if (this.recipes[i].id == recipeId) {
+          this.recipes[i].inFavorite = false;
+        }
+      }
+    });
   }
 
   getServerData(event ?: PageEvent) {

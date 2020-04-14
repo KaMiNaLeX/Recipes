@@ -53,6 +53,13 @@ public class FavoritesRestController extends CustomGlobalExceptionHandler {
         log.info("Remove favorite " + uuid + " is successful");
     }
 
+    @DeleteMapping("/delete/{userId}/{recipeId}")
+    public void removeByUserIdAndRecipeId(@PathVariable("userId") @ValidUUID UUID userId,
+                                          @PathVariable("recipeId") @ValidUUID UUID recipeId) {
+        favoriteService.removeByUserIdAndRecipeId(userId, recipeId);
+        log.info("Remove favorite is successful");
+    }
+
     @GetMapping("/{id}")
     public List<FavoriteDTO> findAllByUserId(@PathVariable("id") @ValidUUID UUID uuid, @RequestParam("page") int page,
                                              @RequestParam("size") int size, @RequestParam("sort") String sort) {

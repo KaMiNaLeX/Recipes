@@ -45,6 +45,12 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
     }
 
     @Override
+    public void removeByUserIdAndRecipeId(UUID userId, UUID recipeId) {
+        FavoriteEntity favoriteEntity = favoriteRepository.getByUserIdAndRecipeId(userId, recipeId);
+        favoriteRepository.delete(favoriteEntity);
+    }
+
+    @Override
     @Transactional
     public FavoriteDTO createDTO(CreateFavoriteDTO createFavoriteDTO) {
         FavoriteEntity createEntity = new FavoriteEntity();

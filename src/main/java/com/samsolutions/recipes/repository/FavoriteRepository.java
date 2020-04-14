@@ -17,4 +17,6 @@ public interface FavoriteRepository extends BaseRepository<FavoriteEntity> {
     Page<FavoriteEntity> findAllByUserId(UUID uuid, Pageable pageable);
 
     List<FavoriteEntity> findAllByUserId(UUID userId);
+
+    FavoriteEntity getByUserIdAndRecipeId(UUID userId, UUID recipeId);
 }

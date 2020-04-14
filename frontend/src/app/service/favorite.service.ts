@@ -29,6 +29,10 @@ export class FavoriteService {
     return this.http.delete(`${this.baseUrl}/delete/${id}`, {responseType: 'text'});
   }
 
+  public deleteByUserAndRecipeId(userId: string, recipeId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete/${userId}/${recipeId}`, {responseType: 'text'});
+  }
+
   addToFavorite(id: string, authenticated: boolean) {
     let createFavorite = new CreateFavorite();
     let favorite = new Favorite();
@@ -39,8 +43,6 @@ export class FavoriteService {
         favorite = data;
         if (favorite == null) {
           this.utilsService.alert("recipe in favorites");
-        } else {
-          this.utilsService.alert("recipe add to favorites");
         }
       })
     } else this.utilsService.alert("you need to authenticated");

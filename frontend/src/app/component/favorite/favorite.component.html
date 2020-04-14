@@ -52,8 +52,11 @@
         <mat-card-actions>
           <button (click)="view(favorite.recipeDTO.id)" mat-raised-button color="primary"
                   type="submit">{{'view' | translate}}</button>
-          <button (click)="deleteFromFavorite(favorite.uuid)" mat-raised-button color="primary"
-                  type="submit">{{'delete fav' | translate}}</button>
+          <button style="margin-left: 178px;margin-right: auto" mat-icon-button
+                  color="warn" (click)="deleteFromFavorite(favorite.uuid)"
+                  type="submit">
+            <mat-icon style="margin: auto auto">favorite</mat-icon>
+          </button>
         </mat-card-actions>
       </mat-card>
     </div>

@@ -63,7 +63,7 @@
               <mat-icon style="margin: auto auto">favorite_border</mat-icon>
             </button>
             <button *ngIf="recipe.inFavorite == true" style="margin-left: 178px;margin-right: auto" mat-icon-button
-                    color="warn" (click)="addToFavorite(recipe.id)"
+                    color="warn" (click)="deleteFromFavorite(recipe.id)"
                     type="submit">
               <mat-icon style="margin: auto auto">favorite</mat-icon>
             </button>

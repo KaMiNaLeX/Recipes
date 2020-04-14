@@ -15,6 +15,8 @@ public interface FavoriteService {
 
     void removeById(UUID uuid);
 
+    void removeByUserIdAndRecipeId(UUID userId, UUID recipeId);
+
     FavoriteDTO createDTO(CreateFavoriteDTO favoriteDTO);
 
     List<FavoriteDTO> findAllByUserId(UUID uuid, int page, int size, String sort);

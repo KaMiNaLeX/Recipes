@@ -48,11 +48,17 @@ export class FavoriteComponent implements OnInit {
 
   deleteFromFavorite(id: string) {
     this.favoriteService.delete(id).subscribe(data => {
-      this.favoriteService.findAll(localStorage.getItem('id'), 0, this.pageSize, "addedAt").subscribe(data => {
-        this.favorites = data;
-        this.favoriteService.getCountAllFavoritesRecipes(localStorage.getItem('id')).subscribe(data => {
-          this.length = data;
+      if (this.pageEvent != undefined) {
+        this.favoriteService.findAll(localStorage.getItem('id'), this.pageEvent.pageIndex, this.pageEvent.pageSize, "addedAt").subscribe(data => {
+          this.favorites = data;
         });
+      } else {
+        this.favoriteService.findAll(localStorage.getItem('id'), 0, this.pageSize, "addedAt").subscribe(data => {
+          this.favorites = data;
+        });
+      }
+      this.favoriteService.getCountAllFavoritesRecipes(localStorage.getItem('id')).subscribe(data => {
+        this.length = data;
       });
     });
   }
@@ -63,6 +69,6 @@ export class FavoriteComponent implements OnInit {
         this.favorites = response;
       }
     );
-    return undefined;
+    return event;
   }
 }
