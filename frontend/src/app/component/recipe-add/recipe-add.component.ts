@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "../../service/recipe.service";
 import {CreateRecipeDTO} from "../../model/createRecipe/create-recipe-dto";
@@ -16,6 +16,7 @@ import {UnitRu} from "../../model/unit-ru.enum";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {Fruit} from "../../model/fruit";
 import {MatTableDataSource} from "@angular/material/table";
+import {TranslateResponse} from "../../model/translate-response";
 
 @Component({
   selector: 'app-recipe-add',
@@ -153,12 +154,27 @@ export class RecipeAddComponent implements OnInit {
 
   addCookingStep(description: string) {
     let step = new CookingStepRecipeDTO();
-    //todo: need to fix
-    step.description = description;
-    step.descriptionRu = description;
     step.active = true;
     step.imgSource = this.imgURL;
+    if (this.ru != true) {
+      this.utilsService.translate('en-ru', this.createRecipeDTO.name).subscribe((data: TranslateResponse) => {
+        this.createRecipeDTO.nameRu = data.text[0];
+      });
+      this.utilsService.translate('en-ru', description).subscribe((data: TranslateResponse) => {
+        step.descriptionRu = data.text[0];
+        step.description = description;
+      });
+    } else {
+      this.utilsService.translate('ru-en', this.createRecipeDTO.nameRu).subscribe((data: TranslateResponse) => {
+        this.createRecipeDTO.name = data.text[0];
+      });
+      this.utilsService.translate('ru-en', description).subscribe((data: TranslateResponse) => {
+        step.description = data.text[0];
+        step.descriptionRu = description;
+      });
+    }
     this.cookingSteps.push(step);
+    console.log(this.cookingSteps);
     this.cookingStep.description = null;
     this.imgURL = null;
     this.dataSource = new MatTableDataSource<CookingStepRecipeDTO>(this.cookingSteps);
@@ -198,7 +214,7 @@ export class RecipeAddComponent implements OnInit {
     this.createRecipeDTO.categoryRecipeDTOList = this.checkedArray;
     // need to fix
     this.createRecipeDTO.cookingDifficultyRu = "ЛЕГКО";
-    this.createRecipeDTO.nameRu = "Тест";
+    //this.createRecipeDTO.nameRu = "Тест";
 
     if (this.cookingSteps.length != 0 &&
       this.ingredients.length != 0 &&
@@ -217,7 +233,13 @@ export class RecipeAddComponent implements OnInit {
         this.cookingSteps = [];
         for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
           this.cookingSteps.push(this.createRecipeDTO.cookingStepRecipeDTOList[i]);
-          this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id, this.selectedFile[i]);
+          if (this.selectedFile[i] != undefined) {
+            this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id, this.selectedFile[i]);
+          } else {
+            this.selectedFile[i] = new File([], "null", undefined);
+            this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id, this.selectedFile[i]);
+          }
+
         }
       });
       this.router.navigate(['category']);
@@ -237,6 +259,11 @@ export class RecipeAddComponent implements OnInit {
         }
       }
     }
+  }
+
+  translateName() {
+
+
   }
 }
 

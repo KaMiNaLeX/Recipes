@@ -60,7 +60,7 @@
       </div>
       <button style="margin-top: 15px"
               [disabled]=" difficulty.invalid || minutes.invalid || checkedArray.length == 0"
-              mat-raised-button matStepperNext>{{'next' | translate}}
+              mat-raised-button matStepperNext (click)="translateName()">{{'next' | translate}}
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
     </mat-step>

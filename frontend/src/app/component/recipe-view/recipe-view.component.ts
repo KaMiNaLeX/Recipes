@@ -29,7 +29,7 @@ export class RecipeViewComponent implements OnInit {
       data => {
         this.createRecipeDTO = data;
         this.dataSource = this.createRecipeDTO.ingredientRecipeDTOList;
-        this.dataSource2 = this.createRecipeDTO.cookingStepRecipeDTOList;
+        this.dataSource2 = this.createRecipeDTO.cookingStepRecipeDTOList.reverse();
       });
     this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
