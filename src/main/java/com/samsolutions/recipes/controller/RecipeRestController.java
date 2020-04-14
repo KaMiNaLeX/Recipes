@@ -167,8 +167,9 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     public List<RecipeDTO> findAllByData(@Valid @RequestBody RecipeDataDTO recipeDataDTO,
                                          @RequestParam("page") int page,
                                          @RequestParam("size") int size,
-                                         @RequestParam("sort") String sort) {
-        return recipeService.findAllByData(recipeDataDTO, page, size, sort);
+                                         @RequestParam("sort") String sort,
+                                         @RequestParam("userId") UUID... userId) {
+        return recipeService.findAllByData(recipeDataDTO, page, size, sort, userId);
     }
 
     @PostMapping(value = "/addPhoto4Step/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

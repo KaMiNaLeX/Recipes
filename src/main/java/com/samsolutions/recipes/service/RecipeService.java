@@ -60,7 +60,7 @@ public interface RecipeService {
 
     int getCountAllRecipesByIngredient();
 
-    List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO, int page, int size, String sort);
+    List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO, int page, int size, String sort, UUID... userId);
 
     int getCountAllRecipesByData();
 

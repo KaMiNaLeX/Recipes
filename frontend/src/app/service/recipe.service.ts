@@ -102,8 +102,12 @@ export class RecipeService {
     return this.http.post<Recipe[]>(`${this.baseUrl}/ingredientName?page=${page}&size=${size}&sort=${sort}&userId=`, ingredientsList);
   }
 
-  public findAllByData(recipeData: RecipeDataDTO, page: number, size: number, sort: string) {
-    return this.http.post<Recipe[]>(`${this.baseUrl}/data?page=${page}&size=${size}&sort=${sort}`, recipeData);
+  public findAllByData(recipeData: RecipeDataDTO, page: number, size: number, sort: string, userId: string) {
+    return this.http.post<Recipe[]>(`${this.baseUrl}/data?page=${page}&size=${size}&sort=${sort}&userId=${userId}`, recipeData);
+  }
+
+  public findAllByData2(recipeData: RecipeDataDTO, page: number, size: number, sort: string) {
+    return this.http.post<Recipe[]>(`${this.baseUrl}/data?page=${page}&size=${size}&sort=${sort}&userId=`, recipeData);
   }
 
   public addPhoto4Step(stepId: string, file: File) {

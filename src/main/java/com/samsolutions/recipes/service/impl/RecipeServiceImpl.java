@@ -450,7 +450,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     }
 
     @Override
-    public List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO, int page, int size, String sort) {
+    public List<RecipeDTO> findAllByData(RecipeDataDTO recipeDataDTO, int page, int size, String sort, UUID... userId) {
         boolean ru = false;
         if (recipeDataDTO.getCookingDifficultyDTOList().size() != 0) {
             if (recipeDataDTO.getCookingDifficultyDTOList().get(0).getCookingDifficulty().matches("^[А-Яа-я\\s]+$")) {
@@ -501,7 +501,10 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                 recipeEntityList.remove((size - 1) + 1);
             }
         }
-        return mapListLambda(recipeEntityList, RecipeDTO.class);
+        if (userId.length > 0) {
+            List<RecipeDTO> result = mapListLambda(recipeEntityList, RecipeDTO.class);
+            return favoriteService.checkInFavorite(userId[0], result);
+        } else return mapListLambda(recipeEntityList, RecipeDTO.class);
     }
 
     @Override
