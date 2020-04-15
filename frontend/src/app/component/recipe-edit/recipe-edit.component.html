@@ -100,6 +100,15 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field style="max-width: 20%; margin-left: 30px">
+          <mat-label>{{'note' | translate}}</mat-label>
+          <input matInput [(ngModel)]="ingredient.note"
+                 #note="ngModel">
+        </mat-form-field>
+        <button style="margin-left: 30px" mat-mini-fab
+                (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit)">
+          <mat-icon style="margin-left: 8px">add</mat-icon>
+        </button>
       </ng-container>
       <ng-template #lang3>
         <mat-chip-list aria-label="Fish selection">
@@ -131,16 +140,17 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field style="max-width: 20%; margin-left: 30px">
+          <mat-label>{{'note' | translate}}</mat-label>
+          <input matInput [(ngModel)]="ingredient.noteRu"
+                 #note="ngModel">
+        </mat-form-field>
+        <button style="margin-left: 30px" mat-mini-fab
+                (click)="addIngredient(ingredient.nameRu,ingredient.amount,ingredient.unitRu)">
+          <mat-icon style="margin-left: 8px">add</mat-icon>
+        </button>
       </ng-template>
-      <mat-form-field style="max-width: 20%; margin-left: 30px">
-        <mat-label>{{'note' | translate}}</mat-label>
-        <input matInput [(ngModel)]="ingredient.note"
-               #note="ngModel">
-      </mat-form-field>
-      <button style="margin-left: 30px" mat-mini-fab
-              (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit)">
-        <mat-icon style="margin-left: 8px">add</mat-icon>
-      </button>
+
       <div>
         <button style="margin-top: 15px" mat-button matStepperPrevious mat-raised-button>
           <mat-icon>keyboard_arrow_left</mat-icon>
@@ -158,7 +168,8 @@
                  *ngIf="cookingSteps.length != 0">
         <ng-container matColumnDef="photo">
           <mat-header-cell *matHeaderCellDef>{{'photo' | translate}}</mat-header-cell>
-          <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" style="width: 150px"  *ngIf="step.imgSource != null">
+          <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" style="width: 150px"
+                                                *ngIf="step.imgSource != null">
           </mat-cell>
         </ng-container>
         <ng-container *ngIf="!ru;else lang4">

@@ -33,6 +33,8 @@ export class RecipeAddComponent implements OnInit {
   cookingStep: CookingStepRecipeDTO = new CookingStepRecipeDTO();
   cookingSteps: CookingStepRecipeDTO[] = [];
   unit = [];
+  unRu = [];
+  un = [];
   allIngredients: Ingredient[];
   recipe: Recipe;
   selectedFile: File[] = [];
@@ -56,6 +58,11 @@ export class RecipeAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    let u = Unit;
+    this.un = Object.values(u);
+    let ur = UnitRu;
+    this.unRu = Object.values(ur);
+
     this.categoryService.findAllCategoriesDTO().subscribe(data => {
       this.categories = data;
     });
@@ -108,18 +115,25 @@ export class RecipeAddComponent implements OnInit {
     let ingredientRecipeDTO = new IngredientRecipeDTO();
     let fruit = new Fruit();
     this.ingredientService.getByName(name).subscribe(data => {
-      let ingredient = data;
-      ingredientRecipeDTO.nameRu = ingredient.nameRu;
-      ingredientRecipeDTO.name = ingredient.name;
+      ingredientRecipeDTO.nameRu = data.nameRu;
+      ingredientRecipeDTO.name = data.name;
       ingredientRecipeDTO.amount = amount;
-      //todo need to fix
-      ingredientRecipeDTO.unitRu = unit;
-      ingredientRecipeDTO.unit = unit;
-      fruit.name = ingredient.name;
-      fruit.nameRu = ingredient.nameRu;
+      fruit.name = data.name;
+      fruit.nameRu = data.nameRu;
       fruit.amount = amount;
-      fruit.unit = unit.toLowerCase();
-      fruit.unitRu = unit.toLowerCase();
+      if (this.ru != true) {
+        ingredientRecipeDTO.unit = unit;
+        fruit.unit = unit.toLowerCase();
+        let i = this.un.indexOf(unit);
+        ingredientRecipeDTO.unitRu = this.unRu[i];
+        fruit.unitRu = this.unRu[i].toLowerCase();
+      } else {
+        ingredientRecipeDTO.unitRu = unit;
+        fruit.unitRu = unit.toLowerCase();
+        let i = this.unRu.indexOf(unit);
+        ingredientRecipeDTO.unit = this.un[i];
+        fruit.unit = this.un[i].toLowerCase();
+      }
     });
     this.ingredients.push(ingredientRecipeDTO);
     this.fruits.push(fruit);
