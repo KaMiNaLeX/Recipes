@@ -51,7 +51,7 @@
           <mat-table [dataSource]="dataSource2" class="mat-elevation-z8" style="text-align: justify">
             <ng-container matColumnDef="photo">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" *ngIf="step.imgSource != null">
+              <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" style="width: 150px" *ngIf="step.imgSource != null">
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="description">

@@ -158,7 +158,7 @@
                  *ngIf="cookingSteps.length != 0">
         <ng-container matColumnDef="photo">
           <mat-header-cell *matHeaderCellDef>{{'photo' | translate}}</mat-header-cell>
-          <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" *ngIf="step.imgSource != null">
+          <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" style="width: 150px"  *ngIf="step.imgSource != null">
           </mat-cell>
         </ng-container>
         <ng-container *ngIf="!ru;else lang4">

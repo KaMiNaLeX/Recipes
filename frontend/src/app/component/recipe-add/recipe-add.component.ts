@@ -36,7 +36,7 @@ export class RecipeAddComponent implements OnInit {
   allIngredients: Ingredient[];
   recipe: Recipe;
   selectedFile: File[] = [];
-  imgURL: any;
+  imgURL: any = null;
   selectedFile2: File = null;
   imgURL2: any;
   ru: boolean;
@@ -112,6 +112,7 @@ export class RecipeAddComponent implements OnInit {
       ingredientRecipeDTO.nameRu = ingredient.nameRu;
       ingredientRecipeDTO.name = ingredient.name;
       ingredientRecipeDTO.amount = amount;
+      //todo need to fix
       ingredientRecipeDTO.unitRu = unit;
       ingredientRecipeDTO.unit = unit;
       fruit.name = ingredient.name;
@@ -155,7 +156,11 @@ export class RecipeAddComponent implements OnInit {
   addCookingStep(description: string) {
     let step = new CookingStepRecipeDTO();
     step.active = true;
-    step.imgSource = this.imgURL;
+    if (this.imgURL == null) {
+      step.imgSource = "http://localhost:4200/getFile/noImage.png";
+    } else {
+      step.imgSource = this.imgURL;
+    }
     if (this.ru != true) {
       this.utilsService.translate('en-ru', this.createRecipeDTO.name).subscribe((data: TranslateResponse) => {
         this.createRecipeDTO.nameRu = data.text[0];
@@ -174,16 +179,13 @@ export class RecipeAddComponent implements OnInit {
       });
     }
     this.cookingSteps.push(step);
-    console.log(this.cookingSteps);
     this.cookingStep.description = null;
     this.imgURL = null;
     this.dataSource = new MatTableDataSource<CookingStepRecipeDTO>(this.cookingSteps);
   }
 
   handleFileInput(event) {
-    console.log(event);
     this.selectedFile.push(event.target.files[0]);
-
     // Below part is used to display the selected image
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
@@ -193,7 +195,6 @@ export class RecipeAddComponent implements OnInit {
   }
 
   handleFileInput2(event) {
-    console.log(event);
     this.selectedFile2 = event.target.files[0];
     // Below part is used to display the selected image
     let reader = new FileReader();
@@ -206,7 +207,8 @@ export class RecipeAddComponent implements OnInit {
   onSubmit() {
     this.createRecipeDTO.imgSource = null;
     for (let i = 0; i < this.cookingSteps.length; i++) {
-      this.cookingSteps[i].imgSource = null;
+      if (this.cookingSteps[i].imgSource.length > 1000)
+        this.cookingSteps[i].imgSource = null;
     }
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
@@ -214,8 +216,6 @@ export class RecipeAddComponent implements OnInit {
     this.createRecipeDTO.categoryRecipeDTOList = this.checkedArray;
     // need to fix
     this.createRecipeDTO.cookingDifficultyRu = "ЛЕГКО";
-    //this.createRecipeDTO.nameRu = "Тест";
-
     if (this.cookingSteps.length != 0 &&
       this.ingredients.length != 0 &&
       this.checkedArray.length != 0 &&
@@ -230,16 +230,10 @@ export class RecipeAddComponent implements OnInit {
           this.selectedFile2 = new File([], "null", undefined);
           this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile2);
         }
-        this.cookingSteps = [];
         for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
-          this.cookingSteps.push(this.createRecipeDTO.cookingStepRecipeDTOList[i]);
-          if (this.selectedFile[i] != undefined) {
-            this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id, this.selectedFile[i]);
-          } else {
-            this.selectedFile[i] = new File([], "null", undefined);
+          if (this.selectedFile[i] != undefined && this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource == null) {
             this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id, this.selectedFile[i]);
           }
-
         }
       });
       this.router.navigate(['category']);

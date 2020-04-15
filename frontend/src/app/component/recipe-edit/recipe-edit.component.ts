@@ -16,6 +16,7 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MatTableDataSource} from "@angular/material/table";
 import {Fruit} from "../../model/fruit";
 import {UnitRu} from "../../model/unit-ru.enum";
+import {TranslateResponse} from "../../model/translate-response";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -39,7 +40,7 @@ export class RecipeEditComponent implements OnInit {
   primaryName: String;
 
   selectedFile2: File[] = [];
-  imgURL2: any;
+  imgURL2: any = null;
 
   selectedFile: File = null;
   imgURL: any;
@@ -177,14 +178,32 @@ export class RecipeEditComponent implements OnInit {
 
   addCookingStep(description: string) {
     let step = new CookingStepRecipeDTO();
-    //todo: need to fix
-    step.description = description;
-    step.descriptionRu = description;
     step.active = true;
-    step.imgSource = this.imgURL2;
+    if (this.imgURL2 == null) {
+      step.imgSource = "http://localhost:4200/getFile/noImage.png";
+    } else {
+      step.imgSource = this.imgURL2;
+    }
+    if (this.ru != true) {
+      this.utilsService.translate('en-ru', this.createRecipeDTO.name).subscribe((data: TranslateResponse) => {
+        this.createRecipeDTO.nameRu = data.text[0];
+      });
+      this.utilsService.translate('en-ru', description).subscribe((data: TranslateResponse) => {
+        step.descriptionRu = data.text[0];
+        step.description = description;
+      });
+    } else {
+      this.utilsService.translate('ru-en', this.createRecipeDTO.nameRu).subscribe((data: TranslateResponse) => {
+        this.createRecipeDTO.name = data.text[0];
+      });
+      this.utilsService.translate('ru-en', description).subscribe((data: TranslateResponse) => {
+        step.description = data.text[0];
+        step.descriptionRu = description;
+      });
+    }
     this.cookingSteps.push(step);
     this.cookingStep.description = null;
-    this.imgURL = null;
+    this.imgURL2 = null;
     this.dataSource = new MatTableDataSource<CookingStepRecipeDTO>(this.cookingSteps);
   }
 
@@ -210,45 +229,34 @@ export class RecipeEditComponent implements OnInit {
 
   onSubmit() {
     let y = -1;
+    for (let i = 0; i < this.cookingSteps.length; i++) {
+      if (this.cookingSteps[i].imgSource.length > 1000) {
+        this.cookingSteps[i].imgSource = null;
+      }
+    }
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
     this.createRecipeDTO.categoryRecipeDTOList = this.categoryArray;
     // need to fix
     this.createRecipeDTO.cookingDifficultyRu = "ЛЕГКО";
-    this.createRecipeDTO.nameRu = "Тест";
-
     if (this.cookingSteps.length != 0 &&
       this.ingredients.length != 0 &&
       this.categoryArray.length != 0 &&
       this.createRecipeDTO.cookingTime != null &&
       this.createRecipeDTO.name != null &&
       this.createRecipeDTO.cookingDifficulty != null) {
-      if (this.imgURL2 != undefined) {
-        for (let i = 0; i < this.cookingSteps.length; i++) {
-          if (this.cookingSteps[i].imgSource != null) {
-            if (this.cookingSteps[i].imgSource.length > 1000) {
-              this.cookingSteps[i].imgSource = "pic";
-            }
-          }
-        }
-        this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
-      }
       this.recipeService.update(this.createRecipeDTO.id, this.createRecipeDTO).subscribe(data => {
           this.recipeService.getById(this.createRecipeDTO.id).subscribe(data => {
               this.createRecipeDTO = data;
-              console.log(this.createRecipeDTO.cookingStepRecipeDTOList[0].id);
-              if (this.imgURL != undefined) {
+              if (this.selectedFile != null) {
                 this.recipeService.addPhoto4Recipe(this.createRecipeDTO.id, this.selectedFile);
               }
-              if (this.imgURL2 != undefined) {
-                for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
-                  console.log(this.createRecipeDTO.cookingStepRecipeDTOList[i].id);
-                  if (this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource != null &&
-                    this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource == "pic") {
-                    this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id,
-                      this.selectedFile2[y += 1]);
-                  }
+              for (let i = 0; i < this.createRecipeDTO.cookingStepRecipeDTOList.length; i++) {
+                if (this.createRecipeDTO.cookingStepRecipeDTOList[i].imgSource == null) {
+                  this.recipeService.addPhoto4Step(this.createRecipeDTO.cookingStepRecipeDTOList[i].id,
+                    this.selectedFile2[y + 1]);
+
                 }
               }
               window.location.reload();
@@ -272,6 +280,5 @@ export class RecipeEditComponent implements OnInit {
         }
       }
     }
-    console.log(this.categoryArray);
   }
 }
