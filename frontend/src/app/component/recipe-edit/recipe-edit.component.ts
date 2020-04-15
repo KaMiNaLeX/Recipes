@@ -9,14 +9,16 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CategoryService} from "../../service/category.service";
 import {IngredientService} from "../../service/ingredient.service";
 import {Recipe} from "../../model/recipe";
-import {Unit} from "../../model/unit.enum";
+import {Unit} from "../../model/Enum/unit.enum";
 import {SharedService} from "../../service/shared.service";
 import {UtilsService} from "../../service/utils.service";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MatTableDataSource} from "@angular/material/table";
 import {Fruit} from "../../model/fruit";
-import {UnitRu} from "../../model/unit-ru.enum";
+import {UnitRu} from "../../model/Enum/unit-ru.enum";
 import {TranslateResponse} from "../../model/translate-response";
+import {CookDifficulty} from "../../model/Enum/cook-difficulty.enum";
+import {CookDifficultyRu} from "../../model/Enum/cook-difficulty-ru.enum";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -37,6 +39,8 @@ export class RecipeEditComponent implements OnInit {
   unit = [];
   unRu = [];
   un = [];
+  diff = [];
+  diffRu = [];
   allIngredients: Ingredient[];
   recipe: Recipe;
   primaryName: String;
@@ -66,6 +70,11 @@ export class RecipeEditComponent implements OnInit {
     this.un = Object.values(u);
     let ur = UnitRu;
     this.unRu = Object.values(ur);
+
+    let c = CookDifficulty;
+    this.diff = Object.values(c);
+    let cr = CookDifficultyRu;
+    this.diffRu = Object.values(cr);
 
     this.recipeService.getById(sessionStorage.getItem('recipe')).subscribe(
       data => {
@@ -249,12 +258,17 @@ export class RecipeEditComponent implements OnInit {
         this.cookingSteps[i].imgSource = null;
       }
     }
+    if (this.createRecipeDTO.cookingDifficulty != null) {
+      let i = this.diff.indexOf(this.createRecipeDTO.cookingDifficulty);
+      this.createRecipeDTO.cookingDifficultyRu = this.diffRu[i];
+    } else if (this.createRecipeDTO.cookingDifficultyRu != null) {
+      let i = this.diffRu.indexOf(this.createRecipeDTO.cookingDifficultyRu);
+      this.createRecipeDTO.cookingDifficulty = this.diff[i];
+    }
     this.createRecipeDTO.cookingStepRecipeDTOList = this.cookingSteps;
     this.createRecipeDTO.ingredientRecipeDTOList = this.ingredients;
     this.createRecipeDTO.authorId = localStorage.getItem("id");
     this.createRecipeDTO.categoryRecipeDTOList = this.categoryArray;
-    // need to fix
-    this.createRecipeDTO.cookingDifficultyRu = "ЛЕГКО";
     if (this.cookingSteps.length != 0 &&
       this.ingredients.length != 0 &&
       this.categoryArray.length != 0 &&

@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Ingredient} from "../model/ingredient";
-import {TypeIngredient} from "../model/type-ingredient.enum";
-import {TypeIngredientRu} from "../model/type-ingredient-ru.enum";
+import {TypeIngredient} from "../model/Enum/type-ingredient.enum";
+import {TypeIngredientRu} from "../model/Enum/type-ingredient-ru.enum";
 import {IngredientRecipeDTO} from "../model/createRecipe/ingredient-recipe-dto";
 
 @Injectable({

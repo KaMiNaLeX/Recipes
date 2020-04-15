@@ -24,13 +24,24 @@
                #minutes="ngModel" required>
         <span matSuffix>{{'minutes' | translate}}</span>
       </mat-form-field>
-      <mat-radio-group aria-label="Select an option" [(ngModel)]="createRecipeDTO.cookingDifficulty"
-                       #difficulty="ngModel" required>
-        <h4 class="mat-form-field">{{'difficulty' | translate}} * :</h4>
-        <mat-radio-button value="{{'easy' | translate}}">{{'easy' | translate}}</mat-radio-button>
-        <mat-radio-button value="{{'medium' | translate}}">{{'medium' | translate}}</mat-radio-button>
-        <mat-radio-button value="{{'hard' | translate}}">{{'hard' | translate}}</mat-radio-button>
-      </mat-radio-group>
+      <ng-container *ngIf="!ru;else langg">
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="createRecipeDTO.cookingDifficulty"
+                         #difficulty="ngModel" required>
+          <h4 class="mat-form-field">{{'difficulty' | translate}} * :</h4>
+          <mat-radio-button value="{{'easy' | translate}}">{{'easy' | translate}}</mat-radio-button>
+          <mat-radio-button value="{{'medium' | translate}}">{{'medium' | translate}}</mat-radio-button>
+          <mat-radio-button value="{{'hard' | translate}}">{{'hard' | translate}}</mat-radio-button>
+        </mat-radio-group>
+      </ng-container>
+      <ng-template #langg>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="createRecipeDTO.cookingDifficultyRu"
+                         #difficulty="ngModel" required>
+          <h4 class="mat-form-field">{{'difficulty' | translate}} * :</h4>
+          <mat-radio-button value="{{'easy' | translate}}">{{'easy' | translate}}</mat-radio-button>
+          <mat-radio-button value="{{'medium' | translate}}">{{'medium' | translate}}</mat-radio-button>
+          <mat-radio-button value="{{'hard' | translate}}">{{'hard' | translate}}</mat-radio-button>
+        </mat-radio-group>
+      </ng-template>
       <h4 class="mat-form-field" style="margin-top: 20px">{{'category' | translate}} * :</h4>
       <section class="example-section">
         <div *ngFor="let category of categories;let i = index">
@@ -63,7 +74,7 @@
         </div>
       </div>
       <button style="margin-top: 15px"
-              [disabled]=" difficulty.invalid || minutes.invalid || checkedArray.length == 0"
+              [disabled]="minutes.invalid || checkedArray.length == 0"
               mat-raised-button matStepperNext>{{'next' | translate}}
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
@@ -249,7 +260,7 @@
         </button>
         <button [disabled]=" ((createRecipeDTO.name == null || createRecipeDTO.name == '') &&
               (createRecipeDTO.nameRu == null || createRecipeDTO.nameRu == '')) ||
-        cookingSteps.length == 0 || ingredients.length == 0 || difficulty.invalid
+        cookingSteps.length == 0 || ingredients.length == 0
         || minutes.invalid || categoryArray.length == 0"
                 type="submit" (click)="onSubmit()" style="margin-top: 15px; margin-left: 15px;width: 300px"
                 mat-raised-button color="accent">

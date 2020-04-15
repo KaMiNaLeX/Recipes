@@ -3,8 +3,8 @@ import {Ingredient} from "../../../../model/ingredient";
 import {IngredientService} from "../../../../service/ingredient.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
-import {TypeIngredient} from "../../../../model/type-ingredient.enum";
-import {TypeIngredientRu} from "../../../../model/type-ingredient-ru.enum";
+import {TypeIngredient} from "../../../../model/Enum/type-ingredient.enum";
+import {TypeIngredientRu} from "../../../../model/Enum/type-ingredient-ru.enum";
 import {SharedService} from "../../../../service/shared.service";
 import {UtilsService} from "../../../../service/utils.service";
 
