@@ -53,7 +53,6 @@ export class RecipeEditComponent implements OnInit {
 
   ru: boolean;
   ///
-  isEditable = true;
   removable = true;
   fruits: Fruit[] = [];
   ///
@@ -122,25 +121,34 @@ export class RecipeEditComponent implements OnInit {
       });
   }
 
-  checkRecipe() {
-    if ((this.createRecipeDTO.name != null && this.createRecipeDTO.name != "") || (this.createRecipeDTO.nameRu != null
-      && this.createRecipeDTO.nameRu != "")) {
-      if (this.ru != true) {
+  checkRecipeAndTranslate() {
+    if (this.ru != true) {
+      if (this.createRecipeDTO.name != null && this.createRecipeDTO.name != "") {
         this.recipeService.getByNameAndAuthor(this.createRecipeDTO.name, localStorage.getItem('id')).subscribe(data => {
           this.recipe = data;
           if (this.recipe != null) {
             this.createRecipeDTO.name = null;
             this.utilsService.alert("have recipe with this name");
+          } else {
+            this.utilsService.translate('en-ru', this.createRecipeDTO.name).subscribe((data: TranslateResponse) => {
+              this.createRecipeDTO.nameRu = data.text[0];
+            });
           }
         })
       } else {
-        this.recipeService.getByNameAndAuthor(this.createRecipeDTO.nameRu, localStorage.getItem('id')).subscribe(data => {
-          this.recipe = data;
-          if (this.recipe != null) {
-            this.createRecipeDTO.nameRu = null;
-            this.utilsService.alert("have recipe with this name");
-          }
-        })
+        if (this.createRecipeDTO.nameRu != null && this.createRecipeDTO.nameRu != "") {
+          this.recipeService.getByNameAndAuthor(this.createRecipeDTO.nameRu, localStorage.getItem('id')).subscribe(data => {
+            this.recipe = data;
+            if (this.recipe != null) {
+              this.createRecipeDTO.nameRu = null;
+              this.utilsService.alert("have recipe with this name");
+            } else {
+              this.utilsService.translate('ru-en', this.createRecipeDTO.nameRu).subscribe((data: TranslateResponse) => {
+                this.createRecipeDTO.name = data.text[0];
+              });
+            }
+          })
+        }
       }
     }
   }
@@ -209,17 +217,11 @@ export class RecipeEditComponent implements OnInit {
       step.imgSource = this.imgURL2;
     }
     if (this.ru != true) {
-      this.utilsService.translate('en-ru', this.createRecipeDTO.name).subscribe((data: TranslateResponse) => {
-        this.createRecipeDTO.nameRu = data.text[0];
-      });
       this.utilsService.translate('en-ru', description).subscribe((data: TranslateResponse) => {
         step.descriptionRu = data.text[0];
         step.description = description;
       });
     } else {
-      this.utilsService.translate('ru-en', this.createRecipeDTO.nameRu).subscribe((data: TranslateResponse) => {
-        this.createRecipeDTO.name = data.text[0];
-      });
       this.utilsService.translate('ru-en', description).subscribe((data: TranslateResponse) => {
         step.description = data.text[0];
         step.descriptionRu = description;
@@ -274,6 +276,7 @@ export class RecipeEditComponent implements OnInit {
       this.categoryArray.length != 0 &&
       this.createRecipeDTO.cookingTime != null &&
       this.createRecipeDTO.name != null &&
+      this.createRecipeDTO.nameRu != null &&
       this.createRecipeDTO.cookingDifficulty != null) {
       this.recipeService.update(this.createRecipeDTO.id, this.createRecipeDTO).subscribe(data => {
           this.recipeService.getById(this.createRecipeDTO.id).subscribe(data => {
