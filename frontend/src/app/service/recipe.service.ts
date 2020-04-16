@@ -54,7 +54,11 @@ export class RecipeService {
   }
 
   public getById(id: string): Observable<CreateRecipeDTO> {
-    return this.http.get<CreateRecipeDTO>(`${this.baseUrl}/id/${id}`);
+    return this.http.get<CreateRecipeDTO>(`${this.baseUrl}/id/${id}?userId=`);
+  }
+
+  public getById2(id: string, userId: string): Observable<CreateRecipeDTO> {
+    return this.http.get<CreateRecipeDTO>(`${this.baseUrl}/id/${id}?userId=${userId}`);
   }
 
   public getByAuthorId(id: string, page: number, size: number, sort: string): Observable<CreateRecipeDTO[]> {
@@ -104,6 +108,7 @@ export class RecipeService {
   public findAllByData2(recipeData: RecipeDataDTO, page: number, size: number, sort: string) {
     return this.http.post<Recipe[]>(`${this.baseUrl}/data?page=${page}&size=${size}&sort=${sort}&userId=`, recipeData);
   }
+
 
   public addPhoto4Step(stepId: string, file: File) {
     const data = new FormData();

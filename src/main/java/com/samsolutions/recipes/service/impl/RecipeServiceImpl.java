@@ -293,7 +293,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     }
 
     @Override
-    public CreateRecipeDTO getByRecipeId(UUID uuid) {
+    public CreateRecipeDTO getByRecipeId(UUID uuid, UUID... userId) {
         //map recipeEntity to DTO
         RecipeEntity recipeEntity = recipeRepository.getById(uuid);
         CreateRecipeDTO createRecipeDTO = new CreateRecipeDTO();
@@ -304,7 +304,9 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         map(mapCookingStepRecipeEntityListToDTO(recipeEntity, createRecipeDTO), createRecipeDTO);
         //map recipeIngredientEntityList to DTO
         map(mapRecipeIngredientEntityListToDTO(recipeEntity, createRecipeDTO), createRecipeDTO);
-        return createRecipeDTO;
+        if (userId.length > 0) {
+            return favoriteService.checkInFavorite(userId[0], createRecipeDTO);
+        } else return createRecipeDTO;
     }
 
     @Override

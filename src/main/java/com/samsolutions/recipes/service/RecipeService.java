@@ -42,7 +42,7 @@ public interface RecipeService {
 
     CreateRecipeDTO createRecipeDTO(CreateRecipeDTO createRecipeDTO);
 
-    CreateRecipeDTO getByRecipeId(UUID uuid);
+    CreateRecipeDTO getByRecipeId(UUID uuid, UUID... userId);
 
     List<CreateRecipeDTO> getByAuthorId(UUID authorId, int page, int size, String sort);
 

@@ -27,13 +27,22 @@
             <p class="card-text"><small
               class="text-muted">{{'added at' | translate}} {{ favorite.addedAt }}</small></p>
           </mat-card-content>
+          <mat-card-actions>
+            <button (click)="view(favorite.recipeDTO.id)" mat-raised-button color="primary"
+                    type="submit">{{'view' | translate}}</button>
+            <button style="margin-left: 62%;margin-right: auto" mat-icon-button
+                    color="warn" (click)="deleteFromFavorite(favorite.uuid)"
+                    type="submit">
+              <mat-icon style="margin: auto auto">favorite</mat-icon>
+            </button>
+          </mat-card-actions>
         </ng-container>
         <ng-template #lang>
           <mat-card-header>
             <mat-card-title>{{ favorite.recipeDTO.nameRu }}</mat-card-title>
             <mat-card-subtitle>{{'author' | translate}}: {{ favorite.recipeDTO.authorName }}</mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image height="250" style="max-width: 345px" [src]="favorite.recipeDTO.imgSource"
+          <img mat-card-image height="250" style="width: 300px" [src]="favorite.recipeDTO.imgSource"
                *ngIf="favorite.recipeDTO.imgSource !=null"
                alt="">
           <mat-card-content>
@@ -48,16 +57,16 @@
             <p class="card-text"><small
               class="text-muted">{{'added at' | translate}} {{ favorite.addedAt }}</small></p>
           </mat-card-content>
+          <mat-card-actions>
+            <button (click)="view(favorite.recipeDTO.id)" mat-raised-button color="primary"
+                    type="submit">{{'view' | translate}}</button>
+            <button style="margin-left: 48%;margin-right: auto" mat-icon-button
+                    color="warn" (click)="deleteFromFavorite(favorite.uuid)"
+                    type="submit">
+              <mat-icon style="margin: auto auto">favorite</mat-icon>
+            </button>
+          </mat-card-actions>
         </ng-template>
-        <mat-card-actions>
-          <button (click)="view(favorite.recipeDTO.id)" mat-raised-button color="primary"
-                  type="submit">{{'view' | translate}}</button>
-          <button style="margin-left: 178px;margin-right: auto" mat-icon-button
-                  color="warn" (click)="deleteFromFavorite(favorite.uuid)"
-                  type="submit">
-            <mat-icon style="margin: auto auto">favorite</mat-icon>
-          </button>
-        </mat-card-actions>
       </mat-card>
     </div>
     <div *ngIf="favorites.length != 0">

@@ -34,13 +34,29 @@
             <p class="card-text"><small
               class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
           </mat-card-content>
+          <mat-card-actions>
+            <div class="example-button-row">
+              <button (click)="view(recipe.id)" mat-raised-button color="primary"
+                      type="submit">{{'view' | translate}}</button>
+              <button *ngIf="recipe.inFavorite == false" style="margin-left: 62%;margin-right: auto" mat-icon-button
+                      color="warn" (click)="addToFavorite(recipe.id)"
+                      type="submit">
+                <mat-icon style="margin: auto auto">favorite_border</mat-icon>
+              </button>
+              <button *ngIf="recipe.inFavorite == true" style="margin-left: 62%;margin-right: auto" mat-icon-button
+                      color="warn" (click)="deleteFromFavorite(recipe.id)"
+                      type="submit">
+                <mat-icon style="margin: auto auto">favorite</mat-icon>
+              </button>
+            </div>
+          </mat-card-actions>
         </ng-container>
         <ng-template #lang>
           <mat-card-header>
             <mat-card-title>{{ recipe.nameRu }}</mat-card-title>
             <mat-card-subtitle>{{'author' | translate}}:{{ recipe.authorName }}</mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image height="250" weight="350" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null"
+          <img mat-card-image height="250" style="width: 300px" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null"
                alt="">
           <mat-card-content>
             <h6>
@@ -52,23 +68,24 @@
             <p class="card-text"><small
               class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
           </mat-card-content>
+          <mat-card-actions>
+            <div class="example-button-row">
+              <button (click)="view(recipe.id)" mat-raised-button color="primary"
+                      type="submit">{{'view' | translate}}</button>
+              <button *ngIf="recipe.inFavorite == false" style="margin-left: 48%;margin-right: auto" mat-icon-button
+                      color="warn" (click)="addToFavorite(recipe.id)"
+                      type="submit">
+                <mat-icon style="margin: auto auto">favorite_border</mat-icon>
+              </button>
+              <button *ngIf="recipe.inFavorite == true" style="margin-left: 48%;margin-right: auto" mat-icon-button
+                      color="warn" (click)="deleteFromFavorite(recipe.id)"
+                      type="submit">
+                <mat-icon style="margin: auto auto">favorite</mat-icon>
+              </button>
+            </div>
+          </mat-card-actions>
         </ng-template>
-        <mat-card-actions>
-          <div class="example-button-row">
-            <button (click)="view(recipe.id)" mat-raised-button color="primary"
-                    type="submit">{{'view' | translate}}</button>
-            <button *ngIf="recipe.inFavorite == false" style="margin-left: 178px;margin-right: auto" mat-icon-button
-                    color="warn" (click)="addToFavorite(recipe.id)"
-                    type="submit">
-              <mat-icon style="margin: auto auto">favorite_border</mat-icon>
-            </button>
-            <button *ngIf="recipe.inFavorite == true" style="margin-left: 178px;margin-right: auto" mat-icon-button
-                    color="warn" (click)="deleteFromFavorite(recipe.id)"
-                    type="submit">
-              <mat-icon style="margin: auto auto">favorite</mat-icon>
-            </button>
-          </div>
-        </mat-card-actions>
+
       </mat-card>
     </div>
     <div *ngIf="recipes.length != 0">

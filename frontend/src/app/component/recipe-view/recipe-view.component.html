@@ -9,8 +9,16 @@
       <mat-card>
         <mat-card-header>
           <h2 class="center">{{createRecipeDTO.name}}</h2>
-          <button mat-icon-button color="warn" (click)="addToFavorite(createRecipeDTO.id)"
-                  type="submit"><mat-icon>favorite</mat-icon></button>
+          <button *ngIf="createRecipeDTO.inFavorite == false" mat-icon-button color="warn"
+                  (click)="addToFavorite(createRecipeDTO.id)"
+                  type="submit">
+            <mat-icon>favorite_border</mat-icon>
+          </button>
+          <button *ngIf="createRecipeDTO.inFavorite == true" mat-icon-button
+                  color="warn" (click)="deleteFromFavorite(createRecipeDTO.id)"
+                  type="submit">
+            <mat-icon style="margin: auto auto">favorite</mat-icon>
+          </button>
         </mat-card-header>
         <mat-card-content>
           <div class="div">
@@ -51,12 +59,13 @@
           <mat-table [dataSource]="dataSource2" class="mat-elevation-z8" style="text-align: justify">
             <ng-container matColumnDef="photo">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" style="width: 150px" *ngIf="step.imgSource != null">
+              <mat-cell *matCellDef="let step"><img [src]="step.imgSource" height="100" style="width: 150px"
+                                                    *ngIf="step.imgSource != null">
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="description">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell  *matCellDef="let step"> {{step.description}} </mat-cell>
+              <mat-cell *matCellDef="let step"> {{step.description}} </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
@@ -69,7 +78,9 @@
         <mat-card-header>
           <h2 class="center">{{createRecipeDTO.nameRu}}</h2>
           <button mat-icon-button color="warn" (click)="addToFavorite(createRecipeDTO.id)"
-                  type="submit"><mat-icon>favorite</mat-icon></button>
+                  type="submit">
+            <mat-icon>favorite</mat-icon>
+          </button>
         </mat-card-header>
         <mat-card-content>
           <div class="div">
@@ -115,7 +126,7 @@
             </ng-container>
             <ng-container matColumnDef="description">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell  *matCellDef="let step"> {{step.descriptionRu}} </mat-cell>
+              <mat-cell *matCellDef="let step"> {{step.descriptionRu}} </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>

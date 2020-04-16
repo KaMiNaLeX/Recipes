@@ -3,6 +3,7 @@ package com.samsolutions.recipes.service.impl;
 import com.samsolutions.recipes.dto.FavoriteDTO;
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
+import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.model.FavoriteEntity;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.repository.FavoriteRepository;
@@ -103,5 +104,16 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
             }
         }
         return list;
+    }
+
+    @Override
+    public CreateRecipeDTO checkInFavorite(UUID userId, CreateRecipeDTO recipeDTO) {
+        List<FavoriteEntity> favorites = favoriteRepository.findAllByUserId(userId);
+        for (FavoriteEntity favorite : favorites) {
+            if (favorite.getRecipeId().equals(recipeDTO.getId())) {
+                recipeDTO.setInFavorite(true);
+            }
+        }
+        return recipeDTO;
     }
 }

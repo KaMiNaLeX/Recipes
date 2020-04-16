@@ -25,12 +25,23 @@ export class RecipeViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createRecipeService.getById(sessionStorage.getItem('recipe')).subscribe(
-      data => {
-        this.createRecipeDTO = data;
-        this.dataSource = this.createRecipeDTO.ingredientRecipeDTOList;
-        this.dataSource2 = this.createRecipeDTO.cookingStepRecipeDTOList.reverse();
-      });
+    if (this.authenticated != false) {
+      this.createRecipeService.getById2(sessionStorage.getItem('recipe'), localStorage.getItem('id')).subscribe(
+        data => {
+          this.createRecipeDTO = data;
+          this.dataSource = this.createRecipeDTO.ingredientRecipeDTOList;
+          this.dataSource2 = this.createRecipeDTO.cookingStepRecipeDTOList.reverse();
+          console.log(this.createRecipeDTO.inFavorite);
+        });
+    } else {
+      this.createRecipeService.getById(sessionStorage.getItem('recipe')).subscribe(
+        data => {
+          this.createRecipeDTO = data;
+          this.dataSource = this.createRecipeDTO.ingredientRecipeDTOList;
+          this.dataSource2 = this.createRecipeDTO.cookingStepRecipeDTOList.reverse();
+        });
+    }
+
     this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
       .subscribe(item => this.ru = item);
@@ -38,5 +49,14 @@ export class RecipeViewComponent implements OnInit {
 
   addToFavorite(id: string) {
     this.favoriteService.addToFavorite(id, this.authenticated);
+    if (this.authenticated != false) {
+      this.createRecipeDTO.inFavorite = true;
+    }
+  }
+
+  deleteFromFavorite(recipeId: string) {
+    this.favoriteService.deleteByUserAndRecipeId(localStorage.getItem('id'), recipeId).subscribe(data => {
+      this.createRecipeDTO.inFavorite = false;
+    });
   }
 }

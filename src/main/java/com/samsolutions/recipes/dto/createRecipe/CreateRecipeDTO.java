@@ -42,4 +42,5 @@ public class CreateRecipeDTO {
     private List<CategoryRecipeDTO> categoryRecipeDTOList;
     private List<IngredientRecipeDTO> ingredientRecipeDTOList;
     private List<CookingStepRecipeDTO> cookingStepRecipeDTOList;
+    private boolean inFavorite = false;
 }

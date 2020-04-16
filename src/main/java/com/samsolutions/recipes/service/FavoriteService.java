@@ -3,6 +3,7 @@ package com.samsolutions.recipes.service;
 import com.samsolutions.recipes.dto.FavoriteDTO;
 import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
+import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,5 +25,7 @@ public interface FavoriteService {
     int getCountAllFavoritesRecipes(UUID userId);
 
     List<RecipeDTO> checkInFavorite(UUID userId, List<RecipeDTO> list);
+
+    CreateRecipeDTO checkInFavorite(UUID userId, CreateRecipeDTO recipeDTO);
 
 }

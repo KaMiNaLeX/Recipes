@@ -112,8 +112,8 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
     }
 
     @GetMapping("/id/{id}")
-    public CreateRecipeDTO getByRecipeId(@PathVariable("id") @ValidUUID UUID uuid) {
-        return recipeService.getByRecipeId(uuid);
+    public CreateRecipeDTO getByRecipeId(@PathVariable("id") @ValidUUID UUID uuid, @RequestParam("userId") UUID... userId) {
+        return recipeService.getByRecipeId(uuid, userId);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
