@@ -1,17 +1,33 @@
 <h1>{{'edit category' | translate}}</h1>
 <div mat-dialog-content>
-  <mat-form-field class="full-width">
-    <mat-label>{{'name' | translate}}</mat-label>
-    <input matInput [(ngModel)]="category.name" value="{{category.name}}" #name="ngModel" required>
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>{{'description' | translate}}</mat-label>
-    <input matInput [(ngModel)]="category.description" value="{{category.description}}" #description="ngModel" required>
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>{{'tag' | translate}}</mat-label>
-    <input matInput [(ngModel)]="category.tag" value="{{category.tag}}" #tag="ngModel" required>
-  </mat-form-field>
+  <ng-container *ngIf="!ru;else lang">
+    <mat-form-field class="full-width">
+      <mat-label>{{'name' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.name" value="{{category.name}}" (change)="translateName()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'description' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.description" value="{{category.description}}" (change)="translateDescription()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'tag' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.tag" value="{{category.tag}}" (change)="translateTag()" required>
+    </mat-form-field>
+  </ng-container>
+  <ng-template #lang>
+    <mat-form-field class="full-width">
+      <mat-label>{{'name' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.nameRu" value="{{category.nameRu}}" (change)="translateName()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'description' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.descriptionRu" value="{{category.descriptionRu}}" (change)="translateDescription()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'tag' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.tagRu" value="{{category.tagRu}}" (change)="translateTag()" required>
+    </mat-form-field>
+  </ng-template>
   <mat-label class="label">{{'old photo' | translate}}:</mat-label>
   <mat-label *ngIf="imgURL" style="margin-left: 107px" class="label">{{'new photo' | translate}}:</mat-label>
   <br/>
@@ -35,9 +51,18 @@
 </div>
 <div mat-dialog-actions class="example-button-row">
   <button mat-button (click)="onNoClick()">{{'cancel' | translate}}</button>
-  <form (ngSubmit)="editCategory()">
-    <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data" cdkFocusInitial
-            [disabled]="name.invalid || description.invalid || tag.invalid">
-      {{'edit category' | translate}}</button>
-  </form>
+  <ng-container *ngIf="!ru;else langAdd">
+    <form (ngSubmit)="editCategory()">
+      <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data"
+              [disabled]="category.name == null || category.description == null || category.tag == null">
+        {{'edit category' | translate}}</button>
+    </form>
+  </ng-container>
+  <ng-template #langAdd>
+    <form (ngSubmit)="editCategory()">
+      <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data"
+              [disabled]="category.nameRu == null || category.descriptionRu == null || category.tagRu == null">
+        {{'edit category' | translate}}</button>
+    </form>
+  </ng-template>
 </div>

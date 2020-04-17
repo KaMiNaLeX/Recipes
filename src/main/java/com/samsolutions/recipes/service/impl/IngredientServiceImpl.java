@@ -1,6 +1,7 @@
 package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.IngredientDTO;
+import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.Enum.Type;
 import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.model.RecipeIngredientEntity;
@@ -90,12 +91,18 @@ public class IngredientServiceImpl extends ModelMapperService implements Ingredi
     @Override
     public IngredientDTO getByName(String name) {
         IngredientDTO ingredientDTO = new IngredientDTO();
-        if (name.matches("^[A-Za-z\\s]+$")) {
-            map(ingredientRepository.getByName(name), ingredientDTO);
-        } else {
-            map(ingredientRepository.getByNameRu(name), ingredientDTO);
+        try {
+            if (name.matches("^[A-Za-z\\s]+$")) {
+                map(ingredientRepository.getByName(name), ingredientDTO);
+            } else {
+                map(ingredientRepository.getByNameRu(name), ingredientDTO);
+            }
+            return ingredientDTO;
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return null;
         }
-        return ingredientDTO;
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.CategoryDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
+import com.samsolutions.recipes.exception.NotFoundException;
 import com.samsolutions.recipes.model.CategoryEntity;
 import com.samsolutions.recipes.repository.CategoryRepository;
 import com.samsolutions.recipes.service.CategoryService;
@@ -83,12 +84,17 @@ public class CategoryServiceImpl extends ModelMapperService implements CategoryS
     @Override
     public CategoryDTO getByName(String name) {
         CategoryDTO categoryDTO = new CategoryDTO();
-        if (name.matches("^[А-Яа-я\\s]+$")) {
-            map(categoryRepository.getByNameRu(name), categoryDTO);
-        } else {
-            map(categoryRepository.getByName(name), categoryDTO);
+        try {
+            if (name.matches("^[А-Яа-я\\s]+$")) {
+                map(categoryRepository.getByNameRu(name), categoryDTO);
+            } else {
+                map(categoryRepository.getByName(name), categoryDTO);
+            }
+            return categoryDTO;
+        } catch (NotFoundException e) {
+            e.getMessage();
+            return null;
         }
-        return categoryDTO;
     }
 
     @Override

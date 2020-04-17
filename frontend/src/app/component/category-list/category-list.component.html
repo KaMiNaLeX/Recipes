@@ -7,7 +7,8 @@
           <mat-card-title>{{ category.name }}</mat-card-title>
           <mat-card-subtitle>{{ category.tag }}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image height="250" weight="350" [src]="category.imgSource" *ngIf="category.imgSource !=null"
+        <img mat-card-image height="250" style="width: 400px" [src]="category.imgSource"
+             *ngIf="category.imgSource !=null"
              alt="">
         <mat-card-content>
           <p>
@@ -25,7 +26,8 @@
           <mat-card-title>{{ category.nameRu }}</mat-card-title>
           <mat-card-subtitle>{{ category.tagRu }}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image height="250" weight="350" [src]="category.imgSource" *ngIf="category.imgSource !=null"
+        <img mat-card-image height="250" style="width: 400px" [src]="category.imgSource"
+             *ngIf="category.imgSource !=null"
              alt="">
         <mat-card-content>
           <p>

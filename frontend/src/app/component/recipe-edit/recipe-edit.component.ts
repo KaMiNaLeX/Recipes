@@ -44,6 +44,7 @@ export class RecipeEditComponent implements OnInit {
   allIngredients: Ingredient[];
   recipe: Recipe;
   primaryName: String;
+  primaryNameRu: String;
 
   selectedFile2: File[] = [];
   imgURL2: any = null;
@@ -79,6 +80,7 @@ export class RecipeEditComponent implements OnInit {
       data => {
         this.createRecipeDTO = data;
         this.primaryName = this.createRecipeDTO.name;
+        this.primaryNameRu = this.createRecipeDTO.nameRu;
         this.fruits = this.createRecipeDTO.ingredientRecipeDTOList;
         this.cookingSteps = this.createRecipeDTO.cookingStepRecipeDTOList;
         this.categoryArray = this.createRecipeDTO.categoryRecipeDTOList;
@@ -123,7 +125,7 @@ export class RecipeEditComponent implements OnInit {
 
   checkRecipeAndTranslate() {
     if (this.ru != true) {
-      if (this.createRecipeDTO.name != null && this.createRecipeDTO.name != "") {
+      if (this.createRecipeDTO.name != null && this.createRecipeDTO.name != "" && this.createRecipeDTO.name != this.primaryName) {
         this.recipeService.getByNameAndAuthor(this.createRecipeDTO.name, localStorage.getItem('id')).subscribe(data => {
           this.recipe = data;
           if (this.recipe != null) {
@@ -136,7 +138,7 @@ export class RecipeEditComponent implements OnInit {
           }
         })
       } else {
-        if (this.createRecipeDTO.nameRu != null && this.createRecipeDTO.nameRu != "") {
+        if (this.createRecipeDTO.nameRu != null && this.createRecipeDTO.nameRu != "" && this.createRecipeDTO.nameRu != this.primaryNameRu) {
           this.recipeService.getByNameAndAuthor(this.createRecipeDTO.nameRu, localStorage.getItem('id')).subscribe(data => {
             this.recipe = data;
             if (this.recipe != null) {

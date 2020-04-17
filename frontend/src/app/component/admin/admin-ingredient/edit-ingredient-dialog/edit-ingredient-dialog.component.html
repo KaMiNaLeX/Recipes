@@ -1,33 +1,70 @@
 <h1>{{'edit ingredient' | translate}}</h1>
 <div mat-dialog-content>
-  <mat-form-field class="full-width">
-    <mat-label>{{'name' | translate}}</mat-label>
-    <input matInput [(ngModel)]="ingredient.name" value="{{ingredient.name}}" #name="ngModel" required>
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>{{'description' | translate}}</mat-label>
-    <input matInput [(ngModel)]="ingredient.description" value="{{ingredient.description}}">
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>{{'calories' | translate}}</mat-label>
-    <input matInput [(ngModel)]="ingredient.calories" value="{{ingredient.calories}}" #calories="ngModel" required
-           pattern="[+-]?([0-9]*[.])?[0-9]+">
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>{{'type' | translate}}</mat-label>
-    <mat-select [(ngModel)]="ingredient.type" #type="ngModel" required>
-      <mat-option *ngFor="let key of keys" value="{{key}}">
-        {{key}}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="type.invalid">{{'required' | translate}}</mat-error>
-  </mat-form-field>
+  <ng-container *ngIf="!ru;else lang">
+    <mat-form-field class="full-width">
+      <mat-label>{{'name' | translate}}</mat-label>
+      <input matInput [(ngModel)]="ingredient.name" value="{{ingredient.name}}" (change)="translateName()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'description' | translate}}</mat-label>
+      <input matInput [(ngModel)]="ingredient.description" value="{{ingredient.description}}"
+             (change)="translateDescription()">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'calories' | translate}}</mat-label>
+      <input matInput [(ngModel)]="ingredient.calories" value="{{ingredient.calories}}" required
+             pattern="[+-]?([0-9]*[.])?[0-9]+">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'type' | translate}}</mat-label>
+      <mat-select [(ngModel)]="ingredient.type" #type="ngModel" required>
+        <mat-option *ngFor="let key of keys" value="{{key}}">
+          {{key}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="type.invalid">{{'required' | translate}}</mat-error>
+    </mat-form-field>
+  </ng-container>
+  <ng-template #lang>
+    <mat-form-field class="full-width">
+      <mat-label>{{'name' | translate}}</mat-label>
+      <input matInput [(ngModel)]="ingredient.nameRu" value="{{ingredient.nameRu}}" (change)="translateName()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'description' | translate}}</mat-label>
+      <input matInput [(ngModel)]="ingredient.descriptionRu" value="{{ingredient.descriptionRu}}"
+             (change)="translateDescription()">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'calories' | translate}}</mat-label>
+      <input matInput [(ngModel)]="ingredient.calories" value="{{ingredient.calories}}" required
+             pattern="[+-]?([0-9]*[.])?[0-9]+">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'type' | translate}}</mat-label>
+      <mat-select [(ngModel)]="ingredient.typeRu" #type="ngModel" required>
+        <mat-option *ngFor="let key of keys" value="{{key}}">
+          {{key}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="type.invalid">{{'required' | translate}}</mat-error>
+    </mat-form-field>
+  </ng-template>
 </div>
 <div mat-dialog-actions class="example-button-row">
   <button mat-button (click)="onNoClick()">{{'cancel' | translate}}</button>
-  <form (ngSubmit)="editIngredient()">
-    <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data" cdkFocusInitial
-            [disabled]="name.invalid || calories.invalid || type.invalid">
-      {{'edit ingredient' | translate}}</button>
-  </form>
+  <ng-container *ngIf="!ru;else langAdd">
+    <form (ngSubmit)="editIngredient()">
+      <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data"
+              [disabled]="ingredient.name == null || ingredient.calories == null || ingredient.type == null">
+        {{'edit ingredient' | translate}}</button>
+    </form>
+  </ng-container>
+  <ng-template #langAdd>
+    <form (ngSubmit)="editIngredient()">
+      <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data"
+              [disabled]="ingredient.nameRu == null || ingredient.calories == null || ingredient.typeRu == null">
+        {{'edit ingredient' | translate}}</button>
+    </form>
+  </ng-template>
 </div>

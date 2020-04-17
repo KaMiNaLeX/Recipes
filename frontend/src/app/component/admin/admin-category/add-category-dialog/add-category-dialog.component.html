@@ -1,17 +1,33 @@
 <h1>{{'add category' | translate}}</h1>
 <div mat-dialog-content>
-  <mat-form-field class="full-width">
-    <mat-label>{{'name' | translate}}</mat-label>
-    <input matInput [(ngModel)]="category.name" #name="ngModel" required>
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>{{'description' | translate}}</mat-label>
-    <input matInput [(ngModel)]="category.description" #description="ngModel" required>
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>{{'tag' | translate}}</mat-label>
-    <input matInput [(ngModel)]="category.tag" #tag="ngModel" required>
-  </mat-form-field>
+  <ng-container *ngIf="!ru;else lang">
+    <mat-form-field class="full-width">
+      <mat-label>{{'name' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.name" (change)="translateName()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'description' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.description" (change)="translateDescription()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'tag' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.tag" (change)="translateTag()" required>
+    </mat-form-field>
+  </ng-container>
+  <ng-template #lang>
+    <mat-form-field class="full-width">
+      <mat-label>{{'name' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.nameRu" (change)="translateName()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'description' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.descriptionRu" (change)="translateDescription()" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{'tag' | translate}}</mat-label>
+      <input matInput [(ngModel)]="category.tagRu" (change)="translateTag()" required>
+    </mat-form-field>
+  </ng-template>
   <mat-label class="label">{{'photo' | translate}} * :</mat-label>
   <br/>
   <img style="margin-top: 6px;margin-bottom: 6px;width: 150px" [src]="imgURL" height="100" *ngIf="imgURL">
@@ -28,9 +44,18 @@
 </div>
 <div mat-dialog-actions class="example-button-row">
   <button mat-button (click)="onNoClick()">{{'cancel' | translate}}</button>
-  <form (ngSubmit)="addCategory()">
-    <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data"
-            [disabled]="name.invalid || description.invalid || tag.invalid || imgURL == null">
-      + {{'add category' | translate}}</button>
-  </form>
+  <ng-container *ngIf="!ru;else langAdd">
+    <form (ngSubmit)="addCategory()">
+      <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data"
+              [disabled]="category.name == null || category.description == null || category.tag == null || imgURL == null">
+        + {{'add category' | translate}}</button>
+    </form>
+  </ng-container>
+  <ng-template #langAdd>
+    <form (ngSubmit)="addCategory()">
+      <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="data"
+              [disabled]="category.nameRu == null || category.descriptionRu == null || category.tagRu == null || imgURL == null">
+        + {{'add category' | translate}}</button>
+    </form>
+  </ng-template>
 </div>
