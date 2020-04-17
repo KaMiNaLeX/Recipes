@@ -199,8 +199,6 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
             recipeIngredientEntity.setAmount(createRecipeDTO.getIngredientRecipeDTOList().get(i).getAmount());
             recipeIngredientEntity.setUnit(createRecipeDTO.getIngredientRecipeDTOList().get(i).getUnit());
             recipeIngredientEntity.setUnitRu(createRecipeDTO.getIngredientRecipeDTOList().get(i).getUnitRu());
-            recipeIngredientEntity.setNote(createRecipeDTO.getIngredientRecipeDTOList().get(i).getNote());
-            recipeIngredientEntity.setNoteRu(createRecipeDTO.getIngredientRecipeDTOList().get(i).getNoteRu());
             recipeIngredientRepository.save(recipeIngredientEntity);
         }
     }

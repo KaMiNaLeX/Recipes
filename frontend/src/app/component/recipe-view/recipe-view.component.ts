@@ -14,7 +14,7 @@ export class RecipeViewComponent implements OnInit {
   ru: boolean;
   dataSource: any;
   dataSource2: any;
-  displayedColumns: string[] = ['ingredient', 'amount', 'unit', 'note'];
+  displayedColumns: string[] = ['ingredient', 'amount', 'unit'];
   displayedColumns2: string[] = ['photo', 'description'];
   authenticated = false;
 

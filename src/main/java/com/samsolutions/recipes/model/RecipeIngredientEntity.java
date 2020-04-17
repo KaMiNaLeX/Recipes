@@ -37,12 +37,6 @@ public class RecipeIngredientEntity extends BaseEntity {
     @Column(name = "amount")
     private float amount;
 
-    @Column(name = "note")
-    private String note;
-
-    @Column(name = "note_ru")
-    private String noteRu;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 50)
     private Unit unit;

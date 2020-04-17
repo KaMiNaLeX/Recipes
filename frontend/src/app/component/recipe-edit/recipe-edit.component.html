@@ -119,10 +119,6 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field style="max-width: 20%; margin-left: 30px">
-          <mat-label>{{'note' | translate}}</mat-label>
-          <input matInput [(ngModel)]="ingredient.note">
-        </mat-form-field>
         <button [disabled]="ingredient.name == null || ingredient.amount == null || ingredient.unit == null"
                 style="margin-left: 30px" mat-mini-fab
                 (click)="addIngredient(ingredient.name,ingredient.amount,ingredient.unit)">
@@ -157,10 +153,6 @@
               {{u}}
             </mat-option>
           </mat-select>
-        </mat-form-field>
-        <mat-form-field style="max-width: 20%; margin-left: 30px">
-          <mat-label>{{'note' | translate}}</mat-label>
-          <input matInput [(ngModel)]="ingredient.noteRu">
         </mat-form-field>
         <button [disabled]="ingredient.nameRu == null || ingredient.amount == null || ingredient.unitRu == null"
                 style="margin-left: 30px" mat-mini-fab

@@ -48,10 +48,6 @@
               <mat-header-cell *matHeaderCellDef>{{'unit' | translate}}</mat-header-cell>
               <mat-cell *matCellDef="let ingredient"> {{ingredient.unit}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="note">
-              <mat-header-cell *matHeaderCellDef>{{'note' | translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let ingredient"> {{ingredient.note}} </mat-cell>
-            </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
@@ -109,10 +105,6 @@
             <ng-container matColumnDef="unit">
               <mat-header-cell *matHeaderCellDef>{{'unit' | translate}}</mat-header-cell>
               <mat-cell *matCellDef="let ingredient"> {{ingredient.unitRu}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="note">
-              <mat-header-cell *matHeaderCellDef>{{'note' | translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let ingredient"> {{ingredient.noteRu}} </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
