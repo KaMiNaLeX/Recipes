@@ -60,6 +60,12 @@ public class UserEntity extends BaseEntity {
     )
     private List<RecipeEntity> recipeEntityList;
 
+    @OneToMany(mappedBy = "user",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            orphanRemoval = true
+    )
+    private List<CommentsEntity> commentsEntityList;
+
     @JsonIgnore
     public List<UserRoleEntity> getUserRoles() {
         return userRoles;

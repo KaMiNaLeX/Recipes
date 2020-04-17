@@ -91,4 +91,10 @@ public class RecipeEntity extends BaseEntity {
     )
     private List<CategoryRecipeEntity> categoryRecipeEntities;
 
+    @OneToMany(mappedBy = "recipe",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            orphanRemoval = true
+    )
+    private List<CommentsEntity> commentsEntityList;
+
 }
