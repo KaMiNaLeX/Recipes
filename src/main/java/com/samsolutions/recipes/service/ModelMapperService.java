@@ -2,6 +2,7 @@ package com.samsolutions.recipes.service;
 
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class ModelMapperService {
     public static void map(Object src, Object dest) {
         try {
             ModelMapper modelMapper = new ModelMapper();
+            modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
             modelMapper.map(src, dest);
         } catch (Exception e) {
             log.error(e.getMessage());
