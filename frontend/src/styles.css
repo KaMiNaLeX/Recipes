@@ -65,6 +65,13 @@ body {
   background-color: #303030;
 }
 
+.viewDiv {
+  max-width: 65%;
+  margin: auto auto;
+  padding: 10px;
+  background-color: #303030;
+}
+
 .recipe {
   max-width: 800px;
   margin: 20px auto;

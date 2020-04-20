@@ -3,7 +3,7 @@
   <div class="qub-page-header-divider"></div>
   {{'view recipe' | translate}}
 </h1>
-<div class="resultDiv">
+<div class="viewDiv">
   <div class="container-fluid" style="text-align: center">
     <ng-container *ngIf="!ru;else lang">
       <mat-card>
@@ -12,7 +12,7 @@
           <button *ngIf="createRecipeDTO.inFavorite == false" mat-icon-button color="warn"
                   (click)="addToFavorite(createRecipeDTO.id)"
                   type="submit">
-            <mat-icon>favorite_border</mat-icon>
+            <mat-icon style="margin: auto auto">favorite_border</mat-icon>
           </button>
           <button *ngIf="createRecipeDTO.inFavorite == true" mat-icon-button
                   color="warn" (click)="deleteFromFavorite(createRecipeDTO.id)"
@@ -34,10 +34,10 @@
              *ngIf="createRecipeDTO.imgSource !=null"
              alt="">
         <mat-card-content>
-          <h3>{{'ingredients' | translate}}</h3>
+          <h3 style="text-align: left">{{'ingredients' | translate}}</h3>
           <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="ingredient">
-              <mat-header-cell *matHeaderCellDef>{{'ingredient' | translate}}</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
               <mat-cell *matCellDef="let ingredient"> {{ingredient.name}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="amount">
@@ -51,7 +51,7 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
-          <h3 style="margin-top: 15px">{{'cooking' | translate}}</h3>
+          <h3 style="text-align: left;margin-top: 50px">{{'cooking' | translate}}</h3>
           <mat-table [dataSource]="dataSource2" class="mat-elevation-z8" style="text-align: justify">
             <ng-container matColumnDef="photo">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -63,10 +63,54 @@
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
               <mat-cell *matCellDef="let step"> {{step.description}} </mat-cell>
             </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+            <mat-header-row [hidden]="true" *matHeaderRowDef="displayedColumns2"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
           </mat-table>
         </mat-card-content>
+        <h3 style="text-align: left;margin-top: 50px">{{'comments' | translate}}</h3>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{'comments' | translate}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-card
+              style="margin-top: 20px;box-shadow: -9px 12px 3px 0px rgba(0, 0, 0, 0.2),
+              0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);">
+              <mat-card-header class="example-button-row">
+                <mat-card-title style="margin-left: -17px">Shiba Inu</mat-card-title>
+                <p class="card-text"
+                   style="color: rgba(255, 255, 255, 0.5);margin-top: 3px">{{createRecipeDTO.name}}</p>
+                <button mat-icon-button color="basic" type="submit"
+                        style="margin-left: 81%;margin-right: auto;margin-top: -10px;width: 30px">
+                  <mat-icon style="font-size: 20px;margin: auto auto;width: 30px">edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" type="submit"
+                        style="margin-left: 10px;margin-right: auto;margin-top: -10px;width: 25px">
+                  <mat-icon style="font-size: 22px;margin: auto auto;width: 25px">clear</mat-icon>
+                </button>
+              </mat-card-header>
+              <mat-card-content>
+                <p style="text-align: justify">
+                  The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                  A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                  bred for hunting.
+                </p>
+              </mat-card-content>
+            </mat-card>
+            <button mat-button style="color: #ce93d8;margin-top: 20px">{{'show comments' | translate}}</button>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <div>
+          <mat-form-field style="width: 90%;margin-left: -3%">
+            <mat-label>{{'leave a comment' | translate}}</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+          <button style="margin-left: 30px" mat-mini-fab (click)="addComment()">
+            <mat-icon style="margin-left: 8px">add</mat-icon>
+          </button>
+        </div>
       </mat-card>
     </ng-container>
     <ng-template #lang>

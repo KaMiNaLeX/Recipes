@@ -154,5 +154,8 @@
   "success registration": "Registration was successful",
   "new ingredient": "New ingredient...",
   "cook time": "Сooking time",
-  "next" :"Next"
+  "next" :"Next",
+  "comments": "Comments",
+  "leave a comment": "Leave a comment",
+  "show comments": "Show the following comments"
 }

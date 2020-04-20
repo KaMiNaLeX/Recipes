@@ -56,6 +56,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatStepperModule} from "@angular/material/stepper";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -103,7 +104,7 @@ import {MatStepperModule} from "@angular/material/stepper";
                 deps: [HttpClient]
             }
         })
-        , MatSliderModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule, MatCardModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSortModule, MatDialogModule, MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatAutocompleteModule, MatDividerModule, MatRadioModule, MatStepperModule
+        , MatSliderModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule, MatCardModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSortModule, MatDialogModule, MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatAutocompleteModule, MatDividerModule, MatRadioModule, MatStepperModule, MatExpansionModule
     ],
   providers: [
     {

@@ -17,6 +17,7 @@ export class RecipeViewComponent implements OnInit {
   displayedColumns: string[] = ['ingredient', 'amount', 'unit'];
   displayedColumns2: string[] = ['photo', 'description'];
   authenticated = false;
+  panelOpenState: false;
 
   constructor(private createRecipeService: RecipeService, private ss: SharedService, private favoriteService: FavoriteService) {
     if (localStorage.getItem('token') != undefined) {
@@ -58,5 +59,9 @@ export class RecipeViewComponent implements OnInit {
     this.favoriteService.deleteByUserAndRecipeId(localStorage.getItem('id'), recipeId).subscribe(data => {
       this.createRecipeDTO.inFavorite = false;
     });
+  }
+
+  addComment() {
+
   }
 }
