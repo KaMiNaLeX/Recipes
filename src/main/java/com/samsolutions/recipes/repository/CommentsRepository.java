@@ -1,7 +1,11 @@
 package com.samsolutions.recipes.repository;
 
 import com.samsolutions.recipes.model.CommentsEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
 
 /**
  * @author Kaminskiy Alexey
@@ -9,4 +13,6 @@ import org.springframework.stereotype.Repository;
  **/
 @Repository
 public interface CommentsRepository extends BaseRepository<CommentsEntity> {
+
+    Page<CommentsEntity> findAllByRecipeId(UUID recipeId, Pageable pageable);
 }

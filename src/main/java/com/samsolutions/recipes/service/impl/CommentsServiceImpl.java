@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -61,7 +60,7 @@ public class CommentsServiceImpl extends ModelMapperService implements CommentsS
     public CommentsDTO getById(UUID uuid) {
         CommentsDTO commentsDTO = new CommentsDTO();
         CommentsEntity commentsEntity = commentsRepository.getById(uuid);
-        map(commentsEntity,commentsDTO);
+        map(commentsEntity, commentsDTO);
         commentsDTO.setCreatorName(userService.getById(commentsEntity.getCreatorId()).getLogin());
         return commentsDTO;
     }
@@ -82,5 +81,18 @@ public class CommentsServiceImpl extends ModelMapperService implements CommentsS
     public void delete(UUID uuid) {
         CommentsEntity commentsEntity = commentsRepository.getById(uuid);
         commentsRepository.delete(commentsEntity);
+    }
+
+    @Override
+    public List<CommentsDTO> findAllByRecipeId(UUID recipeId, int page, int size, String sort) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        Page<CommentsEntity> pageEntity = commentsRepository.findAllByRecipeId(recipeId, pageable);
+        List<CommentsDTO> result = mapListLambda(pageEntity.getContent(), CommentsDTO.class);
+        if (result != null) {
+            for (CommentsDTO commentsDTO : result) {
+                commentsDTO.setCreatorName(userService.getById(commentsDTO.getCreatorId()).getLogin());
+            }
+        }
+        return result;
     }
 }

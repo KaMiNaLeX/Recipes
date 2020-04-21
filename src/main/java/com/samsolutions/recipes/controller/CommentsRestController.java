@@ -45,6 +45,13 @@ public class CommentsRestController extends CustomGlobalExceptionHandler {
         return commentsService.getById(uuid);
     }
 
+    @GetMapping("/recipeId/{id}")
+    public List<CommentsDTO> findByRecipeId(@PathVariable("id") UUID uuid,
+                                            @RequestParam("page") int page, @RequestParam("size") int size,
+                                            @RequestParam("sort") String sort) {
+        return commentsService.findAllByRecipeId(uuid, page, size, sort);
+    }
+
     @DeleteMapping("/delete/{id}")
     public void removeById(@PathVariable("id") @ValidUUID UUID uuid) {
         commentsService.delete(uuid);

@@ -3,6 +3,9 @@ import {CreateRecipeDTO} from "../../model/createRecipe/create-recipe-dto";
 import {RecipeService} from "../../service/recipe.service";
 import {SharedService} from "../../service/shared.service";
 import {FavoriteService} from "../../service/favorite.service";
+import {Comment} from "../../model/comment";
+import {CommentsService} from "../../service/comments.service";
+import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-recipe-view',
@@ -17,15 +20,32 @@ export class RecipeViewComponent implements OnInit {
   displayedColumns: string[] = ['ingredient', 'amount', 'unit'];
   displayedColumns2: string[] = ['photo', 'description'];
   authenticated = false;
-  panelOpenState: false;
+  isAuthor = false;
+  isCreator = false;
+  comments: Comment[] = [];
+  comment: Comment = new Comment();
+  editForm: boolean[] = [false, false, false, false, false, false, false, false, false, false];
+  addForm = true;
 
-  constructor(private createRecipeService: RecipeService, private ss: SharedService, private favoriteService: FavoriteService) {
+  constructor(private createRecipeService: RecipeService, private ss: SharedService, private favoriteService: FavoriteService,
+              private commentService: CommentsService, private utilsService: UtilsService) {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
     }
   }
 
   ngOnInit() {
+    this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), 0, 10, 'creationDate').subscribe(data => {
+      this.comments = data;
+      for (let i = 0; i < this.comments.length; i++) {
+        if (this.comments[i].creatorId == localStorage.getItem('id')) {
+          this.isCreator = true;
+        }
+        if (this.comments[i].creatorId == this.createRecipeDTO.authorId) {
+          this.isAuthor = true;
+        }
+      }
+    });
     if (this.authenticated != false) {
       this.createRecipeService.getById2(sessionStorage.getItem('recipe'), localStorage.getItem('id')).subscribe(
         data => {
@@ -62,6 +82,60 @@ export class RecipeViewComponent implements OnInit {
   }
 
   addComment() {
+    if (this.authenticated != false) {
+      this.comment.creatorId = localStorage.getItem('id');
+      this.comment.recipeId = sessionStorage.getItem('recipe');
+      this.commentService.create(this.comment).subscribe(data => {
+        this.comment.text = ' ';
+        this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), 0, 10, 'creationDate').subscribe(data => {
+          this.comments = data;
+          for (let i = 0; i < this.comments.length; i++) {
+            if (this.comments[i].creatorId == localStorage.getItem('id')) {
+              this.isCreator = true;
+            }
+            if (this.comments[i].creatorId == this.createRecipeDTO.authorId) {
+              this.isAuthor = true;
+            }
+          }
+        });
+      })
+    } else this.utilsService.alert("you need to authenticated")
 
+  }
+
+  deleteComment(id: string) {
+    this.commentService.delete(id).subscribe(data => {
+      this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), 0, 10, 'creationDate').subscribe(data => {
+        this.comments = data;
+        for (let i = 0; i < this.comments.length; i++) {
+          if (this.comments[i].creatorId == localStorage.getItem('id')) {
+            this.isCreator = true;
+          }
+          if (this.comments[i].creatorId == this.createRecipeDTO.authorId) {
+            this.isAuthor = true;
+          }
+        }
+      });
+    })
+  }
+
+  editComment(id: string, text: string) {
+    this.comment.creatorId = localStorage.getItem('id');
+    this.comment.recipeId = sessionStorage.getItem('recipe');
+    this.comment.text = text;
+    this.commentService.update(id, this.comment).subscribe(data => {
+      this.comment.text = ' ';
+      this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), 0, 10, 'creationDate').subscribe(data => {
+        this.comments = data;
+        for (let i = 0; i < this.comments.length; i++) {
+          if (this.comments[i].creatorId == localStorage.getItem('id')) {
+            this.isCreator = true;
+          }
+          if (this.comments[i].creatorId == this.createRecipeDTO.authorId) {
+            this.isAuthor = true;
+          }
+        }
+      });
+    })
   }
 }
