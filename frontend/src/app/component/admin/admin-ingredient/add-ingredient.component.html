@@ -3,12 +3,12 @@
   <div class="qub-page-header-divider"></div>
   {{'admin panel' | translate}}
 </h1>
-<div class="container-fluid" style="width: 100%">
-  <mat-form-field>
+<div class="container-fluid">
+  <mat-form-field style="width: 100%">
     <mat-label>{{'filter' | translate}}</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="">
   </mat-form-field>
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%">
     <ng-container *ngIf="!ru;else lang">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'name' | translate}}</th>
