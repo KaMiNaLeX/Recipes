@@ -102,7 +102,7 @@ export class AppComponent {
   profile() {
     this.dialog.open(UserProfileComponent, {
       maxWidth: '30%',
-      height: '68%',
+      height: '80%',
       data: {}
     });
   }

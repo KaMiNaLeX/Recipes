@@ -68,7 +68,7 @@ export class AddCategoryComponent implements OnInit {
   openAddDialog() {
     const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
       maxWidth: '30%',
-      maxHeight: '50%',
+      height: '70%',
       data: {}
     });
   }
@@ -76,7 +76,7 @@ export class AddCategoryComponent implements OnInit {
   openEditDialog(id: number) {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       maxWidth: '30%',
-      maxHeight: '50%',
+      height: '90%',
       data: {id: id}
     });
   }

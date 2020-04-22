@@ -45,7 +45,7 @@ export class UserListComponent implements OnInit {
   openAddDialog() {
     const dialogRef = this.dialog.open(AddUserDialogComponent, {
       maxWidth: '30%',
-      maxHeight: '50%',
+      height: '81%',
       data: {}
     });
   }

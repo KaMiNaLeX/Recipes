@@ -7,7 +7,7 @@
   <mat-horizontal-stepper linear>
     <mat-step>
       <ng-template matStepLabel>{{'dish description' | translate}}</ng-template>
-      <mat-form-field>
+      <mat-form-field style="width: 100%">
         <mat-label>{{'name' | translate}}</mat-label>
         <ng-container *ngIf="!ru;else lang">
           <input matInput [(ngModel)]="createRecipeDTO.name" (change)="checkRecipeAndTranslate()"
@@ -210,7 +210,7 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
-      <mat-form-field class="example-full-width">
+      <mat-form-field style="width: 100%" >
         <mat-label>{{'description' | translate}}</mat-label>
         <ng-container *ngIf="!ru;else lang4">
           <textarea [(ngModel)]="cookingStep.description" required matInput></textarea>

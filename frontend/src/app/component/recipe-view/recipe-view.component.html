@@ -83,7 +83,7 @@
                 <p class="card-text"
                    style="color: rgba(255, 255, 255, 0.5);margin-top: 3px">{{comment.creationDate}}</p>
                 <button *ngIf="isCreator && !editForm[i]" mat-icon-button color="basic" type="submit"
-                        style="margin-left: 67%;margin-right: auto;margin-top: -10px;width: 30px"
+                        style="margin-left: 61%;margin-right: auto;margin-top: -10px;width: 30px"
                         (click)="this.editForm[i] = true;addForm = false">
                   <mat-icon style="font-size: 20px;margin: auto auto;width: 30px">edit</mat-icon>
                 </button>
@@ -131,9 +131,15 @@
       <mat-card>
         <mat-card-header>
           <h2 class="center">{{createRecipeDTO.nameRu}}</h2>
-          <button mat-icon-button color="warn" (click)="addToFavorite(createRecipeDTO.id)"
+          <button *ngIf="createRecipeDTO.inFavorite == false" mat-icon-button color="warn"
+                  (click)="addToFavorite(createRecipeDTO.id)"
                   type="submit">
-            <mat-icon>favorite</mat-icon>
+            <mat-icon style="margin: auto auto">favorite_border</mat-icon>
+          </button>
+          <button *ngIf="createRecipeDTO.inFavorite == true" mat-icon-button
+                  color="warn" (click)="deleteFromFavorite(createRecipeDTO.id)"
+                  type="submit">
+            <mat-icon style="margin: auto auto">favorite</mat-icon>
           </button>
         </mat-card-header>
         <mat-card-content>
@@ -182,6 +188,64 @@
             <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
           </mat-table>
         </mat-card-content>
+        <h3 style="text-align: left;margin-top: 50px">{{'comments' | translate}}</h3>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{'comments' | translate}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-card *ngFor="let comment of comments;let i = index"
+                      style="margin-top: 10px;box-shadow: -7px 7px 1px -1px rgba(0, 0, 0, 0.2),
+                      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);">
+              <mat-card-header class="example-button-row">
+                <mat-card-title style="margin-left: -17px">{{comment.creatorName}}</mat-card-title>
+                <p class="card-text"
+                   style="color: rgba(255, 255, 255, 0.5);margin-top: 3px">{{comment.creationDate}}</p>
+                <button *ngIf="isCreator && !editForm[i]" mat-icon-button color="basic" type="submit"
+                        style="margin-left: 61%;margin-right: auto;margin-top: -10px;width: 30px"
+                        (click)="this.editForm[i] = true;addForm = false">
+                  <mat-icon style="font-size: 20px;margin: auto auto;width: 30px">edit</mat-icon>
+                </button>
+                <button *ngIf="isAuthor || isCreator" mat-icon-button color="warn" type="submit"
+                        style="margin-left: 10px;margin-right: auto;margin-top: -10px;width: 25px">
+                  <mat-icon style="font-size: 22px;margin: auto auto;width: 25px"
+                            (click)="deleteComment(comment.id)">clear
+                  </mat-icon>
+                </button>
+              </mat-card-header>
+              <mat-card-content *ngIf="!editForm[i]">
+                <p style="text-align: justify">{{comment.text}}</p>
+              </mat-card-content>
+              <mat-card-content *ngIf="editForm[i]">
+                <mat-form-field style="width: 81%;margin-left: -3%">
+                  <textarea [(ngModel)]="comment.text" matInput required></textarea>
+                </mat-form-field>
+                <button [disabled]="this.comment.text == null || this.comment.text == ' '" style="margin-left: 30px"
+                        mat-mini-fab
+                        (click)="editComment(comment.id,comment.text); editForm[i]=false; addForm = true">
+                  <mat-icon style="margin-left: 8px">edit</mat-icon>
+                </button>
+                <button style="margin-left: 20px" mat-stroked-button
+                        (click)="editForm[i] = false;addForm = true">{{'cancel' | translate}}
+                </button>
+              </mat-card-content>
+            </mat-card>
+            <button *ngIf="comments.length > 10" mat-button
+                    style="color: #ce93d8;margin-top: 20px">{{'show comments' | translate}}</button>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <div *ngIf="addForm">
+          <mat-form-field style="width: 90%;margin-left: -3%">
+            <mat-label>{{'leave a comment' | translate}}</mat-label>
+            <textarea #text="ngModel" [(ngModel)]="comment.text" matInput required></textarea>
+          </mat-form-field>
+          <button [disabled]="text.invalid || this.comment.text == ' '" style="margin-left: 30px" mat-mini-fab
+                  (click)="addComment()">
+            <mat-icon style="margin-left: 8px">add</mat-icon>
+          </button>
+        </div>
       </mat-card>
     </ng-template>
   </div>
