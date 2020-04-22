@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
     if (login != null) {
       this.userService.getByLogin(login).subscribe(data => {
         this.user = data;
-        if (this.user != null) {
+        if (this.user.id != null) {
           (<HTMLInputElement>document.getElementById('login')).value = null;
           this.utilsService.alert("login exist");
           this.registerForm.get('login').setValue(null);
@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
     if (email != null) {
       this.userService.getByEmail(email).subscribe(data => {
         this.user = data;
-        if (this.user != null) {
+        if (this.user.id != null) {
           (<HTMLInputElement>document.getElementById('email')).value = null;
           this.utilsService.alert("email exist");
           this.registerForm.get('email').setValue(null);

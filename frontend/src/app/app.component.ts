@@ -94,7 +94,7 @@ export class AppComponent {
   register() {
     this.dialog.open(RegisterComponent, {
       maxWidth: '30%',
-      maxHeight: '50%',
+      height:'83%',
       data: {}
     });
   }
@@ -102,7 +102,7 @@ export class AppComponent {
   profile() {
     this.dialog.open(UserProfileComponent, {
       maxWidth: '30%',
-      maxHeight: '50%',
+      height: '68%',
       data: {}
     });
   }
