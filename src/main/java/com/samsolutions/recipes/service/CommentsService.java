@@ -21,4 +21,6 @@ public interface CommentsService {
     void delete(UUID uuid);
 
     List<CommentsDTO> findAllByRecipeId(UUID recipeId, int page, int size, String sort);
+
+    int getCountAllComments(UUID recipeId);
 }

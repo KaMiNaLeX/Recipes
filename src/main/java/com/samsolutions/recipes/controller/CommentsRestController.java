@@ -80,4 +80,9 @@ public class CommentsRestController extends CustomGlobalExceptionHandler {
             return null;
         }
     }
+
+    @GetMapping("/countAllComments/{recipeId}")
+    public int getCountAllComments(@PathVariable("recipeId") @ValidUUID UUID uuid) {
+        return commentsService.getCountAllComments(uuid);
+    }
 }

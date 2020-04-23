@@ -26,6 +26,9 @@ export class RecipeViewComponent implements OnInit {
   comment: Comment = new Comment();
   editForm: boolean[] = [false, false, false, false, false, false, false, false, false, false];
   addForm = true;
+  count: number;
+  pageCommentCounter: number = 0;
+  sizeCommentCounter: number = 10;
 
   constructor(private createRecipeService: RecipeService, private ss: SharedService, private favoriteService: FavoriteService,
               private commentService: CommentsService, private utilsService: UtilsService) {
@@ -35,6 +38,9 @@ export class RecipeViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.commentService.getCountAllComments(sessionStorage.getItem('recipe')).subscribe(data => {
+      this.count = data;
+    });
     this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), 0, 10, 'creationDate').subscribe(data => {
       this.comments = data;
       for (let i = 0; i < this.comments.length; i++) {
@@ -87,7 +93,7 @@ export class RecipeViewComponent implements OnInit {
       this.comment.recipeId = sessionStorage.getItem('recipe');
       this.commentService.create(this.comment).subscribe(data => {
         this.comment.text = ' ';
-        this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), 0, 10, 'creationDate').subscribe(data => {
+        this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), this.pageCommentCounter, 10, 'creationDate').subscribe(data => {
           this.comments = data;
           for (let i = 0; i < this.comments.length; i++) {
             if (this.comments[i].creatorId == localStorage.getItem('id')) {
@@ -98,14 +104,16 @@ export class RecipeViewComponent implements OnInit {
             }
           }
         });
-      })
+        this.commentService.getCountAllComments(sessionStorage.getItem('recipe')).subscribe(data => {
+          this.count = data;
+        });
+      });
     } else this.utilsService.alert("you need to authenticated")
-
   }
 
   deleteComment(id: string) {
     this.commentService.delete(id).subscribe(data => {
-      this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), 0, 10, 'creationDate').subscribe(data => {
+      this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), this.pageCommentCounter, 10, 'creationDate').subscribe(data => {
         this.comments = data;
         for (let i = 0; i < this.comments.length; i++) {
           if (this.comments[i].creatorId == localStorage.getItem('id')) {
@@ -116,7 +124,10 @@ export class RecipeViewComponent implements OnInit {
           }
         }
       });
-    })
+      this.commentService.getCountAllComments(sessionStorage.getItem('recipe')).subscribe(data => {
+        this.count = data;
+      });
+    });
   }
 
   editComment(id: string, text: string) {
@@ -125,7 +136,7 @@ export class RecipeViewComponent implements OnInit {
     this.comment.text = text;
     this.commentService.update(id, this.comment).subscribe(data => {
       this.comment.text = ' ';
-      this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), 0, 10, 'creationDate').subscribe(data => {
+      this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), this.pageCommentCounter, 10, 'creationDate').subscribe(data => {
         this.comments = data;
         for (let i = 0; i < this.comments.length; i++) {
           if (this.comments[i].creatorId == localStorage.getItem('id')) {
@@ -137,5 +148,39 @@ export class RecipeViewComponent implements OnInit {
         }
       });
     })
+  }
+
+  loadComments() {
+    this.pageCommentCounter += 1;
+    this.sizeCommentCounter += 10;
+    this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), this.pageCommentCounter,
+      10, 'creationDate').subscribe(data => {
+      this.comments = data;
+      for (let i = 0; i < this.comments.length; i++) {
+        if (this.comments[i].creatorId == localStorage.getItem('id')) {
+          this.isCreator = true;
+        }
+        if (this.comments[i].creatorId == this.createRecipeDTO.authorId) {
+          this.isAuthor = true;
+        }
+      }
+    });
+  }
+
+  loadPrevComments() {
+    this.pageCommentCounter -= 1;
+    this.sizeCommentCounter -= 10;
+    this.commentService.findByRecipeId(sessionStorage.getItem('recipe'), this.pageCommentCounter,
+      10, 'creationDate').subscribe(data => {
+      this.comments = data;
+      for (let i = 0; i < this.comments.length; i++) {
+        if (this.comments[i].creatorId == localStorage.getItem('id')) {
+          this.isCreator = true;
+        }
+        if (this.comments[i].creatorId == this.createRecipeDTO.authorId) {
+          this.isAuthor = true;
+        }
+      }
+    });
   }
 }

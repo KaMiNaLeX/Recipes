@@ -34,4 +34,8 @@ export class CommentsService {
     return this.http.delete(`${this.baseUrl}/delete/${id}`, {responseType: 'text'});
   }
 
+  public getCountAllComments(recipeId: string): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/countAllComments/${recipeId}`);
+  }
+
 }

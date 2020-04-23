@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/ingredient/**").permitAll()
                 .antMatchers("/api/comments/").permitAll()
                 .antMatchers("/api/comments/recipeId/**").permitAll()
+                .antMatchers("/api/comments/countAllComments/**").permitAll()
                 .anyRequest()
                 .authenticated().and().csrf()
                 .disable().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()

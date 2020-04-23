@@ -95,4 +95,9 @@ public class CommentsServiceImpl extends ModelMapperService implements CommentsS
         }
         return result;
     }
+
+    @Override
+    public int getCountAllComments(UUID recipeId) {
+        return commentsRepository.findAllByRecipeId(recipeId).size();
+    }
 }

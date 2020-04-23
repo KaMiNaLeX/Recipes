@@ -72,9 +72,13 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
+                {{count}}
                 {{'comments' | translate}}
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <button *ngIf="count > 10 && pageCommentCounter != 0" mat-button
+                    style="color: #ce93d8;margin-top: 20px"
+                    (click)="loadPrevComments()">{{'show prev comments' | translate}}</button>
             <mat-card *ngFor="let comment of comments;let i = index"
                       style="margin-top: 10px;box-shadow: -7px 7px 1px -1px rgba(0, 0, 0, 0.2),
                       0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);">
@@ -111,8 +115,9 @@
                 </button>
               </mat-card-content>
             </mat-card>
-            <button *ngIf="comments.length > 10" mat-button
-                    style="color: #ce93d8;margin-top: 20px">{{'show comments' | translate}}</button>
+            <button *ngIf="comments.length == 10 && count > 10 && sizeCommentCounter!= count" mat-button
+                    style="color: #ce93d8;margin-top: 20px"
+                    (click)="loadComments()">{{'show comments' | translate}}</button>
           </mat-expansion-panel>
         </mat-accordion>
         <div *ngIf="addForm">
@@ -193,9 +198,13 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
+                {{count}}
                 {{'comments' | translate}}
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <button *ngIf="count > 10 && pageCommentCounter != 0" mat-button
+                    style="color: #ce93d8;margin-top: 20px"
+                    (click)="loadPrevComments()">{{'show prev comments' | translate}}</button>
             <mat-card *ngFor="let comment of comments;let i = index"
                       style="margin-top: 10px;box-shadow: -7px 7px 1px -1px rgba(0, 0, 0, 0.2),
                       0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);">
@@ -232,8 +241,9 @@
                 </button>
               </mat-card-content>
             </mat-card>
-            <button *ngIf="comments.length > 10" mat-button
-                    style="color: #ce93d8;margin-top: 20px">{{'show comments' | translate}}</button>
+            <button *ngIf="comments.length == 10 && count > 10 && sizeCommentCounter!= count" mat-button
+                    style="color: #ce93d8;margin-top: 20px"
+                    (click)="loadComments()">{{'show comments' | translate}}</button>
           </mat-expansion-panel>
         </mat-accordion>
         <div *ngIf="addForm">
