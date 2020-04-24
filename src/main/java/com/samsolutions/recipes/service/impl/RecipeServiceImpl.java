@@ -1,7 +1,6 @@
 package com.samsolutions.recipes.service.impl;
 
 import com.samsolutions.recipes.dto.RecipeDTO;
-import com.samsolutions.recipes.dto.UserDTO;
 import com.samsolutions.recipes.dto.createRecipe.CategoryRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CookingStepRecipeDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
@@ -28,6 +27,7 @@ import com.samsolutions.recipes.repository.RecipeRepository;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
+import com.samsolutions.recipes.service.RecipeVotesService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -588,6 +588,22 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     public void negativeVote(UUID uuid) {
         RecipeEntity updateEntity = recipeRepository.getById(uuid);
         updateEntity.setNegativeVotes(updateEntity.getNegativeVotes() + 1);
+        recipeRepository.save(updateEntity);
+    }
+
+    @Override
+    @Transactional
+    public void removePositiveVote(UUID uuid) {
+        RecipeEntity updateEntity = recipeRepository.getById(uuid);
+        updateEntity.setPositiveVotes(updateEntity.getPositiveVotes() - 1);
+        recipeRepository.save(updateEntity);
+    }
+
+    @Override
+    @Transactional
+    public void removeNegativeVote(UUID uuid) {
+        RecipeEntity updateEntity = recipeRepository.getById(uuid);
+        updateEntity.setNegativeVotes(updateEntity.getNegativeVotes() - 1);
         recipeRepository.save(updateEntity);
     }
 

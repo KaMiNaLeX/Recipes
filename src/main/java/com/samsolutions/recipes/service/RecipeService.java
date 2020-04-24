@@ -32,6 +32,10 @@ public interface RecipeService {
 
     void negativeVote(UUID uuid);
 
+    void removePositiveVote(UUID uuid);
+
+    void removeNegativeVote(UUID uuid);
+
     void removeById(UUID uuid);
 
     List<RecipeDTO> getByCategoryName(String categoryName, int page, int size, String sort, UUID... userId);

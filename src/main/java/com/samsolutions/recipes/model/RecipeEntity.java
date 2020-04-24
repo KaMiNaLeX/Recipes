@@ -97,4 +97,10 @@ public class RecipeEntity extends BaseEntity {
     )
     private List<CommentsEntity> commentsEntityList;
 
+    @OneToMany(mappedBy = "recipe",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            orphanRemoval = true
+    )
+    private List<RecipeVotesEntity> votesEntityList;
+
 }
