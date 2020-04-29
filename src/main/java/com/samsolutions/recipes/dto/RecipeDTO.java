@@ -40,4 +40,6 @@ public class RecipeDTO {
     private UUID authorId;
     private boolean inFavorite = false;
     private String authorName;
+    private boolean positiveVote = false;
+    private boolean negativeVote = false;
 }

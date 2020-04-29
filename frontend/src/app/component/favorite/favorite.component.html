@@ -15,13 +15,39 @@
           <img mat-card-image height="250" style="width: 300px" [src]="favorite.recipeDTO.imgSource"
                *ngIf="favorite.recipeDTO.imgSource !=null"
                alt="">
-          <mat-card-content>
-            <h6>
-              {{'difficulty' | translate}}: {{ favorite.recipeDTO.cookingDifficulty }}
-            </h6>
-            <h6>
-              {{'time' | translate}}: {{ favorite.recipeDTO.cookingTime }} {{'minutes' | translate}}
-            </h6>
+          <mat-card-content style="margin-left: auto">
+            <div>
+              <div class="div">
+                <mat-icon style="margin-right: 5px;">extension</mat-icon>
+                <h4>{{ favorite.recipeDTO.cookingDifficulty }}</h4>
+              </div>
+            </div>
+            <div class="div" style="margin-top: 7px">
+              <mat-icon style="margin-right: 5px;margin-top: 1px">alarm</mat-icon>
+              <h4>{{ favorite.recipeDTO.cookingTime }} {{'minutes' | translate}}</h4>
+            </div>
+            <div style="margin-left: -9px">
+              <div class="div">
+                <button mat-icon-button
+                        (click)="like(favorite.recipeDTO.id)"
+                        type="submit">
+                  <mat-icon *ngIf="favorite.recipeDTO.positiveVote == false;" style="margin: auto auto">thumb_up</mat-icon>
+                  <mat-icon *ngIf="favorite.recipeDTO.positiveVote == true;" style="margin: auto auto;color: #ce93d8">thumb_up
+                  </mat-icon>
+                </button>
+                <h4 style="margin-top: 8px">{{favorite.recipeDTO.positiveVotes}}</h4>
+              </div>
+              <div class="div">
+                <button mat-icon-button
+                        (click)="dislike(favorite.recipeDTO.id)"
+                        type="submit">
+                  <mat-icon *ngIf="favorite.recipeDTO.negativeVote == false;" style="margin: auto auto">thumb_down</mat-icon>
+                  <mat-icon *ngIf="favorite.recipeDTO.negativeVote == true;" style="margin: auto auto;color: #ce93d8">thumb_down
+                  </mat-icon>
+                </button>
+                <h4 style="margin-top: 8px">{{favorite.recipeDTO.negativeVotes}}</h4>
+              </div>
+            </div>
             <p class="card-text"><small
               class="text-muted">{{'last update' | translate}} {{ favorite.recipeDTO.lastModified }}</small></p>
             <p class="card-text"><small
@@ -45,13 +71,39 @@
           <img mat-card-image height="250" style="width: 300px" [src]="favorite.recipeDTO.imgSource"
                *ngIf="favorite.recipeDTO.imgSource !=null"
                alt="">
-          <mat-card-content>
-            <h6>
-              {{'difficulty' | translate}}:{{ favorite.recipeDTO.cookingDifficultyRu }}
-            </h6>
-            <h6>
-              {{'time' | translate}}:{{ favorite.recipeDTO.cookingTime }} {{'minutes' | translate}}
-            </h6>
+          <mat-card-content style="margin-left: auto">
+            <div>
+              <div class="div">
+                <mat-icon style="margin-right: 5px;">extension</mat-icon>
+                <h4>{{ favorite.recipeDTO.cookingDifficultyRu }}</h4>
+              </div>
+            </div>
+            <div class="div" style="margin-top: 7px">
+              <mat-icon style="margin-right: 5px;margin-top: 1px">alarm</mat-icon>
+              <h4>{{ favorite.recipeDTO.cookingTime }} {{'minutes' | translate}}</h4>
+            </div>
+            <div style="margin-left: -9px">
+              <div class="div">
+                <button mat-icon-button
+                        (click)="like(favorite.recipeDTO.id)"
+                        type="submit">
+                  <mat-icon *ngIf="favorite.recipeDTO.positiveVote == false;" style="margin: auto auto">thumb_up</mat-icon>
+                  <mat-icon *ngIf="favorite.recipeDTO.positiveVote == true;" style="margin: auto auto;color: #ce93d8">thumb_up
+                  </mat-icon>
+                </button>
+                <h4 style="margin-top: 8px">{{favorite.recipeDTO.positiveVotes}}</h4>
+              </div>
+              <div class="div">
+                <button mat-icon-button
+                        (click)="dislike(favorite.recipeDTO.id)"
+                        type="submit">
+                  <mat-icon *ngIf="favorite.recipeDTO.negativeVote == false;" style="margin: auto auto">thumb_down</mat-icon>
+                  <mat-icon *ngIf="favorite.recipeDTO.negativeVote == true;" style="margin: auto auto;color: #ce93d8">thumb_down
+                  </mat-icon>
+                </button>
+                <h4 style="margin-top: 8px">{{favorite.recipeDTO.negativeVotes}}</h4>
+              </div>
+            </div>
             <p class="card-text"><small
               class="text-muted">{{'last update' | translate}} {{ favorite.recipeDTO.lastModified }}</small></p>
             <p class="card-text"><small

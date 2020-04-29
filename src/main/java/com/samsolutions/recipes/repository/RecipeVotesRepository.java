@@ -3,7 +3,6 @@ package com.samsolutions.recipes.repository;
 import com.samsolutions.recipes.model.RecipeVotesEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -13,6 +12,4 @@ import java.util.UUID;
 @Repository
 public interface RecipeVotesRepository extends BaseRepository<RecipeVotesEntity> {
     RecipeVotesEntity getByUserIdAndRecipeId(UUID userId, UUID recipeId);
-
-    List<RecipeVotesEntity> findAllByRecipeId(UUID recipeId);
 }

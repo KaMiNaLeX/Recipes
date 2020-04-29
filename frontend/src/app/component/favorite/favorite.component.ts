@@ -5,6 +5,9 @@ import {Favorite} from "../../model/favorite";
 import {RecipeService} from "../../service/recipe.service";
 import {SharedService} from "../../service/shared.service";
 import {PageEvent} from "@angular/material/paginator";
+import {Vote} from "../../model/vote";
+import {VotesService} from "../../service/votes.service";
+import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-favorite',
@@ -21,8 +24,11 @@ export class FavoriteComponent implements OnInit {
   pageSizeOptions: number[] = [8, 32, 64];
   // MatPaginator Output
   pageEvent: PageEvent;
+  //votes
+  vote: Vote = new Vote();
 
-  constructor(private router: Router, private favoriteService: FavoriteService, private recipeService: RecipeService, private ss: SharedService) {
+  constructor(private router: Router, private favoriteService: FavoriteService, private recipeService: RecipeService,
+              private ss: SharedService, private votesService: VotesService, private utilsService: UtilsService) {
   }
 
   ngOnInit() {
@@ -70,5 +76,27 @@ export class FavoriteComponent implements OnInit {
       }
     );
     return event;
+  }
+
+  like(id: string) {
+    this.vote.recipeId = id;
+    this.vote.userId = localStorage.getItem('id');
+    this.vote.positiveVote = true;
+    this.votesService.createVote(this.vote).subscribe(data => {
+      if (data != null) {
+
+      } else this.utilsService.alert("evaluated")
+    })
+  }
+
+  dislike(id: string) {
+    this.vote.recipeId = id;
+    this.vote.userId = localStorage.getItem('id');
+    this.vote.negativeVote = true;
+    this.votesService.createVote(this.vote).subscribe(data => {
+      if (data != null) {
+
+      } else this.utilsService.alert("evaluated")
+    });
   }
 }

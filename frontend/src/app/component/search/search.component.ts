@@ -19,6 +19,8 @@ import {FormControl} from "@angular/forms";
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {Fruit} from "../../model/fruit";
+import {Vote} from "../../model/vote";
+import {VotesService} from "../../service/votes.service";
 
 @Component({
   selector: 'app-search',
@@ -56,13 +58,16 @@ export class SearchComponent implements OnInit {
   //
   searchArr: string[] = ['recipeName', 'authorName', 'byIngredients', 'recipeData'];
   currentsSearch: string;
+  //votes
+  vote: Vote = new Vote();
 
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService,
-              private favoriteService: FavoriteService, private ss: SharedService, private utilsService: UtilsService) {
+              private favoriteService: FavoriteService, private ss: SharedService, private utilsService: UtilsService,
+              private votesService: VotesService) {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
     }
@@ -320,5 +325,31 @@ export class SearchComponent implements OnInit {
       }
     }
     return event;
+  }
+
+  like(id: string) {
+    if (this.authenticated != false) {
+      this.vote.recipeId = id;
+      this.vote.userId = localStorage.getItem('id');
+      this.vote.positiveVote = true;
+      this.votesService.createVote(this.vote).subscribe(data => {
+        if (data != null) {
+
+        } else this.utilsService.alert("evaluated")
+      })
+    } else this.utilsService.alert("you need to authenticated");
+  }
+
+  dislike(id: string) {
+    if (this.authenticated != false) {
+      this.vote.recipeId = id;
+      this.vote.userId = localStorage.getItem('id');
+      this.vote.negativeVote = true;
+      this.votesService.createVote(this.vote).subscribe(data => {
+        if (data != null) {
+
+        } else this.utilsService.alert("evaluated")
+      });
+    } else this.utilsService.alert("you need to authenticated");
   }
 }

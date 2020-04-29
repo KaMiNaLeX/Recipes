@@ -28,4 +28,6 @@ public interface FavoriteService {
 
     CreateRecipeDTO checkInFavorite(UUID userId, CreateRecipeDTO recipeDTO);
 
+    RecipeDTO checkVotes(UUID userId, RecipeDTO recipeDTO);
+
 }

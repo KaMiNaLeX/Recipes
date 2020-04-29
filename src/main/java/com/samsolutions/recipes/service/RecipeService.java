@@ -93,4 +93,8 @@ public interface RecipeService {
 
     CreateRecipeDTO mapRecipeIngredientEntityListToDTO(RecipeEntity recipeEntity, CreateRecipeDTO createRecipeDTO);
 
+    List<RecipeDTO> checkVotes(UUID userId, List<RecipeDTO> list);
+
+    List<CreateRecipeDTO> checkVotes2(UUID userId, List<CreateRecipeDTO> list);
+
 }

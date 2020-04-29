@@ -12,4 +12,6 @@ export class Recipe {
   lastModified: Date = new Date();
   imgSource: string;
   inFavorite: boolean = false;
+  positiveVote: boolean = false;
+  negativeVote: boolean = false;
 }

@@ -24,13 +24,39 @@
           <img mat-card-image height="250" style="width: 300px" [src]="recipe.imgSource"
                *ngIf="recipe.imgSource !=null"
                alt="">
-          <mat-card-content>
-            <h6>
-              {{'difficulty' | translate}}: {{ recipe.cookingDifficulty }}
-            </h6>
-            <h6>
-              {{'time' | translate}}: {{ recipe.cookingTime }} {{'minutes' | translate}}
-            </h6>
+          <mat-card-content style="margin-left: auto">
+            <div>
+              <div class="div">
+                <mat-icon style="margin-right: 5px;">extension</mat-icon>
+                <h4>{{ recipe.cookingDifficulty }}</h4>
+              </div>
+            </div>
+            <div class="div" style="margin-top: 7px">
+              <mat-icon style="margin-right: 5px;margin-top: 1px">alarm</mat-icon>
+              <h4>{{ recipe.cookingTime }} {{'minutes' | translate}}</h4>
+            </div>
+            <div style="margin-left: -9px">
+              <div class="div">
+                <button mat-icon-button
+                        (click)="like(recipe.id)"
+                        type="submit">
+                  <mat-icon *ngIf="recipe.positiveVote == false;" style="margin: auto auto">thumb_up</mat-icon>
+                  <mat-icon *ngIf="recipe.positiveVote == true;" style="margin: auto auto;color: #ce93d8">thumb_up
+                  </mat-icon>
+                </button>
+                <h4 style="margin-top: 8px">{{recipe.positiveVotes}}</h4>
+              </div>
+              <div class="div">
+                <button mat-icon-button
+                        (click)="dislike(recipe.id)"
+                        type="submit">
+                  <mat-icon *ngIf="recipe.negativeVote == false;" style="margin: auto auto">thumb_down</mat-icon>
+                  <mat-icon *ngIf="recipe.negativeVote == true;" style="margin: auto auto;color: #ce93d8">thumb_down
+                  </mat-icon>
+                </button>
+                <h4 style="margin-top: 8px;">{{recipe.negativeVotes}}</h4>
+              </div>
+            </div>
             <p class="card-text"><small
               class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
           </mat-card-content>
@@ -58,13 +84,39 @@
           </mat-card-header>
           <img mat-card-image height="250" style="width: 300px" [src]="recipe.imgSource" *ngIf="recipe.imgSource !=null"
                alt="">
-          <mat-card-content>
-            <h6>
-              {{'difficulty' | translate}}:{{ recipe.cookingDifficultyRu }}
-            </h6>
-            <h6>
-              {{'time' | translate}}:{{ recipe.cookingTime }} {{'minutes' | translate}}
-            </h6>
+          <mat-card-content style="margin-left: auto">
+            <div>
+              <div class="div">
+                <mat-icon style="margin-right: 5px;">extension</mat-icon>
+                <h4>{{ recipe.cookingDifficultyRu }}</h4>
+              </div>
+            </div>
+            <div class="div" style="margin-top: 7px">
+              <mat-icon style="margin-right: 5px;margin-top: 1px">alarm</mat-icon>
+              <h4>{{ recipe.cookingTime }} {{'minutes' | translate}}</h4>
+            </div>
+            <div style="margin-left: -9px">
+              <div class="div">
+                <button mat-icon-button
+                        (click)="like(recipe.id)"
+                        type="submit">
+                  <mat-icon *ngIf="recipe.positiveVote == false;" style="margin: auto auto">thumb_up</mat-icon>
+                  <mat-icon *ngIf="recipe.positiveVote == true;" style="margin: auto auto;color: #ce93d8">thumb_up
+                  </mat-icon>
+                </button>
+                <h4 style="margin-top: 8px">{{recipe.positiveVotes}}</h4>
+              </div>
+              <div class="div">
+                <button mat-icon-button
+                        (click)="dislike(recipe.id)"
+                        type="submit">
+                  <mat-icon *ngIf="recipe.negativeVote == false;" style="margin: auto auto">thumb_down</mat-icon>
+                  <mat-icon *ngIf="recipe.negativeVote == true;" style="margin: auto auto;color: #ce93d8">thumb_down
+                  </mat-icon>
+                </button>
+                <h4 style="margin-top: 8px">{{recipe.negativeVotes}}</h4>
+              </div>
+            </div>
             <p class="card-text"><small
               class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
           </mat-card-content>

@@ -19,4 +19,6 @@ export class CreateRecipeDTO {
   ingredientRecipeDTOList: Array<IngredientRecipeDTO>;
   cookingStepRecipeDTOList: Array<CookingStepRecipeDTO>;
   inFavorite: boolean = false;
+  positiveVote: boolean = false;
+  negativeVote: boolean = false;
 }

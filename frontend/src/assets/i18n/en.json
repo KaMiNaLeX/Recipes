@@ -158,5 +158,6 @@
   "comments": "Comments",
   "leave a comment": "Leave a comment",
   "show comments": "Show the following comments",
-  "show prev comments": "Show previous comments"
+  "show prev comments": "Show previous comments",
+  "evaluated" : "You already evaluated this recipe"
 }

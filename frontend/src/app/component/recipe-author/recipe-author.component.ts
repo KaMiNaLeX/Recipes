@@ -6,6 +6,8 @@ import {SharedService} from "../../service/shared.service";
 import {UtilsService} from "../../service/utils.service";
 import {PageEvent} from "@angular/material/paginator";
 import {User} from "../../model/user";
+import {Vote} from "../../model/vote";
+import {VotesService} from "../../service/votes.service";
 
 @Component({
   selector: 'app-recipe-author',
@@ -22,9 +24,11 @@ export class RecipeAuthorComponent implements OnInit {
   pageSizeOptions: number[] = [8, 32, 64];
   // MatPaginator Output
   pageEvent: PageEvent;
+  //votes
+  vote: Vote = new Vote();
 
   constructor(private router: Router, private recipeService: RecipeService, private ss: SharedService,
-              private utilsService: UtilsService) {
+              private utilsService: UtilsService, private votesService: VotesService) {
   }
 
   ngOnInit() {
@@ -74,5 +78,27 @@ export class RecipeAuthorComponent implements OnInit {
       }
     );
     return undefined;
+  }
+
+  like(id: string) {
+      this.vote.recipeId = id;
+      this.vote.userId = localStorage.getItem('id');
+      this.vote.positiveVote = true;
+      this.votesService.createVote(this.vote).subscribe(data => {
+        if (data != null) {
+
+        } else this.utilsService.alert("evaluated")
+      })
+  }
+
+  dislike(id: string) {
+      this.vote.recipeId = id;
+      this.vote.userId = localStorage.getItem('id');
+      this.vote.negativeVote = true;
+      this.votesService.createVote(this.vote).subscribe(data => {
+        if (data != null) {
+
+        } else this.utilsService.alert("evaluated")
+      });
   }
 }

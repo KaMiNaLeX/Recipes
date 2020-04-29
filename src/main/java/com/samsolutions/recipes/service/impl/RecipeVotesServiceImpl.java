@@ -10,8 +10,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -76,27 +74,5 @@ public class RecipeVotesServiceImpl extends ModelMapperService implements Recipe
     public void delete(UUID uuid) {
         RecipeVotesEntity recipeVotesEntity = recipeVotesRepository.getById(uuid);
         recipeVotesRepository.delete(recipeVotesEntity);
-    }
-
-    @Override
-    public List<Integer> checkVotes(UUID recipeId) {
-        List<Integer> integerList = new ArrayList<>();
-        try {
-            List<RecipeVotesEntity> list = recipeVotesRepository.findAllByRecipeId(recipeId);
-            int positiveCounter = 0;
-            int negativeCounter = 0;
-            for (RecipeVotesEntity recipeVote : list) {
-                if (recipeVote.isPositiveVote()) {
-                    positiveCounter += 1;
-                } else negativeCounter += 1;
-            }
-            integerList.add(positiveCounter);
-            integerList.add(negativeCounter);
-            return integerList;
-        } catch (Exception e) {
-            integerList.add(0);
-            integerList.add(0);
-            return integerList;
-        }
     }
 }

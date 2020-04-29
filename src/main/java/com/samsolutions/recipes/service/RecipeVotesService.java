@@ -2,7 +2,6 @@ package com.samsolutions.recipes.service;
 
 import com.samsolutions.recipes.dto.RecipeVotesDTO;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -15,6 +14,4 @@ public interface RecipeVotesService {
     RecipeVotesDTO update(UUID uuid, RecipeVotesDTO recipeVotesDTO);
 
     void delete(UUID uuid);
-
-    List<Integer> checkVotes (UUID recipeId);
 }

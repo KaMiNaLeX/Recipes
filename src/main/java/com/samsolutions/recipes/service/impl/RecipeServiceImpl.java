@@ -17,6 +17,7 @@ import com.samsolutions.recipes.model.Enum.CookingDifficulty;
 import com.samsolutions.recipes.model.IngredientEntity;
 import com.samsolutions.recipes.model.RecipeEntity;
 import com.samsolutions.recipes.model.RecipeIngredientEntity;
+import com.samsolutions.recipes.model.RecipeVotesEntity;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.repository.CategoryRecipeRepository;
 import com.samsolutions.recipes.repository.CategoryRepository;
@@ -24,10 +25,10 @@ import com.samsolutions.recipes.repository.CookingStepsRepository;
 import com.samsolutions.recipes.repository.IngredientRepository;
 import com.samsolutions.recipes.repository.RecipeIngredientRepository;
 import com.samsolutions.recipes.repository.RecipeRepository;
+import com.samsolutions.recipes.repository.RecipeVotesRepository;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
-import com.samsolutions.recipes.service.RecipeVotesService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -71,13 +72,15 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
 
     private final FavoriteServiceImpl favoriteService;
 
+    private final RecipeVotesRepository recipeVotesRepository;
+
     public RecipeServiceImpl(RecipeRepository recipeRepository,
                              CategoryRepository categoryRepository,
                              CategoryRecipeRepository categoryRecipeRepository,
                              CookingStepsRepository cookingStepsRepository,
                              IngredientRepository ingredientRepository,
                              RecipeIngredientRepository recipeIngredientRepository,
-                             UserRepository userRepository, FileStorageServiceImpl fileStorageService, FavoriteServiceImpl favoriteService) {
+                             UserRepository userRepository, FileStorageServiceImpl fileStorageService, FavoriteServiceImpl favoriteService, RecipeVotesRepository recipeVotesRepository) {
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
         this.categoryRecipeRepository = categoryRecipeRepository;
@@ -87,6 +90,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         this.userRepository = userRepository;
         this.fileStorageService = fileStorageService;
         this.favoriteService = favoriteService;
+        this.recipeVotesRepository = recipeVotesRepository;
     }
 
     private static int getCountAllRecipesByIngredient;
@@ -178,7 +182,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     @Transactional
     public List<UUID> saveCookingStepsEntityList(CreateRecipeDTO createRecipeDTO) {
         List<UUID> cookingStepsEntitiesUUID = new ArrayList<>();
-        for (CookingStepsEntity stepsEntity : mapListLambda(createRecipeDTO.getCookingStepRecipeDTOList(), CookingStepsEntity.class)) {
+        for (CookingStepsEntity stepsEntity : Objects.requireNonNull(mapListLambda(createRecipeDTO.getCookingStepRecipeDTOList(), CookingStepsEntity.class))) {
             stepsEntity.setRecipeId(createRecipeDTO.getId());
             stepsEntity.setRecipe(recipeRepository.getById(createRecipeDTO.getId()));
             cookingStepsRepository.save(stepsEntity);
@@ -231,6 +235,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
             List<RecipeDTO> result = mapListLambda(recipeEntityList, RecipeDTO.class);
             if (userId.length > 0) {
                 result = getAuthorName(result);
+                result = checkVotes(userId[0], result);
                 return favoriteService.checkInFavorite(userId[0], result);
             } else {
                 return getAuthorName(result);
@@ -325,6 +330,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
                 //map recipeIngredientEntityList to DTO
                 map(mapRecipeIngredientEntityListToDTO(recipeEntity, createRecipeDTO), createRecipeDTO);
             }
+            createRecipeDTOList = checkVotes2(authorId, createRecipeDTOList);
         }
         return createRecipeDTOList;
     }
@@ -341,6 +347,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         List<RecipeDTO> result = mapListLambda(recipeRepository.getByAuthorId(uuid, pageable).getContent(), RecipeDTO.class);
         if (userId.length > 0) {
             result = getAuthorName(result);
+            result = checkVotes(userId[0], result);
             return favoriteService.checkInFavorite(userId[0], result);
         } else {
             return getAuthorName(result);
@@ -364,6 +371,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
             List<RecipeDTO> result = mapListLambda(recipeRepository.findAllByName(name, pageable).getContent(), RecipeDTO.class);
             if (userId.length > 0) {
                 result = getAuthorName(result);
+                result = checkVotes(userId[0], result);
                 return favoriteService.checkInFavorite(userId[0], result);
             } else {
                 return getAuthorName(result);
@@ -372,6 +380,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
             List<RecipeDTO> result = mapListLambda(recipeRepository.findAllByNameRu(name, pageable).getContent(), RecipeDTO.class);
             if (userId.length > 0) {
                 result = getAuthorName(result);
+                result = checkVotes(userId[0], result);
                 return favoriteService.checkInFavorite(userId[0], result);
             } else return getAuthorName(result);
         }
@@ -446,6 +455,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         List<RecipeDTO> result = mapListLambda(resultList, RecipeDTO.class);
         if (userId.length > 0) {
             result = getAuthorName(result);
+            result = checkVotes(userId[0], result);
             return favoriteService.checkInFavorite(userId[0], result);
         } else return getAuthorName(result);
     }
@@ -509,6 +519,7 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
         }
         List<RecipeDTO> result = mapListLambda(recipeEntityList, RecipeDTO.class);
         if (userId.length > 0) {
+            result = checkVotes(userId[0], result);
             result = getAuthorName(result);
             return favoriteService.checkInFavorite(userId[0], result);
         } else return getAuthorName(result);
@@ -612,5 +623,31 @@ public class RecipeServiceImpl extends ModelMapperService implements RecipeServi
     public void removeById(UUID uuid) {
         RecipeEntity removeEntity = recipeRepository.getById(uuid);
         recipeRepository.delete(removeEntity);
+    }
+
+    @Override
+    public List<RecipeDTO> checkVotes(UUID userId, List<RecipeDTO> list) {
+        for (RecipeDTO recipeDTO : list) {
+            RecipeVotesEntity recipeVotesEntity = recipeVotesRepository.getByUserIdAndRecipeId(userId, recipeDTO.getId());
+            if (recipeVotesEntity != null) {
+                if (recipeVotesEntity.isPositiveVote()) {
+                    recipeDTO.setPositiveVote(true);
+                } else recipeDTO.setNegativeVote(true);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<CreateRecipeDTO> checkVotes2(UUID userId, List<CreateRecipeDTO> list) {
+        for (CreateRecipeDTO recipeDTO : list) {
+            RecipeVotesEntity recipeVotesEntity = recipeVotesRepository.getByUserIdAndRecipeId(userId, recipeDTO.getId());
+            if (recipeVotesEntity != null) {
+                if (recipeVotesEntity.isPositiveVote()) {
+                    recipeDTO.setPositiveVote(true);
+                } else recipeDTO.setNegativeVote(true);
+            }
+        }
+        return list;
     }
 }

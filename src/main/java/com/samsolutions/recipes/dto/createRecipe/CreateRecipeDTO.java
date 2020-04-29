@@ -43,4 +43,6 @@ public class CreateRecipeDTO {
     private List<IngredientRecipeDTO> ingredientRecipeDTOList;
     private List<CookingStepRecipeDTO> cookingStepRecipeDTOList;
     private boolean inFavorite = false;
+    private boolean positiveVote = false;
+    private boolean negativeVote = false;
 }

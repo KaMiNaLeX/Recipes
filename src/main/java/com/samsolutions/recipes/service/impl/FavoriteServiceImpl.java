@@ -5,12 +5,15 @@ import com.samsolutions.recipes.dto.RecipeDTO;
 import com.samsolutions.recipes.dto.createFavorite.CreateFavoriteDTO;
 import com.samsolutions.recipes.dto.createRecipe.CreateRecipeDTO;
 import com.samsolutions.recipes.model.FavoriteEntity;
+import com.samsolutions.recipes.model.RecipeVotesEntity;
 import com.samsolutions.recipes.model.UserEntity;
 import com.samsolutions.recipes.repository.FavoriteRepository;
+import com.samsolutions.recipes.repository.RecipeVotesRepository;
 import com.samsolutions.recipes.repository.UserRepository;
 import com.samsolutions.recipes.service.FavoriteService;
 import com.samsolutions.recipes.service.ModelMapperService;
 import com.samsolutions.recipes.service.RecipeService;
+import com.samsolutions.recipes.service.RecipeVotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,6 +40,9 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RecipeVotesRepository recipeVotesRepository;
 
     @Override
     @Transactional
@@ -74,6 +80,7 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
             RecipeDTO recipeDTO = recipeService.findByRecipeId(favoriteEntity.getRecipeId());
             UserEntity userEntity = userRepository.getById(recipeDTO.getAuthorId());
             recipeDTO.setAuthorName(userEntity.getLogin());
+            recipeDTO = checkVotes(uuid, recipeDTO);
             FavoriteDTO favoriteDTO = new FavoriteDTO();
             favoriteDTO.setRecipeDTO(recipeDTO);
             favoriteDTO.setUuid(favoriteEntity.getId());
@@ -84,7 +91,6 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
         if (favoriteDTOList.size() == 0) {
             map(favoriteEntityList, FavoriteDTO.class);
         }
-
         return favoriteDTOList;
     }
 
@@ -113,6 +119,17 @@ public class FavoriteServiceImpl extends ModelMapperService implements FavoriteS
             if (favorite.getRecipeId().equals(recipeDTO.getId())) {
                 recipeDTO.setInFavorite(true);
             }
+        }
+        return recipeDTO;
+    }
+
+    @Override
+    public RecipeDTO checkVotes(UUID userId, RecipeDTO recipeDTO) {
+        RecipeVotesEntity recipeVotesEntity = recipeVotesRepository.getByUserIdAndRecipeId(userId, recipeDTO.getId());
+        if (recipeVotesEntity != null) {
+            if (recipeVotesEntity.isPositiveVote()) {
+                recipeDTO.setPositiveVote(true);
+            } else recipeDTO.setNegativeVote(true);
         }
         return recipeDTO;
     }

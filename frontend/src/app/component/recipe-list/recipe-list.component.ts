@@ -9,6 +9,8 @@ import {CategoryService} from "../../service/category.service";
 import {Category} from "../../model/category";
 import {UtilsService} from "../../service/utils.service";
 import {PageEvent} from "@angular/material/paginator";
+import {VotesService} from "../../service/votes.service";
+import {Vote} from "../../model/vote";
 
 @Component({
   selector: 'app-recipe-list',
@@ -30,9 +32,11 @@ export class RecipeListComponent implements OnInit {
   pageSizeOptions: number[] = [8, 32, 64];
   // MatPaginator Output
   pageEvent: PageEvent;
+  //votes
+  vote: Vote = new Vote();
 
   constructor(private router: Router, private recipeService: RecipeService, private favoriteService: FavoriteService, private ss: SharedService,
-              private categoryService: CategoryService, private utilsService: UtilsService) {
+              private categoryService: CategoryService, private utilsService: UtilsService, private votesService: VotesService) {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
     }
@@ -118,5 +122,31 @@ export class RecipeListComponent implements OnInit {
       );
     }
     return event;
+  }
+
+  like(id: string) {
+    if (this.authenticated != false) {
+      this.vote.recipeId = id;
+      this.vote.userId = localStorage.getItem('id');
+      this.vote.positiveVote = true;
+      this.votesService.createVote(this.vote).subscribe(data => {
+        if (data != null) {
+
+        } else this.utilsService.alert("evaluated")
+      })
+    } else this.utilsService.alert("you need to authenticated");
+  }
+
+  dislike(id: string) {
+    if (this.authenticated != false) {
+      this.vote.recipeId = id;
+      this.vote.userId = localStorage.getItem('id');
+      this.vote.negativeVote = true;
+      this.votesService.createVote(this.vote).subscribe(data => {
+        if (data != null) {
+
+        } else this.utilsService.alert("evaluated")
+      });
+    } else this.utilsService.alert("you need to authenticated");
   }
 }
