@@ -58,7 +58,7 @@
               </div>
             </div>
             <p class="card-text"><small
-              class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
+              class="text-muted">{{'last update' | translate}} {{ recipe.lastModified | date:"dd/MM/yyyy, HH:mm:ss" }}</small></p>
           </mat-card-content>
           <mat-card-actions>
             <div class="example-button-row">
@@ -118,7 +118,7 @@
               </div>
             </div>
             <p class="card-text"><small
-              class="text-muted">{{'last update' | translate}} {{ recipe.lastModified }}</small></p>
+              class="text-muted">{{'last update' | translate}} {{ recipe.lastModified | date:"dd/MM/yyyy, HH:mm:ss"}}</small></p>
           </mat-card-content>
           <mat-card-actions>
             <div class="example-button-row">

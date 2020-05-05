@@ -49,9 +49,9 @@
               </div>
             </div>
             <p class="card-text"><small
-              class="text-muted">{{'last update' | translate}} {{ favorite.recipeDTO.lastModified }}</small></p>
+              class="text-muted">{{'last update' | translate}} {{ favorite.recipeDTO.lastModified | date:"dd/MM/yyyy, HH:mm:ss"}}</small></p>
             <p class="card-text"><small
-              class="text-muted">{{'added at' | translate}} {{ favorite.addedAt }}</small></p>
+              class="text-muted">{{'added at' | translate}} {{ favorite.addedAt | date:"dd/MM/yyyy, HH:mm:ss"}}</small></p>
           </mat-card-content>
           <mat-card-actions>
             <button (click)="view(favorite.recipeDTO.id)" mat-raised-button color="primary"
@@ -105,9 +105,9 @@
               </div>
             </div>
             <p class="card-text"><small
-              class="text-muted">{{'last update' | translate}} {{ favorite.recipeDTO.lastModified }}</small></p>
+              class="text-muted">{{'last update' | translate}} {{ favorite.recipeDTO.lastModified | date:"dd/MM/yyyy, HH:mm:ss"}}</small></p>
             <p class="card-text"><small
-              class="text-muted">{{'added at' | translate}} {{ favorite.addedAt }}</small></p>
+              class="text-muted">{{'added at' | translate}} {{ favorite.addedAt | date:"dd/MM/yyyy, HH:mm:ss"}}</small></p>
           </mat-card-content>
           <mat-card-actions>
             <button (click)="view(favorite.recipeDTO.id)" mat-raised-button color="primary"
