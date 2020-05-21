@@ -1,9 +1,7 @@
 package com.samsolutions.recipes.controller;
 
-import com.samsolutions.recipes.dto.CommentsDTO;
 import com.samsolutions.recipes.dto.RecipeVotesDTO;
 import com.samsolutions.recipes.exception.CustomGlobalExceptionHandler;
-import com.samsolutions.recipes.model.RecipeVotesEntity;
 import com.samsolutions.recipes.service.RecipeVotesService;
 import com.samsolutions.recipes.service.validation.ValidUUID;
 import lombok.extern.log4j.Log4j2;
@@ -12,7 +10,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

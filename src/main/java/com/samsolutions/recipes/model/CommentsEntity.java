@@ -23,7 +23,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comments")
+@Table(name = "recipe_comments")
 public class CommentsEntity extends BaseEntity {
     @Column(name = "text")
     private String text;

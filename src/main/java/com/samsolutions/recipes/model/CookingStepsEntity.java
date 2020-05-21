@@ -22,7 +22,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "cooking_steps")
+@Table(name = "recipe_cooking_steps")
 public class CookingStepsEntity extends BaseEntity {
 
     @Column(name = "description")
@@ -33,9 +33,6 @@ public class CookingStepsEntity extends BaseEntity {
 
     @Column(name = "img_source")
     private String imgSource;
-
-    @Column(name = "active")
-    private boolean active;
 
     @Column(name = "recipe_id")
     private UUID recipeId;

@@ -1,4 +1,4 @@
-CREATE TABLE comments
+CREATE TABLE recipe_comments
 (
     id            BINARY(16)    NOT NULL,
     recipe_id     BINARY(16)    NOT NULL,

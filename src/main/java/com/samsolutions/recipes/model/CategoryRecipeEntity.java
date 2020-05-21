@@ -22,7 +22,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "category_recipe")
+@Table(name = "recipe_category")
 public class CategoryRecipeEntity extends BaseEntity {
 
     @Column(name = "recipe_id")

@@ -1,4 +1,4 @@
-CREATE TABLE category_recipe
+CREATE TABLE recipe_category
 (
     id          BINARY(16) NOT NULL,
     recipe_id   BINARY(16) NOT NULL,

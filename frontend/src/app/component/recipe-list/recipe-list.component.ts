@@ -11,6 +11,12 @@ import {UtilsService} from "../../service/utils.service";
 import {PageEvent} from "@angular/material/paginator";
 import {VotesService} from "../../service/votes.service";
 import {Vote} from "../../model/vote";
+import {WebSocketService} from "../../service/web-socket.service";
+import {Message} from "@stomp/stompjs";
+import {StompState} from "@stomp/ng2-stompjs";
+
+const WEBSOCKET_URL = "ws://localhost:8080/socket";
+const EXAMPLE_URL = "/topic/server-broadcaster";
 
 @Component({
   selector: 'app-recipe-list',
@@ -34,12 +40,28 @@ export class RecipeListComponent implements OnInit {
   pageEvent: PageEvent;
   //votes
   vote: Vote = new Vote();
-
+  messageHistory: string;
+  state: string = "NOT CONNECTED";
   constructor(private router: Router, private recipeService: RecipeService, private favoriteService: FavoriteService, private ss: SharedService,
-              private categoryService: CategoryService, private utilsService: UtilsService, private votesService: VotesService) {
+              private categoryService: CategoryService, private utilsService: UtilsService, private votesService: VotesService,
+              private webSocketService: WebSocketService) {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
     }
+    // Instantiate a messagingService
+    this.webSocketService = new WebSocketService(WEBSOCKET_URL, EXAMPLE_URL);
+
+    // Subscribe to its stream (to listen on messages)
+    this.webSocketService.stream().subscribe((message: Message) => {
+      this.recipes = JSON.parse(message.body);
+      console.log(message.body);
+    });
+
+    // Subscribe to its state (to know its connected or not)
+    this.webSocketService.state().subscribe((state: StompState) => {
+      this.state = StompState[state];
+    });
+
   }
 
   ngOnInit() {
@@ -149,4 +171,5 @@ export class RecipeListComponent implements OnInit {
       });
     } else this.utilsService.alert("you need to authenticated");
   }
+
 }

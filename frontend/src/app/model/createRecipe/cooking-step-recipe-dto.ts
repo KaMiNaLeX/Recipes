@@ -3,5 +3,4 @@ export class CookingStepRecipeDTO {
   description: string;
   descriptionRu: string;
   imgSource: string;
-  active: boolean;
 }

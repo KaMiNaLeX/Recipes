@@ -212,7 +212,6 @@ export class RecipeEditComponent implements OnInit {
 
   addCookingStep(description: string) {
     let step = new CookingStepRecipeDTO();
-    step.active = true;
     if (this.imgURL2 == null) {
       step.imgSource = "http://localhost:4200/getFile/noImage.png";
     } else {

@@ -38,7 +38,6 @@ public class CookingStepsServiceImpl extends ModelMapperService implements Cooki
     public CookingStepDTO createStepDTO(CookingStepDTO cookingStepDTO) {
         CookingStepsEntity cookingStepsEntity = new CookingStepsEntity();
         map(cookingStepDTO, cookingStepsEntity);
-        cookingStepsEntity.setActive(true);
         cookingStepsRepository.save(cookingStepsEntity);
         cookingStepDTO.setId(cookingStepsEntity.getId());
         return cookingStepDTO;
