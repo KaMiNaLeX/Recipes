@@ -130,11 +130,11 @@ export class SearchComponent implements OnInit {
 
   searchByName(name: string) {
     if (this.authenticated != false) {
-      this.recipeService.getByName(name, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+      this.recipeService.getByName(name, 0, this.pageSize, "lastModified", localStorage.getItem('id')).subscribe(data => {
         this.recipes = data;
       });
     } else {
-      this.recipeService.getByName2(name, 0, this.pageSize, "name").subscribe(data => {
+      this.recipeService.getByName2(name, 0, this.pageSize, "lastModified").subscribe(data => {
         this.recipes = data;
       });
     }
@@ -148,11 +148,11 @@ export class SearchComponent implements OnInit {
 
   searchByAuthorName(name: string) {
     if (this.authenticated != false) {
-      this.recipeService.getByAuthorName(name, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+      this.recipeService.getByAuthorName(name, 0, this.pageSize, "lastModified", localStorage.getItem('id')).subscribe(data => {
         this.recipes = data;
       });
     } else {
-      this.recipeService.getByAuthorName2(name, 0, this.pageSize, "name").subscribe(data => {
+      this.recipeService.getByAuthorName2(name, 0, this.pageSize, "lastModified").subscribe(data => {
         this.recipes = data;
       });
     }
@@ -237,11 +237,11 @@ export class SearchComponent implements OnInit {
     this.recipeData.cookingDifficultyDTOList = cookingDifficultyDTOList;
 
     if (this.authenticated != false) {
-      this.recipeService.findAllByData(this.recipeData, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+      this.recipeService.findAllByData(this.recipeData, 0, this.pageSize, "lastModified", localStorage.getItem('id')).subscribe(data => {
         this.recipes = data;
       });
     } else {
-      this.recipeService.findAllByData2(this.recipeData, 0, this.pageSize, "name").subscribe(data => {
+      this.recipeService.findAllByData2(this.recipeData, 0, this.pageSize, "lastModified").subscribe(data => {
         this.recipes = data;
       });
     }
@@ -255,11 +255,11 @@ export class SearchComponent implements OnInit {
   searchByIngredients() {
     this.ingredientNameDTOList.ingredientNameDTOList = this.ingredientNameDTOS;
     if (this.authenticated != false) {
-      this.recipeService.findAllByIngredients(this.ingredientNameDTOList, 0, this.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+      this.recipeService.findAllByIngredients(this.ingredientNameDTOList, 0, this.pageSize, "lastModified", localStorage.getItem('id')).subscribe(data => {
         this.recipes = data;
       });
     } else {
-      this.recipeService.findAllByIngredients2(this.ingredientNameDTOList, 0, this.pageSize, "name").subscribe(data => {
+      this.recipeService.findAllByIngredients2(this.ingredientNameDTOList, 0, this.pageSize, "lastModified").subscribe(data => {
         this.recipes = data;
       });
     }
@@ -280,13 +280,13 @@ export class SearchComponent implements OnInit {
         name = <HTMLInputElement>document.getElementById('recipeName');
       }
       if (this.authenticated != false) {
-        this.recipeService.getByName(name.value, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+        this.recipeService.getByName(name.value, event.pageIndex, event.pageSize, "lastModified", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
           this.pageIndex = event.pageIndex;
           this.pageSize = event.pageSize;
         });
       } else {
-        this.recipeService.getByName2(name.value, event.pageIndex, event.pageSize, "name").subscribe(data => {
+        this.recipeService.getByName2(name.value, event.pageIndex, event.pageSize, "lastModified").subscribe(data => {
           this.recipes = data;
           this.pageIndex = event.pageIndex;
           this.pageSize = event.pageSize;
@@ -296,7 +296,7 @@ export class SearchComponent implements OnInit {
     } else if (this.currentsSearch == this.searchArr[1]) {
       let authorName = <HTMLInputElement>document.getElementById('authorName');
       if (this.authenticated != false) {
-        this.recipeService.getByAuthorName(authorName.value, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(
+        this.recipeService.getByAuthorName(authorName.value, event.pageIndex, event.pageSize, "lastModified", localStorage.getItem('id')).subscribe(
           response => {
             this.recipes = response;
             this.pageIndex = event.pageIndex;
@@ -304,7 +304,7 @@ export class SearchComponent implements OnInit {
           }
         );
       } else {
-        this.recipeService.getByAuthorName2(authorName.value, event.pageIndex, event.pageSize, "name").subscribe(
+        this.recipeService.getByAuthorName2(authorName.value, event.pageIndex, event.pageSize, "lastModified").subscribe(
           response => {
             this.recipes = response;
             this.pageIndex = event.pageIndex;
@@ -315,13 +315,13 @@ export class SearchComponent implements OnInit {
 
     } else if (this.currentsSearch == this.searchArr[2]) {
       if (this.authenticated != false) {
-        this.recipeService.findAllByIngredients(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+        this.recipeService.findAllByIngredients(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "lastModified", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
           this.pageIndex = event.pageIndex;
           this.pageSize = event.pageSize;
         });
       } else {
-        this.recipeService.findAllByIngredients2(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "name").subscribe(data => {
+        this.recipeService.findAllByIngredients2(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "lastModified").subscribe(data => {
           this.recipes = data;
           this.pageIndex = event.pageIndex;
           this.pageSize = event.pageSize;
@@ -329,13 +329,13 @@ export class SearchComponent implements OnInit {
       }
     } else if (this.currentsSearch == this.searchArr[3]) {
       if (this.authenticated != false) {
-        this.recipeService.findAllByData(this.recipeData, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
+        this.recipeService.findAllByData(this.recipeData, event.pageIndex, event.pageSize, "lastModified", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
           this.pageIndex = event.pageIndex;
           this.pageSize = event.pageSize;
         });
       } else {
-        this.recipeService.findAllByData2(this.recipeData, event.pageIndex, event.pageSize, "name").subscribe(data => {
+        this.recipeService.findAllByData2(this.recipeData, event.pageIndex, event.pageSize, "lastModified").subscribe(data => {
           this.recipes = data;
           this.pageIndex = event.pageIndex;
           this.pageSize = event.pageSize;

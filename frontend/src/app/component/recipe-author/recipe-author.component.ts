@@ -35,7 +35,7 @@ export class RecipeAuthorComponent implements OnInit {
     this.recipeService.getCountAllOwnRecipes(localStorage.getItem('id')).subscribe(data => {
       this.length = data;
     });
-    this.recipeService.getByAuthorId(localStorage.getItem('id'), 0, this.pageSize, "name").subscribe(data => this.recipes = data);
+    this.recipeService.getByAuthorId(localStorage.getItem('id'), 0, this.pageSize, "lastModified").subscribe(data => this.recipes = data);
     this.ru = (localStorage.getItem('lang') == 'ru');
     this.ss.getEmittedValue()
       .subscribe(item => this.ru = item);
@@ -60,7 +60,7 @@ export class RecipeAuthorComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.recipeService.getByAuthorId(localStorage.getItem('id'), 0, this.pageSize, "name").subscribe(data => {
+          this.recipeService.getByAuthorId(localStorage.getItem('id'), 0, this.pageSize, "lastModified").subscribe(data => {
             this.recipes = data;
             this.recipeService.getCountAllOwnRecipes(localStorage.getItem('id')).subscribe(data => {
               this.length = data;
@@ -72,7 +72,7 @@ export class RecipeAuthorComponent implements OnInit {
   }
 
   getServerData(event?: PageEvent) {
-    this.recipeService.getByAuthorId(localStorage.getItem('id'), event.pageIndex, event.pageSize, "name").subscribe(
+    this.recipeService.getByAuthorId(localStorage.getItem('id'), event.pageIndex, event.pageSize, "lastModified").subscribe(
       response => {
         this.recipes = response;
         this.pageIndex = event.pageIndex;
@@ -89,7 +89,7 @@ export class RecipeAuthorComponent implements OnInit {
     this.vote.negativeVote = false;
     this.votesService.createVote(this.vote).subscribe(data => {
       if (data != null) {
-        this.recipeService.getByAuthorId(localStorage.getItem('id'), this.pageIndex, this.pageSize, "name").subscribe(
+        this.recipeService.getByAuthorId(localStorage.getItem('id'), this.pageIndex, this.pageSize, "lastModified").subscribe(
           response => {
             this.recipes = response;
           }
@@ -105,7 +105,7 @@ export class RecipeAuthorComponent implements OnInit {
     this.vote.positiveVote = false;
     this.votesService.createVote(this.vote).subscribe(data => {
       if (data != null) {
-        this.recipeService.getByAuthorId(localStorage.getItem('id'), this.pageIndex, this.pageSize, "name").subscribe(
+        this.recipeService.getByAuthorId(localStorage.getItem('id'), this.pageIndex, this.pageSize, "lastModified").subscribe(
           response => {
             this.recipes = response;
           }

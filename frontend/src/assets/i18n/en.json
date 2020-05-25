@@ -132,7 +132,7 @@
   "user updated successfully": "Data changed successfully",
   "recipe in favorites": "This recipe is already in favorites",
   "recipe add to favorites": "Recipe add to favorites",
-  "you need to authenticated": "You need to authenticated!",
+  "you need to authenticated": "You need to be logged in!",
   "have recipe with this name": "You already have recipe with this name",
   "add one step" : "Add at least one step",
   "add one ingredient" : "Add at least one ingredient",

@@ -47,12 +47,12 @@ export class RecipeListComponent implements OnInit {
     });
     if (this.authenticated != false) {
       this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
-        0, this.pageSize, "name").subscribe(data => {
+        0, this.pageSize, "lastModified").subscribe(data => {
         this.recipes = data;
       });
     } else {
       this.recipeService.getRecipesByCategoryName2(sessionStorage.getItem('categoryName'),
-        0, this.pageSize, "name").subscribe(data => {
+        0, this.pageSize, "lastModified").subscribe(data => {
         this.recipes = data;
       });
     }
@@ -89,7 +89,7 @@ export class RecipeListComponent implements OnInit {
   addRecipe() {
     if (this.authenticated != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
-    } else this.utilsService.alert("author or admin");
+    } else this.utilsService.alert("you need to authenticated");
   }
 
   deleteFromFavorite(recipeId: string) {
@@ -105,7 +105,7 @@ export class RecipeListComponent implements OnInit {
   getServerData(event ?: PageEvent) {
     if (this.authenticated != false) {
       this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
-        event.pageIndex, event.pageSize, "name").subscribe(
+        event.pageIndex, event.pageSize, "lastModified").subscribe(
         response => {
           this.recipes = response;
           this.pageIndex = event.pageIndex;
@@ -113,7 +113,7 @@ export class RecipeListComponent implements OnInit {
       );
     } else {
       this.recipeService.getRecipesByCategoryName2(sessionStorage.getItem('categoryName'), event.pageIndex,
-        event.pageSize, "name").subscribe(
+        event.pageSize, "lastModified").subscribe(
         response => {
           this.recipes = response;
           this.pageIndex = event.pageIndex;
@@ -132,7 +132,7 @@ export class RecipeListComponent implements OnInit {
       this.votesService.createVote(this.vote).subscribe(data => {
         if (data != null) {
           this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
-            this.pageIndex, this.pageSize, "name").subscribe(
+            this.pageIndex, this.pageSize, "lastModified").subscribe(
             response => {
               this.recipes = response;
             }
@@ -151,7 +151,7 @@ export class RecipeListComponent implements OnInit {
       this.votesService.createVote(this.vote).subscribe(data => {
         if (data != null) {
           this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
-            this.pageIndex, this.pageSize, "name").subscribe(
+            this.pageIndex, this.pageSize, "lastModified").subscribe(
             response => {
               this.recipes = response;
             }

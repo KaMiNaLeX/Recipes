@@ -257,8 +257,10 @@ export class RecipeEditComponent implements OnInit {
   onSubmit() {
     let y = -1;
     for (let i = 0; i < this.cookingSteps.length; i++) {
-      if (this.cookingSteps[i].imgSource.length > 1000) {
-        this.cookingSteps[i].imgSource = null;
+      if (this.cookingSteps[i].imgSource != null){
+        if (this.cookingSteps[i].imgSource.length > 1000) {
+          this.cookingSteps[i].imgSource = null;
+        }
       }
     }
     if (this.createRecipeDTO.cookingDifficulty != null) {
@@ -292,7 +294,7 @@ export class RecipeEditComponent implements OnInit {
 
                 }
               }
-              window.location.reload();
+              this.router.navigate(['recipe-author']).then(window.location.reload);
             }
           );
         }
