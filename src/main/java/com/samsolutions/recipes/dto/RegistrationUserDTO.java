@@ -1,6 +1,5 @@
 package com.samsolutions.recipes.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.samsolutions.recipes.service.validation.ValidEmail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +28,5 @@ public class RegistrationUserDTO {
     private String login;
     @NotBlank
     private String password;
-    @JsonProperty
-    private boolean isAuthor;
+
 }

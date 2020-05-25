@@ -51,7 +51,7 @@ public class IngredientControllerTest extends BaseTest {
     public void testGetIngredientListSuccess() throws URISyntaxException {
         RestTemplate restTemplate = new RestTemplate();
 
-        final String baseUrl = "http://localhost:" + randomServerPort + "/api/ingredient/";
+        final String baseUrl = "http://localhost:" + randomServerPort + "/api/ingredient/?page=0&size=10&sort=name";
         URI uri = new URI(baseUrl);
 
         ResponseEntity<String> result = restTemplate.getForEntity(uri, String.class);

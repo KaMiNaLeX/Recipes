@@ -20,7 +20,6 @@ export class AppComponent {
   title = 'Recipes';
   authenticated = false;
   admin = false;
-  author = false;
   username = "unauthorized";
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService,
@@ -37,6 +36,11 @@ export class AppComponent {
       this.role();
       this.username = localStorage.getItem('email');
     }
+    if (window.location.href == 'http://localhost:4200/#/' ||
+      window.location.href == 'http://localhost:4200/') {
+      this.router.navigate(['category']);
+    }
+    console.log(window.location.href);
   }
 
   useLanguage(language: string) {
@@ -53,17 +57,16 @@ export class AppComponent {
     this.authService.logout();
     this.authenticated = false;
     this.admin = false;
-    this.author = false;
     this.router.navigate(['category']).then(data =>
       window.location.reload()
     )
   }
 
   addRecipe() {
-    if (this.author != false || this.admin != false) {
+    if (this.authenticated != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
     } else {
-      this.utilsService.alert("author or admin");
+      this.utilsService.alert("you need to authenticated");
     }
   }
 
@@ -94,7 +97,7 @@ export class AppComponent {
   register() {
     this.dialog.open(RegisterComponent, {
       maxWidth: '30%',
-      height:'83%',
+      height: '83%',
       data: {}
     });
   }
@@ -114,9 +117,7 @@ export class AppComponent {
   role() {
     this.authService.role().subscribe(data => {
       this.admin = (data['roles'] && data['roles'].indexOf('ADMIN')) > -1;
-      this.author = (data['roles'] && data['roles'].indexOf('AUTHOR')) > -1;
       localStorage.setItem('adminRole', this.admin.toString());
-      localStorage.setItem('authorRole', this.author.toString());
     });
   }
 

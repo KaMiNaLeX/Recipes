@@ -111,8 +111,11 @@ import {MatExpansionModule} from "@angular/material/expansion";
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
+    },
+    {
+      provide: String,
+      useValue: "socketUrl"
     }
-
   ],
   bootstrap: [AppComponent]
 })

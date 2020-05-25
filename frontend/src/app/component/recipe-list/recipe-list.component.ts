@@ -11,12 +11,6 @@ import {UtilsService} from "../../service/utils.service";
 import {PageEvent} from "@angular/material/paginator";
 import {VotesService} from "../../service/votes.service";
 import {Vote} from "../../model/vote";
-import {WebSocketService} from "../../service/web-socket.service";
-import {Message} from "@stomp/stompjs";
-import {StompState} from "@stomp/ng2-stompjs";
-
-const WEBSOCKET_URL = "ws://localhost:8080/socket";
-const EXAMPLE_URL = "/topic/server-broadcaster";
 
 @Component({
   selector: 'app-recipe-list',
@@ -28,40 +22,23 @@ export class RecipeListComponent implements OnInit {
   recipe: Recipe = new Recipe();
   recipes: Recipe[] = [];
   admin = false;
-  author = false;
   favorite: Favorite = new Favorite();
   authenticated = false;
   category: Category = new Category();
   // MatPaginator Inputs
   length: number;
   pageSize = 8;
+  pageIndex = 0;
   pageSizeOptions: number[] = [8, 32, 64];
   // MatPaginator Output
   pageEvent: PageEvent;
   //votes
   vote: Vote = new Vote();
-  messageHistory: string;
-  state: string = "NOT CONNECTED";
   constructor(private router: Router, private recipeService: RecipeService, private favoriteService: FavoriteService, private ss: SharedService,
-              private categoryService: CategoryService, private utilsService: UtilsService, private votesService: VotesService,
-              private webSocketService: WebSocketService) {
+              private categoryService: CategoryService, private utilsService: UtilsService, private votesService: VotesService) {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
     }
-    // Instantiate a messagingService
-    this.webSocketService = new WebSocketService(WEBSOCKET_URL, EXAMPLE_URL);
-
-    // Subscribe to its stream (to listen on messages)
-    this.webSocketService.stream().subscribe((message: Message) => {
-      this.recipes = JSON.parse(message.body);
-      console.log(message.body);
-    });
-
-    // Subscribe to its state (to know its connected or not)
-    this.webSocketService.state().subscribe((state: StompState) => {
-      this.state = StompState[state];
-    });
-
   }
 
   ngOnInit() {
@@ -83,8 +60,6 @@ export class RecipeListComponent implements OnInit {
     let admin = localStorage.getItem('adminRole');
     this.admin = (admin == 'true');
 
-    let author = localStorage.getItem('authorRole');
-    this.author = (author == 'true');
     this.categoryService.getByName(sessionStorage.getItem('categoryName')).subscribe(data => {
       this.category = data;
     });
@@ -112,7 +87,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   addRecipe() {
-    if (this.author != false || this.admin != false) {
+    if (this.authenticated != false || this.admin != false) {
       this.router.navigate(['addRecipe']);
     } else this.utilsService.alert("author or admin");
   }
@@ -133,6 +108,7 @@ export class RecipeListComponent implements OnInit {
         event.pageIndex, event.pageSize, "name").subscribe(
         response => {
           this.recipes = response;
+          this.pageIndex = event.pageIndex;
         }
       );
     } else {
@@ -140,6 +116,7 @@ export class RecipeListComponent implements OnInit {
         event.pageSize, "name").subscribe(
         response => {
           this.recipes = response;
+          this.pageIndex = event.pageIndex;
         }
       );
     }
@@ -151,9 +128,15 @@ export class RecipeListComponent implements OnInit {
       this.vote.recipeId = id;
       this.vote.userId = localStorage.getItem('id');
       this.vote.positiveVote = true;
+      this.vote.negativeVote = false;
       this.votesService.createVote(this.vote).subscribe(data => {
         if (data != null) {
-
+          this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
+            this.pageIndex, this.pageSize, "name").subscribe(
+            response => {
+              this.recipes = response;
+            }
+          );
         } else this.utilsService.alert("evaluated")
       })
     } else this.utilsService.alert("you need to authenticated");
@@ -164,9 +147,15 @@ export class RecipeListComponent implements OnInit {
       this.vote.recipeId = id;
       this.vote.userId = localStorage.getItem('id');
       this.vote.negativeVote = true;
+      this.vote.positiveVote = false;
       this.votesService.createVote(this.vote).subscribe(data => {
         if (data != null) {
-
+          this.recipeService.getRecipesByCategoryName(sessionStorage.getItem('categoryName'), localStorage.getItem('id'),
+            this.pageIndex, this.pageSize, "name").subscribe(
+            response => {
+              this.recipes = response;
+            }
+          );
         } else this.utilsService.alert("evaluated")
       });
     } else this.utilsService.alert("you need to authenticated");

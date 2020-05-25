@@ -21,6 +21,7 @@ export class FavoriteComponent implements OnInit {
   // MatPaginator Inputs
   length: number;
   pageSize = 8;
+  pageIndex = 0;
   pageSizeOptions: number[] = [8, 32, 64];
   // MatPaginator Output
   pageEvent: PageEvent;
@@ -73,6 +74,8 @@ export class FavoriteComponent implements OnInit {
     this.favoriteService.findAll(localStorage.getItem('id'), event.pageIndex, event.pageSize, "addedAt").subscribe(
       response => {
         this.favorites = response;
+        this.pageSize = event.pageSize;
+        this.pageIndex = event.pageIndex;
       }
     );
     return event;
@@ -82,9 +85,14 @@ export class FavoriteComponent implements OnInit {
     this.vote.recipeId = id;
     this.vote.userId = localStorage.getItem('id');
     this.vote.positiveVote = true;
+    this.vote.negativeVote = false;
     this.votesService.createVote(this.vote).subscribe(data => {
       if (data != null) {
-
+        this.favoriteService.findAll(localStorage.getItem('id'), this.pageIndex, this.pageSize, "addedAt").subscribe(
+          response => {
+            this.favorites = response;
+          }
+        );
       } else this.utilsService.alert("evaluated")
     })
   }
@@ -93,9 +101,14 @@ export class FavoriteComponent implements OnInit {
     this.vote.recipeId = id;
     this.vote.userId = localStorage.getItem('id');
     this.vote.negativeVote = true;
+    this.vote.positiveVote = false;
     this.votesService.createVote(this.vote).subscribe(data => {
       if (data != null) {
-
+        this.favoriteService.findAll(localStorage.getItem('id'), this.pageIndex, this.pageSize, "addedAt").subscribe(
+          response => {
+            this.favorites = response;
+          }
+        );
       } else this.utilsService.alert("evaluated")
     });
   }

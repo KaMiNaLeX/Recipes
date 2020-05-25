@@ -49,7 +49,7 @@ public class CategoryControllerTest extends BaseTest {
     public void testGetCategoriesListSuccess() throws URISyntaxException {
         RestTemplate restTemplate = new RestTemplate();
 
-        final String baseUrl = "http://localhost:" + randomServerPort + "/api/category/";
+        final String baseUrl = "http://localhost:" + randomServerPort + "/api/category/?page=0&size=10&sort=name";
         URI uri = new URI(baseUrl);
 
         ResponseEntity<String> result = restTemplate.getForEntity(uri, String.class);

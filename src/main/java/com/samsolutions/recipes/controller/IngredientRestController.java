@@ -64,7 +64,7 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
     }
 
     @PostMapping("/create")
-    public IngredientDTO createIngredient(@Valid @RequestBody IngredientDTO ingredient) {
+    public IngredientDTO createIngredient(@RequestBody IngredientDTO ingredient) {
         try {
             log.info("Create ingredient " + ingredient.getName() + " is successful");
             return ingredientService.createIngredient(ingredient);
@@ -76,7 +76,7 @@ public class IngredientRestController extends CustomGlobalExceptionHandler {
 
     @PutMapping("/update/{id}")
     public IngredientDTO updateIngredient(@PathVariable("id") @ValidUUID UUID uuid,
-                                          @Valid @RequestBody IngredientDTO ingredient) {
+                                          @RequestBody IngredientDTO ingredient) {
         try {
             log.info("Update ingredient " + uuid + " is successful");
             return ingredientService.updateIngredient(uuid, ingredient);

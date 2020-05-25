@@ -64,7 +64,7 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
         return recipeService.update(uuid, recipeDTO);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PutMapping("/updateRecipe/{id}")
     public CreateRecipeDTO updateRecipe(@PathVariable("id") @ValidUUID UUID uuid,
                                         @Valid @RequestBody CreateRecipeDTO recipeDTO) {
@@ -100,7 +100,7 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
         return recipeService.getByCategoryName(categoryName, page, size, sort, userId);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PostMapping("/createRecipe")
     public CreateRecipeDTO createRecipeDTO(@Valid @RequestBody CreateRecipeDTO createRecipeDTO) {
         try {
@@ -116,7 +116,7 @@ public class RecipeRestController extends CustomGlobalExceptionHandler {
         return recipeService.getByRecipeId(uuid, userId);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/authorId/{id}")
     public List<CreateRecipeDTO> getByAuthorId(@PathVariable("id") @ValidUUID UUID uuid,
                                                @RequestParam("page") int page,

@@ -10,11 +10,12 @@ import {
 import {Observable, throwError} from 'rxjs';
 import {map, catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {UtilsService} from "../service/utils.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private utilsService:UtilsService ) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -47,12 +48,10 @@ export class TokenInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         console.log(error);
         if (error.status === 401) {
-          this.router.navigate(['login']);
-          window.alert('Wrong email or password');
+          this.utilsService.alert('wrong email or password');
         }
         if (error.status === 404) {
-          this.router.navigate(['login']);
-          window.alert('Wrong email or password');
+          this.utilsService.alert('wrong email or password');
         }
         if (error.status === 400) {
           alert(error.error);

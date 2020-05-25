@@ -5,7 +5,6 @@ import {Router} from "@angular/router";
 import {SharedService} from "../../service/shared.service";
 import {UtilsService} from "../../service/utils.service";
 import {PageEvent} from "@angular/material/paginator";
-import {User} from "../../model/user";
 import {Vote} from "../../model/vote";
 import {VotesService} from "../../service/votes.service";
 
@@ -21,6 +20,7 @@ export class RecipeAuthorComponent implements OnInit {
   // MatPaginator Inputs
   length: number;
   pageSize = 8;
+  pageIndex = 0;
   pageSizeOptions: number[] = [8, 32, 64];
   // MatPaginator Output
   pageEvent: PageEvent;
@@ -75,30 +75,42 @@ export class RecipeAuthorComponent implements OnInit {
     this.recipeService.getByAuthorId(localStorage.getItem('id'), event.pageIndex, event.pageSize, "name").subscribe(
       response => {
         this.recipes = response;
+        this.pageIndex = event.pageIndex;
+        this.pageSize = event.pageSize;
       }
     );
-    return undefined;
+    return event;
   }
 
   like(id: string) {
-      this.vote.recipeId = id;
-      this.vote.userId = localStorage.getItem('id');
-      this.vote.positiveVote = true;
-      this.votesService.createVote(this.vote).subscribe(data => {
-        if (data != null) {
-
-        } else this.utilsService.alert("evaluated")
-      })
+    this.vote.recipeId = id;
+    this.vote.userId = localStorage.getItem('id');
+    this.vote.positiveVote = true;
+    this.vote.negativeVote = false;
+    this.votesService.createVote(this.vote).subscribe(data => {
+      if (data != null) {
+        this.recipeService.getByAuthorId(localStorage.getItem('id'), this.pageIndex, this.pageSize, "name").subscribe(
+          response => {
+            this.recipes = response;
+          }
+        );
+      } else this.utilsService.alert("evaluated")
+    })
   }
 
   dislike(id: string) {
-      this.vote.recipeId = id;
-      this.vote.userId = localStorage.getItem('id');
-      this.vote.negativeVote = true;
-      this.votesService.createVote(this.vote).subscribe(data => {
-        if (data != null) {
-
-        } else this.utilsService.alert("evaluated")
-      });
+    this.vote.recipeId = id;
+    this.vote.userId = localStorage.getItem('id');
+    this.vote.negativeVote = true;
+    this.vote.positiveVote = false;
+    this.votesService.createVote(this.vote).subscribe(data => {
+      if (data != null) {
+        this.recipeService.getByAuthorId(localStorage.getItem('id'), this.pageIndex, this.pageSize, "name").subscribe(
+          response => {
+            this.recipes = response;
+          }
+        );
+      } else this.utilsService.alert("evaluated")
+    });
   }
 }

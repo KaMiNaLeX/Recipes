@@ -159,5 +159,6 @@
   "leave a comment": "Оставьте комментарий",
   "show comments": "Показать следующие комментарии",
   "show prev comments": "Показать предыдущие комментарии",
-  "evaluated" : "Вы уже оценили этот рецепт"
+  "evaluated" : "Вы уже оценили этот рецепт",
+  "wrong email or password" : "Неверный email или пароль"
 }

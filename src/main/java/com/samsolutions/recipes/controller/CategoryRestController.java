@@ -76,7 +76,7 @@ public class CategoryRestController extends CustomGlobalExceptionHandler {
     }
 
     @PostMapping("/create")
-    public CategoryDTO createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+    public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO) {
         try {
             log.info("Create category " + categoryDTO.getName() + " is successful");
             return categoryService.createCategory(categoryDTO);
@@ -88,7 +88,7 @@ public class CategoryRestController extends CustomGlobalExceptionHandler {
 
     @PutMapping("/update/{id}")
     public CategoryDTO updateCategory(@PathVariable("id") @ValidUUID UUID uuid,
-                                      @Valid @RequestBody CategoryDTO categoryDTO) {
+                                      @RequestBody CategoryDTO categoryDTO) {
         try {
             log.info("Update category " + uuid + "  is successful");
             return categoryService.updateCategory(uuid, categoryDTO);

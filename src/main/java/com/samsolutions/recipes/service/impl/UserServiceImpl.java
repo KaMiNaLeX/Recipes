@@ -93,7 +93,7 @@ public class UserServiceImpl extends ModelMapperService implements UserService {
 
         UserRoleEntity userRoleEntity = new UserRoleEntity();
         userRoleEntity.setUserId(saveUser.getId());
-        userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
+        userRoleEntity.setRoleId(roleRepository.findByName(RoleName.USER).getId());
         userRoleRepository.save(userRoleEntity);
         return userDTO;
     }

@@ -83,15 +83,8 @@ public class CustomUserDetailsService extends ModelMapperService implements User
 
         UserRoleEntity userRoleEntity = new UserRoleEntity();
         userRoleEntity.setUserId(saveUser.getId());
-        userRoleEntity.setRoleId(roleRepository.findByName(RoleName.VIEWER).getId());
+        userRoleEntity.setRoleId(roleRepository.findByName(RoleName.USER).getId());
         userRoleRepository.save(userRoleEntity);
-
-        if (user.isAuthor()) {
-            UserRoleEntity userRoleEntity2 = new UserRoleEntity();
-            userRoleEntity2.setUserId(saveUser.getId());
-            userRoleEntity2.setRoleId(roleRepository.findByName(RoleName.AUTHOR).getId());
-            userRoleRepository.save(userRoleEntity2);
-        }
 
     }
 }

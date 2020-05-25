@@ -21,6 +21,7 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 import {Fruit} from "../../model/fruit";
 import {Vote} from "../../model/vote";
 import {VotesService} from "../../service/votes.service";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-search',
@@ -44,6 +45,7 @@ export class SearchComponent implements OnInit {
   length: number;
   pageSize = 8;
   pageSizeOptions: number[] = [8, 32, 64];
+  pageIndex = 0;
   // MatPaginator Output
   pageEvent: PageEvent;
   value = 'Clear me';
@@ -67,7 +69,7 @@ export class SearchComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService,
               private categoryService: CategoryService, private ingredientService: IngredientService,
               private favoriteService: FavoriteService, private ss: SharedService, private utilsService: UtilsService,
-              private votesService: VotesService) {
+              private votesService: VotesService, private http: HttpClient) {
     if (localStorage.getItem('token') != undefined) {
       this.authenticated = true;
     }
@@ -280,10 +282,14 @@ export class SearchComponent implements OnInit {
       if (this.authenticated != false) {
         this.recipeService.getByName(name.value, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
+          this.pageIndex = event.pageIndex;
+          this.pageSize = event.pageSize;
         });
       } else {
         this.recipeService.getByName2(name.value, event.pageIndex, event.pageSize, "name").subscribe(data => {
           this.recipes = data;
+          this.pageIndex = event.pageIndex;
+          this.pageSize = event.pageSize;
         });
       }
 
@@ -293,12 +299,16 @@ export class SearchComponent implements OnInit {
         this.recipeService.getByAuthorName(authorName.value, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(
           response => {
             this.recipes = response;
+            this.pageIndex = event.pageIndex;
+            this.pageSize = event.pageSize;
           }
         );
       } else {
         this.recipeService.getByAuthorName2(authorName.value, event.pageIndex, event.pageSize, "name").subscribe(
           response => {
             this.recipes = response;
+            this.pageIndex = event.pageIndex;
+            this.pageSize = event.pageSize;
           }
         );
       }
@@ -307,20 +317,28 @@ export class SearchComponent implements OnInit {
       if (this.authenticated != false) {
         this.recipeService.findAllByIngredients(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
+          this.pageIndex = event.pageIndex;
+          this.pageSize = event.pageSize;
         });
       } else {
         this.recipeService.findAllByIngredients2(this.ingredientNameDTOList, event.pageIndex, event.pageSize, "name").subscribe(data => {
           this.recipes = data;
+          this.pageIndex = event.pageIndex;
+          this.pageSize = event.pageSize;
         });
       }
     } else if (this.currentsSearch == this.searchArr[3]) {
       if (this.authenticated != false) {
         this.recipeService.findAllByData(this.recipeData, event.pageIndex, event.pageSize, "name", localStorage.getItem('id')).subscribe(data => {
           this.recipes = data;
+          this.pageIndex = event.pageIndex;
+          this.pageSize = event.pageSize;
         });
       } else {
         this.recipeService.findAllByData2(this.recipeData, event.pageIndex, event.pageSize, "name").subscribe(data => {
           this.recipes = data;
+          this.pageIndex = event.pageIndex;
+          this.pageSize = event.pageSize;
         });
       }
     }
@@ -332,9 +350,13 @@ export class SearchComponent implements OnInit {
       this.vote.recipeId = id;
       this.vote.userId = localStorage.getItem('id');
       this.vote.positiveVote = true;
+      this.vote.negativeVote = false;
       this.votesService.createVote(this.vote).subscribe(data => {
         if (data != null) {
-
+          let pageEvent = new PageEvent();
+          pageEvent.pageIndex = this.pageIndex;
+          pageEvent.pageSize = this.pageSize;
+          this.getServerData(pageEvent);
         } else this.utilsService.alert("evaluated")
       })
     } else this.utilsService.alert("you need to authenticated");
@@ -345,9 +367,13 @@ export class SearchComponent implements OnInit {
       this.vote.recipeId = id;
       this.vote.userId = localStorage.getItem('id');
       this.vote.negativeVote = true;
+      this.vote.positiveVote = false;
       this.votesService.createVote(this.vote).subscribe(data => {
         if (data != null) {
-
+          let pageEvent = new PageEvent();
+          pageEvent.pageIndex = this.pageIndex;
+          pageEvent.pageSize = this.pageSize;
+          this.getServerData(pageEvent);
         } else this.utilsService.alert("evaluated")
       });
     } else this.utilsService.alert("you need to authenticated");

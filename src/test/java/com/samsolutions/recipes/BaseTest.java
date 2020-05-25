@@ -1,23 +1,17 @@
 package com.samsolutions.recipes;
 
 import com.samsolutions.recipes.config.JwtTokenProvider;
-import com.samsolutions.recipes.controller.CategoryRestController;
 import com.samsolutions.recipes.controller.CookingStepsRestController;
 import com.samsolutions.recipes.controller.FavoritesRestController;
 import com.samsolutions.recipes.controller.GetFileController;
-import com.samsolutions.recipes.controller.IngredientRestController;
 import com.samsolutions.recipes.controller.RecipeRestController;
-import com.samsolutions.recipes.controller.UserRestController;
-import com.samsolutions.recipes.service.CategoryService;
 import com.samsolutions.recipes.service.FavoriteService;
 import com.samsolutions.recipes.service.FileStorageService;
 import com.samsolutions.recipes.service.RecipeService;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
